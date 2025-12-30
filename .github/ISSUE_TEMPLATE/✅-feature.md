@@ -3,7 +3,7 @@ name: "✅ Feature"
 about: 기능 추가
 title: "[FEAT] 로그인 기능 추가"
 labels: feature
-assignees: tablemin03
+assignees: ''
 
 ---
 
