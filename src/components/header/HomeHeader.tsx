@@ -17,12 +17,15 @@ const HomeHeader = () => {
       <div className="flex justify-start items-center gap-3.5">
         <div className="flex justify-center items-center w-8 h-8 cursor-pointer">
           <img src={shoppingCart} className="w-6 h-6" />
-        </div>{" "}
+        </div>
         {/*장바구니 페이지로 이동은 아직 미구현*/}
         <div className="flex justify-center items-center w-8 h-8 cursor-pointer bg-zinc-100 rounded-2xl">
-          <img src={accountImg} className="w-6 h-6" />
-        </div>{" "}
-        {/*마이 페이지로 이동은 아직 미구현*/}
+          <img
+            src={accountImg}
+            className="w-6 h-6"
+            onClick={() => navigate("mypage")}
+          />
+        </div>
       </div>
     </div>
   );
