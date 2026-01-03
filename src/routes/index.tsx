@@ -4,6 +4,7 @@ import ProtectedRoute from "./protected-route";
 import SignupPage from "../pages/auth/signup-page";
 import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
+import MyPage from "../pages/mypage/my-page";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
             index: true, // path: '/' 와 동일
             element: <HomePage />,
           },
+          { path: "mypage", element: <MyPage /> }, // 마이페이지 라우팅, path는 임시로 부여
         ],
       },
     ],
