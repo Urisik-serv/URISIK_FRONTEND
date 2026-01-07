@@ -10,18 +10,19 @@ const HomeHeader = () => {
     <div className="w-full px-4 py-2.5 flex justify-between items-center">
       <img
         src={headerLogo}
-        alt="Urisik logo"
+        alt="우리식 로고"
         className="w-16 h-8 cursor-pointer"
         onClick={() => navigate("/")}
       />
       <div className="flex justify-start items-center gap-3.5">
         <div className="flex justify-center items-center w-8 h-8 cursor-pointer">
-          <img src={shoppingCart} className="w-6 h-6" />
+          <img src={shoppingCart} alt="장바구니 아이콘" className="w-6 h-6" />
         </div>
         {/*장바구니 페이지로 이동은 아직 미구현*/}
         <div className="flex justify-center items-center w-8 h-8 cursor-pointer bg-zinc-100 rounded-2xl">
           <img
             src={accountImg}
+            alt="마이페이지 아이콘"
             className="w-6 h-6"
             onClick={() => navigate("mypage")}
           />

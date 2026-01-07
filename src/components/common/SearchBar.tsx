@@ -8,7 +8,7 @@ const SearchBar = () => {
           placeholder="조리를 원하시는 음식을 입력해주세요."
           className="justify-start flex-1 text-sm font-medium leading-6 focus:outline-none"
         />
-        <img src={SearchIcon} className="cursor-pointer" />
+        <img src={SearchIcon} alt="돋보기 아이콘" className="cursor-pointer" />
       </form>
     </>
   );
