@@ -12,10 +12,10 @@ const LoginPage = () => {
           className="w-[211px] h-[84.1px]"
         />
         <div className="text-center justify-start pt-[36px]">
-          <span className="text-neutral-500 text-xs font-normal font-['Pretendard'] leading-4">
+          <span className="text-neutral-500 text-xs font-normal  leading-4">
             모두의 식단 기호를 반영한 <br />
           </span>
-          <span className="text-neutral-500 text-sm font-semibold font-['Pretendard'] leading-5">
+          <span className="text-neutral-500 text-sm font-semibold  leading-5">
             가족 단위의 식단 관리 서비스
           </span>
         </div>
@@ -26,7 +26,7 @@ const LoginPage = () => {
             <div className="w-6 h-6 relative overflow-hidden">
               <img src={kakaoLogo} alt="카카오 로그인 로고" />
             </div>
-            <div className="justify-start text-black text-base font-normal font-['Pretendard']">
+            <div className="justify-start text-black text-base font-normal ">
               카카오 로그인
             </div>
           </div>
@@ -36,18 +36,18 @@ const LoginPage = () => {
             <div className="w-6 h-6 relative bg-white">
               <img src={googleLogo} alt="구글 로그인 로고" />
             </div>
-            <div className="justify-start text-black/50 text-base font-normal font-['Pretendard'] ">
+            <div className="justify-start text-black/50 text-base font-normal  ">
               구글 로그인
             </div>
           </div>
         </button>
         <div className="pt-[8px]">
           <div className="inline-flex justify-start items-end gap-4">
-            <div className="cursor-pointer justify-start text-[#B8B8B8] text-sm font-normal font-['Pretendard'] underline underline-offset-4 decoration-1">
+            <div className="cursor-pointer justify-start text-[#B8B8B8] text-sm font-normal  underline underline-offset-4 decoration-1">
               아이디 찾기
             </div>
             <div className="w-0 h-4 outline outline-1 outline-offset-[-0.50px] outline-[#B8B8B8]" />
-            <div className="cursor-pointer justify-start text-[#B8B8B8] text-sm font-normal font-['Pretendard'] underline underline-offset-4 decoration-1">
+            <div className="cursor-pointer justify-start text-[#B8B8B8] text-sm font-normal  underline underline-offset-4 decoration-1">
               비밀번호 찾기
             </div>
           </div>
