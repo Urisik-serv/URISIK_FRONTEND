@@ -1,17 +1,10 @@
-import BackButtonImg from "../../assets/icons/chevron-left.svg";
+import BackButton from "../../components/common/BackButton";
 import SearchBar from "../../components/common/SearchBar";
 
-interface SearchingPageProps {
-  handleClose: () => void;
-}
-const SearchingPage = ({ handleClose }: SearchingPageProps) => {
+const SearchingPage = () => {
   return (
     <div className="flex px-4 py-2 justify-center items-center ">
-      <img
-        src={BackButtonImg}
-        className="w-6 h-6 cursor-pointer"
-        onClick={handleClose}
-      />
+      <BackButton />
       <SearchBar />
     </div>
   );
