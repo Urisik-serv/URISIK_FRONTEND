@@ -1,5 +1,14 @@
+import HomeHeader from "../../components/header/HomeHeader";
+
 const HomePage = () => {
-  return <div>HomePage 입니다.</div>;
+  return (
+    <>
+      <HomeHeader />
+      <div>
+        <h1>HomePage</h1>
+      </div>
+    </>
+  );
 };
 
 export default HomePage;
