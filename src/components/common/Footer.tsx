@@ -40,7 +40,7 @@ export default function Footer() {
             flex flex-col justify-center items-center gap-1 
             w-[clamp(40px,calc(68/375*100vw),68px)]
             h-[clamp(40px,calc(68/375*100vw),68px)] 
-            rounded-full bg-[#FF885A] cursor-pointer"
+            rounded-full bg-primary-700 cursor-pointer"
           onClick={() => navigate("/meal-plan")}
         >
           <img src={Note} className="size-6" alt="식단짜기 아이콘" />
