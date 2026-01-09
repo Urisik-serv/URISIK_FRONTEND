@@ -1,15 +1,16 @@
 import chevronLeftGray from "../../assets/icons/chevron-left-gray.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
 import emptyCheckBox from "../../assets/icons/Check_box_empty.svg";
-import { useState } from "react";
 
-export default function TermsAgreementRow() {
-  const [checked, setChecked] = useState(false);
+interface TermsAgreementRowProps {
+  isChecked: boolean;
+  onChecked: () => void;
+}
 
-  const handleToggle = () => {
-    setChecked((prev) => !prev);
-  };
-
+export default function TermsAgreementRow({
+  isChecked,
+  onChecked,
+}: TermsAgreementRowProps) {
   return (
     <>
       <div className="w-80 inline-flex justify-between items-center pb-[20px]">
@@ -25,8 +26,8 @@ export default function TermsAgreementRow() {
             />
           </button>
         </div>
-        <button onClick={handleToggle} className="cursor-pointer">
-          {checked ? (
+        <button onClick={onChecked} className="cursor-pointer">
+          {isChecked ? (
             <img src={checkBox} alt="checkBox" />
           ) : (
             <img src={emptyCheckBox} alt="emptycheckBox" />

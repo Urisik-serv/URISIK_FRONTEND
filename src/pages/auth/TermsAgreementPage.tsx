@@ -2,8 +2,41 @@ import Button from "../../components/common/Button";
 import PublicHeader from "../../components/header/PublicHeader";
 import TermsAgreementRow from "../../components/terms/TermsAgreementRow";
 import CheckBoxEmpty from "../../assets/icons/Check_box_empty.svg";
+import checkBox from "../../assets/icons/Check_box.svg";
+import { useState } from "react";
+
+interface TermItem {
+  index: number;
+  isChecked: boolean;
+}
 
 export default function TermsAgreementPage() {
+  // 5개의 약관 상태를 false로 초기화
+  const [terms, setTerms] = useState<TermItem[]>([
+    { index: 0, isChecked: false },
+    { index: 1, isChecked: false },
+    { index: 2, isChecked: false },
+    { index: 3, isChecked: false },
+    { index: 4, isChecked: false },
+  ]);
+
+  const allChecked = terms.length > 0 && terms.every((term) => term.isChecked);
+
+  const handleCheck = (index: number) => {
+    setTerms((prev) =>
+      prev.map((term) =>
+        term.index === index ? { ...term, isChecked: !term.isChecked } : term
+      )
+    );
+  };
+
+  const handleAllCheck = () => {
+    const nextStatus = !allChecked;
+    setTerms((prev) =>
+      prev.map((term) => ({ ...term, isChecked: nextStatus }))
+    );
+  };
+
   return (
     <>
       <PublicHeader title={"약관 및 정책"} />
@@ -18,20 +51,26 @@ export default function TermsAgreementPage() {
             <div className="justify-start text-zinc-800 text-xl font-semibold font-['Wanted_Sans'] tracking-tight">
               모든 약관에 동의합니다.
             </div>
-            <div
+            <button
+              onClick={handleAllCheck}
               data-property-1="Default"
-              className="w-6 h-6 relative overflow-hidden"
+              className="w-6 h-6 relative overflow-hidden cursor-pointer"
             >
-              <img src={CheckBoxEmpty} alt="빈 체크박스" />
-            </div>
+              {allChecked ? (
+                <img src={checkBox} alt="체크된 체크박스" />
+              ) : (
+                <img src={CheckBoxEmpty} alt="빈 체크박스" />
+              )}
+            </button>
           </div>
         </div>
         <div className="pt-[40px] flex flex-col items-center pr-[16px]">
-          <TermsAgreementRow />
-          <TermsAgreementRow />
-          <TermsAgreementRow />
-          <TermsAgreementRow />
-          <TermsAgreementRow />
+          {terms.map((term) => (
+            <TermsAgreementRow
+              isChecked={term.isChecked}
+              onChecked={() => handleCheck(term.index)}
+            />
+          ))}
         </div>
         <div className="pt-[159px]">
           <Button text={`다음`} type="button" />
