@@ -1,5 +1,6 @@
 import SearchBar from "../../components/common/SearchBar";
 import HomeHeader from "../../components/header/HomeHeader";
+import FamilyProfile from "../../components/profile/FamilyProfile";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -20,8 +21,10 @@ const HomePage = () => {
       ) : (
         <>
           <HomeHeader />
-          <div>
-            <h1>HomePage</h1>
+          <div className="pt-1">
+            <div className="mb-12">
+              <FamilyProfile />
+            </div>
             <div onClick={openSearchBar}>
               <SearchBar />
             </div>
