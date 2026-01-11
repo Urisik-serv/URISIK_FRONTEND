@@ -1,4 +1,4 @@
-import DefaultMomImg from "../../assets/profile/default-mom.svg";
+import DefaultMomImg from "../../../assets/profile/default-mom.svg";
 interface HomeProfileCardProps {
   name: string;
   // myProfile: boolean;

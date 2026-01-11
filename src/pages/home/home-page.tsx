@@ -1,6 +1,6 @@
 import SearchBar from "../../components/common/SearchBar";
 import HomeHeader from "../../components/header/HomeHeader";
-import FamilyProfile from "../../components/profile/FamilyProfile";
+import FamilyProfile from "../../components/home/profile/FamilyProfile";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 
