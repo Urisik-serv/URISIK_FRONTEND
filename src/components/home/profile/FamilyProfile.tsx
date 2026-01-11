@@ -2,7 +2,7 @@ import HomeProfileCard from "./HomeProfileCard";
 
 const FamilyProfile = () => {
   return (
-    <div className="w-80  px-4 pt-5 pb-3 bg-white rounded-xl outline-1 outline-stone-300 flex flex-col justify-start items-center gap-3 mx-auto ">
+    <div className="w-full  px-4 pt-5 pb-3 bg-white rounded-xl outline-1 outline-stone-300 flex flex-col justify-start items-center gap-3  ">
       <p className="self-stretch justify-start text-black text-lg font-medium leading-7">
         우리가족 프로필
       </p>
