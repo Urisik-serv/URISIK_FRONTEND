@@ -1,6 +1,7 @@
 import SearchBar from "../../components/common/SearchBar";
 import HomeHeader from "../../components/header/HomeHeader";
 import FoodCard from "../../components/home/category/FoodCard";
+import AllergyCuration from "../../components/home/curation/AllergyCuration";
 import FamilyProfile from "../../components/home/profile/FamilyProfile";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ const HomePage = () => {
       ) : (
         <>
           <HomeHeader />
-          <main className="px-4">
+          <main className="px-4 pb-37">
             <div className="pt-1">
               <div className="mb-12">
                 <FamilyProfile />
@@ -36,6 +37,7 @@ const HomePage = () => {
                 <FoodCard name="중식" />
                 <FoodCard name="양식" />
               </div>
+              <AllergyCuration />
             </div>
           </main>
         </>
