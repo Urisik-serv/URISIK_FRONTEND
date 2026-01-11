@@ -17,8 +17,11 @@ interface FoodCardProps {
 const FoodCard = ({ name }: FoodCardProps) => {
   const imgSrc = categoryImages[name];
   return (
-    <div className="w-11">
-      <img src={imgSrc} />
+    <div className="w-20 h-20 px-2 py-2.5 flex flex-col justify-center items-center gap-1 cursor-pointer">
+      <img className="w-11 h-11 " src={imgSrc} alt={`${name}`} />
+      <p className="text-center text-neutral-700 text-base font-semibold leading-6">
+        {name}
+      </p>
     </div>
   );
 };

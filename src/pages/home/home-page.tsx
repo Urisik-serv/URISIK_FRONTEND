@@ -30,8 +30,11 @@ const HomePage = () => {
               <div onClick={openSearchBar}>
                 <SearchBar />
               </div>
-              <div className="items-center">
+              <div className="pt-5 gap-3 flex">
                 <FoodCard name="한식" />
+                <FoodCard name="일식" />
+                <FoodCard name="중식" />
+                <FoodCard name="양식" />
               </div>
             </div>
           </main>
