@@ -7,7 +7,7 @@ const SearchingPage = () => {
   const handleClose = () => {};
   return (
     <div className="flex pt-[30px] justify-center items-start flex-col">
-      <div className="flex justify-center items-center self-stretch px-4 gap-1">
+      <div className="flex justify-center items-center self-stretch px-4 gap-1 pb-7.5">
         <BackButton />
         <SearchBar />
       </div>
