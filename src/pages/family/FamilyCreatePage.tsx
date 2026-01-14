@@ -4,6 +4,7 @@ import FamilyTotalNumber from "../../components/family/FamilyTotalNumber";
 import PublicHeader from "../../components/header/PublicHeader";
 import NumberOfMember from "../../components/family/NumberOfMember";
 import Button from "../../components/common/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function FamilyCreatePage() {
   const [familyNumber, setFamilyNumber] = useState(3);
@@ -13,6 +14,8 @@ export default function FamilyCreatePage() {
   const [daughterNumber, setDaughterNumber] = useState(0);
   const [momLeader, setMomLeader] = useState(false);
   const [dadLeader, setDadLeader] = useState(false);
+
+  const navigate = useNavigate();
 
   const availableNumber =
     familyNumber -
@@ -129,7 +132,13 @@ export default function FamilyCreatePage() {
             </div>
           </div>
           <div className="pt-[264px]">
-            <Button text="방 생성하기" type="submit" />
+            <Button
+              text="방 생성하기"
+              type="submit"
+              onClick={() => {
+                navigate("/family-invite");
+              }}
+            />
           </div>
         </div>
       </div>
