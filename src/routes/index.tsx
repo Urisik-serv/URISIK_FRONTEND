@@ -7,6 +7,7 @@ import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
 import PlannerPage from "../pages/planner/planner-page";
 import MealPlanPage from "../pages/meal-plan/meal-plan-page";
+import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignupPage />,
+      },
+      {
+        path: "agreement",
+        element: <TermsAgreementPage />,
       },
 
       // Protected Routes (로그인 필요), 이후 페이지는 여기에 라우팅
