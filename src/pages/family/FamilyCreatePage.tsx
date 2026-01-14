@@ -128,7 +128,7 @@ export default function FamilyCreatePage() {
               </button>
             </div>
           </div>
-          <div className="pt-[164px]">
+          <div className="pt-[264px]">
             <Button text="방 생성하기" type="submit" />
           </div>
         </div>
