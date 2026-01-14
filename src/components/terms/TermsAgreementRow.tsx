@@ -15,7 +15,7 @@ export default function TermsAgreementRow({
     <>
       <div className="w-80 inline-flex justify-between items-center pb-[20px]">
         <div className="flex flex-row items-center gap-[4px]">
-          <div className="justify-start text-zinc-900 text-lg font-medium font-['Wanted_Sans'] leading-7">
+          <div className=" text-zinc-900 text-lg font-medium font-['Wanted_Sans'] leading-7">
             서비스 이용 약관 (필수)
           </div>
           <button className="w-6 h-6 cursor-pointer">
