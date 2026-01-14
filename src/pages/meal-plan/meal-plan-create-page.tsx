@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import HomeHeader from "../../components/header/HomeHeader";
-import ChooseWeek from "../../components/meal-plan/chooseWeek";
+import ChooseWeek from "../../components/meal-plan/ChooseWeek";
 import MemberMealPlanView from "../../components/meal-plan/MemberMealPlanView";
 
-const MealPlanPage = () => {
+const MealPlanCreatePage = () => {
   const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
+  const navigate = useNavigate();
   return (
     <div>
       <HomeHeader />
@@ -23,7 +25,11 @@ const MealPlanPage = () => {
             <ChooseWeek mealTime="저녁" />
           </div>
           <div className="fixed bottom-11">
-            <Button text="식단 생성" type="button" />
+            <Button
+              text="식단 생성"
+              type="button"
+              onClick={() => navigate("/meal-plan/result")}
+            />
           </div>
         </div>
       )}
@@ -31,4 +37,4 @@ const MealPlanPage = () => {
   );
 };
 
-export default MealPlanPage;
+export default MealPlanCreatePage;
