@@ -5,6 +5,9 @@ import SignupPage from "../pages/auth/signup-page";
 import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
+import PlannerPage from "../pages/planner/planner-page";
+import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
+import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +36,9 @@ export const router = createBrowserRouter([
             element: <HomePage />,
           },
           { path: "mypage", element: <MyPage /> }, // 마이페이지 라우팅, path는 임시로 부여
+          { path: "planner", element: <PlannerPage /> },
+          { path: "meal-plan/create", element: <MealPlanCreatePage /> },
+          { path: "meal-plan/result", element: <MealPlanResultPage /> },
         ],
       },
     ],

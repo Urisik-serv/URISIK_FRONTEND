@@ -1,1 +1,41 @@
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/static/complete/WantedSans.min.css");
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Wanted Sans", "Pretendard", sans-serif;
+
+  /* Gray Scale 재정의 */
+  --color-gray-100: #f4f4f5;
+  --color-gray-200: #e4e4e7;
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #a1a1aa;
+  --color-gray-500: #71717a;
+  --color-gray-600: #52525b;
+  --color-gray-700: #3f3f46;
+  --color-gray-800: #18181b;
+
+  /* Pramary Scale 정의 */
+  --color-primary-100: #fff6f4;
+  --color-primary-200: #ffe7df;
+  --color-primary-300: #ffd2c2;
+  --color-primary-400: #ffbaa2;
+  --color-primary-500: #ffa586;
+  --color-primary-600: #ff8f68;
+  --color-primary-700: #ff7c4e;
+
+  /* Secondary Scale 정의 */
+  --color-secondary-100: #fffef8;
+  --color-secondary-200: #fffdf3;
+  --color-secondary-300: #fffcef;
+  --color-secondary-400: #fffae5;
+  --color-secondary-500: #fff8d8;
+  --color-secondary-600: #fff6c8;
+  --color-secondary-700: #fef2b8;
+}
+
+@layer base {
+  html {
+    font-family: "Wanted Sans", "Pretendard", sans-serif;
+    scroll-behavior: smooth;
+  }
+}
