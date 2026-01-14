@@ -38,13 +38,13 @@ export default function FamilyCreatePage() {
   };
 
   const handleMomLeader = () => {
-    if (momNumber > 0) {
+    if (momNumber > 0 && !dadLeader) {
       setMomLeader((prev) => !prev);
     }
   };
 
   const handleDadLeader = () => {
-    if (dadNumber > 0) {
+    if (dadNumber > 0 && !momLeader) {
       setDadLeader((prev) => !prev);
     }
   };
