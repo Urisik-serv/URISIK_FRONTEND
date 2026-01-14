@@ -1,10 +1,15 @@
-import { useState } from "react";
 import menuDownIcon from "../../assets/icons/menu-down.svg";
 import menuUpIcon from "../../assets/icons/menu-up.svg";
 
-export default function FamilyTotalNumber() {
-  const [familyNumber, setFamilyNumber] = useState(3);
+interface familyTotalProps {
+  familyNumber: number;
+  setFamilyNumber: React.Dispatch<React.SetStateAction<number>>;
+}
 
+export default function FamilyTotalNumber({
+  familyNumber,
+  setFamilyNumber,
+}: familyTotalProps) {
   const handleDecreaseFamily = () => {
     setFamilyNumber((prev) => (prev > 0 ? prev - 1 : prev));
   };
