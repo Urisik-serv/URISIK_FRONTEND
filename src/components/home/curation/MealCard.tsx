@@ -21,7 +21,7 @@ const MealCard = () => {
         <p className="text-zinc-800 text-sm font-normal cursor-pointer">
           새우볶음밥 느낌 그대로, 갑각류 없이도 씹는 맛은 살렸어요.
         </p>
-        <WishlistButton />
+        <WishlistButton isWishList={true} />
       </div>
     </div>
   );
