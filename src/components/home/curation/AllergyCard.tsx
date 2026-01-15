@@ -7,10 +7,10 @@ const AllergyCard = () => {
       <div className="flex justify-between items-center h-32">
         <div className="w-44">
           <div className="pb-4">
-            <h1 className="text-zinc-800 text-[15px] font-semibold leading-6 pb-2">
+            <h1 className="text-zinc-800 text-[15px] font-semibold leading-6 pb-2 cursor-pointer">
               새우 알레르기 가족원 사이에서 인기있는 버섯 두부 새우탕!
             </h1>
-            <p className="text-neutral-500 text-xs font-medium leading-5">
+            <p className="text-neutral-500 text-xs font-medium leading-5 cursor-pointer">
               표고 버섯과 두부피로 새우의 식감을 살린 메뉴로 주목받고 있어요.
             </p>
           </div>
@@ -24,7 +24,7 @@ const AllergyCard = () => {
         <img
           src={SampleImg}
           alt="음식 이미지"
-          className="w-32 h-32 rounded-lg object-cover"
+          className="w-32 h-32 rounded-lg object-cover cursor-pointer"
         />
       </div>
     </div>
