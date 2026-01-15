@@ -1,3 +1,4 @@
+import PageIndicator from "../../common/PageIndicator";
 import AllergyCard from "./AllergyCard";
 
 const AllergyCuration = () => {
@@ -12,6 +13,9 @@ const AllergyCuration = () => {
         </p>
       </div>
       <AllergyCard />
+      <div className="flex justify-center pt-2">
+        <PageIndicator page={1} total={3} />
+      </div>
     </div>
   );
 };
