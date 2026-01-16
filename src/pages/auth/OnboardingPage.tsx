@@ -3,7 +3,6 @@ import FirstStep from "../../components/onboarding/FirstStep";
 import SecondStep from "../../components/onboarding/SecondStep";
 import ThirdStep from "../../components/onboarding/ThirdStep";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 
 // @ts-ignore
 import "swiper/css";
