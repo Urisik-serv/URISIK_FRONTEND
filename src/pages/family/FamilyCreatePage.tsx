@@ -133,7 +133,7 @@ export default function FamilyCreatePage() {
           </div>
           <div className="pt-[264px]">
             <Button
-              text="방 생성하기"
+              text="다음"
               type="submit"
               onClick={() => {
                 navigate("/family-invite");
