@@ -9,7 +9,7 @@ import PlannerPage from "../pages/planner/planner-page";
 
 import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
 import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
-
+import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
 
 export const router = createBrowserRouter([
   {
