@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
-          { path: "family-wishList", element: <FamilyWishListPage /> },
+          { path: "family-wishlist", element: <FamilyWishListPage /> },
         ],
       },
     ],

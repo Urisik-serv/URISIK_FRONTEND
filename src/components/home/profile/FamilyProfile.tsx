@@ -14,7 +14,7 @@ const FamilyProfile = () => {
         <HomeProfileCard name="강민지" />
       </div>
       <button
-        onClick={() => navigate("family-wishList")}
+        onClick={() => navigate("family-wishlist")}
         className="self-stretch px-2.5 py-3 text-white bg-primary-700 rounded-xl justify-center items-center cursor-pointer"
       >
         우리가족 공통 위시리스트
