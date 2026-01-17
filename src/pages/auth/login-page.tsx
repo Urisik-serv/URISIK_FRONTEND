@@ -1,16 +1,12 @@
-import logo from "../../assets/logos/logo.svg";
+import logo from "../../assets/logos/mainLogo.svg";
 import kakaoLogo from "../../assets/logos/카카오 로고.svg";
 import googleLogo from "../../assets/logos/Google Logo.svg";
 
 const LoginPage = () => {
   return (
     <div className="h-dvh flex flex-col items-center">
-      <div className=" pt-[269px] pl-[82px] pr-[82.4px]">
-        <img
-          src={logo}
-          alt="로그인 화면 로고"
-          className="w-[211px] h-[84.1px]"
-        />
+      <div className=" pt-[269px]">
+        <img src={logo} alt="로그인 화면 로고" className="w-[240px] h-[80px]" />
         <div className="text-center justify-start pt-[36px]">
           <span className="text-neutral-500 text-xs font-normal  leading-4">
             모두의 식단 기호를 반영한 <br />

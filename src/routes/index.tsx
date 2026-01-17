@@ -6,7 +6,13 @@ import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
 import PlannerPage from "../pages/planner/planner-page";
-import MealPlanPage from "../pages/meal-plan/meal-plan-page";
+
+import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
+import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
+import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
+import FamilyCreatePage from "../pages/family/FamilyCreatePage";
+import FamilyInvitePage from "../pages/family/FamilyInvitePage";
+import OnboardingPage from "../pages/auth/OnboardingPage";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +30,14 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupPage />,
       },
+      {
+        path: "agreement",
+        element: <TermsAgreementPage />,
+      },
+      {
+        path: "onboarding",
+        element: <OnboardingPage />,
+      },
 
       // Protected Routes (로그인 필요), 이후 페이지는 여기에 라우팅
       // 지금은 인증이 없을 때 접근 가능하게 해놓음
@@ -36,7 +50,10 @@ export const router = createBrowserRouter([
           },
           { path: "mypage", element: <MyPage /> }, // 마이페이지 라우팅, path는 임시로 부여
           { path: "planner", element: <PlannerPage /> },
-          { path: "meal-plan", element: <MealPlanPage /> },
+          { path: "meal-plan/create", element: <MealPlanCreatePage /> },
+          { path: "meal-plan/result", element: <MealPlanResultPage /> },
+          { path: "family-create", element: <FamilyCreatePage /> },
+          { path: "family-invite", element: <FamilyInvitePage /> },
         ],
       },
     ],
