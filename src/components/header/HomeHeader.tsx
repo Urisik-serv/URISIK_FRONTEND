@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import headerLogo from "../../assets/logos/en-logo.png";
+import headerLogo from "../../assets/logos/mainLogo.svg";
 import shoppingCart from "../../assets/icons/shopping-outline.svg";
 import accountImg from "../../assets/icons/account-outline.svg";
 
@@ -11,7 +11,7 @@ const HomeHeader = () => {
       <img
         src={headerLogo}
         alt="우리식 로고"
-        className="w-21 h-7 items-center justify-center cursor-pointer"
+        className="w-16 h-8 items-center justify-center cursor-pointer"
         onClick={() => navigate("/")}
       />
       <div className="flex justify-start items-center gap-3.5">
