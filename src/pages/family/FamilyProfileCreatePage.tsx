@@ -3,6 +3,8 @@ import PublicHeader from "../../components/header/PublicHeader";
 import Button from "../../components/common/Button";
 import { useFamilyProfileForm } from "../../hooks/useFamilyProfileForm";
 import { useNavigate } from "react-router-dom";
+import RequiredLabel from "../../components/family/required-label";
+import OptionalLabel from "../../components/family/optional-label";
 
 export default function FamilyProfileCreatePage() {
   const {
@@ -32,17 +34,7 @@ export default function FamilyProfileCreatePage() {
           className="pt-[26px] w-[343px] flex flex-col gap-[32px]"
         >
           <div className=" w-[343px] ">
-            <div className="flex items-center ">
-              <label className="text-[#282828] text-lg font-medium leading-[27px] ">
-                닉네임
-              </label>
-              <div className="text-[#FF1A1A] text-lg font-medium leading-[27px]">
-                *
-              </div>
-              <div className="pl-[4px] text-[#6A6A6A] text-[15px] font-normal leading-[22.5px]">
-                (필수)
-              </div>
-            </div>
+            <RequiredLabel title="닉네임" />
             <div className="pt-[12px]">
               <input
                 required
@@ -54,17 +46,7 @@ export default function FamilyProfileCreatePage() {
             </div>
           </div>
           <div className=" w-[343px] ">
-            <div className="flex items-center ">
-              <label className="text-[#282828] text-lg font-medium leading-[27px] ">
-                역할
-              </label>
-              <div className="text-[#FF1A1A] text-lg font-medium leading-[27px]">
-                *
-              </div>
-              <div className="pl-[4px] text-[#6A6A6A] text-[15px] font-normal leading-[22.5px]">
-                (필수)
-              </div>
-            </div>
+            <RequiredLabel title="역할" />
             <div className="pt-[12px] flex gap-[12px] ">
               {roles.map((role) => (
                 <button
@@ -82,17 +64,7 @@ export default function FamilyProfileCreatePage() {
             </div>
           </div>
           <div className=" w-[343px] ">
-            <div className="flex items-center ">
-              <label className="text-[#282828] text-lg font-medium leading-[27px] ">
-                알레르기 정보
-              </label>
-              <div className="text-[#FF1A1A] text-lg font-medium leading-[27px]">
-                *
-              </div>
-              <div className="pl-[4px] text-[#6A6A6A] text-[15px] font-normal leading-[22.5px]">
-                (필수)
-              </div>
-            </div>
+            <RequiredLabel title="알레르기 정보" />
             <div className="pt-[12px]">
               <input
                 type="text"
@@ -110,17 +82,7 @@ export default function FamilyProfileCreatePage() {
             </button>
           </div>
           <div className=" w-[343px] ">
-            <div className="flex items-center ">
-              <label className="text-[#282828] text-lg font-medium leading-[27px] ">
-                식단 선호도
-              </label>
-              <div className="text-[#FF1A1A] text-lg font-medium leading-[27px]">
-                *
-              </div>
-              <div className="pl-[4px] text-[#6A6A6A] text-[15px] font-normal leading-[22.5px]">
-                (필수)
-              </div>
-            </div>
+            <RequiredLabel title="식단 선호도" />
             <div className="pt-[12px] flex flex-wrap gap-[12px] w-[319px]">
               {foods.map((food, index) => (
                 <button
@@ -138,15 +100,7 @@ export default function FamilyProfileCreatePage() {
             </div>
           </div>
           <div className=" w-[343px] ">
-            <div className="flex items-center ">
-              <label className="text-[#282828] text-lg font-medium leading-[27px] ">
-                좋아하는 식재료
-              </label>
-
-              <div className="pl-[4px] text-[#6A6A6A] text-[15px] font-normal leading-[22.5px]">
-                (선택)
-              </div>
-            </div>
+            <OptionalLabel title="좋아하는 식재료" />
             <div className="pt-[12px]">
               <input
                 type="text"
@@ -157,15 +111,7 @@ export default function FamilyProfileCreatePage() {
             </div>
           </div>
           <div className=" w-[343px] ">
-            <div className="flex items-center ">
-              <label className="text-[#282828] text-lg font-medium leading-[27px] ">
-                싫어하는 식재료
-              </label>
-
-              <div className="pl-[4px] text-[#6A6A6A] text-[15px] font-normal leading-[22.5px]">
-                (선택)
-              </div>
-            </div>
+            <OptionalLabel title="싫어하는 식재료" />
             <div className="pt-[12px]">
               <input
                 type="text"
