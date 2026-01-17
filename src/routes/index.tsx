@@ -12,6 +12,7 @@ import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
 import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
 import FamilyCreatePage from "../pages/family/FamilyCreatePage";
 import FamilyInvitePage from "../pages/family/FamilyInvitePage";
+import OnboardingPage from "../pages/auth/OnboardingPage";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "agreement",
         element: <TermsAgreementPage />,
+      },
+      {
+        path: "onboarding",
+        element: <OnboardingPage />,
       },
 
       // Protected Routes (로그인 필요), 이후 페이지는 여기에 라우팅
