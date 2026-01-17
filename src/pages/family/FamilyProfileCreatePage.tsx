@@ -2,6 +2,7 @@ import FamilyMemberButton from "../../components/family/FamilyMemberButton";
 import PublicHeader from "../../components/header/PublicHeader";
 import Button from "../../components/common/Button";
 import { useFamilyProfileForm } from "../../hooks/useFamilyProfileForm";
+import { useNavigate } from "react-router-dom";
 
 export default function FamilyProfileCreatePage() {
   const {
@@ -20,6 +21,7 @@ export default function FamilyProfileCreatePage() {
 
   const roles = ["엄마", "아빠", "아들", "딸"];
   const foods = ["한식", "중식", "일식", "양식", "디저트"];
+  const navigate = useNavigate();
 
   return (
     <>
@@ -96,6 +98,7 @@ export default function FamilyProfileCreatePage() {
                 type="text"
                 placeholder="알레르기 입력하기"
                 className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
+                onClick={() => navigate("allergies-search")}
               />
             </div>
             <button

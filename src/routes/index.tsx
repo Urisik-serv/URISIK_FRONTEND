@@ -14,6 +14,7 @@ import FamilyCreatePage from "../pages/family/FamilyCreatePage";
 import FamilyInvitePage from "../pages/family/FamilyInvitePage";
 
 import FamilyProfileCreatePage from "../pages/family/FamilyProfileCreatePage";
+import AllergiesSearchPage from "../pages/family/AllergiesSearchPage";
 
 import OnboardingPage from "../pages/auth/OnboardingPage";
 
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
           {
             path: "family-profile-create",
             element: <FamilyProfileCreatePage />,
+          },
+          {
+            path: "family-profile-create/allergies-search",
+            element: <AllergiesSearchPage />,
           },
         ],
       },
