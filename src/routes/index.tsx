@@ -13,7 +13,7 @@ import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
 import FamilyCreatePage from "../pages/family/FamilyCreatePage";
 import FamilyInvitePage from "../pages/family/FamilyInvitePage";
 import OnboardingPage from "../pages/auth/OnboardingPage";
-import FamilyWishListPage from "../pages/family/family-wishList-page";
+import FamilyWishListPage from "../pages/family/family-wishlist-page";
 
 export const router = createBrowserRouter([
   {
