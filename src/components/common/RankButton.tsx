@@ -10,7 +10,10 @@ interface RankButtonProps {
 
 const RankButton = ({ rank, name, up, onClick }: RankButtonProps) => {
   return (
-    <div className="flex justify-between items-center w-32">
+    <div
+      className="flex justify-between items-center w-32 cursor-pointer"
+      onClick={onClick}
+    >
       <div className="flex gap-2 text-zinc-800 text-base font-normal leading-5">
         <p className="font-semibold">{rank}</p>
         <p className="">{name}</p>
