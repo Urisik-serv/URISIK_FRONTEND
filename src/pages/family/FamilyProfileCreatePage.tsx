@@ -176,7 +176,7 @@ export default function FamilyProfileCreatePage() {
             </div>
           </div>
           <div className="pt-[131px] ">
-            <Button text={"완료"} type="submit" disabled={!isValid} />
+            <Button text={"완료"} type="submit" disabled={!isValid()} />
           </div>
         </form>
       </div>
