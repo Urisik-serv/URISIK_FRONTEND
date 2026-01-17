@@ -14,9 +14,7 @@ const ElementButton = ({ onClick, onClose, name }: ElementButtonProps) => {
         onClose && "pr-2"
       }`}
     >
-      <p className="text-center justify-start text-black text-sm font-medium">
-        {name}
-      </p>
+      <p className="text-center text-black text-sm font-medium">{name}</p>
       {onClose && (
         <img
           src={CloseIcon}
