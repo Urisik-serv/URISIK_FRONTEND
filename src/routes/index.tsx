@@ -13,6 +13,7 @@ import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
 import FamilyCreatePage from "../pages/family/FamilyCreatePage";
 import FamilyInvitePage from "../pages/family/FamilyInvitePage";
 import OnboardingPage from "../pages/auth/OnboardingPage";
+import MealPlanEditPage from "../pages/meal-plan/meal-plan-edit-page";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
           { path: "planner", element: <PlannerPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
+          { path: "meal-plan/edit", element: <MealPlanEditPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
         ],

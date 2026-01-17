@@ -24,7 +24,8 @@ const MealPlanResultPage = () => {
         ))}
       </div>
       <div className="w-full max-w-[375px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
-        <button className="w-full h-14 rounded-xl cursor-pointer bg-gray-200 text-gray-400">
+        <button className="w-full h-14 rounded-xl cursor-pointer bg-gray-200 text-gray-400"
+        onClick={() => navigate(`/meal-plan/edit`)}>
           수정
         </button>
         <button
