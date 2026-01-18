@@ -1,6 +1,6 @@
 import chevronLeftGray from "../../assets/icons/chevron-left-gray.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
-import emptyCheckBox from "../../assets/icons/Check_box_empty.svg";
+import emptyCheckBox from "../../assets/icons/check-box-empty.svg";
 
 interface TermsAgreementRowProps {
   isChecked: boolean;

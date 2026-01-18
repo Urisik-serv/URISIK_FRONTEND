@@ -1,5 +1,5 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import EmptyImages from "../../assets/images/emptyProfile.png";
+import EmptyImages from "../../assets/images/empty-profile.png";
 import KakaoImage from "../../assets/images/kakao.png";
 import LinkImage from "../../assets/images/link.png";
 import Button from "../../components/common/Button";
