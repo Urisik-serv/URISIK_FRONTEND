@@ -9,15 +9,12 @@ import PlannerPage from "../pages/planner/planner-page";
 
 import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
 import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
-import TermsAgreementPage from "../pages/auth/TermsAgreementPage";
-import FamilyCreatePage from "../pages/family/FamilyCreatePage";
-import FamilyInvitePage from "../pages/family/FamilyInvitePage";
-
-import FamilyProfileCreatePage from "../pages/family/FamilyProfileCreatePage";
-import AllergiesSearchPage from "../pages/family/AllergiesSearchPage";
-
-import OnboardingPage from "../pages/auth/OnboardingPage";
-
+import TermsAgreementPage from "../pages/auth/terms-agreement-page";
+import OnboardingPage from "../pages/auth/onboarding-page";
+import FamilyCreatePage from "../pages/family/family-create-page";
+import FamilyInvitePage from "../pages/family/family-invite-page";
+import FamilyProfileCreatePage from "../pages/family/family-profile-create-page";
+import AllergiesSearchPage from "../pages/family/allergies-search-page";
 
 export const router = createBrowserRouter([
   {

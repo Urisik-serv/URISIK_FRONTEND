@@ -1,10 +1,10 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import Button from "../../components/common/Button";
-import { useFamilyProfileForm } from "../../hooks/useFamilyProfileForm";
+import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 import { useNavigate } from "react-router-dom";
-import RequiredLabel from "../../components/family/required-label";
-import OptionalLabel from "../../components/family/optional-label";
-import SelectButton from "../../components/family/select-button";
+import RequiredLabel from "../../components/family/RequiredLabel";
+import OptionalLabel from "../../components/family/OptionalLabel";
+import SelectButton from "../../components/family/SelectButton";
 import { useAllergySearch } from "../../hooks/use-allergy-search";
 
 export default function FamilyProfileCreatePage() {

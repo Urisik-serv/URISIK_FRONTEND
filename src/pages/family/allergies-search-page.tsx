@@ -1,5 +1,5 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import SelectButton from "../../components/family/select-button";
+import SelectButton from "../../components/family/SelectButton";
 import { useAllergySearch } from "../../hooks/use-allergy-search";
 import Button from "../../components/common/Button";
 import { useNavigate } from "react-router-dom";
