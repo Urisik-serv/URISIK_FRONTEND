@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import RequiredLabel from "../../components/family/required-label";
 import OptionalLabel from "../../components/family/optional-label";
 import SelectButton from "../../components/family/select-button";
+import { useAllergySearch } from "../../hooks/use-allergy-search";
 
 export default function FamilyProfileCreatePage() {
   const {
@@ -19,7 +20,10 @@ export default function FamilyProfileCreatePage() {
     handleDislikeChange,
     handleSubmit,
     isValid,
+    formData,
   } = useFamilyProfileForm();
+
+  const { selectedAllergies, handleSelectAllergy } = useAllergySearch();
 
   const roles = ["엄마", "아빠", "아들", "딸"];
   const foods = ["한식", "중식", "일식", "양식", "디저트"];
@@ -42,6 +46,7 @@ export default function FamilyProfileCreatePage() {
                 placeholder="닉네임을 입력해주세요."
                 className="w-full h-[42px] ring-1 ring-[#C3C3C3] focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#AFAFAF]"
                 onChange={handleNickNameChange}
+                value={formData.nickname}
               />
             </div>
           </div>
@@ -73,13 +78,27 @@ export default function FamilyProfileCreatePage() {
                 onClick={() => navigate("allergies-search")}
               />
             </div>
-            <button
-              onClick={() => handleAllergyChange(selectedNone)}
-              className="cursor-pointer pt-[12px]"
-              type="button"
-            >
-              <SelectButton name="없음" number={selectedNone ? 1 : 0} />
-            </button>
+            <div className="flex gap-[12px]">
+              {selectedAllergies.length == 0 ? (
+                <button
+                  onClick={() => handleAllergyChange(selectedNone)}
+                  className="cursor-pointer pt-[12px]"
+                  type="button"
+                >
+                  <SelectButton name="없음" number={selectedNone ? 1 : 0} />
+                </button>
+              ) : (
+                selectedAllergies.map((allergy) => (
+                  <button
+                    key={allergy}
+                    onClick={() => handleSelectAllergy(allergy)}
+                    className="pt-[12px]"
+                  >
+                    <SelectButton name={allergy} number={1} />
+                  </button>
+                ))
+              )}
+            </div>
           </div>
           <div className=" w-[343px] ">
             <RequiredLabel title="식단 선호도" />
@@ -107,6 +126,7 @@ export default function FamilyProfileCreatePage() {
                 placeholder="직접 입력하기"
                 className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
                 onChange={handleLikeChange}
+                value={formData.likedIngredients}
               />
             </div>
           </div>
@@ -118,6 +138,7 @@ export default function FamilyProfileCreatePage() {
                 placeholder="직접 입력하기"
                 className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
                 onChange={handleDislikeChange}
+                value={formData.dislikedIngredients}
               />
             </div>
           </div>
