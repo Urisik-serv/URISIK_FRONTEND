@@ -96,7 +96,6 @@ export const useFamilyProfileForm = () => {
     if (!isValid()) {
       alert("필수 항목을 모두 입력해주세요.");
     }
-    console.log("제출된 폼 데이터:", formData);
   };
 
   return {
