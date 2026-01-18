@@ -1,5 +1,5 @@
-import logo from "../../assets/logos/mainLogo.svg";
-import kakaoLogo from "../../assets/logos/카카오 로고.svg";
+import logo from "../../assets/logos/main-logo.svg";
+import kakaoLogo from "../../assets/logos/kakao-logo.svg";
 import googleLogo from "../../assets/logos/Google Logo.svg";
 
 const LoginPage = () => {

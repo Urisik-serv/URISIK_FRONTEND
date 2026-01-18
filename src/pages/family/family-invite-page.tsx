@@ -1,9 +1,12 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import EmptyImages from "../../assets/images/emptyProfile.png";
+import EmptyImages from "../../assets/images/empty-profile.png";
 import KakaoImage from "../../assets/images/kakao.png";
 import LinkImage from "../../assets/images/link.png";
+import Button from "../../components/common/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function FamilyInvitePage() {
+  const navigate = useNavigate();
   return (
     <>
       <PublicHeader title="가족초대" />
@@ -41,6 +44,15 @@ export default function FamilyInvitePage() {
                 URL 복사
               </div>
             </button>
+          </div>
+          <div className="pt-[156px]">
+            <Button
+              text="다음"
+              type="submit"
+              onClick={() => {
+                navigate("/family-invite");
+              }}
+            />
           </div>
         </div>
       </div>
