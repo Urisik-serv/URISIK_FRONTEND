@@ -5,8 +5,9 @@
       "name": "김엄마",
       "role": "mother",
       "preferences": {
-        "dietType": ["한식", "양식"]
+        "likedFood": ["한식", "양식"]
       },
+      "allergies": [],
       "wishList": [
         {
           "id": 101,
