@@ -3,10 +3,7 @@ interface FamilyMemberProps {
   number: number;
 }
 
-export default function FamilyMemberButton({
-  name,
-  number,
-}: FamilyMemberProps) {
+export default function SelectButton({ name, number }: FamilyMemberProps) {
   return (
     <>
       {number > 0 ? (
