@@ -1,23 +1,17 @@
-import { useState } from "react";
-
-interface FamilyProfileFormData {
-  nickname: string;
-  role: string;
-  allergies: string[] | boolean;
-  preferences: string[];
-  likedIngredients?: string;
-  dislikedIngredients?: string;
-}
+import { useEffect, useState } from "react";
+import { useProfileStore } from "../stores/use-profile-store";
 
 export const useFamilyProfileForm = () => {
-  const [formData, setFormData] = useState<FamilyProfileFormData>({
-    nickname: "",
-    role: "",
-    allergies: [] as string[] | true,
-    preferences: [] as string[],
-    likedIngredients: "",
-    dislikedIngredients: "",
-  });
+  const { savedFormData, setSavedFormData } = useProfileStore();
+  const [formData, setFormData] = useState(savedFormData);
+
+  useEffect(() => {
+    setFormData(savedFormData);
+  }, [savedFormData]);
+
+  useEffect(() => {
+    setSavedFormData(formData);
+  }, [formData]);
 
   // 닉네임 핸들러
   const handleNickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +19,7 @@ export const useFamilyProfileForm = () => {
   };
 
   // 역할 핸들러
-  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [selectedRole, setSelectedRole] = useState<string>(savedFormData.role);
   const handleRoleChange = (role: string) => {
     if (!selectedRole || selectedRole !== role) {
       setSelectedRole(role);
@@ -46,13 +40,10 @@ export const useFamilyProfileForm = () => {
   };
 
   // 식단 선호도 핸들러
-  const [isCheckedPreference, setIsCheckedPreference] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [isCheckedPreference, setIsCheckedPreference] = useState(() => {
+    const foods = ["한식", "중식", "일식", "양식", "디저트"];
+    return foods.map((food) => savedFormData.preferences.includes(food));
+  });
   const handlePreferencesChange = (foods: string[], index: number) => {
     if (formData.preferences.includes(foods[index])) {
       let newPreferences = formData.preferences.filter(
