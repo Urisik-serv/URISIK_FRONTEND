@@ -64,10 +64,17 @@ export const router = createBrowserRouter([
             element: <FamilyProfileCreatePage />,
           },
           {
-            path: "family-profile-create/allergies-search",
+            path: "family-profile-create/allergy-search",
             element: <AllergiesSearchPage />,
           },
-          { path: "modify-profile", element: <ModifyProfilePage /> },
+          {
+            path: "modify-profile",
+            element: <ModifyProfilePage />,
+          },
+          {
+            path: "modify-profile/allergy-search",
+            element: <AllergiesSearchPage />,
+          },
         ],
       },
     ],
