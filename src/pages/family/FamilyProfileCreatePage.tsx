@@ -1,10 +1,10 @@
-import FamilyMemberButton from "../../components/family/FamilyMemberButton";
 import PublicHeader from "../../components/header/PublicHeader";
 import Button from "../../components/common/Button";
 import { useFamilyProfileForm } from "../../hooks/useFamilyProfileForm";
 import { useNavigate } from "react-router-dom";
 import RequiredLabel from "../../components/family/required-label";
 import OptionalLabel from "../../components/family/optional-label";
+import SelectButton from "../../components/family/select-button";
 
 export default function FamilyProfileCreatePage() {
   const {
@@ -55,7 +55,7 @@ export default function FamilyProfileCreatePage() {
                   type="button"
                   className="cursor-pointer"
                 >
-                  <FamilyMemberButton
+                  <SelectButton
                     name={role}
                     number={selectedRole === role ? 1 : 0}
                   />
@@ -78,7 +78,7 @@ export default function FamilyProfileCreatePage() {
               className="cursor-pointer pt-[12px]"
               type="button"
             >
-              <FamilyMemberButton name="없음" number={selectedNone ? 1 : 0} />
+              <SelectButton name="없음" number={selectedNone ? 1 : 0} />
             </button>
           </div>
           <div className=" w-[343px] ">
@@ -91,7 +91,7 @@ export default function FamilyProfileCreatePage() {
                   onClick={() => handlePreferencesChange(foods, index)}
                   key={index}
                 >
-                  <FamilyMemberButton
+                  <SelectButton
                     name={food}
                     number={isCheckedPreference[index] ? 1 : 0}
                   />

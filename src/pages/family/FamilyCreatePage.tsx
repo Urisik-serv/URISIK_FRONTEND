@@ -1,10 +1,10 @@
 import { useState } from "react";
-import FamilyMemberButton from "../../components/family/FamilyMemberButton";
 import FamilyTotalNumber from "../../components/family/FamilyTotalNumber";
 import PublicHeader from "../../components/header/PublicHeader";
 import NumberOfMember from "../../components/family/NumberOfMember";
 import Button from "../../components/common/Button";
 import { useNavigate } from "react-router-dom";
+import SelectButton from "../../components/family/select-button";
 
 export default function FamilyCreatePage() {
   const [familyNumber, setFamilyNumber] = useState(3);
@@ -80,18 +80,15 @@ export default function FamilyCreatePage() {
             </div>
             <div className="flex gap-[12px]">
               <button onClick={handleMomNumber}>
-                <FamilyMemberButton name="엄마" number={momNumber ? 1 : 0} />
+                <SelectButton name="엄마" number={momNumber ? 1 : 0} />
               </button>
               <button onClick={handleDadNumber}>
-                <FamilyMemberButton name="아빠" number={dadNumber ? 1 : 0} />
+                <SelectButton name="아빠" number={dadNumber ? 1 : 0} />
               </button>
             </div>
             <div className="flex flex-col gap-[8px]">
               <div className="self-stretch inline-flex justify-start items-center gap-6">
-                <FamilyMemberButton
-                  name="아들"
-                  number={sonNumber > 0 ? 1 : 0}
-                />
+                <SelectButton name="아들" number={sonNumber > 0 ? 1 : 0} />
                 <NumberOfMember
                   number={sonNumber}
                   availableNumber={availableNumber}
@@ -100,10 +97,7 @@ export default function FamilyCreatePage() {
                 />
               </div>
               <div className="self-stretch inline-flex justify-start items-center gap-6">
-                <FamilyMemberButton
-                  name="딸"
-                  number={daughterNumber > 0 ? 1 : 0}
-                />
+                <SelectButton name="딸" number={daughterNumber > 0 ? 1 : 0} />
                 <NumberOfMember
                   number={daughterNumber}
                   availableNumber={availableNumber}
@@ -124,10 +118,10 @@ export default function FamilyCreatePage() {
             </div>
             <div className="flex gap-[12px]">
               <button onClick={handleMomLeader}>
-                <FamilyMemberButton name="엄마" number={momLeader ? 1 : 0} />
+                <SelectButton name="엄마" number={momLeader ? 1 : 0} />
               </button>
               <button onClick={handleDadLeader}>
-                <FamilyMemberButton name="아빠" number={dadLeader ? 1 : 0} />
+                <SelectButton name="아빠" number={dadLeader ? 1 : 0} />
               </button>
             </div>
           </div>
