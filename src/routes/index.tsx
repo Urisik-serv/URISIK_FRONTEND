@@ -15,6 +15,8 @@ import FamilyCreatePage from "../pages/family/family-create-page";
 import FamilyInvitePage from "../pages/family/family-invite-page";
 import FamilyProfileCreatePage from "../pages/family/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
+import FamilyWishListPage from "../pages/family/family-wishlist-page";
+
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +58,7 @@ export const router = createBrowserRouter([
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
+          { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",
             element: <FamilyProfileCreatePage />,
