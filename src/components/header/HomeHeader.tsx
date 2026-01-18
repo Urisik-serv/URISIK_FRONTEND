@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import headerLogo from "../../assets/logos/mainLogo.svg";
+import headerLogo from "../../assets/logos/main-logo.svg";
 import shoppingCart from "../../assets/icons/shopping-outline.svg";
 import accountImg from "../../assets/icons/account-outline.svg";
 
