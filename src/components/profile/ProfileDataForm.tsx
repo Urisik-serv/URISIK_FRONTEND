@@ -1,21 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import { useAllergySearch } from "../../hooks/use-allergy-search";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
-import RequiredLabel from "./RequiredLabel";
-import SelectButton from "./SelectButton";
-import OptionalLabel from "./OptionalLabel";
+
 import Button from "../common/Button";
 import DefaultMom from "../../assets/profile/default-mom.svg";
 import Camera from "../../assets/icons/camera.svg";
+import RequiredLabel from "../family/RequiredLabel";
+import SelectButton from "../family/SelectButton";
+import OptionalLabel from "../family/OptionalLabel";
 
 interface ProfileDataFormProps {
   isSelected: number;
   isEdit?: boolean; // 편집 모드 여부
+  handlePicture?: () => void;
 }
 
 export default function ProfileDataForm({
   isSelected,
   isEdit,
+  handlePicture,
 }: ProfileDataFormProps) {
   const {
     handleNickNameChange,
@@ -51,6 +54,7 @@ export default function ProfileDataForm({
               className="w-[104px] m-0"
             />
             <button
+              onClick={handlePicture}
               type="button"
               className="cursor-pointer bg-[#CACACA] size-[30px] flex justify-center items-center rounded-full -translate-y-[30px] translate-x-[37px]"
             >
