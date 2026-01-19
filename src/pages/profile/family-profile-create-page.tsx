@@ -1,5 +1,5 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import ProfileDataForm from "../../components/family/ProfileDataForm";
+import ProfileDataForm from "../../components/profile/ProfileDataForm";
 
 export default function FamilyProfileCreatePage() {
   return (
