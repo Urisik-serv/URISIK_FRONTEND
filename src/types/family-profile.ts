@@ -5,9 +5,10 @@ interface Allergy {
   alternativeIngredients: string[];
 }
 
-interface WishList {
+export interface WishList {
   id: number;
   name: string;
+  FoodImageUrl: string;
   category: string;
   tags: string[];
   rating: number;
