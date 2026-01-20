@@ -1,8 +1,26 @@
 import { useNavigate } from "react-router-dom";
 import HomeProfileCard from "./HomeProfileCard";
+import { useEffect, useState } from "react";
+import type { FamilyMembers } from "../../../types/family-profile";
+import axios from "axios";
 
 const FamilyProfile = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState<FamilyMembers | null>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("/data/family-data.json");
+
+        setData(res.data);
+        console.log(res);
+      } catch (error) {
+        console.log("데이터 로딩 실패:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full  px-4 pt-5 pb-3 bg-white rounded-xl outline-1 outline-stone-300 flex flex-col justify-start items-center gap-3  ">
@@ -10,9 +28,9 @@ const FamilyProfile = () => {
         우리가족 프로필
       </p>
       <div className="flex self-stretch items-center gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-        <HomeProfileCard onClick={() => navigate("mypage")} name="내 프로필" />
-        <HomeProfileCard name="강아빠" />
-        <HomeProfileCard name="강민지" />
+        {data?.familyMembers.map((profile) => (
+          <HomeProfileCard key={profile.id} data={profile} />
+        ))}
       </div>
       <button
         onClick={() => navigate("family-wishlist")}

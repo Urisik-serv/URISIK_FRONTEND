@@ -1,24 +1,23 @@
 import DefaultMomImg from "../../../assets/profile/default-mom.svg";
+import type { FamilyProfile } from "../../../types/family-profile";
 interface HomeProfileCardProps {
-  name: string;
-  onClick?: () => void;
-  // myProfile: boolean;
+  data: FamilyProfile;
 }
 
-const HomeProfileCard = ({ name, onClick }: HomeProfileCardProps) => {
-  const myProfile = name === "내 프로필";
+const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
+  // 서버와 연결하기 전까지 임시 myProfile 확인
+  const myProfile = data.name === "김엄마";
   return (
     <div className="shrink-0">
       <img
         src={DefaultMomImg}
         alt="프로필 이미지"
-        onClick={onClick}
         className={`w-14 h-14 rounded-full cursor-pointer ${
           myProfile ? "border-[3px] border-primary-700" : ""
         }`}
       />
       <p className="text-center text-neutral-500 text-sm font-normal leading-5">
-        {name}
+        {myProfile ? "내 프로필" : data.name}
       </p>
     </div>
   );
