@@ -25,5 +25,5 @@ export interface Recipe {
   isWishlisted: boolean;
 }
 export interface FoodList {
-  racipes: Recipe[];
+  recipes: Recipe[];
 }
