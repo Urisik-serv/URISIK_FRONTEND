@@ -1,9 +1,12 @@
 type CalendarChipMProps = {
   text: string;
-  isSelect: boolean;
+  isSelect?: boolean;
 };
 
-export default function CalendarChipM({ text, isSelect }: CalendarChipMProps) {
+export default function CalendarChipM({
+  text,
+  isSelect = false,
+}: CalendarChipMProps) {
   return (
     <button
       className={`flex justify-center items-center w-[49px] h-[47px] font-medium text-[18px] rounded-lg
