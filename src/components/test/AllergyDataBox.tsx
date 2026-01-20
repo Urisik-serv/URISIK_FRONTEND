@@ -16,7 +16,9 @@ export default function AllergyDataBox({
       <div className="pt-[8px] px-[7px] w-[62px] flex flex-col items-center gap-[6px]">
         <img src={icon} alt={`${name} 아이콘`} />
         <div className="bg-primary-700 rounded-sm w-[48px] flex justify-center items-center">
-          <div className="text-white text-sm leading-[22.26px]">{name}</div>
+          <div className="text-white text-sm leading-[22.26px] font-medium">
+            {name}
+          </div>
         </div>
       </div>
       <div className="pt-[12px]">
