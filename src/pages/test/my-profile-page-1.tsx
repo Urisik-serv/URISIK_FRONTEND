@@ -3,6 +3,7 @@ import { useFamilyData } from "../../hooks/use-family-data";
 import profilePicture from "../../assets/profile/leader-mom.svg";
 import ProfileDataBox from "../../components/test/ProfileDataBox";
 import AllergyDataBox from "../../components/test/AllergyDataBox";
+import WishListBox from "../../components/test/WishListBox";
 
 export default function MyProfilePage1() {
   const { familyData } = useFamilyData();
@@ -21,7 +22,7 @@ export default function MyProfilePage1() {
             </div>
           </div>
           <button className="cursor-pointer flex items-start">
-            <div className="text-[#767676] text-sm leading-[22.26px]">
+            <div className="text-[#767676] text-sm leading-[22.26px] font-medium">
               프로필 편집
             </div>
           </button>
@@ -63,6 +64,11 @@ export default function MyProfilePage1() {
         <div className="pt-[42px]">
           <div className="text-[16px] font-semibold leading-[24px]">
             내 위시리스트
+          </div>
+          <div className="pt-[17px] flex flex-col gap-0">
+            {myData?.wishList.map((item) => (
+              <WishListBox myWishList={item} key={item.id} />
+            ))}
           </div>
         </div>
       </div>
