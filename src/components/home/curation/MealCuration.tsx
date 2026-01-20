@@ -13,6 +13,7 @@ const MealCuration = () => {
       </div>
       <MealCard />
       <MealCard />
+      <MealCard />
     </div>
   );
 };

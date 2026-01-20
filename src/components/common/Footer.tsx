@@ -8,7 +8,7 @@ export default function Footer() {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed bottom-0 text-[10px] font-medium">
+    <div className="fixed bottom-0 text-[10px] font-medium z-50">
       <div className="relative">
         <img src={Background} className="w-full" alt="푸터 배경" />
 
