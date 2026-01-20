@@ -1,5 +1,5 @@
 import Rate from "./Rate";
-import Profile from "../../assets/images/emptyProfile.png";
+import Profile from "../../assets/images/empty-profile.png";
 
 type MenuListMode = "default" | "rate" | "profile";
 //default: 기본, rate: 별점까지만 보이도록, profile: 별점+프로필까지 보이도록

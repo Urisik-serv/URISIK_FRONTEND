@@ -28,14 +28,14 @@ export default function BottomSheet({ open }: BottomSheetProps) {
   }, [open]);
   return (
     <div className="w-[375px] fixed bottom-0 p-[10px] rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] overflow-hidden bg-white flex flex-col items-center">
-      <div className="">
+      <div>
         <button
           className="flex items-center justify-center size-8 mb-3 cursor-pointer"
           onClick={() => {
             setIsOpen((prev) => !prev);
           }}
         >
-          <img src={Up} alt="위로 올리기" />
+          <img src={Up} className="size-8" alt="위로 올리기" />
         </button>
       </div>
       <div className="w-full flex font-semibold text-[18px] h-13">
