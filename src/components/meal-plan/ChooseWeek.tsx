@@ -1,4 +1,4 @@
-import CalenderChip from "./CalenderChip";
+import CalenderChip from "./CalendarChip/CalendarChipS";
 
 type ChooseWeekProps = {
   mealTime: "점심" | "저녁";

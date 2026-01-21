@@ -6,7 +6,7 @@ URISIK(우리'식)은 <b>알레르기 자녀를 둔 가족을 위한 맞춤형 �
 
 | <img src="https://github.com/shooukie.png" width="120" /> | <img src="https://github.com/tablemin03.png" width="120" /> | <img src="https://github.com/jangmk05.png" width="120" /> |
 |:---:|:---:|:---:|
-| [강민서](https://github.com/yewon-Noh) | [이상민](https://github.com/tablemin03) | [장문경](https://github.com/jangmk05) |
+| [강민서](https://github.com/shooukie) | [이상민](https://github.com/tablemin03) | [장문경](https://github.com/jangmk05) |
 
 ## 🧑‍💻 개발 환경 세팅 가이드
 
