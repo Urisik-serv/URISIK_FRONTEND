@@ -15,12 +15,7 @@ export interface Recipe {
     };
     tastePoint: string;
   };
-  substitutionLogics: [
-    {
-      title: string;
-      descriptions: string[];
-    },
-  ];
+  descriptions: string[];
   ingredients: string[];
   isWishlisted: boolean;
 }
