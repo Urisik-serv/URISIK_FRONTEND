@@ -23,7 +23,7 @@ export default function TermsOfService() {
 콘텐츠: 식단, 메뉴, 레시피, 추천 결과 등 서비스 내에서 제공되는 모든 정보를 말합니다."
         />
         <Term
-          title="회원 가입 및 계정 관리"
+          title="3. 회원 가입 및 계정 관리"
           content={
             <ol className="list-decimal list-outside pl-[16px]">
               <li>
@@ -35,6 +35,43 @@ export default function TermsOfService() {
                 가집니다.
               </li>
             </ol>
+          }
+        />
+        <Term
+          title="4. 서비스 제공 범위"
+          content={
+            <div className="flex flex-col gap-[8px]">
+              <div>
+                <div>회사는 다음과 같은 서비스를 제공합니다.</div>
+                <ul>
+                  <li className="flex gap-2">
+                    <span>•</span>
+                    <span>가족 프로필 및 알레르기 정보 관리 기능</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span>•</span>
+                    <span>식사 기호를 반영한 식단 추천 기능</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span>•</span>
+                    <span>대체 식재료 및 레시피 정보 제공</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span>•</span>
+                    <span>식단 기록 및 개인화 추천 기능</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="text-black text-[16px] font-medium leadint-[24px]">
+                  ⚠ 중요 고지
+                </div>
+                <div>
+                  본 서비스는 의료, 치료 또는 진단을 목적으로 하지 않으며, 전문
+                  의료인의 판단을 대체하지 않습니다.
+                </div>
+              </div>
+            </div>
           }
         />
       </div>
