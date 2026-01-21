@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
             element: <AllergiesSearchPage />,
           },
           {
-            path: "menu-information/:menuid",
+            path: "menu-information/:menuId",
             element: <MenuInformationPage />,
           },
         ],
