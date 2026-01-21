@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-type CalenderChipProps = {
+type CalendarChipSProps = {
   text: string;
 };
 
-export default function CalenderChip({ text }: CalenderChipProps) {
+export default function CalendarChipS({ text }: CalendarChipSProps) {
   const [select, setSelect] = useState(false);
   return (
     <button
