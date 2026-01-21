@@ -58,6 +58,19 @@ export default function PrivacyPolicy() {
             </ol>
           }
         />
+        <Term
+          title="4. 개인정보의 제3자 제공"
+          content={
+            <ol className="list-decimal pl-[16px]">
+              <li>회사는 원칙적으로 개인정보를 제3자에게 제공하지 않습니다.</li>
+              <li>제3자 제공이 필요한 경우 사전에 회원의 동의를 받습니다.</li>
+            </ol>
+          }
+        />
+        <Term
+          title="5. 이용자의 권리"
+          content="회원은 언제든지 개인정보의 열람, 수정 및 삭제를 요청할 수 있으며, 동의 철회 및 회원 탈퇴를 할 수 있습니다."
+        />
       </div>
     </>
   );
