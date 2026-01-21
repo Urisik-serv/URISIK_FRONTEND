@@ -1,6 +1,25 @@
+import { useEffect, useState } from "react";
 import MealCard from "./MealCard";
+import type { FoodList } from "../../../types/recipe-list";
+import axios from "axios";
 
 const MealCuration = () => {
+  // mock data fetching
+  const [data, setData] = useState<FoodList | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/data/recipe-list.json");
+
+        setData(response.data);
+      } catch (error) {
+        console.log("데이터 로딩 실패: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="pt-8">
       <div>
@@ -11,9 +30,17 @@ const MealCuration = () => {
           식단에 추가하고 싶은 메뉴를 스크랩해보세요.
         </p>
       </div>
-      <MealCard />
-      <MealCard />
-      <MealCard />
+      {data?.recipes.map((recipe) => (
+        <MealCard
+          key={recipe.id}
+          id={recipe.id}
+          shortDescription={recipe.shortDescription}
+          title={recipe.title}
+          rating={recipe.rating}
+          category={recipe.category}
+          isWishlisted={recipe.isWishlisted}
+        />
+      ))}
     </div>
   );
 };

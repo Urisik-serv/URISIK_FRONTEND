@@ -11,7 +11,7 @@ const RatePx: Record<number, string> = {
 
 interface RateProps {
   px: number;
-  rate: number;
+  rate?: number;
 }
 
 const Rate = ({ px, rate }: RateProps) => {

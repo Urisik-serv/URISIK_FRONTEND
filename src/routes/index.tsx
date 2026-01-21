@@ -17,6 +17,7 @@ import FamilyInvitePage from "../pages/family/family-invite-page";
 import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
+import MenuInformationPage from "../pages/home/menu-information-page";
 import MealPlanIngredientsPage from "../pages/meal-plan/meal-plan-ingredients-page";
 import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
@@ -25,7 +26,6 @@ import ChildrenAndFamily from "../pages/terms-and-policies/children-and-family";
 import MarketingPreferences from "../pages/terms-and-policies/marketing-preferences";
 import PrivacyPolicy from "../pages/terms-and-policies/privacy-policy";
 import TermsOfService from "../pages/terms-and-policies/term-of-service";
-
 
 export const router = createBrowserRouter([
   {
@@ -89,6 +89,10 @@ export const router = createBrowserRouter([
           {
             path: "modify-profile/allergy-search",
             element: <AllergiesSearchPage />,
+          },
+          {
+            path: "menu-information/:menuId",
+            element: <MenuInformationPage />,
           },
           {
             path: "ai-recomendation-notice",
