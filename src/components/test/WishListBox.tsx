@@ -1,6 +1,6 @@
 import type { WishList } from "../../types/family-profile";
-import ratingStar from "../../assets/common/star.svg";
 import { motion } from "framer-motion";
+import Rate from "../common/Rate";
 
 interface wishListBoxProps {
   myWishList: WishList;
@@ -33,10 +33,7 @@ export default function WishListBox({ myWishList }: wishListBoxProps) {
                     {myWishList.name}
                   </div>
                   <div className="flex gap-[2.34px] items-center justify-center">
-                    <img src={ratingStar} alt="평점 별 아이콘" />
-                    <div className="text-[12px] text-gray-400 font-semibold leading-[18px] tracking-[-0.36px]">
-                      {myWishList.rating}
-                    </div>
+                    <Rate px={12} rate={myWishList.rating} />
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center">
