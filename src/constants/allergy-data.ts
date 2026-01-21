@@ -22,3 +22,38 @@ export const ALLERGY_DATA = [
   { id: 21, name: "아황산류", category: "기타" },
   { id: 22, name: "참깨", category: "견과류" },
 ];
+
+export const ALLERGY_ICON = [
+  {
+    name: "대두",
+    icon: "/assets/allergies/bean.svg",
+  },
+  {
+    name: "계란",
+    icon: "/assets/allergies/egg.svg",
+  },
+  {
+    name: "생선",
+    icon: "/assets/allergies/fish.svg",
+  },
+  {
+    name: "우유",
+    icon: "/assets/allergies/milk.svg",
+  },
+  {
+    name: "견과류",
+    icon: "/assets/allergies/nuts.svg",
+  },
+  {
+    name: "땅콩",
+    icon: "/assets/allergies/peanut.svg",
+  },
+  {
+    name: "새우",
+    icon: "/assets/allergies/shrimp.svg",
+  },
+  {
+    name: "밀",
+    icon: "/assets/allergies/wheat.svg",
+  },
+];

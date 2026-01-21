@@ -42,7 +42,9 @@ export const useFamilyProfileForm = () => {
   // 식단 선호도 핸들러
   const [isCheckedPreference, setIsCheckedPreference] = useState(() => {
     const foods = ["한식", "중식", "일식", "양식", "디저트"];
-    return foods.map((food) => savedFormData.preferences.includes(food));
+    return foods.map((food: string) =>
+      savedFormData.preferences.includes(food),
+    );
   });
   const handlePreferencesChange = (foods: string[], index: number) => {
     if (formData.preferences.includes(foods[index])) {
