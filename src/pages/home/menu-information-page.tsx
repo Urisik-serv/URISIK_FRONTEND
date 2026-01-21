@@ -46,19 +46,19 @@ const MenuInformationPage = () => {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex justify-start items-center gap-6">
-              <p className="w-13 text-gray-400 text-sm font-medium leading-6">
+              <p className="w-15 text-gray-400 text-sm font-medium leading-6">
                 조리 시간
               </p>
               <p>{data?.meta.cookingTime}</p>
             </div>
             <div className="flex justify-start items-center gap-6">
-              <p className="w-13 text-gray-400 text-sm font-medium leading-6">
+              <p className="w-15 text-gray-400 text-sm font-medium leading-6">
                 난이도
               </p>
               <p>{data?.meta.difficulty.label}</p>
             </div>
             <div className="flex justify-start items-center gap-6 pb-9">
-              <p className="w-13 text-gray-400 text-sm font-medium leading-6">
+              <p className="w-15 text-gray-400 text-sm font-medium leading-6">
                 맛 포인트
               </p>
               <p>{data?.meta.tastePoint}</p>

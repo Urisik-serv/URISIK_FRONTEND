@@ -94,6 +94,7 @@ export const router = createBrowserRouter([
             path: "menu-information/:menuId",
             element: <MenuInformationPage />,
           },
+          {
             path: "ai-recomendation-notice",
             element: <AiRecommendationNotice />,
           },
