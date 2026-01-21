@@ -1,10 +1,19 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import TryAgain from "../../assets/icons/try-again.svg";
-import DayMenuChip from "../../components/meal-plan/DayMenuChip";
 import { useNavigate } from "react-router-dom";
+import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM";
+import MenuChip from "../../components/meal-plan/MenuChip";
 
 const MealPlanResultPage = () => {
-  const week = ["월", "화", "수", "목", "금", "토", "일"];
+  const data = [
+    { day: "월", menus: ["바나나", "김밥"] },
+    { day: "화", menus: ["귤", "김밥", "김밥"] },
+    { day: "수", menus: ["귤", "김밥", "김밥"] },
+    { day: "목", menus: ["귤"] },
+    { day: "금", menus: ["김밥"] },
+    { day: "토", menus: ["귤", "김밥", "김밥"] },
+    { day: "일", menus: ["귤", "김밥"] },
+  ]; //임시 데이터
   const navigate = useNavigate();
   return (
     <div>
@@ -19,12 +28,22 @@ const MealPlanResultPage = () => {
         </button>
       </div>
       <div className="flex gap-2 pt-2 px-4 overflow-x-auto">
-        {week.map((day) => (
-          <DayMenuChip key={day} day={day} />
-        ))}
+        {data.map((data) => {
+          return (
+            <div className="flex flex-col items-center gap-3">
+              <CalendarChipM text={data.day} />
+              {data.menus.map((menu) => {
+                return <MenuChip text={menu} />;
+              })}
+            </div>
+          );
+        })}
       </div>
       <div className="w-full max-w-[375px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
-        <button className="w-full h-14 rounded-xl cursor-pointer bg-gray-200 text-gray-400">
+        <button
+          className="w-full h-14 rounded-xl cursor-pointer bg-gray-200 text-gray-400"
+          onClick={() => navigate(`/meal-plan/edit`)}
+        >
           수정
         </button>
         <button

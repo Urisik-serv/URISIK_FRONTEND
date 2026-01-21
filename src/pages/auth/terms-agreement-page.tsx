@@ -1,7 +1,7 @@
 import Button from "../../components/common/Button";
 import PublicHeader from "../../components/header/PublicHeader";
 import TermsAgreementRow from "../../components/terms/TermsAgreementRow";
-import CheckBoxEmpty from "../../assets/icons/Check_box_empty.svg";
+import CheckBoxEmpty from "../../assets/icons/check-box-empty.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
 import { useState } from "react";
 
@@ -25,15 +25,15 @@ export default function TermsAgreementPage() {
   const handleCheck = (index: number) => {
     setTerms((prev) =>
       prev.map((term) =>
-        term.index === index ? { ...term, isChecked: !term.isChecked } : term
-      )
+        term.index === index ? { ...term, isChecked: !term.isChecked } : term,
+      ),
     );
   };
 
   const handleAllCheck = () => {
     const nextStatus = !allChecked;
     setTerms((prev) =>
-      prev.map((term) => ({ ...term, isChecked: nextStatus }))
+      prev.map((term) => ({ ...term, isChecked: nextStatus })),
     );
   };
 

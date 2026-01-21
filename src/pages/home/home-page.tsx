@@ -1,4 +1,5 @@
 import SearchBar from "../../components/common/SearchBar";
+import UpButton from "../../components/common/UpButton";
 import HomeHeader from "../../components/header/HomeHeader";
 import FoodCard from "../../components/home/category/FoodCard";
 import AllergyCuration from "../../components/home/curation/AllergyCuration";
@@ -40,6 +41,7 @@ const HomePage = () => {
               </div>
               <AllergyCuration />
               <MealCuration />
+              <UpButton />
             </div>
           </main>
         </>
