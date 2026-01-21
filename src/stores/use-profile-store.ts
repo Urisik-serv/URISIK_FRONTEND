@@ -8,6 +8,7 @@ export interface FamilyProfileFormData {
   preferences: string[];
   likedIngredients?: string;
   dislikedIngredients?: string;
+  profilePicUrl?: string;
 }
 
 interface ProfileStore {
@@ -27,6 +28,7 @@ export const useProfileStore = create<ProfileStore>((set) => ({
     preferences: [],
     likedIngredients: "",
     dislikedIngredients: "",
+    profilePicUrl: "",
   },
   setSavedFormData: (updater) =>
     set((state) => ({

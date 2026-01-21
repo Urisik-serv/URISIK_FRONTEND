@@ -27,7 +27,7 @@ export default function MenuList({
       <div className="flex gap-3">
         <img className="size-13 rounded-lg bg-[#F5F1ED]" />
 
-        <div>
+        <div className="flex flex-col justify-between">
           <div className="flex items-center gap-[5px] font-semibold">
             <p>{menu}</p>
             {(type == "rate" || type == "profile") && (

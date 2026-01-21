@@ -14,10 +14,18 @@ import TermsAgreementPage from "../pages/auth/terms-agreement-page";
 import OnboardingPage from "../pages/auth/onboarding-page";
 import FamilyCreatePage from "../pages/family/family-create-page";
 import FamilyInvitePage from "../pages/family/family-invite-page";
-import FamilyProfileCreatePage from "../pages/family/family-profile-create-page";
+import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
 import MenuInformationPage from "../pages/home/menu-information-page";
+import MealPlanIngredientsPage from "../pages/meal-plan/meal-plan-ingredients-page";
+import ModifyProfilePage from "../pages/profile/modify-profile-page";
+import TermsAndPolicies from "../pages/mypage/terms-and-policies";
+import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
+import ChildrenAndFamily from "../pages/terms-and-policies/children-and-family";
+import MarketingPreferences from "../pages/terms-and-policies/marketing-preferences";
+import PrivacyPolicy from "../pages/terms-and-policies/privacy-policy";
+import TermsOfService from "../pages/terms-and-policies/term-of-service";
 
 export const router = createBrowserRouter([
   {
@@ -53,11 +61,16 @@ export const router = createBrowserRouter([
             index: true, // path: '/' 와 동일
             element: <HomePage />,
           },
-          { path: "mypage", element: <MyPage /> }, // 마이페이지 라우팅, path는 임시로 부여
+          { path: "mypage", element: <MyPage /> },
+          { path: "mypage/terms-and-policies", element: <TermsAndPolicies /> }, // 마이페이지 라우팅, path는 임시로 부여
           { path: "planner", element: <PlannerPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
+          {
+            path: "meal-plan/ingredients",
+            element: <MealPlanIngredientsPage />,
+          },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
           { path: "family-wishlist", element: <FamilyWishListPage /> },
@@ -66,13 +79,28 @@ export const router = createBrowserRouter([
             element: <FamilyProfileCreatePage />,
           },
           {
-            path: "family-profile-create/allergies-search",
+            path: "family-profile-create/allergy-search",
+            element: <AllergiesSearchPage />,
+          },
+          {
+            path: "modify-profile",
+            element: <ModifyProfilePage />,
+          },
+          {
+            path: "modify-profile/allergy-search",
             element: <AllergiesSearchPage />,
           },
           {
             path: "menu-information/:menuId",
             element: <MenuInformationPage />,
           },
+            path: "ai-recomendation-notice",
+            element: <AiRecommendationNotice />,
+          },
+          { path: "children-and-family", element: <ChildrenAndFamily /> },
+          { path: "marketing-preference", element: <MarketingPreferences /> },
+          { path: "privacy-policy", element: <PrivacyPolicy /> },
+          { path: "terms-of-service", element: <TermsOfService /> },
         ],
       },
     ],
