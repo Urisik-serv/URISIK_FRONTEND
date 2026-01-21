@@ -14,9 +14,10 @@ import TermsAgreementPage from "../pages/auth/terms-agreement-page";
 import OnboardingPage from "../pages/auth/onboarding-page";
 import FamilyCreatePage from "../pages/family/family-create-page";
 import FamilyInvitePage from "../pages/family/family-invite-page";
-import FamilyProfileCreatePage from "../pages/family/family-profile-create-page";
+import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
+import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
 import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
 import ChildrenAndFamily from "../pages/terms-and-policies/children-and-family";
@@ -72,7 +73,15 @@ export const router = createBrowserRouter([
             element: <FamilyProfileCreatePage />,
           },
           {
-            path: "family-profile-create/allergies-search",
+            path: "family-profile-create/allergy-search",
+            element: <AllergiesSearchPage />,
+          },
+          {
+            path: "modify-profile",
+            element: <ModifyProfilePage />,
+          },
+          {
+            path: "modify-profile/allergy-search",
             element: <AllergiesSearchPage />,
           },
           {
