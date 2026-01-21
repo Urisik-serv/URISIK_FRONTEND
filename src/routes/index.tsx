@@ -17,6 +17,7 @@ import FamilyInvitePage from "../pages/family/family-invite-page";
 import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
+import MealPlanIngredientsPage from "../pages/meal-plan/meal-plan-ingredients-page";
 import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
 import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
@@ -24,6 +25,7 @@ import ChildrenAndFamily from "../pages/terms-and-policies/children-and-family";
 import MarketingPreferences from "../pages/terms-and-policies/marketing-preferences";
 import PrivacyPolicy from "../pages/terms-and-policies/privacy-policy";
 import TermsOfService from "../pages/terms-and-policies/term-of-service";
+
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,10 @@ export const router = createBrowserRouter([
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
+          {
+            path: "meal-plan/ingredients",
+            element: <MealPlanIngredientsPage />,
+          },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
           { path: "family-wishlist", element: <FamilyWishListPage /> },
