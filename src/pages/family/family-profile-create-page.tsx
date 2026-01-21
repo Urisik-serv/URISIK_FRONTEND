@@ -53,7 +53,7 @@ export default function FamilyProfileCreatePage() {
           <div className=" w-[343px] ">
             <RequiredLabel title="역할" />
             <div className="pt-[12px] flex gap-[12px] ">
-              {roles.map((role) => (
+              {roles.map((role: string) => (
                 <button
                   onClick={() => handleRoleChange(role)}
                   key={role}
@@ -103,7 +103,7 @@ export default function FamilyProfileCreatePage() {
           <div className=" w-[343px] ">
             <RequiredLabel title="식단 선호도" />
             <div className="pt-[12px] flex flex-wrap gap-[12px] w-[319px]">
-              {foods.map((food, index) => (
+              {foods.map((food: string, index: number) => (
                 <button
                   className="cursor-pointer"
                   type="button"
