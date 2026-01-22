@@ -1,9 +1,9 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import { useFamilyData } from "../../hooks/use-family-data";
 import profilePicture from "../../assets/profile/leader-mom.svg";
-import ProfileDataBox from "../../components/test/ProfileDataBox";
-import AllergyDataBox from "../../components/test/AllergyDataBox";
-import WishListBox from "../../components/test/WishListBox";
+import ProfileDataBox from "../../components/profile/ProfileDataBox";
+import AllergyDataBox from "../../components/profile/AllergyDataBox";
+import WishListBox from "../../components/profile/WishListBox";
 
 export default function MyProfilePage1() {
   const { familyData } = useFamilyData();
