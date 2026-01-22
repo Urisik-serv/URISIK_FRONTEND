@@ -1,5 +1,6 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import Term from "../../components/terms/Term";
+import TermDetailList from "../../components/terms/TermDetailList";
 
 export default function TermsOfService() {
   return (
@@ -44,22 +45,10 @@ export default function TermsOfService() {
               <div>
                 <div>회사는 다음과 같은 서비스를 제공합니다.</div>
                 <ul>
-                  <li className="flex gap-2">
-                    <span>•</span>
-                    <span>가족 프로필 및 알레르기 정보 관리 기능</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span>•</span>
-                    <span>식사 기호를 반영한 식단 추천 기능</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span>•</span>
-                    <span>대체 식재료 및 레시피 정보 제공</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span>•</span>
-                    <span>식단 기록 및 개인화 추천 기능</span>
-                  </li>
+                  <TermDetailList content="가족 프로필 및 알레르기 정보 관리 기능" />
+                  <TermDetailList content="식사 기호를 반영한 식단 추천 기능" />
+                  <TermDetailList content="대체 식재료 및 레시피 정보 제공" />
+                  <TermDetailList content="식단 기록 및 개인화 추천 기능" />
                 </ul>
               </div>
               <div>
@@ -72,6 +61,39 @@ export default function TermsOfService() {
                 </div>
               </div>
             </div>
+          }
+        />
+        <Term
+          title="5. 이용 제한"
+          content={
+            <div>
+              <div>회원은 다음 각 호에 해당하는 행위를 하여서는 안 됩니다.</div>
+              <ul>
+                <TermDetailList content="허위 정보를 입력하는 행위" />
+                <TermDetailList content="타인의 정보를 무단으로 등록하거나 사용하는 행위" />
+                <TermDetailList content="서비스 운영을 방해하거나 정상적인 이용을 저해하는 행위" />
+                <TermDetailList content="회사는 위 행위가 확인될 경우 서비스 이용을 제한할 수 있습니다." />
+              </ul>
+            </div>
+          }
+        />
+        <Term
+          title="6. 서비스 변경 및 중단"
+          content="회사는 서비스의 일부 또는 전부를 변경할 수 있으며, 변경 사항이 있을 경우 사전에 공지합니다."
+        />
+        <Term
+          title="7. 책임 제한 (면책 조항)"
+          content={
+            <ol className="list-decimal pl-[16px]">
+              <li>
+                알레르기 반응은 개인차가 있으며, 서비스의 추천 결과가 모든
+                알레르기 반응을 완전히 예방함을 보장하지 않습니다.
+              </li>
+              <li>
+                최종적인 식재료 선택, 조리 및 섭취에 대한 책임은 회원에게
+                있습니다.
+              </li>
+            </ol>
           }
         />
       </div>
