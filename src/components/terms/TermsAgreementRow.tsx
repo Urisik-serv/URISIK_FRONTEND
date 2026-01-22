@@ -5,18 +5,20 @@ import emptyCheckBox from "../../assets/icons/check-box-empty.svg";
 interface TermsAgreementRowProps {
   isChecked: boolean;
   onChecked: () => void;
+  title: string;
 }
 
 export default function TermsAgreementRow({
   isChecked,
   onChecked,
+  title,
 }: TermsAgreementRowProps) {
   return (
     <>
       <div className="w-80 inline-flex justify-between items-center pb-[20px]">
         <div className="flex flex-row items-center gap-[4px]">
-          <div className=" text-zinc-900 text-lg font-medium font-['Wanted_Sans'] leading-7">
-            서비스 이용 약관 (필수)
+          <div className=" text-gray-800 text-lg font-medium leading-7">
+            {title}
           </div>
           <button className="w-6 h-6 cursor-pointer">
             <img
