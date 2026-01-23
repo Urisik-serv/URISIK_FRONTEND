@@ -3,7 +3,7 @@ import Footer from "../components/common/Footer";
 
 export default function MobileLayout() {
   const location = useLocation();
-  const footerPaths = ["/", "/planner"];
+  const footerPaths = ["/", "/meal-plan"];
 
   const showFooter = footerPaths.includes(location.pathname);
   return (
