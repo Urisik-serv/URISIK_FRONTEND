@@ -6,7 +6,6 @@ import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
 import PlannerPage from "../pages/planner/planner-page";
-
 import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
 import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
 import MealPlanEditPage from "../pages/meal-plan/meal-plan-edit-page";
@@ -26,6 +25,7 @@ import ChildrenAndFamily from "../pages/terms-and-policies/children-and-family";
 import MarketingPreferences from "../pages/terms-and-policies/marketing-preferences";
 import PrivacyPolicy from "../pages/terms-and-policies/privacy-policy";
 import TermsOfService from "../pages/terms-and-policies/term-of-service";
+import MealPlanPage from "../pages/meal-plan/meal-plan-page";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +64,7 @@ export const router = createBrowserRouter([
           { path: "mypage", element: <MyPage /> },
           { path: "mypage/terms-and-policies", element: <TermsAndPolicies /> }, // 마이페이지 라우팅, path는 임시로 부여
           { path: "planner", element: <PlannerPage /> },
+          { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
