@@ -12,7 +12,7 @@ export default function ChooseWeek({ mealTime }: ChooseWeekProps) {
       <p className="text-[18px] font-medium">{mealTime} 식사</p>
       <div className="flex gap-3 pt-3">
         {week.map((day) => (
-          <CalenderChip key={day} text={day} />
+          <CalenderChip key={day} text={day} type="select" />
         ))}
       </div>
     </div>
