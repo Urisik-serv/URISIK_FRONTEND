@@ -27,7 +27,7 @@ import MarketingPreferences from "../pages/terms-and-policies/marketing-preferen
 import PrivacyPolicy from "../pages/terms-and-policies/privacy-policy";
 import TermsOfService from "../pages/terms-and-policies/term-of-service";
 import FamilyAccount from "../pages/mypage/family-account";
-import LogOut from "../pages/mypage/log-out";
+import MyProfilePage from "../pages/profile/my-profile-page";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +93,7 @@ export const router = createBrowserRouter([
             path: "modify-profile/allergy-search",
             element: <AllergiesSearchPage />,
           },
+          { path: "my-profile", element: <MyProfilePage /> },
           {
             path: "menu-information/:menuId",
             element: <MenuInformationPage />,
