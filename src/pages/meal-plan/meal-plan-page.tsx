@@ -1,6 +1,7 @@
 import { useState } from "react";
 import HomeHeader from "../../components/header/HomeHeader";
 import TodayMeal from "../../components/meal-plan/TodayMeal";
+import WeekMeal from "../../components/meal-plan/WeekMeal";
 
 const MealPlanPage = () => {
   const [tab, setTab] = useState<"오늘의 식단" | "이번주 식단" | "다음주 식단">(
@@ -31,6 +32,8 @@ const MealPlanPage = () => {
           </button>
         </div>
         {tab === "오늘의 식단" && <TodayMeal />}
+        {tab == "이번주 식단" && <WeekMeal />}
+        {tab == "다음주 식단" && <WeekMeal />}
       </div>
     </div>
   );
