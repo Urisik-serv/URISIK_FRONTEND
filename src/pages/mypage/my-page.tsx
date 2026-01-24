@@ -72,7 +72,7 @@ const MyPage = () => {
             title="약관 및 정책"
             to={"terms-and-policies"}
           />
-          <ListItem isOnOff={false} title="로그아웃" to={"log-out"} />
+          <ListItem isOnOff={false} title="로그아웃" />
         </div>
       </div>
     </>

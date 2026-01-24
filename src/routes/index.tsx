@@ -66,7 +66,6 @@ export const router = createBrowserRouter([
           { path: "mypage", element: <MyPage /> },
           { path: "mypage/terms-and-policies", element: <TermsAndPolicies /> }, // 마이페이지 라우팅, path는 임시로 부여
           { path: "mypage/family-account", element: <FamilyAccount /> },
-          { path: "mypage/log-out", element: <LogOut /> },
           { path: "planner", element: <PlannerPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
