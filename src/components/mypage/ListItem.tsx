@@ -31,9 +31,12 @@ export default function ListItem({ to, isOnOff, title }: ListItemProps) {
         </div>
       ) : (
         <div className="w-full h-[42px] px-[20px] py-[16px] rounded-xl flex justify-start items-center bg-gray-100 gap-[4px]">
-          <div className="text-gray-800 text-center text-[16px] font-semibold leading-[24px]">
+          <button
+            onClick={handleNavigate}
+            className="cursor-pointer text-gray-800 text-center text-[16px] font-semibold leading-[24px]"
+          >
             {title}
-          </div>
+          </button>
           <button className="cursor-pointer" onClick={handleNavigate}>
             <img
               className="size-[24px]"
