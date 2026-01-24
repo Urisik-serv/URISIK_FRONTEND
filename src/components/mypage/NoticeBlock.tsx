@@ -19,11 +19,6 @@ export default function NoticeBlock({
   } else if (icon === "review") {
     icon = reviewIcon;
   }
-  const now = new Date("2026-01-24T17:00:00");
-  const targetDate = new Date(date);
-  const diffInMinutes = Math.floor(
-    (now.getTime() - targetDate.getTime()) / (1000 * 60),
-  );
 
   const getRelativeTime = (dateString: string) => {
     const now = new Date("2026-01-24T17:00:00");
@@ -31,7 +26,7 @@ export default function NoticeBlock({
     const diffInMinutes = Math.floor(
       (now.getTime() - targetDate.getTime()) / (1000 * 60),
     );
-    const diffInDays = now.getDay() - targetDate.getDay();
+    const diffInDays = now.getDate() - targetDate.getDate();
 
     if (diffInMinutes < 60) {
       return `${diffInMinutes}분전`;
@@ -41,7 +36,7 @@ export default function NoticeBlock({
     } else if (diffInDays == 1 && diffInMinutes < 2880) {
       return `어제`;
     } else {
-      return `${targetDate.getMonth()}.${targetDate.getDay()}`;
+      return `${targetDate.getMonth() + 1}.${targetDate.getDate()}`;
     }
   };
 
