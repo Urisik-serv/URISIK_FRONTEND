@@ -5,6 +5,7 @@
   --font-sans: "Wanted Sans", "Pretendard", sans-serif;
 
   /* Gray Scale 재정의 */
+  --color-gray-50: #f9f9f9;
   --color-gray-100: #f4f4f5;
   --color-gray-200: #e4e4e7;
   --color-gray-300: #d4d4d8;
