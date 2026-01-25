@@ -8,7 +8,7 @@ export default function NoticePage() {
     <>
       <PublicHeader title={"알림 내용"} />
       <div className="pt-[66px] flex flex-col items-center mx-auto gap-[12px] w-[343px]">
-        {noticeList.noticeList?.notices.map((notice) => (
+        {noticeList.noticeList?.notices?.map((notice) => (
           <NoticeBlock
             key={notice.id}
             icon={notice.icon}
