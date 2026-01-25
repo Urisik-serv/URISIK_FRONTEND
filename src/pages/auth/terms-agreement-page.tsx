@@ -4,6 +4,7 @@ import TermsAgreementRow from "../../components/terms/TermsAgreementRow";
 import CheckBoxEmpty from "../../assets/icons/check-box-empty.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface TermItem {
   index: number;
@@ -19,6 +20,7 @@ export default function TermsAgreementPage() {
     { index: 3, isChecked: false },
     { index: 4, isChecked: false },
   ]);
+  const navigate = useNavigate();
 
   const allChecked = terms.length > 0 && terms.every((term) => term.isChecked);
 
@@ -35,6 +37,17 @@ export default function TermsAgreementPage() {
     setTerms((prev) =>
       prev.map((term) => ({ ...term, isChecked: nextStatus })),
     );
+  };
+
+  const isValid = () => {
+    if (
+      terms[0].isChecked &&
+      terms[1].isChecked &&
+      terms[2].isChecked &&
+      terms[3].isChecked
+    ) {
+      return true;
+    }
   };
 
   return (
@@ -65,15 +78,44 @@ export default function TermsAgreementPage() {
           </div>
         </div>
         <div className="pt-[40px] flex flex-col items-center pr-[16px]">
-          {terms.map((term) => (
-            <TermsAgreementRow
-              isChecked={term.isChecked}
-              onChecked={() => handleCheck(term.index)}
-            />
-          ))}
+          <TermsAgreementRow
+            isChecked={terms[0].isChecked}
+            onChecked={() => handleCheck(terms[0].index)}
+            title="서비스 이용 악관(필수)"
+            to="../terms-of-service"
+          />
+          <TermsAgreementRow
+            isChecked={terms[1].isChecked}
+            onChecked={() => handleCheck(terms[1].index)}
+            title="개인 정보 처리 방침 (필수)"
+            to="../privacy-policy"
+          />
+          <TermsAgreementRow
+            isChecked={terms[2].isChecked}
+            onChecked={() => handleCheck(terms[2].index)}
+            title="아동·가족 정보 조항 (필수)"
+            to="../children-and-family"
+          />
+          <TermsAgreementRow
+            isChecked={terms[3].isChecked}
+            onChecked={() => handleCheck(terms[3].index)}
+            title="AI 추천 고지 (필수)"
+            to="../ai-recommendation-notice"
+          />
+          <TermsAgreementRow
+            isChecked={terms[4].isChecked}
+            onChecked={() => handleCheck(terms[4].index)}
+            title="마케팅 수신 동의 (선택)"
+            to="../marketing-preferences"
+          />
         </div>
         <div className="pt-[159px]">
-          <Button text={`다음`} type="button" />
+          <Button
+            text={`다음`}
+            type="button"
+            disabled={!isValid()}
+            onClick={() => navigate("../family-invite")}
+          />
         </div>
       </div>
     </>

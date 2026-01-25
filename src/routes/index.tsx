@@ -26,6 +26,8 @@ import ChildrenAndFamily from "../pages/terms-and-policies/children-and-family";
 import MarketingPreferences from "../pages/terms-and-policies/marketing-preferences";
 import PrivacyPolicy from "../pages/terms-and-policies/privacy-policy";
 import TermsOfService from "../pages/terms-and-policies/term-of-service";
+import FamilyAccount from "../pages/mypage/family-account";
+import MyProfilePage from "../pages/profile/my-profile-page";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +65,7 @@ export const router = createBrowserRouter([
           },
           { path: "mypage", element: <MyPage /> },
           { path: "mypage/terms-and-policies", element: <TermsAndPolicies /> }, // 마이페이지 라우팅, path는 임시로 부여
+          { path: "mypage/family-account", element: <FamilyAccount /> },
           { path: "planner", element: <PlannerPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
@@ -90,6 +93,7 @@ export const router = createBrowserRouter([
             path: "modify-profile/allergy-search",
             element: <AllergiesSearchPage />,
           },
+          { path: "my-profile", element: <MyProfilePage /> },
           {
             path: "menu-information/:menuId",
             element: <MenuInformationPage />,

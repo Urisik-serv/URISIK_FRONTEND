@@ -1,23 +1,38 @@
 import chevronLeftGray from "../../assets/icons/chevron-right-gray.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
 import emptyCheckBox from "../../assets/icons/check-box-empty.svg";
+import { useNavigate, type To } from "react-router-dom";
 
 interface TermsAgreementRowProps {
   isChecked: boolean;
   onChecked: () => void;
+  title: string;
+  to: To;
 }
 
 export default function TermsAgreementRow({
   isChecked,
   onChecked,
+  title,
+  to,
 }: TermsAgreementRowProps) {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    if (to) {
+      navigate(to);
+    }
+  };
+
   return (
     <>
       <div className="w-80 inline-flex justify-between items-center pb-[20px]">
         <div className="flex flex-row items-center gap-[4px]">
-          <div className=" text-zinc-900 text-lg font-medium font-['Wanted_Sans'] leading-7">
-            서비스 이용 약관 (필수)
-          </div>
+          <button
+            onClick={handleNavigate}
+            className="cursor-pointer text-gray-800 text-lg font-medium leading-7"
+          >
+            {title}
+          </button>
           <button className="w-6 h-6 cursor-pointer">
             <img
               src={chevronLeftGray}
