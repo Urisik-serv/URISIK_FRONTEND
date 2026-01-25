@@ -8,9 +8,7 @@ export const useNoticeList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get<NoticeLists>(
-          "/public/data/notice-list.json",
-        );
+        const res = await axios.get<NoticeLists>("/data/notice-list.json");
 
         setNoticeList(res.data);
         console.log(res);
