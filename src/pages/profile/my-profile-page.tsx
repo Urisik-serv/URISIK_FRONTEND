@@ -18,7 +18,7 @@ export default function MyProfilePage() {
   return (
     <>
       <PublicHeader title={"내 프로필"} />
-      <div className="pt-[33px] w-[343px] mx-auto flex flex-col ">
+      <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-40">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
             <img src={profilePicture} alt="내 프로필 사진" />

@@ -10,6 +10,7 @@ interface Item {
 }
 
 const MyWishList = () => {
+  // 임시 데이터
   const [items, setItems] = useState<Item[]>([
     { id: 1, name: "바나나 프렌치토스트" },
     { id: 2, name: "바나나 프렌치토스트" },
@@ -26,10 +27,8 @@ const MyWishList = () => {
 
     setSelectedIds((prev) => {
       if (prev.includes(id)) {
-        // 이미 선택되어 있다면 제거
         return prev.filter((itemId) => itemId !== id);
       } else {
-        // 선택 안 되어 있다면 추가
         return [...prev, id];
       }
     });
@@ -40,17 +39,15 @@ const MyWishList = () => {
       setEditMode(true);
     } else {
       if (selectedIds.length > 0) {
-        // 선택된 ID를 제외한 나머지 아이템만 남김
         const newItems = items.filter((item) => !selectedIds.includes(item.id));
         setItems(newItems);
-        alert(`${selectedIds.length}개의 아이템이 삭제되었습니다.`);
       }
 
-      // 초기화 및 편집 모드 OFF
       setSelectedIds([]);
       setEditMode(false);
     }
   };
+
   return (
     <div>
       <div className="flex justify-end pt-4">
