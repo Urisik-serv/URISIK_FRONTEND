@@ -8,9 +8,7 @@ export const useFamilyData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get<FamilyMembers>(
-          "/public/data/family-data.json",
-        );
+        const res = await axios.get<FamilyMembers>("/data/family-data.json");
 
         setFamilyData(res.data);
         console.log(res);
