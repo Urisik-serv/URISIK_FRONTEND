@@ -50,7 +50,7 @@ const MyWishList = () => {
 
   return (
     <div>
-      <div className="flex justify-end pt-4">
+      <div className="flex justify-end">
         <EditButton
           onClick={handleButtonClick}
           count={selectedIds.length}

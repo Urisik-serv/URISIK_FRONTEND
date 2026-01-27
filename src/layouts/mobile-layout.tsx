@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../components/common/Footer";
+import UpButton from "../components/common/UpButton";
 
 export default function MobileLayout() {
   const location = useLocation();
@@ -11,6 +12,7 @@ export default function MobileLayout() {
       <div className="relative w-full max-w-[375px] bg-white shadow-md">
         <Outlet />
         {showFooter && <Footer />}
+        <UpButton />
       </div>
     </div>
   );

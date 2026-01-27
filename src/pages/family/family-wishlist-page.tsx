@@ -37,17 +37,10 @@ const FamilyWishListPage = () => {
               나의
             </button>
             <button onClick={() => setIsClicked(true)} className={myStyle}>
-              우리 가족
+              가족
             </button>
           </div>
-          <div>
-            <h1 className="text-xl font-semibold tracking-tight text-zinc-800">
-              우리 가족 위시리스트
-            </h1>
-            <p className="text-neutral-400 text-sm font-medium leading-6">
-              우리 가족이 원하는 음식들을 종합해서 확인하세요.
-            </p>
-          </div>
+
           <div>{isClicked ? <FamilyWishList /> : <MyWishList />}</div>
         </div>
       </div>
