@@ -24,7 +24,7 @@ const HomeHeader = () => {
             src={accountImg}
             alt="마이페이지 아이콘"
             className="w-6 h-6"
-            onClick={() => navigate("mypage")}
+            onClick={() => navigate("/mypage")}
           />
         </div>
       </div>
