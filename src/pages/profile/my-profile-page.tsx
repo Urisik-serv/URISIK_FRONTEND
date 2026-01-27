@@ -1,13 +1,13 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import { useFamilyData } from "../../hooks/use-family-data";
 import profilePicture from "../../assets/profile/leader-mom.svg";
-import ProfileDataBox from "../../components/profile/ProfileDataBox";
 import AllergyDataBox from "../../components/profile/AllergyDataBox";
 import WishListBox from "../../components/profile/WishListBox";
 import alertImage from "../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
 import SmallButton from "../../components/common/SmallCommonButton";
 import Footer from "../../components/common/Footer";
+import ElementButton from "../../components/common/ElementButton";
 
 export default function MyProfilePage() {
   const { familyData } = useFamilyData();
@@ -53,8 +53,8 @@ export default function MyProfilePage() {
               <div className="text-[16px] font-semibold leading-[24px]">
                 알레르기
               </div>
-              <div className="w-[48px] pt-[6px]">
-                <ProfileDataBox name="없음" className="px-[7px]" />
+              <div className="flex pt-2">
+                <ElementButton name="없음" />
               </div>
             </div>
           )}
@@ -65,7 +65,7 @@ export default function MyProfilePage() {
           </div>
           <div className="flex gap-[8px] pt-[8px]">
             {myData?.preferences.likedFood.map((food) => (
-              <ProfileDataBox name={food} className="px-[12px]" />
+              <ElementButton name={food} />
             ))}
           </div>
         </div>

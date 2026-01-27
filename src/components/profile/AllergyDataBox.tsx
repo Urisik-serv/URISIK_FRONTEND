@@ -1,5 +1,5 @@
 import { ALLERGY_ICON } from "../../constants/allergy-data";
-import ProfileDataBox from "./ProfileDataBox";
+import ElementButton from "../common/ElementButton";
 
 interface allergyDataProps {
   name: string;
@@ -27,7 +27,7 @@ export default function AllergyDataBox({
         </div>
         <div className="pt-[4px] flex gap-[8px] flex-wrap">
           {alternative.map((item) => (
-            <ProfileDataBox name={item} className="px-[12px]" />
+            <ElementButton name={item} />
           ))}
         </div>
       </div>
