@@ -4,18 +4,6 @@ import MyWishList from "../../components/wish-list/MyWishList";
 import FamilyWishList from "../../components/wish-list/FamilyWishList";
 
 const FamilyWishListPage = () => {
-  const menus = [
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-    "바나나 프렌치토스트",
-  ];
-
   const [isClicked, setIsClicked] = useState(true);
   const myStyle =
     "h-12 p-2.5 border-b-2 flex justify-center items-center gap-2.5 w-full text-lg font-semibold leading-4 " +
