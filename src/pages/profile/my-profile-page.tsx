@@ -82,6 +82,7 @@ export default function MyProfilePage() {
                   category={item.category}
                   tags={item.tags.join(", ")}
                   key={item.id}
+                  border="border-b-1 border-b-gray-200"
                 />
               ))}
             </div>

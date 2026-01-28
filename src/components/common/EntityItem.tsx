@@ -7,6 +7,7 @@ interface EntityItemProps {
   category: string;
   tags: string;
   rating?: number;
+  border?: string;
 }
 
 export default function EntityItem({
@@ -15,6 +16,7 @@ export default function EntityItem({
   category,
   tags,
   rating,
+  border,
 }: EntityItemProps) {
   return (
     <>
@@ -27,7 +29,9 @@ export default function EntityItem({
           dragConstraints={{ left: -93, right: 0 }}
           className="relative bg-white"
         >
-          <div className="w-[343px] h-[72px] p-[10px] border-b-[1px] border-b-gray-200 text-xl leading-[20px] tracking-[-0.6px]">
+          <div
+            className={`w-[343px] h-[72px] p-[10px] ${border} text-xl leading-[20px] tracking-[-0.6px]`}
+          >
             <div className=" flex gap-[12px]">
               <img
                 src={picture}
