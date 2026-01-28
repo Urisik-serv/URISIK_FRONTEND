@@ -34,10 +34,7 @@ const ProfileModal = () => {
     }
   }, [open, controls]);
 
-  const onDragEnd = async (
-    event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo,
-  ) => {
+  const onDragEnd = async (_: any, info: PanInfo) => {
     const offset = info.offset.y;
     const velocity = info.velocity.y;
 
@@ -91,7 +88,7 @@ const ProfileModal = () => {
           <div className="h-1.5 w-24 rounded-[3px] bg-gray-300" />
         </div>
 
-        <div className="px-4 pb-10 overflow-y-auto h-full [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
+        <div className="px-4 pb-10 overflow-y-auto overscroll-contain h-full [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
           <div className="pt-15.5 w-full mx-auto flex flex-col pb-10">
             <div className="flex justify-between  w-full">
               <div className="flex gap-3 items-end">
