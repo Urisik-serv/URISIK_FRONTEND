@@ -55,7 +55,12 @@ const MyPage = () => {
               알림
             </button>
             <div className="w-0 h-[57px] border-l border-l-[#E2E2E2]" />
-            <button className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]">
+            <button
+              className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]"
+              onClick={() => {
+                navigate("/family-wishlist");
+              }}
+            >
               위시리스트
             </button>
             <div className="w-0 h-[57px] border-l border-l-[#E2E2E2]" />

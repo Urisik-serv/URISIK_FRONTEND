@@ -10,11 +10,11 @@ const ElementButton = ({ onClick, onClose, name }: ElementButtonProps) => {
   return (
     <div
       onClick={onClick}
-      className={`px-3 py-1 bg-zinc-100 rounded flex justify-center items-center gap-1 ${
+      className={`px-3 py-1 bg-gray-100 rounded flex justify-center items-center gap-1 ${
         onClose && "pr-2"
       }`}
     >
-      <p className="text-center text-black text-sm font-medium">{name}</p>
+      <p className="text-center text-black text-[14px] font-medium">{name}</p>
       {onClose && (
         <img
           src={CloseIcon}

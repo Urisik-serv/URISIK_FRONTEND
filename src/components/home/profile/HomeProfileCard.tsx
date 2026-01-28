@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import DefaultMomImg from "../../../assets/profile/default-mom.svg";
 import type { FamilyProfile } from "../../../types/family-profile";
 interface HomeProfileCardProps {
@@ -5,10 +6,16 @@ interface HomeProfileCardProps {
 }
 
 const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
+  const navigate = useNavigate();
+
   // 서버와 연결하기 전까지 임시 myProfile 확인
   const myProfile = data.name === "김엄마";
+
+  const handleClick = () => {
+    if (myProfile) navigate("my-profile");
+  };
   return (
-    <div className="shrink-0">
+    <div onClick={handleClick} className="shrink-0">
       <img
         src={DefaultMomImg}
         alt="프로필 이미지"
