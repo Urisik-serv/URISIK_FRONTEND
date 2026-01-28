@@ -5,6 +5,8 @@ import FoodCard from "../../components/home/category/FoodCard";
 import AllergyCuration from "../../components/home/curation/AllergyCuration";
 import MealCuration from "../../components/home/curation/MealCuration";
 import FamilyProfile from "../../components/home/profile/FamilyProfile";
+import ProfileModal from "../../components/home/profile/ProfileModal";
+import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -17,6 +19,8 @@ const HomePage = () => {
   const openSearchBar = () => {
     navigate(location.pathname, { state: { showSearch: true } });
   };
+
+  const { open } = useProfileModalInfo();
 
   return (
     <>
@@ -43,6 +47,7 @@ const HomePage = () => {
               </div>
               <AllergyCuration />
               <MealCuration />
+              {open && <ProfileModal />}
               <UpButton />
             </div>
           </main>

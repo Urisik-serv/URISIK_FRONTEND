@@ -5,7 +5,6 @@ import AllergyDataBox from "../../components/profile/AllergyDataBox";
 import alertImage from "../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
 import SmallButton from "../../components/common/SmallCommonButton";
-import Footer from "../../components/common/Footer";
 import ElementButton from "../../components/common/ElementButton";
 import EntityItem from "../../components/common/EntityItem";
 
