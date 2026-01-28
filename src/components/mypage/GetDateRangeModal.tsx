@@ -14,12 +14,11 @@ export default function GetDateRangeModal({ handleModal }: ModalProps) {
         <div className="absolute inset-0 bg-black/50" onClick={handleModal} />
 
         <div className="relative w-full flex flex-col bg-white py-[17px] px-[16px] rounded-t-3xl">
-          <button
-            onClick={handleModal}
-            className="cursor-pointer flex justify-center pb-[24px]"
-          >
-            <img src={xIcon} alt="닫기" />
-          </button>
+          <div className="flex justify-center pb-[24px]">
+            <button onClick={handleModal} className="cursor-pointer">
+              <img src={xIcon} alt="닫기" />
+            </button>
+          </div>
 
           <div className="pb-[24px] text-xl font-semibold">기간 조회</div>
 
