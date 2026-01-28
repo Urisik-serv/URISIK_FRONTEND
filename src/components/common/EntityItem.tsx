@@ -1,14 +1,21 @@
-import type { WishList } from "../../types/family-profile";
 import { motion } from "framer-motion";
-import Rate from "../common/Rate";
+import Rate from "./Rate";
 
-interface wishListBoxProps {
-  myWishList: WishList;
+interface EntityItemProps {
+  picture: string;
+  name: string;
+  category: string;
+  tags: string;
+  rating?: number;
 }
 
-export default function WishListBox({ myWishList }: wishListBoxProps) {
-  const tag = myWishList.tags.join(", ");
-
+export default function EntityItem({
+  picture,
+  name,
+  category,
+  tags,
+  rating,
+}: EntityItemProps) {
   return (
     <>
       <div className="relative overflow-hidden bg-gray-100 ">
@@ -23,26 +30,28 @@ export default function WishListBox({ myWishList }: wishListBoxProps) {
           <div className="w-[343px] h-[72px] p-[10px] border-b-[1px] border-b-gray-200 text-xl leading-[20px] tracking-[-0.6px]">
             <div className=" flex gap-[12px]">
               <img
-                src={myWishList.FoodImageUrl}
-                alt={`${myWishList.name} 사진`}
+                src={picture}
+                alt={`${name} 사진`}
                 className="size-[52px] rounded-lg object-cover"
               />
               <div className="flex flex-col gap-[11px]">
                 <div className="flex items-center gap-[5px]">
                   <div className="text-[16px] font-semibold leading-[24px]">
-                    {myWishList.name}
+                    {name}
                   </div>
-                  <div className="flex gap-[2.34px] items-center justify-center">
-                    <Rate px={12} rate={myWishList.rating} />
-                  </div>
+                  {rating && (
+                    <div className="flex gap-[2.34px] items-center justify-center">
+                      <Rate px={12} rate={rating} />
+                    </div>
+                  )}
                 </div>
                 <div className="flex gap-[5px] items-center">
                   <div className="text-sm tracking-[-0.42px] text-gray-400">
-                    {myWishList.category}
+                    {category}
                   </div>
                   <div className="w-0 h-3.5 bg-gray-400 border-r border-r-gray-400" />
                   <div className="text-sm tracking-[-0.42px] text-gray-400">
-                    {tag}
+                    {tags}
                   </div>
                 </div>
               </div>
