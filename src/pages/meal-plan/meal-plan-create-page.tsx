@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
-import HomeHeader from "../../components/header/HomeHeader";
 import ChooseWeek from "../../components/meal-plan/ChooseWeek";
 import MemberMealPlanView from "../../components/meal-plan/MemberMealPlanView";
+import PublicHeader from "../../components/header/PublicHeader";
 
 const MealPlanCreatePage = () => {
   const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
   const navigate = useNavigate();
   return (
     <div>
-      <HomeHeader />
+      <PublicHeader title={"식단 생성"} />
       {isMember ? (
         <MemberMealPlanView />
       ) : (

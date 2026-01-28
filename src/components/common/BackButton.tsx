@@ -23,7 +23,7 @@ export default function BackButton({
   return (
     <button
       onClick={handleClick}
-      className={`cursor-pointer size-[24px] ${className}`}
+      className={`cursor-pointer size-[24px] shrink-0 ${className}`}
     >
       <img src={BackIcon} alt="뒤로가기" />
     </button>

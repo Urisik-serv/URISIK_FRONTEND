@@ -1,15 +1,39 @@
+import { useState, useEffect } from "react";
 import UpImg from "../../assets/icons/chevron-up.svg";
 
 const UpButton = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
   const handleClick = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 30) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
   return (
     <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[375px] h-0 z-50 pointer-events-none">
-      <div className="absolute bottom-32 right-5 pointer-events-auto">
+      <div
+        className={`
+          absolute bottom-32 right-5 transition-opacity duration-200 ease-in-out
+          ${isVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+        `}
+      >
         <button
-          className="cursor-pointer pointer-events-auto"
+          className="cursor-pointer"
           onClick={handleClick}
+          tabIndex={isVisible ? 0 : -1}
         >
           <img
             src={UpImg}

@@ -4,11 +4,19 @@ import profilePicture from "../../assets/profile/leader-mom.svg";
 import SpeechBubble from "../../components/mypage/SpeechBubble";
 import { useNavigate } from "react-router-dom";
 import ListItem from "../../components/mypage/ListItem";
+import { useState } from "react";
+import AlertModal from "../../components/common/AlertModal";
 
 const MyPage = () => {
   const { familyData } = useFamilyData();
   const myData = familyData?.familyMembers[0];
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <>
       <PublicHeader title="마이페이지" />
@@ -55,7 +63,12 @@ const MyPage = () => {
               알림
             </button>
             <div className="w-0 h-[57px] border-l border-l-[#E2E2E2]" />
-            <button className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]">
+            <button
+              className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]"
+              onClick={() => {
+                navigate("/family-wishlist");
+              }}
+            >
               위시리스트
             </button>
             <div className="w-0 h-[57px] border-l border-l-[#E2E2E2]" />
@@ -72,8 +85,19 @@ const MyPage = () => {
             title="약관 및 정책"
             to={"terms-and-policies"}
           />
-          <ListItem isOnOff={false} title="로그아웃" />
+          <div onClick={handleModal} className="cursor-pointer">
+            <ListItem isOnOff={false} title="로그아웃" />
+          </div>
         </div>
+        {isOpen && (
+          <AlertModal
+            title="안내창"
+            boldContent={`[${myData?.name}]님`}
+            mediumContent="우리식에서 로그아웃할까요?"
+            buttonText="로그아웃"
+            onClick={handleModal}
+          />
+        )}
       </div>
     </>
   );

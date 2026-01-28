@@ -1,0 +1,45 @@
+import { useState } from "react";
+import PublicHeader from "../../components/header/PublicHeader";
+import DateRangeBlock from "../../components/mypage/DateRangeBlock";
+import { useHistoryData } from "../../hooks/use-history-data";
+import GetDateRangeModal from "../../components/mypage/GetDateRangeModal";
+
+export default function History() {
+  const { historyData } = useHistoryData();
+  const [isOpen, setIsOpen] = useState(false);
+  const handleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  return (
+    <>
+      <PublicHeader title={"기록"} />
+      <div className="w-[343px] mx-auto relative">
+        <div className="flex justify-start pt-[24px]">
+          <div className="text-2xl font-semibold leading-[36px]">
+            최근 1개월 식단 기록
+          </div>
+        </div>
+        <div className="pt-[16px] flex justify-end">
+          <button
+            onClick={handleModal}
+            className="cursor-pointer w-[70px] p-10px text-center text-white text-[16px] font-medium leading-[16px] tracking-[-0.48px] bg-primary-700 rounded-lg p-[8px]"
+          >
+            기간조회
+          </button>
+        </div>
+        <div className="flex flex-col gap-[11px] pt-[8px]">
+          {historyData?.history?.map((history) => (
+            <DateRangeBlock
+              key={history.id}
+              startDate={history.started_at}
+              updateDate={history.updated_at}
+              dailyRecords={history.daily_records}
+            />
+          ))}
+        </div>
+      </div>
+      {isOpen && <GetDateRangeModal handleModal={handleModal} />}
+    </>
+  );
+}

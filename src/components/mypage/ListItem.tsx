@@ -37,13 +37,13 @@ export default function ListItem({ to, isOnOff, title }: ListItemProps) {
           >
             {title}
           </button>
-          <button className="cursor-pointer" onClick={handleNavigate}>
+          <div className="cursor-pointer" onClick={handleNavigate}>
             <img
               className="size-[24px]"
               src={chevronRight}
               alt={`${title} 바로 가기기`}
             />
-          </button>
+          </div>
         </div>
       )}
     </div>
