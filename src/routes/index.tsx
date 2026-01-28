@@ -69,7 +69,6 @@ export const router = createBrowserRouter([
           { path: "mypage/notice", element: <NoticePage /> },
           { path: "mypage/family-account", element: <FamilyAccount /> },
           { path: "mypage/history", element: <History /> },
-          { path: "planner", element: <PlannerPage /> },
 
           { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
