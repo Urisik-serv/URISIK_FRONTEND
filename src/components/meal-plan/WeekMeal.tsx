@@ -12,7 +12,11 @@ export default function ThisWeekMeal() {
       <div className="flex flex-col gap-3 pb-30">
         {week.map((day) => (
           <div className="flex gap-3">
-            <CalendarChipS text={day} type="primary" />
+            {day == "일" ? (
+              <CalendarChipS text={day} type="primary" />
+            ) : (
+              <CalendarChipS text={day} type="gray" />
+            )}
             {day == "일" ? <DateMenuList /> : <DateMenuList isSelect={false} />}
           </div>
         ))}

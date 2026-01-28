@@ -13,7 +13,7 @@ export default function CalendarChipS({ text, type }: CalendarChipSProps) {
   if (type === "primary") {
     className += "bg-primary-700 text-white";
   } else if (type === "gray") {
-    className += "bg-gray-400 text-gray-50";
+    className += "bg-gray-50 text-gray-400 border-0";
   } else {
     // type === "select"
     if (select) {

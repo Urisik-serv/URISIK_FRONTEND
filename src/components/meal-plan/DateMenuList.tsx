@@ -37,7 +37,7 @@ export default function DateMenuList({ isSelect = true }: DateMenuListProps) {
       </div>
       <div className="flex justify-end">
         <button
-          className="flex font-semibold cursor-pointer text-[14px]"
+          className="flex items-center font-semibold cursor-pointer text-[14px]"
           onClick={() => navigate("/menu-information/101")}
         >
           레시피 자세히 보기 <img src={Right} alt="화살표 아이콘" />
