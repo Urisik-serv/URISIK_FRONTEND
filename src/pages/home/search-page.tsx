@@ -22,7 +22,7 @@ const SearchingPage = () => {
         </div>
         <div className="pb-7.5">
           <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
-            사용자님 취향에 맞는 메뉴를 추천해요
+            00님 취향에 맞는 메뉴를 추천해요
           </p>
           <div className="flex gap-1.5">
             <ElementButton name="스프" />
