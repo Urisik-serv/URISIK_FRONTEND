@@ -1,10 +1,17 @@
+import { useState } from "react";
 import CreamPasta from "../../assets/sample/cream-pasta.png";
 import Button from "../common/Button";
+import ReviewModal from "./ReviewModal";
 
 export default function TodayMeal() {
+  const [isDone, setIsDone] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleOpen = () => setIsOpen(false);
+  console.log(isOpen);
   return (
     <>
       <div className="flex justify-between items-center pt-10 pb-6">
+        {isOpen && <ReviewModal onClick={handleOpen} />}
         <div>
           <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p>
           <p className="font-semibold text-[18px] tracking-[0.01em]">
@@ -15,7 +22,21 @@ export default function TodayMeal() {
         </div>
         <img src={CreamPasta} alt="크림파스타" />
       </div>
-      <Button type="button" text="식사 완료" />
+      {!isDone ? (
+        <Button
+          type="button"
+          text="식사 완료"
+          onClick={() => setIsDone(true)}
+        />
+      ) : (
+        <Button
+          type="button"
+          text="리뷰 작성"
+          bgColor="white"
+          onClick={() => setIsOpen(true)}
+        />
+      )}
+
       <div className="flex flex-col gap-2 text-[14px] pt-11 pb-7">
         <p className="font-semibold text-primary-700">식재료</p>
         <p className="font-normal text-gray-600">
