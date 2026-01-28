@@ -3,11 +3,11 @@ import { useFamilyData } from "../../hooks/use-family-data";
 import profilePicture from "../../assets/profile/leader-mom.svg";
 import ProfileDataBox from "../../components/profile/ProfileDataBox";
 import AllergyDataBox from "../../components/profile/AllergyDataBox";
-import WishListBox from "../../components/profile/WishListBox";
 import alertImage from "../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
 import SmallButton from "../../components/common/SmallCommonButton";
 import Footer from "../../components/common/Footer";
+import EntityItem from "../../components/common/EntityItem";
 
 export default function MyProfilePage() {
   const { familyData } = useFamilyData();
@@ -73,10 +73,16 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             내 위시리스트
           </div>
-          {!myData?.wishList ? (
+          {myData?.wishList ? (
             <div className="pt-[17px] flex flex-col gap-0">
               {myData?.wishList.map((item) => (
-                <WishListBox myWishList={item} key={item.id} />
+                <EntityItem
+                  picture={item.FoodImageUrl}
+                  name={item.name}
+                  category={item.category}
+                  tags={item.tags.join(", ")}
+                  key={item.id}
+                />
               ))}
             </div>
           ) : (
