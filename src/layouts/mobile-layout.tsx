@@ -4,7 +4,7 @@ import UpButton from "../components/common/UpButton";
 
 export default function MobileLayout() {
   const location = useLocation();
-  const footerPaths = ["/", "/planner"];
+  const footerPaths = ["/", "/meal-plan"];
 
   const showFooter = footerPaths.includes(location.pathname);
   return (
