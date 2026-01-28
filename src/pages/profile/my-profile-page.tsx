@@ -1,14 +1,19 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import { useFamilyData } from "../../hooks/use-family-data";
 import profilePicture from "../../assets/profile/leader-mom.svg";
-import ProfileDataBox from "../../components/test/ProfileDataBox";
-import AllergyDataBox from "../../components/test/AllergyDataBox";
-import WishListBox from "../../components/test/WishListBox";
+import ProfileDataBox from "../../components/profile/ProfileDataBox";
+import AllergyDataBox from "../../components/profile/AllergyDataBox";
+import alertImage from "../../assets/images/alert-circle.png";
+import { useNavigate } from "react-router-dom";
+import SmallButton from "../../components/common/SmallCommonButton";
+import Footer from "../../components/common/Footer";
+import EntityItem from "../../components/common/EntityItem";
 
-export default function MyProfilePage1() {
+export default function MyProfilePage() {
   const { familyData } = useFamilyData();
   const myData = familyData?.familyMembers[0];
   console.log(myData);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -21,7 +26,10 @@ export default function MyProfilePage1() {
               {myData?.name}
             </div>
           </div>
-          <button className="cursor-pointer flex items-start">
+          <button
+            className="cursor-pointer flex items-start"
+            onClick={() => navigate("../modify-profile")}
+          >
             <div className="text-[#767676] text-sm leading-[22.26px] font-medium">
               프로필 편집
             </div>
@@ -65,13 +73,36 @@ export default function MyProfilePage1() {
           <div className="text-[16px] font-semibold leading-[24px]">
             내 위시리스트
           </div>
-          <div className="pt-[17px] flex flex-col gap-0">
-            {myData?.wishList.map((item) => (
-              <WishListBox myWishList={item} key={item.id} />
-            ))}
-          </div>
+          {myData?.wishList ? (
+            <div className="pt-[17px] flex flex-col gap-0">
+              {myData?.wishList.map((item) => (
+                <EntityItem
+                  picture={item.FoodImageUrl}
+                  name={item.name}
+                  category={item.category}
+                  tags={item.tags.join(", ")}
+                  key={item.id}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="pt-[48px] flex flex-col items-center gap-[11px]">
+              <img src={alertImage} alt="알림 아이콘" className="size-[76px]" />
+              <div className="text-center text-[16px] leading-[24px] text-[#4D4D4D]">
+                추가된 위시리스트가 없어요
+              </div>
+              <div className="pt-[24px]">
+                <SmallButton
+                  text={"위시리스트 담기"}
+                  type="button"
+                  onClick={() => navigate("../")}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

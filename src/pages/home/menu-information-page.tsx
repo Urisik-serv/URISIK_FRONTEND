@@ -4,9 +4,12 @@ import type { Recipe } from "../../types/recipe-list";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import SampleImg from "../../assets/sample/shrimp-mushroom.png";
+import WhiteHeart from "../../assets/icons/heart-white.svg";
 import Rate from "../../components/common/Rate";
 import MenuInfo from "../../components/common/MenuInfo";
 import UpButton from "../../components/common/UpButton";
+import PageIndicator from "../../components/common/PageIndicator";
+import WishlistButton from "../../components/common/WishlistButton";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -32,7 +35,24 @@ const MenuInformationPage = () => {
   return (
     <div>
       <PublicHeader title={"메뉴 정보"} />
-      <img src={SampleImg} alt={`${data?.title} 사진`} className="h-72" />
+      <div className="relative h-72 w-full">
+        <img
+          src={SampleImg}
+          alt={`${data?.title} 사진`}
+          className="h-full w-full object-cover"
+        />
+        <div className="absolute bottom-16 left-0 w-full flex justify-end pr-2 z-0">
+          <div className="absolute left-1/2 -translate-x-1/2">
+            <PageIndicator page={1} total={1} />
+          </div>
+          <div className="px-2.5 py-2 bg-primary-700 flex justify-start items-center rounded-2xl gap-1">
+            <img src={WhiteHeart} alt="좋아요" />
+            <p className="text-white font-semibold text-[10px]">
+              {data?.pickedCount}가구가 선택했어요
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="px-4 pt-8 rounded-t-3xl -mt-10 relative z-10 bg-white">
         <div>
           <h1 className="text-2xl font-semibold pb-3 leading-9 text-gray-800">
@@ -73,8 +93,11 @@ const MenuInformationPage = () => {
           <div className="pb-5">
             <MenuInfo title="재료" sentences={data?.ingredients} />
           </div>
-          <div>
+          <div className="pb-20">
             <MenuInfo title="레시피" sentences={data?.descriptions} />
+          </div>
+          <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
+            <WishlistButton isWishList={data?.isWishlisted} isbig={true} />
           </div>
           <UpButton />
         </div>

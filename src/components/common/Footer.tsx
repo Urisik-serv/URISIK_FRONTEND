@@ -18,18 +18,18 @@ export default function Footer() {
               className="flex flex-col cursor-pointer gap-2"
               onClick={() => navigate("/")}
             >
-              <img src={Home} className="size-5" alt="루틴 아이콘" />
-              <p>루틴</p>
+              <img src={Home} className="size-5" alt="홈 아이콘" />
+              <p>홈</p>
             </button>
           </div>
 
           <div className="flex flex-col items-center w-19 pt-2">
             <button
               className="flex flex-col items-center cursor-pointer gap-2"
-              onClick={() => navigate("")} //보류, 추후 질문 예정
+              onClick={() => navigate("")}
             >
               <img src={Calendar} className="size-5" alt="마이 아이콘" />
-              <p>마이</p>
+              <p>식단표</p>
             </button>
           </div>
         </div>
