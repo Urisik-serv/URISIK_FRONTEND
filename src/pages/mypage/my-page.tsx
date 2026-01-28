@@ -5,6 +5,7 @@ import SpeechBubble from "../../components/mypage/SpeechBubble";
 import { useNavigate } from "react-router-dom";
 import ListItem from "../../components/mypage/ListItem";
 import { useState } from "react";
+import AlertModal from "../../components/common/AlertModal";
 
 const MyPage = () => {
   const { familyData } = useFamilyData();
@@ -84,37 +85,18 @@ const MyPage = () => {
             title="약관 및 정책"
             to={"terms-and-policies"}
           />
-          <button onClick={handleModal} className="cursor-pointer">
+          <div onClick={handleModal} className="cursor-pointer">
             <ListItem isOnOff={false} title="로그아웃" />
-          </button>
+          </div>
         </div>
         {isOpen && (
-          <div>
-            <div className="fixed inset-0 bg-black/50 w-[375px] mx-auto flex flex-col justify-center items-center">
-              <div className="w-[303px] bg-white px-[24px] pt-[24px] pb-[12px] rounded-xl flex flex-col items-center">
-                <div className="text-primary-700 text-lg text-center font-semibold tracking-[0.18px]">
-                  안내창
-                </div>
-                <div className="pt-[20px] text-center text-[#333] text-2xl font-semibold leading-[36px]">
-                  [{myData?.name}]님
-                </div>
-                <div className="text-[#3C3C3C] text-lg leading-[27px] pt-[8px]">
-                  우리식에서 로그아웃할까요?
-                </div>
-                <div className="pt-[48px] w-full">
-                  <button className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full">
-                    로그아웃
-                  </button>
-                </div>
-              </div>
-              <button
-                onClick={handleModal}
-                className="cursor-pointer text-white pt-[12px] text-[16px] leading-[24px]"
-              >
-                탭해서 취소
-              </button>
-            </div>
-          </div>
+          <AlertModal
+            title="안내창"
+            boldContent={`[${myData?.name}]님`}
+            mediumContent="우리식에서 로그아웃할까요?"
+            buttonText="로그아웃"
+            onClick={handleModal}
+          />
         )}
       </div>
     </>
