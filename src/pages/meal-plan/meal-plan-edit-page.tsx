@@ -33,7 +33,7 @@ const MealPlanEditPage = () => {
 
   return (
     <div>
-      <PublicHeader title={""} />
+      <PublicHeader title={"식단 수정"} />
       <p className="pl-4 pt-6 font-semibold text-[24px] text-[#333333] pb-4 whitespace-pre-line">
         수정하고 싶은 요일을 선택하고,{"\n"}내가 원하는 메뉴로 바꿔요.
       </p>
