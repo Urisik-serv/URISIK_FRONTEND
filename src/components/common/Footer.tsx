@@ -26,7 +26,7 @@ export default function Footer() {
           <div className="flex flex-col items-center w-19 pt-2">
             <button
               className="flex flex-col items-center cursor-pointer gap-2"
-              onClick={() => navigate("")}
+              onClick={() => navigate("/meal-plan")}
             >
               <img src={Calendar} className="size-5" alt="마이 아이콘" />
               <p>식단표</p>
