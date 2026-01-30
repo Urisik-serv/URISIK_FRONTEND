@@ -95,7 +95,9 @@ const MyPage = () => {
             boldContent={`[${myData?.name}]님`}
             mediumContent="우리식에서 로그아웃할까요?"
             buttonText="로그아웃"
-            onClick={handleModal}
+            outsideText="탭해서 취소"
+            onButtonClick={() => {}} //버튼 클릭했을 때
+            onOutsideClick={handleModal}
           />
         )}
       </div>
