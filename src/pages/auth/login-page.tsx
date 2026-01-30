@@ -3,6 +3,14 @@ import kakaoLogo from "../../assets/logos/kakao-logo.svg";
 import googleLogo from "../../assets/logos/Google Logo.svg";
 
 const LoginPage = () => {
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/google`;
+  };
+
+  const handleKakaoLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
+  };
+
   return (
     <div className="h-dvh flex flex-col items-center">
       <div className=" pt-[269px]">
@@ -17,7 +25,10 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="pt-[124px] flex flex-col items-center gap-[8px] w-[343px]">
-        <button className="cursor-pointer self-stretch px-4 pt-[15px] pb-4 bg-[#FEE500] rounded-[10px] inline-flex justify-center items-center gap-3.5 h-[55px]">
+        <button
+          onClick={handleKakaoLogin}
+          className="cursor-pointer self-stretch px-4 pt-[15px] pb-4 bg-[#FEE500] rounded-[10px] inline-flex justify-center items-center gap-3.5 h-[55px]"
+        >
           <div className="flex justify-start items-center gap-[15px] ">
             <div className="w-6 h-6 relative overflow-hidden">
               <img src={kakaoLogo} alt="카카오 로그인 로고" />
@@ -27,7 +38,10 @@ const LoginPage = () => {
             </div>
           </div>
         </button>
-        <button className="cursor-pointer self-stretch p-4 bg-white rounded-[10px] border border-1 border-neutral-300 inline-flex justify-center items-center gap-3.5 h-[56px]">
+        <button
+          onClick={handleGoogleLogin}
+          className="cursor-pointer self-stretch p-4 bg-white rounded-[10px] border border-1 border-neutral-300 inline-flex justify-center items-center gap-3.5 h-[56px]"
+        >
           <div className="flex justify-start items-center gap-[15px] ">
             <div className="w-6 h-6 relative bg-white">
               <img src={googleLogo} alt="구글 로그인 로고" />
