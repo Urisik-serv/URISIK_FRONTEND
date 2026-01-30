@@ -114,7 +114,7 @@ export default function TermsAgreementPage() {
             text={`다음`}
             type="button"
             disabled={!isValid()}
-            onClick={() => navigate("../family-invite")}
+            onClick={() => navigate("../family-create")}
           />
         </div>
       </div>
