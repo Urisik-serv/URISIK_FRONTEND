@@ -51,17 +51,6 @@ const LoginPage = () => {
             </div>
           </div>
         </button>
-        <div className="pt-[8px]">
-          <div className="inline-flex justify-start items-end gap-4">
-            <div className="cursor-pointer justify-start text-[#B8B8B8] text-sm font-normal  underline underline-offset-4 decoration-1">
-              아이디 찾기
-            </div>
-            <div className="w-0 h-4 outline outline-1 outline-offset-[-0.50px] outline-[#B8B8B8]" />
-            <div className="cursor-pointer justify-start text-[#B8B8B8] text-sm font-normal  underline underline-offset-4 decoration-1">
-              비밀번호 찾기
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
