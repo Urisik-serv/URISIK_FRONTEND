@@ -29,6 +29,7 @@ import NoticePage from "../pages/mypage/notice-page";
 import FamilyAccount from "../pages/mypage/family-account";
 import MyProfilePage from "../pages/profile/my-profile-page";
 import History from "../pages/mypage/history";
+import LoginRedirectPage from "../pages/auth/login-redirect-page";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "login/callback",
+        element: <LoginRedirectPage />,
       },
       {
         path: "signup",
