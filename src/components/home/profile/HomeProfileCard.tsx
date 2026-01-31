@@ -1,19 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import DefaultMomImg from "../../../assets/profile/default-mom.svg";
 import type { FamilyProfile } from "../../../types/family-profile";
+import { useProfileModalActions } from "../../../hooks/use-profile-modal-store";
 interface HomeProfileCardProps {
   data: FamilyProfile;
 }
 
 const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
   const navigate = useNavigate();
+  const { isOpen } = useProfileModalActions();
 
   // 서버와 연결하기 전까지 임시 myProfile 확인
   const myProfile = data.name === "김엄마";
 
   const handleClick = () => {
     if (myProfile) navigate("my-profile");
+    else isOpen(data);
   };
+
   return (
     <div onClick={handleClick} className="shrink-0">
       <img

@@ -9,7 +9,7 @@ const PublicHeader = ({ title }: PublicHeaderProps) => {
     <div className="w-full px-4 py-2.5 flex justify-between items-center">
       <BackButton />
       <div className="">
-        <p className="justify-start text-black text-xl font-semibold font-['Pretendard'] tracking-tight">
+        <p className="justify-start text-black text-xl font-semibold tracking-tight">
           {title}
         </p>
       </div>
