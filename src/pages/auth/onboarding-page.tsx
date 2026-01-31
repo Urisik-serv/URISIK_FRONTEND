@@ -22,7 +22,7 @@ export default function OnboardingPage() {
             disableOnInteraction: false,
             stopOnLastSlide: true,
           }}
-          spaceBetween={0}
+          spaceBetween={16}
           slidesPerView={1}
           className="h-full w-full"
         >
