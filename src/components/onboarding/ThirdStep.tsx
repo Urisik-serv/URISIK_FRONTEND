@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import layerImg from "../../assets/images/onboarding3.png";
 import Button from "../common/Button";
-import { useSwiper } from "swiper/react";
 
 export default function ThirdStep() {
   const navigate = useNavigate();
-  const swiper = useSwiper();
   return (
     <>
       <div className="flex flex-col h-full">
@@ -20,14 +18,8 @@ export default function ThirdStep() {
           </div>
         </div>
         <div className="pt-[20px] flex justify-center gap-[3px]">
-          <div
-            className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer"
-            onClick={() => swiper.slideTo(0)}
-          />
-          <div
-            className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer"
-            onClick={() => swiper.slidePrev()}
-          />
+          <div className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer" />
+          <div className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer" />
           <div className="w-[26px] h-[6px] rounded-md bg-[#FF885A]" />
         </div>
         <div className="pt-[73px]">
