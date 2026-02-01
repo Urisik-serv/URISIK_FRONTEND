@@ -1,9 +1,8 @@
-// ---------- 로그인 -----------
-export interface ReissueResponse {
+export interface BaseResponse<T> {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: AuthResult;
+  result: T;
   errorDetail: any;
 }
 
@@ -17,16 +16,14 @@ export interface AuthResult {
   marketingOptIn: boolean;
 }
 
-// ---------- 로그아웃 -----------
-export interface LogoutResponse {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: LogoutResult;
-  errorDetail: any;
-}
-
 export interface LogoutResult {
   logoutSuccess: boolean;
   deleteSuccess: boolean;
 }
+export interface FamilyRoomResult {
+  familyRoomId: number;
+}
+
+export type ReissueResponse = BaseResponse<AuthResult>;
+export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;
+export type LogoutResponse = BaseResponse<LogoutResult>;
