@@ -16,4 +16,9 @@ export interface AuthResult {
   marketingOptIn: boolean;
 }
 
+export interface FamilyRoomResult {
+  familyRoomId: number;
+}
+
 export type ReissueResponse = BaseResponse<AuthResult>;
+export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;
