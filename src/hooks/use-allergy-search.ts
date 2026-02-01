@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useDebounce } from "./use-debounce";
+import useDebounce from "./use-debounce";
 import { ALLERGY_DATA } from "../constants/allergy-data";
 import { useProfileStore } from "../stores/use-profile-store";
 
