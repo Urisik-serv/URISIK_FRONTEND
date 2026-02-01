@@ -42,12 +42,12 @@ export default function BottomSheet({ open }: BottomSheetProps) {
         {isModalOpen && (
           <AlertModal
             title=""
-            boldContent={`[다음주 식단]에 \n저장되었어요.`}
-            mediumContent="식단표로 이동하시겠습니까?"
+            boldContent={`수정을 중단하시겠어요?`}
+            mediumContent={`완료된 식단표는 [다음주 식단]에 \n저장됩니다`}
             buttonText="확인"
             outsideText="탭해서 닫기"
-            handleModal={handleButton}
-            onClick={() => {
+            onClick={handleButton}
+            handleModal={() => {
               setIsModalOpen(false);
             }}
           />

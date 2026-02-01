@@ -68,8 +68,8 @@ export default function MobileLayout() {
             mediumContent="식재료 리스트로 이동하시겠어요?"
             buttonText="확인"
             outsideText="탭해서 닫기"
-            handleModal={handleButton}
-            onClick={closePopup}
+            onClick={handleButton}
+            handleModal={closePopup}
           />
         )}
       </div>

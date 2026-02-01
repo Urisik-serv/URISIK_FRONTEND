@@ -27,10 +27,10 @@ export default function AlertModal({
           <div className="pt-[20px] text-center text-[#333] text-2xl font-semibold leading-[36px] whitespace-pre-line">
             {boldContent}
           </div>
-          <div className="text-[#3C3C3C] text-lg leading-[27px] pt-[8px]">
+          <div className="text-[#3C3C3C] text-lg leading-[27px] pt-[8px] text-center whitespace-pre-line">
             {mediumContent}
           </div>
-          <div className="pt-[48px] w-full">
+          <div className="px-6 pt-[48px] w-full">
             <button
               onClick={onClick}
               className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full"
