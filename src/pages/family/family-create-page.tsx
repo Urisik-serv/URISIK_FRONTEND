@@ -1,83 +1,25 @@
-import { useState } from "react";
 import FamilyTotalNumber from "../../components/family/FamilyTotalNumber";
 import PublicHeader from "../../components/header/PublicHeader";
 import NumberOfMember from "../../components/family/NumberOfMember";
 import Button from "../../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import SelectButton from "../../components/family/SelectButton";
+import { useFamilyData } from "../../hooks/use-family-data";
 
 export default function FamilyCreatePage() {
-  const navigate = useNavigate();
-  const [familyNumber, setFamilyNumber] = useState(3);
-  const [availableFamilyNumber, SetAvailableFamilyNumber] =
-    useState(familyNumber);
-  const [familyCounts, setFamilyCounts] = useState({
-    dad: 0,
-    mom: 0,
-    son: 0,
-    daughter: 0,
-  });
-  const [isLeader, setIsLeader] = useState({
-    dad: false,
-    mom: false,
-  });
-
-  // 토글
-  const select = (role: keyof typeof familyCounts) => {
-    const isTurningOn = familyCounts[role] === 0;
-    const isParent = role === "mom" || role === "dad";
-    if (isTurningOn && availableFamilyNumber <= 0) return;
-
-    setFamilyCounts((prev) => ({
-      ...prev,
-      [role]: isTurningOn ? 1 : 0,
-    }));
-
-    // 선택 되어 있다면?
-    if (!isTurningOn && isParent) {
-      setIsLeader((prev) => ({
-        ...prev,
-        [role]: false,
-      }));
-    }
-
-    SetAvailableFamilyNumber((prev) => (isTurningOn ? prev - 1 : prev + 1));
-  };
-
-  // 자식 증가
-  const increment = (role: keyof typeof familyCounts) => {
-    if (availableFamilyNumber > 0) {
-      setFamilyCounts((prev) => ({
-        ...prev,
-        [role]: prev[role] + 1,
-      }));
-
-      SetAvailableFamilyNumber((prev) => prev - 1);
-    }
-  };
-
-  // 자식 감소
-  const decrement = (role: keyof typeof familyCounts) => {
-    if (familyCounts[role] > 0) {
-      setFamilyCounts((prev) => ({
-        ...prev,
-        [role]: prev[role] - 1,
-      }));
-
-      SetAvailableFamilyNumber((prev) => prev + 1);
-    }
-  };
-
-  const handleLeader = (role: "mom" | "dad") => {
-    if (familyCounts[role] > 0) {
-      setIsLeader((prev) => ({
-        mom: role === "mom" ? !prev.mom : false,
-        dad: role === "dad" ? !prev.dad : false,
-      }));
-    }
-  };
-
-  const canAdjustChildren = familyCounts["mom"] > 0 || familyCounts["dad"] > 0;
+  const {
+    familyNumber,
+    setFamilyNumber,
+    SetAvailableFamilyNumber,
+    select,
+    familyCounts,
+    increment,
+    decrement,
+    canAdjustChildren,
+    handleLeader,
+    isLeader,
+    handleSubmit,
+  } = useFamilyData();
 
   return (
     <>
@@ -164,13 +106,7 @@ export default function FamilyCreatePage() {
             </div>
           </div>
           <div className="pt-[264px]">
-            <Button
-              text="다음"
-              type="submit"
-              onClick={() => {
-                navigate("/family-invite");
-              }}
-            />
+            <Button text="다음" type="submit" onClick={handleSubmit} />
           </div>
         </div>
       </div>
