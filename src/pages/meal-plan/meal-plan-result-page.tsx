@@ -29,7 +29,7 @@ const MealPlanResultPage = () => {
           mediumContent="식단표로 이동하시겠습니까?"
           buttonText="확인"
           outsideText="탭해서 닫기"
-          onButtonClick={() => navigate(`/meal-plan`)}
+          onButtonClick={() => navigate(`/meal-plan?tab=nextWeek`)}
           onOutsideClick={() => navigate(`/`)}
         />
       )}

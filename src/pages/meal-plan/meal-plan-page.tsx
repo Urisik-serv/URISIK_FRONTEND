@@ -2,11 +2,15 @@ import { useState } from "react";
 import HomeHeader from "../../components/header/HomeHeader";
 import TodayMeal from "../../components/meal-plan/TodayMeal";
 import WeekMeal from "../../components/meal-plan/WeekMeal";
+import { useSearchParams } from "react-router-dom";
 
 const MealPlanPage = () => {
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab");
   const [tab, setTab] = useState<"오늘의 식단" | "이번주 식단" | "다음주 식단">(
-    "오늘의 식단",
+    tabParam === "nextWeek" ? "다음주 식단" : "오늘의 식단",
   );
+
   return (
     <div>
       <HomeHeader />
