@@ -1,8 +1,8 @@
-export interface ReissueResponse {
+export interface BaseResponse<T> {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: AuthResult;
+  result: T;
   errorDetail: any;
 }
 
@@ -15,3 +15,10 @@ export interface AuthResult {
   aiNoticeAgreed: boolean;
   marketingOptIn: boolean;
 }
+
+export interface FamilyRoomResult {
+  familyRoomId: number;
+}
+
+export type ReissueResponse = BaseResponse<AuthResult>;
+export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;

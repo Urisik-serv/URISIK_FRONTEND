@@ -62,7 +62,7 @@ export default function FamilyProfileCreatePage() {
                 >
                   <SelectButton
                     name={role}
-                    number={selectedRole === role ? 1 : 0}
+                    isSelected={selectedRole === role}
                   />
                 </button>
               ))}
@@ -85,7 +85,7 @@ export default function FamilyProfileCreatePage() {
                   className="cursor-pointer pt-[12px]"
                   type="button"
                 >
-                  <SelectButton name="없음" number={selectedNone ? 1 : 0} />
+                  <SelectButton name="없음" isSelected={selectedNone} />
                 </button>
               ) : (
                 selectedAllergies.map((allergy) => (
@@ -94,7 +94,7 @@ export default function FamilyProfileCreatePage() {
                     onClick={() => handleSelectAllergy(allergy)}
                     className="pt-[12px]"
                   >
-                    <SelectButton name={allergy} number={1} />
+                    <SelectButton name={allergy} isSelected={true} />
                   </button>
                 ))
               )}
@@ -112,7 +112,7 @@ export default function FamilyProfileCreatePage() {
                 >
                   <SelectButton
                     name={food}
-                    number={isCheckedPreference[index] ? 1 : 0}
+                    isSelected={isCheckedPreference[index]}
                   />
                 </button>
               ))}

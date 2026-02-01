@@ -3,34 +3,23 @@ import minusIcon from "../../assets/icons/minus.svg";
 
 interface NumberOfMemberProps {
   number: number;
-  availableNumber: number;
-  onChange: (num: number) => void;
+  increment: () => void;
+  decrement: () => void;
   isBlocked: boolean;
 }
 
 export default function NumberOfMember({
   number,
-  availableNumber,
-  onChange,
+  increment,
+  decrement,
   isBlocked,
 }: NumberOfMemberProps) {
-  const handleIncrease = () => {
-    if (!isBlocked && availableNumber > 0) {
-      onChange(number + 1);
-    }
-  };
-
-  const handleDecrease = () => {
-    if (!isBlocked && number > 0) {
-      onChange(number - 1);
-    }
-  };
-
   return (
     <>
       <div className="flex justify-start items-center gap-3">
         <button
-          onClick={handleDecrease}
+          disabled={isBlocked}
+          onClick={decrement}
           className="cursor-pointer w-8 h-8 bg-zinc-100 rounded-2xl flex justify-center items-center gap-2.5"
         >
           <img src={minusIcon} alt="인원 감소" />
@@ -41,7 +30,8 @@ export default function NumberOfMember({
           </div>
         </div>
         <button
-          onClick={handleIncrease}
+          disabled={isBlocked}
+          onClick={increment}
           className="cursor-pointer w-8 h-8 bg-zinc-100 rounded-2xl flex justify-center items-center gap-2.5"
         >
           <img src={plusIcon} alt="인원 증가" />
