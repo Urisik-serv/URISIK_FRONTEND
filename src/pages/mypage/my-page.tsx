@@ -6,15 +6,22 @@ import { useNavigate } from "react-router-dom";
 import ListItem from "../../components/mypage/ListItem";
 import { useState } from "react";
 import AlertModal from "../../components/common/AlertModal";
+import { useAuth } from "../../hooks/use-auth";
 
 const MyPage = () => {
   const { familyData } = useFamilyData();
+  const { LogoutMutate } = useAuth();
+
   const myData = familyData?.familyMembers[0];
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModal = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    LogoutMutate();
   };
 
   return (
@@ -95,7 +102,8 @@ const MyPage = () => {
             boldContent={`[${myData?.name}]님`}
             mediumContent="우리식에서 로그아웃할까요?"
             buttonText="로그아웃"
-            onClick={handleModal}
+            handleModal={handleModal}
+            onClick={handleLogout}
           />
         )}
       </div>

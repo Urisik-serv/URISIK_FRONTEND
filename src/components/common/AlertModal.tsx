@@ -3,6 +3,7 @@ interface AlertModalProps {
   boldContent: string;
   mediumContent: string;
   buttonText: string;
+  handleModal: () => void;
   onClick: () => void;
 }
 
@@ -11,6 +12,7 @@ export default function AlertModal({
   boldContent,
   mediumContent,
   buttonText,
+  handleModal,
   onClick,
 }: AlertModalProps) {
   return (
@@ -27,13 +29,16 @@ export default function AlertModal({
             {mediumContent}
           </div>
           <div className="pt-[48px] w-full">
-            <button className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full">
+            <button
+              onClick={onClick}
+              className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full"
+            >
               {buttonText}
             </button>
           </div>
         </div>
         <button
-          onClick={onClick}
+          onClick={handleModal}
           className="cursor-pointer text-white pt-[12px] text-[16px] leading-[24px]"
         >
           탭해서 취소
