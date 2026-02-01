@@ -34,8 +34,8 @@ const MealPlanResultPage = () => {
           mediumContent="식단표로 이동하시겠습니까?"
           buttonText="확인"
           outsideText="탭해서 닫기"
-          onButtonClick={handleButton}
-          onOutsideClick={() => navigate(`/`)}
+          handleModal={handleButton}
+          onClick={() => navigate(`/`)}
         />
       )}
       <p className="pl-4 pt-6 font-semibold text-[24px] text-[#333333] pb-4 whitespace-pre-line">

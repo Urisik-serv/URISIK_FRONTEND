@@ -46,8 +46,8 @@ export default function BottomSheet({ open }: BottomSheetProps) {
             mediumContent="식단표로 이동하시겠습니까?"
             buttonText="확인"
             outsideText="탭해서 닫기"
-            onButtonClick={handleButton}
-            onOutsideClick={() => {
+            handleModal={handleButton}
+            onClick={() => {
               setIsModalOpen(false);
             }}
           />
