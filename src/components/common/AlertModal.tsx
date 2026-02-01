@@ -20,7 +20,7 @@ export default function AlertModal({
   return (
     <div>
       <div className="fixed inset-0 bg-black/50 w-[375px] mx-auto flex flex-col justify-center items-center z-10">
-        <div className="w-[303px] bg-white px-[24px] pt-[24px] pb-[12px] rounded-xl flex flex-col items-center">
+        <div className="w-[303px] bg-white pt-[24px] pb-[12px] rounded-xl flex flex-col items-center">
           <div className="text-primary-700 text-lg text-center font-semibold tracking-[0.18px]">
             {title}
           </div>
@@ -30,7 +30,7 @@ export default function AlertModal({
           <div className="text-[#3C3C3C] text-lg leading-[27px] pt-[8px]">
             {mediumContent}
           </div>
-          <div className="pt-[48px] w-full">
+          <div className="pt-[48px] w-full px-6">
             <button
               onClick={onButtonClick}
               className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full"
