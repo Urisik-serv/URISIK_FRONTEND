@@ -37,7 +37,7 @@ export default function AllergiesSearchPage() {
                 >
                   <SelectButton
                     name={allergy}
-                    number={isSelected(allergy) ? 1 : 0}
+                    isSelected={isSelected(allergy)}
                   />
                 </button>
               ))}

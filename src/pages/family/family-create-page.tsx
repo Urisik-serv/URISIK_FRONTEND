@@ -80,15 +80,15 @@ export default function FamilyCreatePage() {
             </div>
             <div className="flex gap-[12px]">
               <button onClick={handleMomNumber}>
-                <SelectButton name="엄마" number={momNumber ? 1 : 0} />
+                <SelectButton name="엄마" isSelected={momNumber > 0} />
               </button>
               <button onClick={handleDadNumber}>
-                <SelectButton name="아빠" number={dadNumber ? 1 : 0} />
+                <SelectButton name="아빠" isSelected={dadNumber > 0} />
               </button>
             </div>
             <div className="flex flex-col gap-[8px]">
               <div className="self-stretch inline-flex justify-start items-center gap-6">
-                <SelectButton name="아들" number={sonNumber > 0 ? 1 : 0} />
+                <SelectButton name="아들" isSelected={sonNumber > 0} />
                 <NumberOfMember
                   number={sonNumber}
                   availableNumber={availableNumber}
@@ -97,7 +97,7 @@ export default function FamilyCreatePage() {
                 />
               </div>
               <div className="self-stretch inline-flex justify-start items-center gap-6">
-                <SelectButton name="딸" number={daughterNumber > 0 ? 1 : 0} />
+                <SelectButton name="딸" isSelected={daughterNumber > 0} />
                 <NumberOfMember
                   number={daughterNumber}
                   availableNumber={availableNumber}
@@ -118,10 +118,10 @@ export default function FamilyCreatePage() {
             </div>
             <div className="flex gap-[12px]">
               <button onClick={handleMomLeader}>
-                <SelectButton name="엄마" number={momLeader ? 1 : 0} />
+                <SelectButton name="엄마" isSelected={momLeader} />
               </button>
               <button onClick={handleDadLeader}>
-                <SelectButton name="아빠" number={dadLeader ? 1 : 0} />
+                <SelectButton name="아빠" isSelected={dadLeader} />
               </button>
             </div>
           </div>
