@@ -2,7 +2,6 @@ import FamilyTotalNumber from "../../components/family/FamilyTotalNumber";
 import PublicHeader from "../../components/header/PublicHeader";
 import NumberOfMember from "../../components/family/NumberOfMember";
 import Button from "../../components/common/Button";
-import { useNavigate } from "react-router-dom";
 import SelectButton from "../../components/family/SelectButton";
 import { useFamilyData } from "../../hooks/use-family-data";
 
