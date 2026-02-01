@@ -24,7 +24,7 @@ export interface NoticeContent {
   createdAt: "2026-02-01T09:48:24.874Z";
 }
 
-export interface ResponseNoticeDto {
+export interface ResponseNotice {
   isSuccess: boolean;
   code: string;
   message: string;
