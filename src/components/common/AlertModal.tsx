@@ -38,7 +38,7 @@ export default function AlertModal({
           </div>
         </div>
         <button
-          onClick={onClick}
+          onClick={handleModal}
           className="cursor-pointer text-white pt-[12px] text-[16px] leading-[24px]"
         >
           탭해서 취소
