@@ -8,13 +8,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 // @ts-ignore
 import "swiper/css/pagination";
+import { Autoplay, Pagination } from "swiper/modules";
 
 export default function OnboardingPage() {
   return (
     <div className="flex flex-col h-screen">
       <HomeHeader />
       <div className="flex-1 px-[16px] overflow-hidden">
-        <Swiper spaceBetween={0} slidesPerView={1} className="h-full w-full">
+        <Swiper
+          modules={[Autoplay, Pagination]}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+            stopOnLastSlide: true,
+          }}
+          spaceBetween={16}
+          slidesPerView={1}
+          className="h-full w-full"
+        >
           <SwiperSlide className="pt-[92px] h-full flex items-center">
             <FirstStep />
           </SwiperSlide>

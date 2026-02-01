@@ -1,12 +1,12 @@
 interface FamilyMemberProps {
   name: string;
-  number: number;
+  isSelected: boolean;
 }
 
-export default function SelectButton({ name, number }: FamilyMemberProps) {
+export default function SelectButton({ name, isSelected }: FamilyMemberProps) {
   return (
     <>
-      {number > 0 ? (
+      {isSelected ? (
         <div className="h-[36px] px-6 py-1.5 bg-primary-700 rounded-xl inline-flex justify-center items-center gap-2.5">
           <div className="justify-start text-white text-[15px] font-semibold leading-6">
             {name}

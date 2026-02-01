@@ -1,7 +1,7 @@
 import { useState } from "react";
-import HomeHeader from "../../components/header/HomeHeader";
 import MyWishList from "../../components/wish-list/MyWishList";
 import FamilyWishList from "../../components/wish-list/FamilyWishList";
+import PublicHeader from "../../components/header/PublicHeader";
 
 const FamilyWishListPage = () => {
   const [isClicked, setIsClicked] = useState(true);
@@ -17,7 +17,7 @@ const FamilyWishListPage = () => {
       : "border-primary-700 bg-stone-50 text-primary-700");
   return (
     <div>
-      <HomeHeader />
+      <PublicHeader title={"위시리스트"} />
       <div className="p-4">
         <div>
           <div className="flex pb-6">

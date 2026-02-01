@@ -5,7 +5,6 @@ import AllergyDataBox from "../../components/profile/AllergyDataBox";
 import alertImage from "../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
 import SmallButton from "../../components/common/SmallCommonButton";
-import Footer from "../../components/common/Footer";
 import ElementButton from "../../components/common/ElementButton";
 import EntityItem from "../../components/common/EntityItem";
 
@@ -18,7 +17,7 @@ export default function MyProfilePage() {
   return (
     <>
       <PublicHeader title={"내 프로필"} />
-      <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-40">
+      <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-10">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
             <img src={profilePicture} alt="내 프로필 사진" />
@@ -103,7 +102,6 @@ export default function MyProfilePage() {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 }

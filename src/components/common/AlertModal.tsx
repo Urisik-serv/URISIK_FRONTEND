@@ -4,8 +4,8 @@ interface AlertModalProps {
   mediumContent: string;
   buttonText: string;
   outsideText: "탭해서 취소" | "탭해서 닫기";
-  onButtonClick: () => void; //주황색 버튼을 눌렀을 때
-  onOutsideClick: () => void; //취소, 닫기 버튼을 눌렀을 때
+  handleModal: () => void;
+  onClick: () => void;
 }
 
 export default function AlertModal({
@@ -14,8 +14,8 @@ export default function AlertModal({
   mediumContent,
   buttonText,
   outsideText,
-  onButtonClick,
-  onOutsideClick,
+  handleModal,
+  onClick,
 }: AlertModalProps) {
   return (
     <div>
@@ -30,9 +30,9 @@ export default function AlertModal({
           <div className="text-[#3C3C3C] text-lg leading-[27px] pt-[8px]">
             {mediumContent}
           </div>
-          <div className="pt-[48px] w-full px-6">
+          <div className="pt-[48px] w-full">
             <button
-              onClick={onButtonClick}
+              onClick={onClick}
               className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full"
             >
               {buttonText}
@@ -40,7 +40,7 @@ export default function AlertModal({
           </div>
         </div>
         <button
-          onClick={onOutsideClick}
+          onClick={handleModal}
           className="cursor-pointer text-white pt-[12px] text-[16px] leading-[24px]"
         >
           {outsideText}

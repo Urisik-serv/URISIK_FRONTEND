@@ -4,18 +4,22 @@ import menuUpIcon from "../../assets/icons/menu-up.svg";
 interface familyTotalProps {
   familyNumber: number;
   setFamilyNumber: React.Dispatch<React.SetStateAction<number>>;
+  setAvailableNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function FamilyTotalNumber({
   familyNumber,
   setFamilyNumber,
+  setAvailableNumber,
 }: familyTotalProps) {
   const handleDecreaseFamily = () => {
     setFamilyNumber((prev) => (prev > 0 ? prev - 1 : prev));
+    setAvailableNumber((prev) => prev - 1);
   };
 
   const handleIncreaseFamily = () => {
     setFamilyNumber((prev) => prev + 1);
+    setAvailableNumber((prev) => prev + 1);
   };
 
   return (

@@ -7,52 +7,77 @@ import { useNavigate } from "react-router-dom";
 import SelectButton from "../../components/family/SelectButton";
 
 export default function FamilyCreatePage() {
-  const [familyNumber, setFamilyNumber] = useState(3);
-  const [dadNumber, setDadNumber] = useState(0);
-  const [momNumber, setMomNumber] = useState(0);
-  const [sonNumber, setSonNumber] = useState(0);
-  const [daughterNumber, setDaughterNumber] = useState(0);
-  const [momLeader, setMomLeader] = useState(false);
-  const [dadLeader, setDadLeader] = useState(false);
-
   const navigate = useNavigate();
+  const [familyNumber, setFamilyNumber] = useState(3);
+  const [availableFamilyNumber, SetAvailableFamilyNumber] =
+    useState(familyNumber);
+  const [familyCounts, setFamilyCounts] = useState({
+    dad: 0,
+    mom: 0,
+    son: 0,
+    daughter: 0,
+  });
+  const [isLeader, setIsLeader] = useState({
+    dad: false,
+    mom: false,
+  });
 
-  const availableNumber =
-    familyNumber -
-    (momNumber ? 1 : 0) -
-    (dadNumber ? 1 : 0) -
-    sonNumber -
-    daughterNumber;
+  // 토글
+  const select = (role: keyof typeof familyCounts) => {
+    const isTurningOn = familyCounts[role] === 0;
+    const isParent = role === "mom" || role === "dad";
+    if (isTurningOn && availableFamilyNumber <= 0) return;
 
-  const handleDadNumber = () => {
-    setDadNumber((prev) => (prev > 0 ? (prev = 0) : (prev = 1)));
+    setFamilyCounts((prev) => ({
+      ...prev,
+      [role]: isTurningOn ? 1 : 0,
+    }));
+
+    // 선택 되어 있다면?
+    if (!isTurningOn && isParent) {
+      setIsLeader((prev) => ({
+        ...prev,
+        [role]: false,
+      }));
+    }
+
+    SetAvailableFamilyNumber((prev) => (isTurningOn ? prev - 1 : prev + 1));
   };
 
-  const handleMomNumber = () => {
-    setMomNumber((prev) => (prev > 0 ? (prev = 0) : (prev = 1)));
-  };
+  // 자식 증가
+  const increment = (role: keyof typeof familyCounts) => {
+    if (availableFamilyNumber > 0) {
+      setFamilyCounts((prev) => ({
+        ...prev,
+        [role]: prev[role] + 1,
+      }));
 
-  const handleSonChange = (num: number) => {
-    setSonNumber(num);
-  };
-
-  const handleDaughterChange = (num: number) => {
-    setDaughterNumber(num);
-  };
-
-  const handleMomLeader = () => {
-    if (momNumber > 0 && !dadLeader) {
-      setMomLeader((prev) => !prev);
+      SetAvailableFamilyNumber((prev) => prev - 1);
     }
   };
 
-  const handleDadLeader = () => {
-    if (dadNumber > 0 && !momLeader) {
-      setDadLeader((prev) => !prev);
+  // 자식 감소
+  const decrement = (role: keyof typeof familyCounts) => {
+    if (familyCounts[role] > 0) {
+      setFamilyCounts((prev) => ({
+        ...prev,
+        [role]: prev[role] - 1,
+      }));
+
+      SetAvailableFamilyNumber((prev) => prev + 1);
     }
   };
 
-  const canAdjustChildren = momNumber > 0 || dadNumber > 0;
+  const handleLeader = (role: "mom" | "dad") => {
+    if (familyCounts[role] > 0) {
+      setIsLeader((prev) => ({
+        mom: role === "mom" ? !prev.mom : false,
+        dad: role === "dad" ? !prev.dad : false,
+      }));
+    }
+  };
+
+  const canAdjustChildren = familyCounts["mom"] > 0 || familyCounts["dad"] > 0;
 
   return (
     <>
@@ -69,6 +94,7 @@ export default function FamilyCreatePage() {
             <FamilyTotalNumber
               familyNumber={familyNumber}
               setFamilyNumber={setFamilyNumber}
+              setAvailableNumber={SetAvailableFamilyNumber}
             />
             <span className="text-zinc-800 text-base font-semibold leading-6">
               인
@@ -79,29 +105,41 @@ export default function FamilyCreatePage() {
               가족 구성원
             </div>
             <div className="flex gap-[12px]">
-              <button onClick={handleMomNumber}>
-                <SelectButton name="엄마" number={momNumber ? 1 : 0} />
+              <button onClick={() => select("mom")}>
+                <SelectButton
+                  name="엄마"
+                  isSelected={familyCounts["mom"] > 0}
+                />
               </button>
-              <button onClick={handleDadNumber}>
-                <SelectButton name="아빠" number={dadNumber ? 1 : 0} />
+              <button onClick={() => select("dad")}>
+                <SelectButton
+                  name="아빠"
+                  isSelected={familyCounts["dad"] > 0}
+                />
               </button>
             </div>
             <div className="flex flex-col gap-[8px]">
               <div className="self-stretch inline-flex justify-start items-center gap-6">
-                <SelectButton name="아들" number={sonNumber > 0 ? 1 : 0} />
+                <SelectButton
+                  name="아들"
+                  isSelected={familyCounts["son"] > 0}
+                />
                 <NumberOfMember
-                  number={sonNumber}
-                  availableNumber={availableNumber}
-                  onChange={handleSonChange}
+                  number={familyCounts["son"]}
+                  increment={() => increment("son")}
+                  decrement={() => decrement("son")}
                   isBlocked={!canAdjustChildren}
                 />
               </div>
               <div className="self-stretch inline-flex justify-start items-center gap-6">
-                <SelectButton name="딸" number={daughterNumber > 0 ? 1 : 0} />
+                <SelectButton
+                  name="딸"
+                  isSelected={familyCounts["daughter"] > 0}
+                />
                 <NumberOfMember
-                  number={daughterNumber}
-                  availableNumber={availableNumber}
-                  onChange={handleDaughterChange}
+                  number={familyCounts["daughter"]}
+                  increment={() => increment("daughter")}
+                  decrement={() => decrement("daughter")}
                   isBlocked={!canAdjustChildren}
                 />
               </div>
@@ -117,11 +155,11 @@ export default function FamilyCreatePage() {
               </span>
             </div>
             <div className="flex gap-[12px]">
-              <button onClick={handleMomLeader}>
-                <SelectButton name="엄마" number={momLeader ? 1 : 0} />
+              <button onClick={() => handleLeader("mom")}>
+                <SelectButton name="엄마" isSelected={isLeader["mom"]} />
               </button>
-              <button onClick={handleDadLeader}>
-                <SelectButton name="아빠" number={dadLeader ? 1 : 0} />
+              <button onClick={() => handleLeader("dad")}>
+                <SelectButton name="아빠" isSelected={isLeader["dad"]} />
               </button>
             </div>
           </div>
