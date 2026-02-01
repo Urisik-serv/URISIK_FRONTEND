@@ -5,6 +5,7 @@ import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM
 import MenuChip from "../../components/meal-plan/MenuChip";
 import AlertModal from "../../components/common/AlertModal";
 import { useState } from "react";
+import { usePopupTimerActions } from "../../hooks/use-popup-timer-store";
 
 const MealPlanResultPage = () => {
   const data = [
@@ -18,7 +19,11 @@ const MealPlanResultPage = () => {
   ]; //임시 데이터
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
+  const { setTimer } = usePopupTimerActions();
+  const handleButton = () => {
+    setTimer();
+    navigate(`/meal-plan?tab=nextWeek`);
+  };
   return (
     <div>
       <PublicHeader title={"식단표 생성"} />
@@ -29,7 +34,7 @@ const MealPlanResultPage = () => {
           mediumContent="식단표로 이동하시겠습니까?"
           buttonText="확인"
           outsideText="탭해서 닫기"
-          onButtonClick={() => navigate(`/meal-plan?tab=nextWeek`)}
+          onButtonClick={handleButton}
           onOutsideClick={() => navigate(`/`)}
         />
       )}

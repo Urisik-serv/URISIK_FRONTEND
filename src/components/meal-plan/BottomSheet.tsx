@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MenuList from "../common/MenuList";
 import AlertModal from "../common/AlertModal";
+import { usePopupTimerActions } from "../../hooks/use-popup-timer-store";
 
 type BottomSheetProps = {
   open: boolean;
@@ -25,9 +26,16 @@ export default function BottomSheet({ open }: BottomSheetProps) {
     "바나나 프렌치토스트",
     "바나나 프렌치토스트",
   ]; //임시데이터
+  const { setTimer } = usePopupTimerActions();
+
   useEffect(() => {
     setIsOpen(open);
   }, [open]);
+
+  const handleButton = () => {
+    setTimer();
+    navigate(`/meal-plan?tab=nextWeek`);
+  };
   return (
     <div className="w-[375px] fixed bottom-0 p-[10px] rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] overflow-hidden bg-white flex flex-col items-center">
       <div>
@@ -38,7 +46,7 @@ export default function BottomSheet({ open }: BottomSheetProps) {
             mediumContent="식단표로 이동하시겠습니까?"
             buttonText="확인"
             outsideText="탭해서 닫기"
-            onButtonClick={() => navigate(`/meal-plan?tab=nextWeek`)}
+            onButtonClick={handleButton}
             onOutsideClick={() => {
               setIsModalOpen(false);
             }}
