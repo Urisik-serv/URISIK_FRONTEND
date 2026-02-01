@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { ReissueResponse } from "../types/auth";
+import type { ReissueResponse } from "../types/response";
 
 export const postReissue = async (): Promise<ReissueResponse> => {
   const { data } = await axios.post<ReissueResponse>(
