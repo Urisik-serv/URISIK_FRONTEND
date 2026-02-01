@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useLocalStorage } from "./use-local-storage";
-import { postReissue } from "../api/auth";
+import { postLogout, postReissue } from "../api/auth";
 
 export const useAuth = () => {
-  const { setItem: setAccessToken } = useLocalStorage("accessToken");
+  const { setItem: setAccessToken, removeItem: removeAccessToken } =
+    useLocalStorage("accessToken");
 
   const { mutate: LoginMutate, isPending: LoginIsPending } = useMutation({
     mutationFn: postReissue,
@@ -19,8 +20,22 @@ export const useAuth = () => {
     },
   });
 
+  const { mutate: LogoutMutate, isPending: LogoutIsPending } = useMutation({
+    mutationFn: postLogout,
+    onSuccess: (res) => {
+      removeAccessToken();
+      window.location.href = res.isSuccess ? "/login" : "/mypage";
+    },
+    onError: (error) => {
+      console.error("로그아웃 실패:", error);
+      window.location.href = "/mypage";
+    },
+  });
+
   return {
     LoginMutate,
     LoginIsPending,
+    LogoutMutate,
+    LogoutIsPending,
   };
 };
