@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MealCard from "./MealCard";
-import type { FoodList } from "../../../types/recipe-list";
+import type { FoodList } from "../../../types/recipes";
 import axios from "axios";
 
 const MealCuration = () => {

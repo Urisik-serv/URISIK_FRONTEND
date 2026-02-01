@@ -4,7 +4,7 @@ import AllergyCard from "./AllergyCard";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import type { FoodList } from "../../../types/recipe-list";
+import type { FoodList } from "../../../types/recipes";
 import axios from "axios";
 
 const AllergyCuration = () => {

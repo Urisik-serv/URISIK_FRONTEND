@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
-import type { Recipe } from "../../types/recipe-list";
+import type { Recipe } from "../../types/recipes";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import SampleImg from "../../assets/sample/shrimp-mushroom.png";
