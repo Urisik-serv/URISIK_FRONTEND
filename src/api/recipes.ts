@@ -1,4 +1,5 @@
 import type {
+  DetailRecipeStep,
   ResponseExternalRecipes,
   ResponseSearchRecipes,
   SearchRecipesDto,
@@ -22,5 +23,13 @@ export const postExteralRecipes = async (
   const { data } = await axiosInstance.post("/api/recipes/external", external);
 
   console.log("요청 성공: ", data);
+  return data;
+};
+
+export const getDetailRecipe = async (
+  recipeId: number,
+): Promise<ResponseSearchRecipes> => {
+  const { data } = await axiosInstance.get(`/api/recipes/${recipeId}`);
+
   return data;
 };
