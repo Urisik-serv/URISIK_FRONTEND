@@ -31,10 +31,11 @@ const MealCard = ({
       navigate(`/menu-information/${numId}`);
     } else {
       try {
-        const response = await postExteralRecipes({ external } as any);
+        const response = await postExteralRecipes(external as any);
         const recipeId = response.result.recipeId;
 
         console.log("받아온 ID:", recipeId);
+        console.log("전달한 external: ", JSON.stringify(external));
 
         if (recipeId) {
           navigate(`/menu-information/${recipeId}`);
