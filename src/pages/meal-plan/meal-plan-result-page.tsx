@@ -3,6 +3,9 @@ import TryAgain from "../../assets/icons/try-again.svg";
 import { useNavigate } from "react-router-dom";
 import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM";
 import MenuChip from "../../components/meal-plan/MenuChip";
+import AlertModal from "../../components/common/AlertModal";
+import { useState } from "react";
+import { usePopupTimerActions } from "../../hooks/use-popup-timer-store";
 
 const MealPlanResultPage = () => {
   const data = [
@@ -15,9 +18,26 @@ const MealPlanResultPage = () => {
     { day: "일", menus: ["귤", "김밥"] },
   ]; //임시 데이터
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const { setTimer } = usePopupTimerActions();
+  const handleButton = () => {
+    setTimer();
+    navigate(`/meal-plan?tab=nextWeek`);
+  };
   return (
     <div>
       <PublicHeader title={"식단표 생성"} />
+      {isOpen && (
+        <AlertModal
+          title=""
+          boldContent={`생성을 완료하시겠어요?`}
+          mediumContent={`완료된 식단표는 [다음주 식단]에 \n저장됩니다.`}
+          buttonText="확인"
+          outsideText="탭해서 닫기"
+          onClick={handleButton}
+          handleModal={() => navigate(`/`)}
+        />
+      )}
       <p className="pl-4 pt-6 font-semibold text-[24px] text-[#333333] pb-4 whitespace-pre-line">
         우리가족을 위한 식단표가 {"\n"}생성되었어요.
       </p>
@@ -48,7 +68,7 @@ const MealPlanResultPage = () => {
         </button>
         <button
           className="w-full h-14 rounded-xl cursor-pointer bg-primary-700 text-white"
-          onClick={() => navigate(`/`)}
+          onClick={() => setIsOpen(true)}
         >
           완료
         </button>
