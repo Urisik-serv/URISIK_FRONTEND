@@ -1,15 +1,34 @@
+import { useState } from "react";
 import BackButton from "../../components/common/BackButton";
 import ElementButton from "../../components/common/ElementButton";
 import RankButton from "../../components/common/RankButton";
 import SearchBar from "../../components/common/SearchBar";
+import useGetInfiniteSearchRecipes from "../../hooks/queries/use-get-infinite-search-recipes";
+import useDebounce from "../../hooks/use-debounce";
 
 const SearchingPage = () => {
+  const [keyword, setKeyword] = useState("");
+  const debouncedKeyword = useDebounce(keyword, 300);
+
+  const {
+    data: recipes,
+    isFetching,
+    hasNextPage,
+    isPending,
+    fetchNextPage,
+    isError,
+  } = useGetInfiniteSearchRecipes(debouncedKeyword, 10, 1);
+
+  console.log(recipes);
+  console.log(recipes?.pages);
+
   const handleClose = () => {};
+
   return (
     <div className="flex pt-[30px] justify-center items-start flex-col">
       <div className="flex justify-center items-center self-stretch px-4 gap-1 pb-7.5">
         <BackButton />
-        <SearchBar />
+        <SearchBar keyword={keyword} onChange={(e) => setKeyword(e)} />
       </div>
       <div className="flex flex-col px-4 py-2">
         <div className="pb-7.5">

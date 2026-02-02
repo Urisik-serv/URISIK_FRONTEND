@@ -22,3 +22,44 @@ export interface Recipe {
 export interface FoodList {
   recipes: Recipe[];
 }
+
+export interface SearchRecipesDto {
+  keyword: string;
+  page?: number;
+  size?: number;
+}
+
+export interface SearchRecipesItem {
+  id: string;
+  type: string;
+  title: string;
+  category: string;
+  imageUrl: string;
+  avgScore: number;
+  reviewCount: number;
+  external: {
+    rcpSeq: string;
+    rcpNm: string;
+    category: string;
+    servingWeight: string;
+    calorie: string;
+    carbohydrate: string;
+    protein: string;
+    fat: string;
+    sodium: string;
+    imageSmall: string;
+    imageLarge: string;
+    ingredientsRaw: string;
+    instructionsRaw: string;
+  };
+}
+
+export interface ResponseSearchRecipes {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    items: SearchRecipesItem[];
+  };
+  errorDetail: {};
+}
