@@ -1,5 +1,8 @@
 import axios from "axios";
-import type { FamilyProfile } from "../types/family-profile";
+import type {
+  FamilyProfile,
+  postProfileRequest,
+} from "../types/family-profile";
 import type { PostProfileResponse } from "../types/response";
 import { axiosInstance } from "./axios/axios";
 
@@ -13,9 +16,11 @@ export const getFamilyList = async (): Promise<FamilyProfile> => {
 // 프로필 생성
 export const postProfile = async (
   familyRoomId: number,
+  request: postProfileRequest,
 ): Promise<PostProfileResponse> => {
   const { data } = await axiosInstance.post<PostProfileResponse>(
     `/api/family-rooms/${familyRoomId}/profiles`,
+    request,
   );
   return data;
 };
