@@ -1,3 +1,5 @@
+import type { CommonResponse } from "./common";
+
 export interface Recipe {
   id: number;
   title: string;
@@ -63,3 +65,11 @@ export interface ResponseSearchRecipes {
   };
   errorDetail: {};
 }
+
+export interface ExternalRecipes {
+  recipeId: number;
+  created: boolean;
+}
+
+// interface 사용시 extends
+export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
