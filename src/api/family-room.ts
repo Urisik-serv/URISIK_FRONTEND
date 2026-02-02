@@ -1,8 +1,13 @@
 import axios from "axios";
 import { useLocalStorage } from "../hooks/use-local-storage";
 import type { PostFamilyRoomRequest } from "../types/family-room";
-import type { PostFamilyRoomResponse } from "../types/response";
+import type {
+  GetFamilyRoomResponse,
+  PostFamilyRoomResponse,
+} from "../types/response";
+import { axiosInstance } from "./axios/axios";
 
+// 가족방 생성
 export const postFamilyRoom = async (
   request: PostFamilyRoomRequest,
 ): Promise<PostFamilyRoomResponse> => {
@@ -15,6 +20,14 @@ export const postFamilyRoom = async (
         Authorization: `Bearer ${getAccessToken()}`,
       },
     },
+  );
+  return data;
+};
+
+// 가족방 조회
+export const getFamilyRoom = async (): Promise<GetFamilyRoomResponse> => {
+  const { data } = await axiosInstance.get<GetFamilyRoomResponse>(
+    "/api/family-rooms/me",
   );
   return data;
 };

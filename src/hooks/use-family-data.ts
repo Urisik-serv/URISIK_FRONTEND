@@ -1,32 +1,10 @@
-import { useEffect, useState } from "react";
-import type { FamilyMembers } from "../types/family-profile";
-import axios from "axios";
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postFamilyRoom } from "../api/family-room";
 import { useFamilyStore } from "../stores/use-family-store";
 import { useNavigate } from "react-router-dom";
 
 export const useFamilyData = () => {
-  // ---------------------------------------------------------------
-  //                                     가족방 조회
-  // ---------------------------------------------------------------
-
-  const [familyData, setFamilyData] = useState<FamilyMembers | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get<FamilyMembers>("/data/family-data.json");
-
-        setFamilyData(res.data);
-        console.log(res);
-      } catch (error) {
-        console.log("데이터 로딩 실패:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
   // ---------------------------------------------------------------
   //                                   가족방 생성
   // ---------------------------------------------------------------
@@ -46,8 +24,8 @@ export const useFamilyData = () => {
     mom: false,
   });
 
-  const setFamilyRoomData = useFamilyStore((state) => state.setFamilyData);
-
+  const { setFamilyData: setStoreFamilyData, setFamilyRoomId } =
+    useFamilyStore();
   // 토글
   const select = (role: keyof typeof familyCounts) => {
     const isTurningOn = familyCounts[role] === 0;
@@ -106,18 +84,12 @@ export const useFamilyData = () => {
 
   const canAdjustChildren = familyCounts["mom"] > 0 || familyCounts["dad"] > 0;
 
-  const { mutate: createFamilyMutation } = useMutation({
+  const { mutateAsync: createFamilyMutation } = useMutation({
     mutationFn: postFamilyRoom,
-    onSuccess: (res) => {
-      console.log("가족방 생성 성공:", res);
-    },
-    onError: (error) => {
-      console.error(error);
-    },
   });
 
   // 전역 상태 저장
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const currentPolicy = isLeader.mom
       ? "MOTHER_ONLY"
       : isLeader.dad
@@ -135,13 +107,19 @@ export const useFamilyData = () => {
       familyPolicy: currentPolicy,
     };
 
-    setFamilyRoomData(requestData);
-    createFamilyMutation(requestData);
-    navigate("/family-invite");
+    try {
+      const res = await createFamilyMutation(requestData);
+      if (res.result.familyRoomId) {
+        setFamilyRoomId(res.result.familyRoomId);
+      }
+      setStoreFamilyData(requestData);
+      navigate("/family-invite");
+    } catch (error) {
+      console.error("생성 실패:", error);
+    }
   };
 
   return {
-    familyData,
     familyNumber,
     setFamilyNumber,
     SetAvailableFamilyNumber,
