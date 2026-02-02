@@ -36,7 +36,7 @@ const FamilyProfile = () => {
         onClick={() => navigate("family-wishlist")}
         className="self-stretch px-2.5 py-3 text-white bg-primary-700 rounded-xl justify-center items-center cursor-pointer"
       >
-        우리가족 위시리스트
+        가족 위시리스트
       </button>
     </div>
   );
