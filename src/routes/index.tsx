@@ -16,7 +16,6 @@ import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
 import MenuInformationPage from "../pages/home/menu-information-page";
-import MealPlanIngredientsPage from "../pages/meal-plan/meal-plan-ingredients-page";
 import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
 import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
@@ -79,10 +78,6 @@ export const router = createBrowserRouter([
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
-          {
-            path: "meal-plan/ingredients",
-            element: <MealPlanIngredientsPage />,
-          },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
           { path: "family-wishlist", element: <FamilyWishListPage /> },
