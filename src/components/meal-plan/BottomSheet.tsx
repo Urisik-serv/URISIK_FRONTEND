@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MenuList from "../common/MenuList";
 import AlertModal from "../common/AlertModal";
-import { usePopupTimerActions } from "../../hooks/use-popup-timer-store";
 
 type BottomSheetProps = {
   open: boolean;
@@ -26,14 +25,12 @@ export default function BottomSheet({ open }: BottomSheetProps) {
     "바나나 프렌치토스트",
     "바나나 프렌치토스트",
   ]; //임시데이터
-  const { setTimer } = usePopupTimerActions();
 
   useEffect(() => {
     setIsOpen(open);
   }, [open]);
 
   const handleButton = () => {
-    setTimer();
     navigate(`/meal-plan?tab=nextWeek`);
   };
   return (

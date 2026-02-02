@@ -5,7 +5,6 @@ import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM
 import MenuChip from "../../components/meal-plan/MenuChip";
 import AlertModal from "../../components/common/AlertModal";
 import { useState } from "react";
-import { usePopupTimerActions } from "../../hooks/use-popup-timer-store";
 
 const MealPlanResultPage = () => {
   const data = [
@@ -19,9 +18,7 @@ const MealPlanResultPage = () => {
   ]; //임시 데이터
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const { setTimer } = usePopupTimerActions();
   const handleButton = () => {
-    setTimer();
     navigate(`/meal-plan?tab=nextWeek`);
   };
   return (
