@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { postFamilyRoom } from "../api/family-room";
+import { getFamilyRoom, postFamilyRoom } from "../api/family-room";
 import { useFamilyStore } from "../stores/use-family-store";
 import { useNavigate } from "react-router-dom";
 
@@ -24,8 +24,27 @@ export const useFamilyData = () => {
     mom: false,
   });
 
-  const { setFamilyData: setStoreFamilyData, setFamilyRoomId } =
-    useFamilyStore();
+  const {
+    setFamilyData: setStoreFamilyData,
+    setFamilyRoomId,
+    familyRoomId,
+  } = useFamilyStore();
+
+  useEffect(() => {
+    const syncFamilyId = async () => {
+      try {
+        const res = await getFamilyRoom();
+        if (res?.result?.familyRoomId) {
+          setFamilyRoomId(res.result.familyRoomId);
+        }
+      } catch (e) {
+        console.error("ID 복구 실패:", e);
+      }
+    };
+
+    if (!familyRoomId) syncFamilyId();
+  }, []);
+
   // 토글
   const select = (role: keyof typeof familyCounts) => {
     const isTurningOn = familyCounts[role] === 0;
@@ -109,11 +128,16 @@ export const useFamilyData = () => {
 
     try {
       const res = await createFamilyMutation(requestData);
+      console.log("생성 응답:", res);
       if (res.result.familyRoomId) {
         setFamilyRoomId(res.result.familyRoomId);
+        setStoreFamilyData(requestData);
+        console.log(
+          "스토어 업데이트 요청 직후:",
+          useFamilyStore.getState().familyRoomId,
+        );
+        navigate("/family-invite");
       }
-      setStoreFamilyData(requestData);
-      navigate("/family-invite");
     } catch (error) {
       console.error("생성 실패:", error);
     }
