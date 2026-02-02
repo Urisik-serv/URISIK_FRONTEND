@@ -25,5 +25,5 @@ export interface FamilyRoomResult {
 }
 
 export type ReissueResponse = BaseResponse<AuthResult>;
-export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;
 export type LogoutResponse = BaseResponse<LogoutResult>;
+export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;

@@ -5,7 +5,7 @@ export interface PostFamilyRoomRequest {
 }
 
 export interface FamilyComposition {
-  hasMotehr: boolean;
+  hasMother: boolean;
   hasFather: boolean;
   sonCount: number;
   daughterCount: number;

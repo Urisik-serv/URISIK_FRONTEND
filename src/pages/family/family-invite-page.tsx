@@ -50,7 +50,7 @@ export default function FamilyInvitePage() {
               text="다음"
               type="submit"
               onClick={() => {
-                navigate("/family-invite");
+                navigate("/");
               }}
             />
           </div>
