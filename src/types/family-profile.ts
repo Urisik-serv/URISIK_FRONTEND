@@ -28,3 +28,12 @@ export interface FamilyProfile {
 export interface FamilyMembers {
   familyMembers: FamilyProfile[];
 }
+
+export interface postProfileRequest {
+  nickname: string;
+  role: string;
+  likedIngredients?: string;
+  dislikedIngredients?: string;
+  allergy: string[];
+  dietPreferences: string[];
+}
