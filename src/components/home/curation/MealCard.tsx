@@ -2,14 +2,17 @@ import { useNavigate } from "react-router-dom";
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import Rate from "../../common/Rate";
 import WishlistButton from "../../common/WishlistButton";
+import { postExteralRecipes } from "../../../api/recipes";
 
 interface MealCardProps {
-  id: number;
+  id: string;
   title: string;
   shortDescription: string;
   category: string;
   rating: number;
   isWishlisted: boolean;
+  type: string;
+  external: {} | null;
 }
 const MealCard = ({
   id,
@@ -18,11 +21,32 @@ const MealCard = ({
   category,
   rating,
   isWishlisted,
+  type,
+  external,
 }: MealCardProps) => {
   const navigate = useNavigate();
-  const handleOpenInfo = () => {
-    navigate(`/menu-information/${id}`);
+  const handleOpenInfo = async () => {
+    if (type === "RECIPE") {
+      const numId = Number(id);
+      navigate(`/menu-information/${numId}`);
+    } else {
+      try {
+        const response = await postExteralRecipes({ external } as any);
+        const recipeId = response.result.recipeId;
+
+        console.log("받아온 ID:", recipeId);
+
+        if (recipeId) {
+          navigate(`/menu-information/${recipeId}`);
+        } else {
+          console.error("Recipe ID가 없습니다.");
+        }
+      } catch (error) {
+        console.error("외부 레시피 저장 실패:", error);
+      }
+    }
   };
+
   return (
     <div className="flex justify-between py-4 w-86">
       <img

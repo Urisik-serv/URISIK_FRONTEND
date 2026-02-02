@@ -39,6 +39,7 @@ const MealCuration = () => {
           rating={recipe.rating}
           category={recipe.category}
           isWishlisted={recipe.isWishlisted}
+          external={null}
         />
       ))}
     </div>

@@ -56,14 +56,8 @@ export interface SearchRecipesItem {
   };
 }
 
-export interface ResponseSearchRecipes {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: {
-    items: SearchRecipesItem[];
-  };
-  errorDetail: {};
+export interface SearchRecipesItems {
+  items: SearchRecipesItem[];
 }
 
 export interface ExternalRecipes {
@@ -72,4 +66,6 @@ export interface ExternalRecipes {
 }
 
 // interface 사용시 extends
+export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
+
 export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}

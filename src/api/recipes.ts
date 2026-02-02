@@ -1,4 +1,9 @@
-import type { ResponseSearchRecipes, SearchRecipesDto } from "../types/recipes";
+import type {
+  ResponseExternalRecipes,
+  ResponseSearchRecipes,
+  SearchRecipesDto,
+  SearchRecipesItem,
+} from "../types/recipes";
 import { axiosInstance } from "./axios/axios";
 
 export const getSearchRecipes = async (
@@ -8,5 +13,14 @@ export const getSearchRecipes = async (
     params: SearchRecipesDto,
   });
 
+  return data;
+};
+
+export const postExteralRecipes = async (
+  external: SearchRecipesItem,
+): Promise<ResponseExternalRecipes> => {
+  const { data } = await axiosInstance.post("/api/recipes/external", external);
+
+  console.log("요청 성공: ", data);
   return data;
 };
