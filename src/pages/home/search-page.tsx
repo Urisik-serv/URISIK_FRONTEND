@@ -11,11 +11,12 @@ const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 300);
 
-  const {
-    data: recipes,
-    isLoading,
+  {
+    /*isLoading,
     isError,
-  } = useGetSearchRecipes(debouncedKeyword, 0, 6);
+    아직 추가하지 않음 */
+  }
+  const { data: recipes } = useGetSearchRecipes(debouncedKeyword, 0, 6);
 
   const handleClose = () => {};
 
