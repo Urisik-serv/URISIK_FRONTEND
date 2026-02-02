@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { PostFamilyRoomRequest } from "../types/family-room";
+import { persist } from "zustand/middleware";
 
 interface FamilyStore extends PostFamilyRoomRequest {
   familyRoomId: number | null;
@@ -20,20 +21,31 @@ const initialState: PostFamilyRoomRequest & { familyRoomId: number | null } = {
   familyPolicy: "MOTHER_ONLY",
 };
 
-export const useFamilyStore = create<FamilyStore>((set) => ({
-  ...initialState,
-
-  setFamilyData: (data) =>
-    set((state) => ({
-      ...state,
-      ...data,
-    })),
-
-  setFamilyRoomId: (id) => set({ familyRoomId: id }),
-
-  resetFamilyData: () =>
-    set((state) => ({
-      ...state,
+export const useFamilyStore = create<FamilyStore>()(
+  persist(
+    (set) => ({
       ...initialState,
-    })),
-}));
+
+      setFamilyData: (data) =>
+        set((state) => ({
+          ...state,
+          ...data,
+        })),
+
+      setFamilyRoomId: (id) => set({ familyRoomId: id }),
+
+      resetFamilyData: () =>
+        set((state) => ({
+          ...state,
+          ...initialState,
+        })),
+    }),
+    {
+      name: "family-storage", // 로컬 스토리지에 저장될 키 이름
+    },
+  ),
+);
+
+if (typeof window !== "undefined") {
+  (window as any).familyStore = useFamilyStore;
+}
