@@ -24,6 +24,33 @@ export interface FamilyRoomResult {
   familyRoomId: number;
 }
 
+export interface ProfileCreateResult {
+  inviteUrl: string;
+}
+
+export interface GetFamilyRoomResult {
+  familyRoomId: number;
+  familyPolicy: string;
+  me: Me;
+  capabilities: Capability;
+  mealPlanCreated: boolean;
+}
+
+export interface Me {
+  memberId: number;
+  familyRole: string;
+  nickName: string;
+}
+
+export interface Capability {
+  leader: boolean;
+  canEditWishlist: boolean;
+  canCreateMealPlan: boolean;
+  canEditMealPlan: boolean;
+}
+
 export type ReissueResponse = BaseResponse<AuthResult>;
 export type LogoutResponse = BaseResponse<LogoutResult>;
 export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;
+export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
+export type GetFamilyRoomResponse = BaseResponse<GetFamilyRoomResult>;

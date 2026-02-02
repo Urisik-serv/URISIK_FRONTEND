@@ -2,11 +2,14 @@ import { create } from "zustand";
 import type { PostFamilyRoomRequest } from "../types/family-room";
 
 interface FamilyStore extends PostFamilyRoomRequest {
+  familyRoomId: number | null;
   setFamilyData: (data: Partial<PostFamilyRoomRequest>) => void;
+  setFamilyRoomId: (id: number) => void;
   resetFamilyData: () => void;
 }
 
-const initialState: PostFamilyRoomRequest = {
+const initialState: PostFamilyRoomRequest & { familyRoomId: number | null } = {
+  familyRoomId: null,
   familySize: 0,
   familyComposition: {
     hasMother: true,
@@ -26,5 +29,11 @@ export const useFamilyStore = create<FamilyStore>((set) => ({
       ...data,
     })),
 
-  resetFamilyData: () => set(initialState),
+  setFamilyRoomId: (id) => set({ familyRoomId: id }),
+
+  resetFamilyData: () =>
+    set((state) => ({
+      ...state,
+      ...initialState,
+    })),
 }));
