@@ -8,6 +8,7 @@ import Camera from "../../assets/icons/camera.svg";
 import RequiredLabel from "../family/RequiredLabel";
 import SelectButton from "../family/SelectButton";
 import OptionalLabel from "../family/OptionalLabel";
+import { patchProfile, postProfile } from "../../api/family-profile";
 
 interface ProfileDataFormProps {
   isSelected: number;
@@ -30,10 +31,40 @@ export default function ProfileDataForm({
     isCheckedPreference,
     handleLikeChange,
     handleDislikeChange,
-    handleSubmit,
     isValid,
     formData,
+    request,
+    currentFamilyRoomId,
   } = useFamilyProfileForm();
+
+  if (currentFamilyRoomId === null) {
+    alert("가족방 정보가 존재하지 않습니다");
+    return;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (isEdit) {
+        const res = await patchProfile(currentFamilyRoomId, request);
+        console.log(res.result);
+      } else {
+        const res = await postProfile(currentFamilyRoomId, request);
+        console.log(res.result);
+      }
+    } catch (error) {
+      if (isEdit) {
+        console.error("프로필 편집 실패:", error);
+      } else {
+        console.error("프로필 생성 실패:", error);
+      }
+    }
+
+    if (!isValid()) {
+      alert("필수 항목을 모두 입력해주세요.");
+    }
+    console.log("제출된 폼 데이터:", formData);
+  };
 
   const { selectedAllergies, handleSelectAllergy } = useAllergySearch();
 

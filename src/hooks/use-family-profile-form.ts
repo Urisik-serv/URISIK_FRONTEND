@@ -144,38 +144,18 @@ export const useFamilyProfileForm = () => {
     (item) => preferenceMap[item],
   );
 
-  // 폼 제출 핸들러
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const request: postProfileRequest = {
-      nickname: formData.nickname,
-      role: roleMap[formData.role],
-      likedIngredients: formData.likedIngredients,
-      dislikedIngredients: formData.dislikedIngredients,
-      allergy: Array.isArray(allergyList) ? allergyList : [],
-      dietPreferences: preferencesList,
-    };
-
-    const currentFamilyRoomId = useFamilyStore.getState().familyRoomId;
-
-    if (currentFamilyRoomId === null) {
-      alert("가족방 정보가 존재하지 않습니다");
-      return;
-    }
-
-    try {
-      const res = await postProfile(currentFamilyRoomId, request);
-      console.log(res.result);
-    } catch (error) {
-      console.error("프로필 생성 실패:", error);
-    }
-
-    if (!isValid()) {
-      alert("필수 항목을 모두 입력해주세요.");
-    }
-    console.log("제출된 폼 데이터:", formData);
+  const request: postProfileRequest = {
+    nickname: formData.nickname,
+    role: roleMap[formData.role],
+    likedIngredients: formData.likedIngredients,
+    dislikedIngredients: formData.dislikedIngredients,
+    allergy: Array.isArray(allergyList) ? allergyList : [],
+    dietPreferences: preferencesList,
   };
+
+  const currentFamilyRoomId = useFamilyStore.getState().familyRoomId;
+
+  // 폼 제출 핸들러
 
   return {
     formData,
@@ -188,7 +168,8 @@ export const useFamilyProfileForm = () => {
     isCheckedPreference,
     handleLikeChange,
     handleDislikeChange,
-    handleSubmit,
     isValid,
+    request,
+    currentFamilyRoomId,
   };
 };
