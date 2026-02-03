@@ -3,8 +3,27 @@ import { useMutation } from "@tanstack/react-query";
 import { getFamilyRoom, postFamilyRoom } from "../api/family-room";
 import { useFamilyStore } from "../stores/use-family-store";
 import { useNavigate } from "react-router-dom";
+import type { FamilyMembers } from "../types/family-profile";
+import axios from "axios";
 
 export const useFamilyData = () => {
+  // 다른 파일 코드 에러 방지
+  const [familyData, setFamilyData] = useState<FamilyMembers | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get<FamilyMembers>("/data/family-data.json");
+
+        setFamilyData(res.data);
+        console.log(res);
+      } catch (error) {
+        console.log("데이터 로딩 실패:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   // ---------------------------------------------------------------
   //                                   가족방 생성
   // ---------------------------------------------------------------
@@ -144,6 +163,7 @@ export const useFamilyData = () => {
   };
 
   return {
+    familyData,
     familyNumber,
     setFamilyNumber,
     SetAvailableFamilyNumber,
