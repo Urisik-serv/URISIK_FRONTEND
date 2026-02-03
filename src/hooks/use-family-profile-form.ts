@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useProfileStore } from "../stores/use-profile-store";
-import { postProfile } from "../api/family-profile";
 import type { postProfileRequest } from "../types/family-profile";
 import { useFamilyStore } from "../stores/use-family-store";
 
@@ -154,8 +153,6 @@ export const useFamilyProfileForm = () => {
   };
 
   const currentFamilyRoomId = useFamilyStore.getState().familyRoomId;
-
-  // 폼 제출 핸들러
 
   return {
     formData,
