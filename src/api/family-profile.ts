@@ -24,3 +24,15 @@ export const postProfile = async (
   );
   return data;
 };
+
+// 프로필 수정
+export const patchProfile = async (
+  familyRoomId: number,
+  request: postProfileRequest,
+): Promise<PostProfileResponse> => {
+  const { data } = await axiosInstance.patch<PostProfileResponse>(
+    `/api/family-rooms/${familyRoomId}/profiles`,
+    request,
+  );
+  return data;
+};
