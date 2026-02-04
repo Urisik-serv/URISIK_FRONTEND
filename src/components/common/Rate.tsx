@@ -1,11 +1,11 @@
 import Star from "../../assets/icons/star.svg";
 
 const StarSize: Record<number, string> = {
-  12: "w-[12px] h-[12px]",
+  12: "w-[14px] h-[14px]",
   16: "w-[16px] h-[16px]",
 };
 const RatePx: Record<number, string> = {
-  12: "text-xs leading-3",
+  12: "text-[14px] leading-3",
   16: "text-base leading -6",
 };
 
