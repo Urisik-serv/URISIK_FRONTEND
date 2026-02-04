@@ -14,6 +14,8 @@ export const getSearchRecipes = async (
     params: SearchRecipesDto,
   });
 
+  console.log(data);
+
   return data;
 };
 

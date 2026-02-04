@@ -33,9 +33,9 @@ const MenuInformationPage = () => {
       <PublicHeader title={"메뉴 정보"} />
       <div className="relative h-72 w-full">
         <img
-          src={SampleImg}
+          src={recipe?.images.small}
           alt={`${recipe?.title} 사진`}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover shrink-0"
         />
         <div className="absolute bottom-16 left-0 w-full flex justify-end pr-2 z-0">
           <div className="absolute left-1/2 -translate-x-1/2">
