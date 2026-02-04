@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
-import type { Recipe } from "../../types/recipe-list";
+import type { Recipe } from "../../types/recipes";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import SampleImg from "../../assets/sample/shrimp-mushroom.png";
@@ -10,6 +10,7 @@ import MenuInfo from "../../components/common/MenuInfo";
 import UpButton from "../../components/common/UpButton";
 import PageIndicator from "../../components/common/PageIndicator";
 import WishlistButton from "../../components/common/WishlistButton";
+import { getDetailRecipe } from "../../api/recipes";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -18,6 +19,12 @@ const MenuInformationPage = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/data/recipe-list.json");
+
+        // get요청 테스트 코드
+        const recipeId = Number(menuId);
+        const data = await getDetailRecipe(recipeId);
+        console.log("get 요청 성공: ", data);
+
         const targetId = Number(menuId);
 
         const foundData = res.data.recipes.find(
