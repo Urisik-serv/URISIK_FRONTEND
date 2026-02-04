@@ -3,6 +3,10 @@ import HomeHeader from "../../components/header/HomeHeader";
 import TodayMeal from "../../components/meal-plan/TodayMeal";
 import WeekMeal from "../../components/meal-plan/WeekMeal";
 import { useSearchParams } from "react-router-dom";
+import selectedSun from "../../assets/icons/sun-selected.svg";
+import unselectedSun from "../../assets/icons/sun-unselected.svg";
+import selectedMoon from "../../assets/icons/moon-selected.svg";
+import unselectedMoon from "../../assets/icons/moon-unselected.svg";
 
 const MealPlanPage = () => {
   const [searchParams] = useSearchParams();
@@ -10,7 +14,7 @@ const MealPlanPage = () => {
   const [tab, setTab] = useState<"오늘의 식단" | "이번주 식단" | "다음주 식단">(
     tabParam === "nextWeek" ? "다음주 식단" : "오늘의 식단",
   );
-
+  const [todayTab, setTodayTab] = useState<"점심" | "저녁">("점심");
   return (
     <div>
       <HomeHeader />
@@ -35,7 +39,33 @@ const MealPlanPage = () => {
             다음주 식단
           </button>
         </div>
-        {tab === "오늘의 식단" && <TodayMeal />}
+        {tab === "오늘의 식단" && (
+          <>
+            <div className="flex pt-4 w-full font-[14px] font-medium">
+              <button
+                className={`py-2 w-full rounded-lg flex flex-col items-center ${todayTab === "점심" ? "bg-[#fff3ee] text-primary-700" : "text-[#c7c7c7] cursor-pointer"}`}
+                onClick={() => setTodayTab("점심")}
+              >
+                <img
+                  src={todayTab === "점심" ? selectedSun : unselectedSun}
+                  className="size-5"
+                />
+                점심
+              </button>
+              <button
+                className={`py-2 w-full rounded-lg flex flex-col items-center ${todayTab === "저녁" ? "bg-[#fff3ee] text-primary-700" : "text-[#c7c7c7] cursor-pointer"}`}
+                onClick={() => setTodayTab("저녁")}
+              >
+                <img
+                  src={todayTab === "저녁" ? selectedMoon : unselectedMoon}
+                  className="size-5"
+                />
+                저녁
+              </button>
+            </div>
+            {todayTab === "점심" ? <TodayMeal /> : <TodayMeal />}
+          </>
+        )}
         {tab == "이번주 식단" && <WeekMeal />}
         {tab == "다음주 식단" && <WeekMeal />}
       </div>

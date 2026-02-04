@@ -10,7 +10,7 @@ export default function TodayMeal() {
   console.log(isOpen);
   return (
     <>
-      <div className="flex justify-between items-center pt-10 pb-6">
+      <div className="flex justify-between items-center pt-3 pb-6">
         {isOpen && <ReviewModal onClick={handleOpen} />}
         <div>
           <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p>
