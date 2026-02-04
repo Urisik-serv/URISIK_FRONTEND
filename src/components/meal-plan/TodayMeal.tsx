@@ -7,7 +7,6 @@ export default function TodayMeal() {
   const [isDone, setIsDone] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(false);
-  console.log(isOpen);
   return (
     <>
       <div className="flex justify-between items-center pt-3 pb-6">
@@ -38,7 +37,9 @@ export default function TodayMeal() {
       )}
 
       <div className="flex flex-col gap-2 text-[14px] pt-11 pb-7">
-        <p className="font-semibold text-primary-700">식재료</p>
+        <p className="font-semibold text-primary-700">
+          식재료 <span className="text-gray-600">1인 기준</span>
+        </p>
         <p className="font-normal text-gray-600">
           바나나 한묶음, 코코넛 밀크 3개, 해바라기 소스 3개, 땅콩 3개, 바나나
           한묶음, 코코넛 밀크 3개
