@@ -6,13 +6,14 @@ import PublicHeader from "../../components/header/PublicHeader";
 import { useState } from "react";
 import type { CreateMealPlan, SlotRequest } from "../../types/meal-plan";
 import { postCreateMealPlans } from "../../api/meal-plan";
-import useGetFamilyRoom from "../../hooks/queries/use-get-family-room";
+import { useFamilyStore } from "../../stores/use-family-store";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
   const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
   const navigate = useNavigate();
-
+  const { familyRoomId } = useFamilyStore.getState();
+  console.log(useFamilyStore.getState());
   //날짜 계산
   const formatYMD = (d: Date) => {
     const yyyy = d.getFullYear();
@@ -40,8 +41,6 @@ const MealPlanCreatePage = () => {
 
   const [regenerate, setRegenerate] = useState(false);
 
-  const { data } = useGetFamilyRoom();
-
   const handleCreate = async () => {
     const body: CreateMealPlan = {
       weekStartDate: getNextMondayYMD(),
@@ -50,12 +49,12 @@ const MealPlanCreatePage = () => {
     };
     console.log(body);
     try {
-      if (data?.familyRoomId == null) {
+      if (familyRoomId == null) {
         console.log("familyRoomId 없음");
         return;
       }
       await postCreateMealPlans({
-        familyRoomId: data?.familyRoomId,
+        familyRoomId: familyRoomId,
         createMeal: body,
       });
       console.log(body);
