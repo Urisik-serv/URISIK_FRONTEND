@@ -1,7 +1,8 @@
 import { useState } from "react";
 import X from "../../assets/icons/x-icon.svg";
 import Button from "../common/Button";
-import Star from "../../assets/icons/star-unselected.svg";
+import UnselectedStar from "../../assets/icons/star-unselected.svg";
+import SelectedStar from "../../assets/icons/star-selected.svg";
 
 type ReviewModalProps = {
   onClick: () => void;
@@ -11,6 +12,8 @@ type Preference = "LIKE" | "DISLIKE" | null;
 
 export default function ReviewModal({ onClick }: ReviewModalProps) {
   const [preference, setPreference] = useState<Preference>(null);
+  const star = [1, 2, 3, 4, 5];
+  const [score, setScore] = useState(0);
 
   const handlebutton = (select: Preference) => {
     if (select == preference) {
@@ -31,22 +34,18 @@ export default function ReviewModal({ onClick }: ReviewModalProps) {
         <div className="font-semibold">
           <p className="text-[20px] pb-6">오늘의 메뉴는 어떠셨나요</p>
           <div className="pb-4 flex justify-center">
-            <div className="size-[58px] flex justify-center items-center">
-              <img src={Star} alt="별점" />
-            </div>
-            <div className="size-[58px] flex justify-center items-center">
-              <img src={Star} alt="별점" />
-            </div>
-            <div className="size-[58px] flex justify-center items-center">
-              <img src={Star} alt="별점" />
-            </div>
-            <div className="size-[58px] flex justify-center items-center">
-              <img src={Star} alt="별점" />
-            </div>
-            <div className="size-[58px] flex justify-center items-center">
-              <img src={Star} alt="별점" />
-            </div>{" "}
-            {/*아직 구현 미완성이라 하드코딩해두었는데 수정 예정입니다! */}
+            {star.map((idx) => (
+              <button
+                className="size-[58px] flex justify-center items-center cursor-pointer"
+                key={idx}
+                onClick={() => setScore(idx)}
+              >
+                <img
+                  src={idx <= score ? SelectedStar : UnselectedStar}
+                  alt="별점"
+                />
+              </button>
+            ))}
           </div>
           <div className="flex justify-center gap-[10px]">
             <button
