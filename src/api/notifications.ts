@@ -1,9 +1,9 @@
-import type { ResponseNoticeDto } from "../types/notice-list";
+import type { ResponseNotice } from "../types/notice-list";
 import { axiosInstance } from "./axios/axios";
 
 export const getNotificationList = async (
   size: number,
-): Promise<ResponseNoticeDto> => {
+): Promise<ResponseNotice> => {
   const { data } = await axiosInstance.get("/api/notifications", {
     params: { size: size },
   });
