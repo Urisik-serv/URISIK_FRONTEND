@@ -3,6 +3,7 @@ import X from "../../assets/icons/x-icon.svg";
 import Button from "../common/Button";
 import UnselectedStar from "../../assets/icons/star-unselected.svg";
 import SelectedStar from "../../assets/icons/star-selected.svg";
+import AlertModal from "../common/AlertModal";
 
 type ReviewModalProps = {
   onClick: () => void;
@@ -14,6 +15,7 @@ export default function ReviewModal({ onClick }: ReviewModalProps) {
   const [preference, setPreference] = useState<Preference>(null);
   const star = [1, 2, 3, 4, 5];
   const [score, setScore] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handlebutton = (select: Preference) => {
     if (select == preference) {
@@ -22,9 +24,22 @@ export default function ReviewModal({ onClick }: ReviewModalProps) {
       setPreference(select);
     }
   };
+
+  const onModalClick = () => {
+    setIsOpen(false);
+    onClick();
+  };
   return (
-    <div className="fixed inset-0 z-50 flex justify-center items-end">
-      <div className="bg-white rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] w-[375px] z-50 flex flex-col gap-6 items-center text-center">
+    <div className="fixed inset-0 z-30 flex justify-center items-end">
+      {isOpen && (
+        <AlertModal
+          boldContent="리뷰 등록 완료!"
+          mediumContent={`사용자님의 소중한 리뷰를\n기록했어요.`}
+          buttonText="확인"
+          onClick={onModalClick}
+        />
+      )}
+      <div className="bg-white rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] w-[375px] flex flex-col gap-6 items-center text-center">
         <button
           className="pt-[10px] cursor-pointer flex justify-center items-center"
           onClick={onClick}
@@ -63,7 +78,7 @@ export default function ReviewModal({ onClick }: ReviewModalProps) {
           </div>
         </div>
         <div className="w-full p-[10px] flex justify-center">
-          <Button type="button" text="등록" onClick={onClick} />
+          <Button type="button" text="등록" onClick={() => setIsOpen(true)} />
         </div>
       </div>
     </div>
