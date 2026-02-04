@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import MealCard from "./MealCard";
-import type { FoodList } from "../../../types/recipe-list";
+import type { FoodList } from "../../../types/recipes";
 import axios from "axios";
 
 const MealCuration = () => {
@@ -33,12 +33,14 @@ const MealCuration = () => {
       {data?.recipes.map((recipe) => (
         <MealCard
           key={recipe.id}
-          id={recipe.id}
+          id={String(recipe.id)}
           shortDescription={recipe.shortDescription}
           title={recipe.title}
           rating={recipe.rating}
           category={recipe.category}
           isWishlisted={recipe.isWishlisted}
+          external={null}
+          type="RECIPE"
         />
       ))}
     </div>

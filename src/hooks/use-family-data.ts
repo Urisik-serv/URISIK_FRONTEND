@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import type { FamilyMembers } from "../types/family-profile";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { postFamilyRoom } from "../api/family-room";
+import { getFamilyRoom, postFamilyRoom } from "../api/family-room";
 import { useFamilyStore } from "../stores/use-family-store";
 import { useNavigate } from "react-router-dom";
+import type { FamilyMembers } from "../types/family-profile";
+import axios from "axios";
 
 export const useFamilyData = () => {
-  // ---------------------------------------------------------------
-  //                                     가족방 조회
-  // ---------------------------------------------------------------
-
+  // 다른 파일 코드 에러 방지
   const [familyData, setFamilyData] = useState<FamilyMembers | null>(null);
 
   useEffect(() => {
@@ -46,7 +43,26 @@ export const useFamilyData = () => {
     mom: false,
   });
 
-  const setFamilyRoomData = useFamilyStore((state) => state.setFamilyData);
+  const {
+    setFamilyData: setStoreFamilyData,
+    setFamilyRoomId,
+    familyRoomId,
+  } = useFamilyStore();
+
+  useEffect(() => {
+    const syncFamilyId = async () => {
+      try {
+        const res = await getFamilyRoom();
+        if (res?.result?.familyRoomId) {
+          setFamilyRoomId(res.result.familyRoomId);
+        }
+      } catch (e) {
+        console.error("ID 복구 실패:", e);
+      }
+    };
+
+    if (!familyRoomId) syncFamilyId();
+  }, []);
 
   // 토글
   const select = (role: keyof typeof familyCounts) => {
@@ -106,18 +122,12 @@ export const useFamilyData = () => {
 
   const canAdjustChildren = familyCounts["mom"] > 0 || familyCounts["dad"] > 0;
 
-  const { mutate: createFamilyMutation } = useMutation({
+  const { mutateAsync: createFamilyMutation } = useMutation({
     mutationFn: postFamilyRoom,
-    onSuccess: (res) => {
-      console.log("가족방 생성 성공:", res);
-    },
-    onError: (error) => {
-      console.error(error);
-    },
   });
 
   // 전역 상태 저장
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const currentPolicy = isLeader.mom
       ? "MOTHER_ONLY"
       : isLeader.dad
@@ -135,9 +145,21 @@ export const useFamilyData = () => {
       familyPolicy: currentPolicy,
     };
 
-    setFamilyRoomData(requestData);
-    createFamilyMutation(requestData);
-    navigate("/family-invite");
+    try {
+      const res = await createFamilyMutation(requestData);
+      console.log("생성 응답:", res);
+      if (res.result.familyRoomId) {
+        setFamilyRoomId(res.result.familyRoomId);
+        setStoreFamilyData(requestData);
+        console.log(
+          "스토어 업데이트 요청 직후:",
+          useFamilyStore.getState().familyRoomId,
+        );
+        navigate("/family-invite");
+      }
+    } catch (error) {
+      console.error("생성 실패:", error);
+    }
   };
 
   return {

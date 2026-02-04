@@ -1,6 +1,6 @@
 import type { CommonResponse } from "./common";
 
-interface FamilyWishListResult {
+export interface FamilyWishListResult {
   recipeId: number;
   transformedRecipeId: number;
   recipeName: string;

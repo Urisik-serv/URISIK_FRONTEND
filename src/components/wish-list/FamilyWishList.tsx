@@ -1,53 +1,106 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
 import CheckedBox from "../../assets/icons/Check_box.svg";
+import type {
+  DeleteFamilyWishList,
+  FamilyWishListResult,
+} from "../../types/wish-list";
+import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
+import { useInView } from "react-intersection-observer";
 
-interface Item {
-  id: number;
-  name: string;
-}
 const FamilyWishList = () => {
-  // 임시 데이터
-  const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "바나나 프렌치토스트" },
-    { id: 2, name: "바나나 프렌치토스트" },
-    { id: 3, name: "바나나 프렌치토스트" },
-    { id: 4, name: "바나나 프렌치토스트" },
-    { id: 5, name: "바나나 프렌치토스트" },
-    { id: 6, name: "바나나 프렌치토스트" },
-    { id: 7, name: "바나나 프렌치토스트" },
-  ]);
+  const {
+    data: familyWish,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useGetInfiniteFamilyWishList(1, 20); // familyRoomId는 추후에
+  // isPending, isError 등은 나중에...
+  // throttling도 고려해볼 문제..
+
+  const [ref, inView] = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      !isFetching && hasNextPage;
+    }
+  }, [inView, isFetching, hasNextPage]);
 
   // 임시 수정가능 데이터
   const isAuth = false;
 
   const [editMode, setEditMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const toggleSelectItem = (id: number) => {
+
+  // 1. 선택된 ID를 '문자열'로 관리합니다. (number[] -> string[])
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+
+  // 2. 항목마다 고유한 키를 만들어주는 헬퍼 함수
+  const getUniqueKey = (item: FamilyWishListResult) => {
+    // recipeId가 있으면(0이나 null이 아니면) recipe 타입, 아니면 transformed 타입
+    if (item.recipeId) {
+      return `recipe_${item.recipeId}`;
+    } else {
+      return `transformed_${item.transformedRecipeId}`;
+    }
+  };
+
+  const toggleSelectItem = (uniqueKey: string) => {
     if (!editMode) return;
 
-    setSelectedIds((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((itemId) => itemId !== id);
+    setSelectedKeys((prev) => {
+      if (prev.includes(uniqueKey)) {
+        return prev.filter((key) => key !== uniqueKey);
       } else {
-        return [...prev, id];
+        return [...prev, uniqueKey];
       }
     });
+  };
+
+  const handleDelete = async () => {
+    if (selectedKeys.length === 0) return;
+
+    // 3. 문자열 키를 다시 분리해서 API 요청 객체 만들기
+    const deletePayload: DeleteFamilyWishList = {
+      recipeId: [],
+      transformedRecipeId: [],
+    };
+
+    selectedKeys.forEach((key) => {
+      const [type, idStr] = key.split("_"); // "recipe_10" -> ["recipe", "10"]
+      const id = Number(idStr);
+
+      if (type === "recipe") {
+        deletePayload.recipeId.push(id);
+      } else {
+        deletePayload.transformedRecipeId.push(id);
+      }
+    });
+
+    console.log("삭제 요청 데이터:", deletePayload);
+
+    try {
+      // 여기에 실제 삭제 API 호출
+      // await deleteFamilyWishList(familyRoomId, deletePayload);
+
+      // 성공 시 선택 초기화 및 데이터 갱신
+      setSelectedKeys([]);
+      setEditMode(false);
+      // queryClient.invalidateQueries(...) // 쿼리 갱신 필요
+    } catch (error) {
+      console.error("삭제 실패", error);
+    }
   };
 
   const handleButtonClick = () => {
     if (!editMode) {
       setEditMode(true);
     } else {
-      if (selectedIds.length > 0) {
-        const newItems = items.filter((item) => !selectedIds.includes(item.id));
-        setItems(newItems);
-      }
-
-      setSelectedIds([]);
-      setEditMode(false);
+      // 편집 모드에서 버튼을 다시 누르면 삭제 로직 실행
+      handleDelete();
     }
   };
 
@@ -65,14 +118,16 @@ const FamilyWishList = () => {
         <div className="flex justify-end">
           <EditButton
             onClick={handleButtonClick}
-            count={selectedIds.length}
+            count={selectedKeys.length}
             isEditMode={editMode}
           />
         </div>
       )}
       <div className="pt-2">
-        {items.map((item) => {
-          const isSelected = selectedIds.includes(item.id);
+        {familyWish?.pages.map((item) => {
+          const uniqueKey = getUniqueKey(item);
+          const isSelected = selectedKeys.includes(uniqueKey);
+
           return (
             <div className="flex items-center">
               {editMode && (
@@ -81,14 +136,14 @@ const FamilyWishList = () => {
                   src={`${isSelected ? CheckedBox : EmptyBox}`}
                   alt={`${isSelected ? "선택됨" : "선택되지 않음"}`}
                   onClick={() => {
-                    toggleSelectItem(item.id);
+                    toggleSelectItem(uniqueKey);
                   }}
                 />
               )}
               <MenuList
-                key={item.id}
+                key={uniqueKey}
                 type="profile"
-                menu={item.name}
+                menu={item.recipeName}
                 clickable={true}
                 isSelected={false}
               />
