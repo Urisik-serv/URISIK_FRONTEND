@@ -197,7 +197,12 @@ export default function ProfileDataForm({
         </div>
       </div>
       <div className="pt-[131px] ">
-        <Button text={"완료"} type="submit" disabled={!isValid()} />
+        <Button
+          onClick={() => navigate("/mypage")}
+          text={"완료"}
+          type="submit"
+          disabled={!isValid()}
+        />
       </div>
     </form>
   );
