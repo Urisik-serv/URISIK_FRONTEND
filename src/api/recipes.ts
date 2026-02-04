@@ -1,4 +1,5 @@
 import type {
+  ResponseDetailRecipe,
   ResponseExternalRecipes,
   ResponseSearchRecipes,
   SearchRecipesDto,
@@ -27,7 +28,7 @@ export const postExteralRecipes = async (
 
 export const getDetailRecipe = async (
   recipeId: number,
-): Promise<ResponseSearchRecipes> => {
+): Promise<ResponseDetailRecipe> => {
   const { data } = await axiosInstance.get(`/api/recipes/${recipeId}`);
 
   return data;
