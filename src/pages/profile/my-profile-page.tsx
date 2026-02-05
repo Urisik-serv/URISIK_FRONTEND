@@ -10,7 +10,7 @@ import EntityItem from "../../components/common/EntityItem";
 
 export default function MyProfilePage() {
   const { familyData } = useFamilyData();
-  const myData = familyData?.familyMembers[0];
+  const myData = familyData?.familyMembers[2];
   console.log(myData);
   const navigate = useNavigate();
 
@@ -34,24 +34,23 @@ export default function MyProfilePage() {
             </div>
           </button>
         </div>
-        <div className="pt-[24px]">
+        <div className="pt-[24px] pb-[10px]">
+          <div className="text-[16px] font-semibold leading-[24px]">
+            알레르기
+          </div>
           {(myData?.allergies?.length || 0) > 0 ? (
-            myData?.allergies.map((allergy) => (
-              <div className=" pb-[20px]">
-                <div className="text-[16px] font-semibold leading-[24px]">
-                  알레르기
+            <div>
+              {myData?.allergies.map((allergy) => (
+                <div className=" pb-[20px]">
+                  <AllergyDataBox
+                    name={allergy.name}
+                    alternative={allergy.alternativeIngredients}
+                  />
                 </div>
-                <AllergyDataBox
-                  name={allergy.name}
-                  alternative={allergy.alternativeIngredients}
-                />
-              </div>
-            ))
+              ))}
+            </div>
           ) : (
             <div className="pb-[20px] ">
-              <div className="text-[16px] font-semibold leading-[24px]">
-                알레르기
-              </div>
               <div className="flex pt-2">
                 <ElementButton name="없음" />
               </div>
@@ -62,7 +61,7 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             선호 음식
           </div>
-          <div className="flex gap-[8px] pt-[8px]">
+          <div className="flex gap-[8px] pt-[12px]">
             {myData?.preferences.likedFood.map((food) => (
               <ElementButton name={food} />
             ))}

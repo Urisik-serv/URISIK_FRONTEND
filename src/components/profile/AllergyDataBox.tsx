@@ -12,7 +12,7 @@ export default function AllergyDataBox({
 }: allergyDataProps) {
   const icon = ALLERGY_ICON.find((item) => item.name == name)?.icon;
   return (
-    <div>
+    <div className="flex gap-[24px]">
       <div className="pt-[8px] px-[7px] w-[62px] flex flex-col items-center gap-[6px]">
         <img src={icon} alt={`${name} 아이콘`} />
         <div className="bg-primary-700 rounded-sm w-[48px] flex justify-center items-center">
@@ -25,7 +25,7 @@ export default function AllergyDataBox({
         <div className="text-sm text-gray-400 leading-[22.26px]">
           대체식재료
         </div>
-        <div className="pt-[4px] flex gap-[8px] flex-wrap">
+        <div className="pt-[4px] flex gap-[8px] flex-wrap px-[7px]">
           {alternative.map((item) => (
             <ElementButton name={item} />
           ))}
