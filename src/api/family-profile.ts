@@ -1,16 +1,22 @@
-import axios from "axios";
 import type {
-  FamilyProfile,
+  FamilyDetails,
+  GetProfileResponse,
+  GetProfilesResponse,
   postProfileRequest,
+  PostProfileResponse,
+  Profile,
 } from "../types/family-profile";
-import type { PostProfileResponse } from "../types/response";
 import { axiosInstance } from "./axios/axios";
 
 // 프로필 조회
-export const getFamilyList = async (): Promise<FamilyProfile> => {
-  const { data } = await axios.get("/public/data/family-data.json");
-
-  return data;
+export const getProfile = async (
+  familyRoomId: number,
+  profileId: number,
+): Promise<Profile> => {
+  const { data } = await axiosInstance.get<GetProfileResponse>(
+    `/api/family-rooms/${familyRoomId}/profiles/${profileId}`,
+  );
+  return data.result;
 };
 
 // 프로필 생성
@@ -35,4 +41,14 @@ export const patchProfile = async (
     request,
   );
   return data;
+};
+
+// 가족방 전체 프로필 조회
+export const getProfiles = async (
+  familyRoomId: number,
+): Promise<FamilyDetails> => {
+  const { data } = await axiosInstance.get<GetProfilesResponse>(
+    `/api/family-rooms/${familyRoomId}/all-profiles`,
+  );
+  return data.result;
 };
