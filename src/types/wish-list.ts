@@ -21,9 +21,11 @@ interface WishListProfile {
   nickname: string;
 }
 
-export interface DeleteFamilyWishList {
+export interface FamilyWishListBody {
   recipeId: number[];
   transformedRecipeId: number[];
 }
 
 export type ResponseFamilyWishLists = BaseResponse<FamilyWishListResult[]>;
+
+export type ResponseAddWishLists = BaseResponse<FamilyWishListBody>;

@@ -4,19 +4,21 @@ import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
 import CheckedBox from "../../assets/icons/Check_box.svg";
 import type {
-  DeleteFamilyWishList,
+  FamilyWishListBody,
   FamilyWishListResult,
 } from "../../types/wish-list";
 import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
 import { useInView } from "react-intersection-observer";
+import { useFamilyStore } from "../../stores/use-family-store";
 
 const FamilyWishList = () => {
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
   const {
     data: familyWish,
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useGetInfiniteFamilyWishList(1, 20); // familyRoomId는 추후에
+  } = useGetInfiniteFamilyWishList(familyRoomId, 20);
   // isPending, isError 등은 나중에...
   // throttling도 고려해볼 문제..
 
@@ -64,7 +66,7 @@ const FamilyWishList = () => {
     if (selectedKeys.length === 0) return;
 
     // 3. 문자열 키를 다시 분리해서 API 요청 객체 만들기
-    const deletePayload: DeleteFamilyWishList = {
+    const deletePayload: FamilyWishListBody = {
       recipeId: [],
       transformedRecipeId: [],
     };
@@ -101,6 +103,7 @@ const FamilyWishList = () => {
     } else {
       // 편집 모드에서 버튼을 다시 누르면 삭제 로직 실행
       handleDelete();
+      setEditMode(false);
     }
   };
 

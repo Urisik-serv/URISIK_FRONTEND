@@ -2,7 +2,10 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getFamilyWishList } from "../../api/wish-list";
 import { QUERY_KEY } from "../../constants/key";
 
-function useGetInfiniteFamilyWishList(familyRoomId: number, size: number) {
+function useGetInfiniteFamilyWishList(
+  familyRoomId: number | null,
+  size: number,
+) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) =>
       getFamilyWishList(familyRoomId, size, pageParam),
