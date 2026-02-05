@@ -1,5 +1,6 @@
 import type {
   ResponseExternalRecipes,
+  ResponseRecommendSafe,
   ResponseSearchRecipes,
   SearchRecipesDto,
   SearchRecipesItem,
@@ -29,6 +30,17 @@ export const getDetailRecipe = async (
   recipeId: number,
 ): Promise<ResponseSearchRecipes> => {
   const { data } = await axiosInstance.get(`/api/recipes/${recipeId}`);
+
+  return data;
+};
+
+// 홈 안전 레시피 추천 API
+export const getRecommendSafe = async (): Promise<ResponseRecommendSafe> => {
+  const { data } = await axiosInstance.get(
+    "/api/home/recommendations/safe-recipes",
+  );
+
+  console.log("추천 데이터:", data);
 
   return data;
 };

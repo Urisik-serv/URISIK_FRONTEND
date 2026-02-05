@@ -1,4 +1,5 @@
 import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export interface Recipe {
   id: number;
@@ -97,7 +98,24 @@ export interface ResponseDetailRecipe {
   errorDetail: {};
 }
 
+export interface RecommendSafeRecipes {
+  recipes: [
+    {
+      id: string;
+      title: string;
+      imageUrl: string;
+      category: string;
+      avgScore: number;
+      reviewCount: number;
+      wishCount: number;
+      safe: boolean;
+    },
+  ];
+}
+
 // interface 사용시 extends
 export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
 
 export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
+
+export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
