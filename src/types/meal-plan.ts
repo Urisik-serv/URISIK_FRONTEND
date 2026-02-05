@@ -58,3 +58,5 @@ export type ReadFamilyRoomContextResDto = {
 
 export type ResponseReadFamilyRoomContextDto =
   BaseResponse<ReadFamilyRoomContextResDto>;
+
+export type SlotItem = RecipeDTO & SlotRequest;

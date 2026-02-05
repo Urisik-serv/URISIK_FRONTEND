@@ -4,18 +4,13 @@ import MenuChip from "../../components/meal-plan/MenuChip";
 import AlertModal from "../../components/common/AlertModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { SlotItem } from "../../types/meal-plan";
 
 type MealPlanResultProps = {
   onClick: () => void;
 };
 
-type slotItem = {
-  id: number;
-  title: string;
-  mealType: "LUNCH" | "DINNER";
-  dayOfWeek: string;
-};
-type mealPlanResponse = Record<string, slotItem[]>;
+type mealPlanResponse = Record<string, SlotItem[]>;
 const dayKor: Record<string, string> = {
   MONDAY: "월",
   TUESDAY: "화",
@@ -50,7 +45,7 @@ export default function MealPlanResult({ onClick }: MealPlanResultProps) {
           buttonText="확인"
           outsideText="탭해서 닫기"
           onClick={handleButton}
-          handleModal={() => navigate(`/`)}
+          handleModal={() => setIsOpen(false)}
         />
       )}
       <p className="pl-4 pt-6 font-semibold text-[24px] text-[#333333] pb-4 whitespace-pre-line">
@@ -80,7 +75,7 @@ export default function MealPlanResult({ onClick }: MealPlanResultProps) {
       </div>
       <div className="w-full max-w-[375px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
         <button
-          className="w-full h-14 rounded-xl cursor-pointer bg-gray-200 text-gray-400"
+          className="w-full h-14 rounded-xl cursor-pointer text-primary-700 border border-primary-700"
           onClick={() => navigate(`/meal-plan/edit`)}
         >
           수정
