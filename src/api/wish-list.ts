@@ -20,12 +20,14 @@ export const getFamilyWishList = async (
     },
   );
 
+  console.log(res.data);
+
   return res;
 };
 
 // 위시리스트 삭제
 export const deleteFamilyWishList = async (
-  familyRoomId: number,
+  familyRoomId: number | null,
   DeleteFamilyWishList: FamilyWishListBody,
 ): Promise<BaseResponse<{}>> => {
   const { data } = await axiosInstance.delete(
@@ -38,7 +40,7 @@ export const deleteFamilyWishList = async (
 
 // 위시리스트 추가
 export const postAddWishList = async (
-  familyRoomId: number,
+  familyRoomId: number | null,
   addRecipes: FamilyWishListBody,
 ): Promise<ResponseAddWishLists> => {
   const { data } = await axiosInstance.post(
@@ -47,6 +49,8 @@ export const postAddWishList = async (
       addRecipes,
     },
   );
+
+  console.log(data);
 
   return data;
 };
