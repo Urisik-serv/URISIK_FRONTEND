@@ -1,4 +1,5 @@
 import type {
+  ResponseDetailRecipe,
   ResponseExternalRecipes,
   ResponseRecommendSafe,
   ResponseSearchRecipes,
@@ -14,6 +15,8 @@ export const getSearchRecipes = async (
     params: SearchRecipesDto,
   });
 
+  console.log(data);
+
   return data;
 };
 
@@ -28,7 +31,7 @@ export const postExteralRecipes = async (
 
 export const getDetailRecipe = async (
   recipeId: number,
-): Promise<ResponseSearchRecipes> => {
+): Promise<ResponseDetailRecipe> => {
   const { data } = await axiosInstance.get(`/api/recipes/${recipeId}`);
 
   return data;
