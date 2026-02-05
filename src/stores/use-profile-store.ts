@@ -36,3 +36,6 @@ export const useProfileStore = create<ProfileStore>((set) => ({
         typeof updater === "function" ? updater(state.savedFormData) : updater,
     })),
 }));
+if (typeof window !== "undefined") {
+  (window as any).profileStore = useProfileStore;
+}
