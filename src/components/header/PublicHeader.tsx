@@ -2,12 +2,13 @@ import BackButton from "../common/BackButton";
 
 interface PublicHeaderProps {
   title: string | null;
+  onClick?: () => void;
 }
 
-const PublicHeader = ({ title }: PublicHeaderProps) => {
+const PublicHeader = ({ title, onClick }: PublicHeaderProps) => {
   return (
     <div className="w-full px-4 py-2.5 flex justify-between items-center">
-      <BackButton />
+      <BackButton onClick={onClick} />
       <div className="">
         <p className="justify-start text-black text-xl font-semibold tracking-tight">
           {title}
