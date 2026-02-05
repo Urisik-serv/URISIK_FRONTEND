@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MealCard from "./MealCard";
 import type { FoodList } from "../../../types/recipes";
+import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import axios from "axios";
 
 const MealCuration = () => {
@@ -38,7 +39,7 @@ const MealCuration = () => {
           title={recipe.title}
           rating={recipe.rating}
           category={recipe.category}
-          isWishlisted={recipe.isWishlisted}
+          img={SampleImg}
           external={null}
           type="RECIPE"
         />

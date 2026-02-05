@@ -1,9 +1,12 @@
+import type { DetailRecipeStep } from "../../types/recipes";
+
 interface MenuInfoProps {
   title: string;
   sentences?: string[];
+  recipes?: DetailRecipeStep[];
 }
 
-const MenuInfo = ({ title, sentences = [] }: MenuInfoProps) => {
+const MenuInfo = ({ title, sentences = [], recipes = [] }: MenuInfoProps) => {
   const isIngredients = title === "재료";
   return (
     <div className="flex flex-col gap-2">
@@ -15,9 +18,9 @@ const MenuInfo = ({ title, sentences = [] }: MenuInfoProps) => {
           {sentences.join(", ")}
         </p>
       ) : (
-        sentences.map((sentence) => (
+        recipes.map((recipe) => (
           <p className="text-sm font-medium text-gray-800 leading-6">
-            {sentence}
+            {recipe.description}
           </p>
         ))
       )}
