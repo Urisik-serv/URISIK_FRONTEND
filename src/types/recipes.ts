@@ -74,7 +74,6 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
-<<<<<<< HEAD
 export interface RecommendSafeRecipes {
   recipes: [
     {
@@ -89,19 +88,15 @@ export interface RecommendSafeRecipes {
     },
   ];
 }
-=======
+
 export type ResponseDetailRecipe = CommonResponse<DetailRecipe>;
->>>>>>> e2bd3ad36fe77347c5cb998bb5bb434fa3d4ada9
+export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
 
 // interface 사용시 extends
 export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
 
 export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
 
-<<<<<<< HEAD
-export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
-=======
-// 충돌 방지용 이전 mockdata type
 export interface Recipe {
   id: number;
   title: string;
@@ -126,4 +121,3 @@ export interface Recipe {
 export interface FoodList {
   recipes: Recipe[];
 }
->>>>>>> e2bd3ad36fe77347c5cb998bb5bb434fa3d4ada9
