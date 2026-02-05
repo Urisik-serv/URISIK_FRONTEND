@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
 import ChooseWeek from "../../components/meal-plan/ChooseWeek";
 import MemberMealPlanView from "../../components/meal-plan/MemberMealPlanView";
@@ -7,11 +6,12 @@ import { useState } from "react";
 import type { CreateMealPlan, SlotRequest } from "../../types/meal-plan";
 import { postCreateMealPlans } from "../../api/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
+import MealPlanResult from "../../components/meal-plan/MealPlanResult";
+import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
   const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
-  const navigate = useNavigate();
   const { familyRoomId } = useFamilyStore.getState();
   console.log(useFamilyStore.getState());
   //날짜 계산
@@ -39,7 +39,8 @@ const MealPlanCreatePage = () => {
   const [lunchSlots, setLunchSlots] = useState<SlotRequest[]>([]);
   const [dinnerSlots, setDinnerSlots] = useState<SlotRequest[]>([]);
 
-  const [regenerate, setRegenerate] = useState(false);
+  //const [regenerate, setRegenerate] = useState(true);
+  const regenerate = true;
 
   const handleCreate = async () => {
     const body: CreateMealPlan = {
@@ -53,14 +54,19 @@ const MealPlanCreatePage = () => {
         console.log("familyRoomId 없음");
         return;
       }
-      await postCreateMealPlans({
+      const response = await postCreateMealPlans({
         familyRoomId: familyRoomId,
         createMeal: body,
       });
-      console.log(body);
+      sessionStorage.setItem(
+        "mealPlan",
+        JSON.stringify(changeAdditionalProp(response.result.slots)),
+      );
+      console.log("api 호출 후 반응", response);
     } catch (error) {
       console.log("주간 식단 생성 실패", error);
     }
+    setStep("result");
   };
   return (
     <div>
@@ -90,7 +96,7 @@ const MealPlanCreatePage = () => {
               </div>
             </div>
           )}
-          {step === "result" && <></>}
+          {step === "result" && <MealPlanResult onClick={handleCreate} />}
         </>
       )}
     </div>
