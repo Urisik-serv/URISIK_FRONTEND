@@ -4,10 +4,10 @@ import type {
   ResponseFamilyWishLists,
 } from "../types/wish-list";
 import { axiosInstance } from "./axios/axios";
-import type { CommonResponse } from "../types/common";
+import type { BaseResponse } from "../types/response";
 
 export const getFamilyWishList = async (
-  familyRoomId: number,
+  familyRoomId: number | null,
   size: number,
   cursor: string | null,
 ): Promise<AxiosResponse<ResponseFamilyWishLists>> => {
@@ -24,7 +24,7 @@ export const getFamilyWishList = async (
 export const deleteFamilyWishList = async (
   familyRoomId: number,
   DeleteFamilyWishList: DeleteFamilyWishList,
-): Promise<CommonResponse<{}>> => {
+): Promise<BaseResponse<{}>> => {
   const { data } = await axiosInstance.delete(
     `/api/family-rooms/${familyRoomId}/family-wishlist/items`,
     { data: DeleteFamilyWishList },

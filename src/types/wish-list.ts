@@ -1,4 +1,4 @@
-import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export interface FamilyWishListResult {
   recipeId: number;
@@ -26,6 +26,4 @@ export interface DeleteFamilyWishList {
   transformedRecipeId: number[];
 }
 
-export interface ResponseFamilyWishLists extends CommonResponse<
-  FamilyWishListResult[]
-> {}
+export type ResponseFamilyWishLists = BaseResponse<FamilyWishListResult[]>;
