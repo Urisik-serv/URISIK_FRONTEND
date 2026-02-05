@@ -1,14 +1,14 @@
 import { ALLERGY_ICON } from "../../constants/allergy-data";
-import ElementButton from "../common/ElementButton";
+// import ElementButton from "../common/ElementButton";
 
 interface allergyDataProps {
   name: string;
-  alternative: string[];
+  alternative?: string[];
 }
 
 export default function AllergyDataBox({
   name,
-  alternative,
+  //alternative,
 }: allergyDataProps) {
   const icon = ALLERGY_ICON.find((item) => item.name == name)?.icon;
   return (
@@ -25,11 +25,11 @@ export default function AllergyDataBox({
         <div className="text-sm text-gray-400 leading-[22.26px]">
           대체식재료
         </div>
-        <div className="pt-[4px] flex gap-[8px] flex-wrap px-[7px]">
+        {/* <div className="pt-[4px] flex gap-[8px] flex-wrap px-[7px]">
           {alternative.map((item) => (
             <ElementButton name={item} />
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
