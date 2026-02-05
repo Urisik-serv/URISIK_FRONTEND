@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import { useParams } from "react-router-dom";
-import SampleImg from "../../assets/sample/shrimp-mushroom.png";
 import WhiteHeart from "../../assets/icons/heart-white.svg";
 import Rate from "../../components/common/Rate";
 import MenuInfo from "../../components/common/MenuInfo";
@@ -59,14 +58,6 @@ const MenuInformationPage = () => {
               {recipe?.category}
             </p>
             <Rate px={16} rate={4.5} />
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-start items-center gap-6 pb-9">
-              <p className="w-15 text-gray-400 text-sm font-medium leading-6">
-                맛 포인트
-              </p>
-              <p>{recipe?.sourceType}</p>
-            </div>
           </div>
           <div className="pb-12">
             {/*<MenuInfo
