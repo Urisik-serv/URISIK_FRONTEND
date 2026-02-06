@@ -79,7 +79,7 @@ const SearchingPage = () => {
               shortDescription=""
               category={item.category}
               rating={item.avgScore}
-              isWishlisted={false}
+              img={item.imageUrl}
               type={item.type}
               external={item.external}
             />

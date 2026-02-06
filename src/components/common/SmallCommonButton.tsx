@@ -1,6 +1,6 @@
 interface SmallButtonProps {
   onClick?: () => void;
-  text: String;
+  text: string;
   type: "button" | "submit" | "reset";
   disabled?: boolean;
 }

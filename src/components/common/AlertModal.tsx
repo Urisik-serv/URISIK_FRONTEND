@@ -1,10 +1,10 @@
 interface AlertModalProps {
-  title: string;
+  title?: string;
   boldContent: string;
   mediumContent: string;
   buttonText: string;
-  outsideText: "탭해서 취소" | "탭해서 닫기";
-  handleModal: () => void;
+  outsideText?: "탭해서 취소" | "탭해서 닫기";
+  handleModal?: () => void;
   onClick: () => void;
 }
 
@@ -19,7 +19,7 @@ export default function AlertModal({
 }: AlertModalProps) {
   return (
     <div>
-      <div className="fixed inset-0 bg-black/50 w-[375px] mx-auto flex flex-col justify-center items-center z-10">
+      <div className="fixed inset-0 bg-black/50 w-[375px] mx-auto flex flex-col justify-center items-center z-50">
         <div className="w-[303px] bg-white pt-[24px] pb-[12px] rounded-xl flex flex-col items-center">
           <div className="text-primary-700 text-lg text-center font-semibold tracking-[0.18px]">
             {title}
