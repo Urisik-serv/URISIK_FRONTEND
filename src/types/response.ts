@@ -55,8 +55,9 @@ export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;
 export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
 export type GetFamilyRoomResponse = BaseResponse<GetFamilyRoomResult>;
 
-export type CursorBaseResponse<T> = BaseResponse<{
-  result: T;
-  nextCursor: number | null;
-  hasNext: boolean;
-}>;
+export type CursorBaseResponse<T> = BaseResponse<
+  T & {
+    nextCursor: number | null;
+    hasNext: boolean;
+  }
+>;
