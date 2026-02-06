@@ -26,12 +26,6 @@ export default function InviteEntry() {
           return;
         }
 
-        if (!getAccessToken()) {
-          alert("로그인이 필요합니다");
-          navigate("/login");
-          return;
-        }
-
         setInviterName(inviteRes.inviterName);
       } catch (error) {
         console.error("초대 정보 조회 실패", error);
@@ -48,7 +42,13 @@ export default function InviteEntry() {
     },
     onSuccess: (res) => {
       setFamilyRoomId(res.familyRoomId);
-      navigate("/family-profile-create");
+
+      if (getAccessToken()) {
+        navigate("/family-profile-create");
+      } else {
+        const nextStep = encodeURIComponent("/family-profile-create");
+        navigate(`/login?redirect=${nextStep}`);
+      }
     },
     onError: (error: any) => {
       if (error.response?.data?.code === "FAMILY_JOIN_409") {
@@ -64,7 +64,7 @@ export default function InviteEntry() {
       {isOpen && (
         <AlertModal
           title={"초대장"}
-          boldContent={`${inviterName}님의 가족구성원에 초대되었어요`}
+          boldContent={`${inviterName}님의\n 가족구성원에 초대되었어요`}
           mediumContent="우리 가족 식단을 함께 관리해요"
           buttonText="참여하기"
           outsideText="탭해서 닫기"
