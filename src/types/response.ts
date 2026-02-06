@@ -54,3 +54,9 @@ export type LogoutResponse = BaseResponse<LogoutResult>;
 export type PostFamilyRoomResponse = BaseResponse<FamilyRoomResult>;
 export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
 export type GetFamilyRoomResponse = BaseResponse<GetFamilyRoomResult>;
+
+export type CursorBaseResponse<T> = BaseResponse<{
+  result: T;
+  nextCursor: number | null;
+  hasNext: boolean;
+}>;
