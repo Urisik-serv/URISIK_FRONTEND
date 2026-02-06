@@ -10,6 +10,7 @@ import MealPlanResult from "../../components/meal-plan/MealPlanResult";
 import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
 import AlertModal from "../../components/common/AlertModal";
 import { useNavigate } from "react-router-dom";
+import { getNextMonday } from "../../utils/date";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
@@ -17,28 +18,6 @@ const MealPlanCreatePage = () => {
   const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
   const { familyRoomId } = useFamilyStore.getState();
   const navigate = useNavigate();
-
-  //날짜 계산
-  const formatYMD = (d: Date) => {
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
-  };
-
-  //다음주 월요일 날짜를 계산
-  const getNextMondayYMD = (baseDate = new Date()) => {
-    const d = new Date(baseDate);
-    d.setHours(0, 0, 0, 0);
-
-    const day = d.getDay(); // 0=Sun, 1=Mon, ... 6=Sat
-    // 다음 주 월요일까지 남은 일수:
-    // Mon(1)->7, Tue(2)->6, ... Sun(0)->1
-    const daysUntilNextMonday = day === 0 ? 1 : 8 - day;
-
-    d.setDate(d.getDate() + daysUntilNextMonday);
-    return formatYMD(d);
-  };
 
   const [lunchSlots, setLunchSlots] = useState<SlotRequest[]>([]);
   const [dinnerSlots, setDinnerSlots] = useState<SlotRequest[]>([]);
@@ -48,7 +27,7 @@ const MealPlanCreatePage = () => {
 
   const handleCreate = async () => {
     const body: CreateMealPlan = {
-      weekStartDate: getNextMondayYMD(),
+      weekStartDate: getNextMonday(),
       selectedSlots: [...lunchSlots, ...dinnerSlots],
       regenerate: regenerate,
     };
