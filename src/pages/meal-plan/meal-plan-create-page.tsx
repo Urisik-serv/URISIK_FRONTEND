@@ -66,7 +66,6 @@ const MealPlanCreatePage = () => {
         "mealPlan",
         JSON.stringify(changeAdditionalProp(response.result.slots)),
       );
-      console.log("api 호출 후 반응", response);
     } catch (error) {
       console.log("주간 식단 생성 실패", error);
     }

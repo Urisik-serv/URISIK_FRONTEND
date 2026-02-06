@@ -1,4 +1,4 @@
-import type { BaseResponse } from "./response";
+import type { CommonResponse } from "./common";
 
 export type DayOfWeek =
   | "MONDAY"
@@ -37,26 +37,6 @@ export type CreateMealPlanResDto = {
   slots: MealPlanSlots;
 };
 
-export type ResponseCreateMealPlanDto = BaseResponse<CreateMealPlanResDto>;
-
-export type ReadFamilyRoomContextResDto = {
-  familyRoomId: number;
-  familyPolicy: string;
-  me: {
-    memberId: number;
-    familyRole: string;
-    nickName: string;
-  };
-  capabilities: {
-    leader: boolean;
-    canEditWishlist: boolean;
-    canCreateMealPlan: boolean;
-    canEditMealPlan: boolean;
-  };
-  mealPlanCreated: boolean;
-};
-
-export type ResponseReadFamilyRoomContextDto =
-  BaseResponse<ReadFamilyRoomContextResDto>;
+export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
 
 export type SlotItem = RecipeDTO & SlotRequest;

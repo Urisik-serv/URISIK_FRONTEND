@@ -1,7 +1,6 @@
 import type {
   CreateMealPlan,
   ResponseCreateMealPlanDto,
-  ResponseReadFamilyRoomContextDto,
 } from "../types/meal-plan";
 import { axiosInstance } from "./axios/axios";
 
@@ -21,9 +20,3 @@ export const postCreateMealPlans = async ({
 
   return data;
 };
-
-export const getFamilyRoom =
-  async (): Promise<ResponseReadFamilyRoomContextDto> => {
-    const { data } = await axiosInstance.get(`/api/family-rooms/me`);
-    return data;
-  };
