@@ -6,6 +6,7 @@ import { getProfile } from "../../api/family-profile";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 import { useEffect, useState } from "react";
 import type { Profile } from "../../types/family-profile";
+import { useFamilyStore } from "../../stores/use-family-store";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -19,8 +20,8 @@ export default function MyProfilePage() {
     return Object.entries(preferenceMap).find(([_, v]) => v === value)?.[0];
   };
 
-  const { currentFamilyRoomId } = useFamilyProfileForm();
-  if (currentFamilyRoomId === null) {
+  const roomId = useFamilyStore.getState().familyRoomId;
+  if (roomId === null) {
     alert("가족방 정보가 존재하지 않습니다");
     return;
   }
@@ -28,12 +29,12 @@ export default function MyProfilePage() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const profileData = await getProfile(currentFamilyRoomId, -1);
+      const profileData = await getProfile(roomId, -1);
       setProfile(profileData);
     };
 
     fetchProfile();
-  }, [currentFamilyRoomId]);
+  }, [roomId]);
 
   const navigate = useNavigate();
 
