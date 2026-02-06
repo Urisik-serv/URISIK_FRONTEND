@@ -10,21 +10,45 @@ import { postInviteToken } from "../../api/invite";
 export default function FamilyInvitePage() {
   const navigate = useNavigate();
   const { familyRoomId } = useFamilyStore();
-  const handleInvite = async () => {
-    if (!familyRoomId) {
+  const handleInvite = async (): Promise<string | undefined> => {
+    if (familyRoomId == null) {
       alert(`가족방을 찾을 수 없습니다`);
       return;
     }
     const res = await postInviteToken(familyRoomId);
+    return res.inviteUrl;
+  };
+
+  // 카카오톡 페이지로 넘어가도록
+  const InviteByKakao = async () => {
+    const kakaoUrl = await handleInvite();
+
+    console.log("kakaoUrl =", kakaoUrl);
+    console.log("type =", typeof kakaoUrl);
+
+    if (!kakaoUrl) {
+      alert("초대 링크 생성에 실패했습니다.");
+      return;
+    }
 
     window.Kakao.Share.sendDefault({
       objectType: "text",
-      text: "가족방에 초대했어요!\n아래 링크를 눌러 참여해주세요",
+      text: `가족방에 초대했어요!\n${kakaoUrl}`,
       link: {
-        mobileWebUrl: res.inviteUrl,
-        webUrl: res.inviteUrl,
+        mobileWebUrl: kakaoUrl,
+        webUrl: kakaoUrl,
       },
     });
+  };
+
+  // 클립보드에 초대 링크 자동 복사
+  const InviteByLink = async () => {
+    const link = await handleInvite();
+    if (link == null) {
+      alert("초대 링크가 생성되지 않았습니다.");
+      return;
+    }
+    await navigator.clipboard.writeText(link);
   };
   return (
     <>
@@ -52,7 +76,7 @@ export default function FamilyInvitePage() {
           </div>
           <div className="pt-[80px]">
             <button
-              onClick={handleInvite}
+              onClick={InviteByKakao}
               className="cursor-pointer w-24 inline-flex flex-col justify-start items-center gap-2"
             >
               <img className="w-8 h-8" src={KakaoImage} />
@@ -61,7 +85,7 @@ export default function FamilyInvitePage() {
               </div>
             </button>
             <button
-              onClick={handleInvite}
+              onClick={InviteByLink}
               className="cursor-pointer w-24 inline-flex flex-col justify-start items-center gap-2"
             >
               <img className="w-8 h-8" src={LinkImage} />
