@@ -3,6 +3,8 @@ import type {
   FamilyWishListBody,
   ResponseAddWishLists,
   ResponseFamilyWishLists,
+  ResponseProfileTransWish,
+  ResponseProfileWish,
 } from "../types/wish-list";
 import { axiosInstance } from "./axios/axios";
 import type { BaseResponse } from "../types/response";
@@ -23,6 +25,44 @@ export const getFamilyWishList = async (
   console.log(res.data);
 
   return res;
+};
+
+// 프로필 위시리스트 조회
+export const getProfileWishList = async (
+  familyRoomId: number | null,
+  profileId: number,
+  size: number,
+  cursor: number,
+): Promise<ResponseProfileWish> => {
+  const { data } = await axiosInstance.get(
+    `/api/family-rooms/${familyRoomId}/profile-wishes/${profileId}`,
+    {
+      params: { size, cursor },
+    },
+  );
+
+  console.log("프로필 위시리스트 조회 성공: ", data);
+
+  return data;
+};
+
+// 프로필 변형레시피 위시리스트 조회
+export const getProfileTransWishList = async (
+  familyRoomId: number | null,
+  profileId: number,
+  size: number,
+  cursor: number,
+): Promise<ResponseProfileTransWish> => {
+  const { data } = await axiosInstance.get(
+    `/api/family-rooms/${familyRoomId}/profile-wishes/${profileId}`,
+    {
+      params: { size, cursor },
+    },
+  );
+
+  console.log("프로필 변형 레시피 위시리스트 조회 성공: ", data);
+
+  return data;
 };
 
 // 위시리스트 삭제

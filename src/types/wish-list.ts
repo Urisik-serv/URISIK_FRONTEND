@@ -1,4 +1,4 @@
-import type { BaseResponse } from "./response";
+import type { BaseResponse, CursorBaseResponse } from "./response";
 
 export interface FamilyWishListResult {
   recipeId: number;
@@ -27,5 +27,32 @@ export interface FamilyWishListBody {
 }
 
 export type ResponseFamilyWishLists = BaseResponse<FamilyWishListResult[]>;
-
 export type ResponseAddWishLists = BaseResponse<FamilyWishListBody>;
+
+// ProfileWishlist
+export interface ProfileTransWishItems {
+  wishId: number;
+  transformedRecipeId: number;
+  transformedRecipeName: string;
+  category: string;
+  foodImage: string;
+  avgScore: number;
+  recipeIngredients: string[];
+}
+
+export interface ProfileWishItems {
+  wishId: number;
+  recipeId: number;
+  recipeName: string;
+  category: string;
+  foodImage: string;
+  avgScore: number;
+  recipeIngredients: string[];
+}
+
+export type ResponseProfileWish = CursorBaseResponse<{
+  items: ProfileWishItems[];
+}>;
+export type ResponseProfileTransWish = CursorBaseResponse<{
+  items: ProfileTransWishItems[];
+}>;
