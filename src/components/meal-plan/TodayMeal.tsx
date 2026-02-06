@@ -1,9 +1,10 @@
 import { useState } from "react";
-import CreamPasta from "../../assets/sample/cream-pasta.png";
+// import CreamPasta from "../../assets/sample/cream-pasta.png";
 import Button from "../common/Button";
 import ReviewModal from "./ReviewModal";
+import type { TodayMeal } from "../../types/meal-plan";
 
-export default function TodayMeal() {
+export default function TodayMeal({ data }: { data: TodayMeal }) {
   const [isDone, setIsDone] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(false);
@@ -12,14 +13,17 @@ export default function TodayMeal() {
       <div className="flex justify-between items-center pt-3 pb-6">
         {isOpen && <ReviewModal onClick={handleOpen} />}
         <div>
-          <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p>
+          {/* <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p> */}
           <p className="font-semibold text-[18px] tracking-[0.01em]">
-            코코넛밀크로 만드는
-            <br />
-            크림 파스타!
+            {data.title.split(" ").map((title) => (
+              <>
+                {title}
+                <br />
+              </>
+            ))}
           </p>
         </div>
-        <img src={CreamPasta} alt="크림파스타" />
+        <img src={data.imageUrl} alt={`${data.title} 이미지`} />
       </div>
       {!isDone ? (
         <Button
@@ -41,30 +45,25 @@ export default function TodayMeal() {
           식재료 <span className="text-gray-600">1인 기준</span>
         </p>
         <p className="font-normal text-gray-600">
-          바나나 한묶음, 코코넛 밀크 3개, 해바라기 소스 3개, 땅콩 3개, 바나나
-          한묶음, 코코넛 밀크 3개
+          {data.ingredients.split("\n")[1]}
         </p>
       </div>
       <p className="font-semibold text-primary-700 text-[14px] pb-2">레시피</p>
       <div className="flex flex-col gap-4 pb-29">
-        {[1, 2, 3, 4].map((n) => (
+        {data.instructions.split("\n").map((step) => (
           <div className="h-full flex justify-between items-center text-[14px] font-semibold">
             <div>
               <div className="flex flex-col gap-[1px] pb-[6px]">
-                <p>{n}단계</p>
-                <p className=" text-[20px] ">재료손질</p>
+                <p>{step[0]}단계</p>
+                {/* <p className=" text-[20px] ">재료손질</p> */}
               </div>
-              <p className="font-normal">
-                단계별 설명 설명 설명 설명
-                <br />
-                단계별 설명 설명 설명 설명
-              </p>
+              <p className="font-normal">{step.slice(3)}</p>
             </div>
-            <img
+            {/* <img
               src={CreamPasta}
               alt="크림파스타"
               className="w-36 h-26 shrink-0"
-            />
+            /> */}
           </div>
         ))}
       </div>
