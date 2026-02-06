@@ -15,10 +15,9 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
         <div>
           {/* <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p> */}
           <p className="font-semibold text-[18px] tracking-[0.01em]">
-            {data.title.split(" ").map((title) => (
+            {data.title.split(" ").map((title, idx) => (
               <>
-                {title}
-                <br />
+                {title} {idx % 2 === 1 && <br />}
               </>
             ))}
           </p>
