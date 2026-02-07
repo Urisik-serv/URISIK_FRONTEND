@@ -21,6 +21,7 @@ const MealPlanCreatePage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [mealPlanId, setMealPlanId] = useState<number>(0);
   const [lunchSlots, setLunchSlots] = useState<SlotRequest[]>([]);
   const [dinnerSlots, setDinnerSlots] = useState<SlotRequest[]>([]);
 
@@ -47,12 +48,14 @@ const MealPlanCreatePage = () => {
         familyRoomId: familyRoomId,
         createMeal: body,
       });
+      setMealPlanId(response.result.mealPlanId);
       sessionStorage.setItem(
         "mealPlan",
         JSON.stringify(changeAdditionalProp(response.result.slots)),
       );
-    } catch (error) {
-      alert("주간 식단 생성 실패" + error);
+    } catch (error: any) {
+      alert(error.response?.data?.message);
+      navigate(`/`);
     } finally {
       setIsLoading(false); // 로딩 끝
     }
@@ -119,7 +122,10 @@ const MealPlanCreatePage = () => {
                   <LoadingSpinner text="AI가 사용자에 맞춰서 식단을 생성하고 있어요" />
                 </div>
               ) : (
-                <MealPlanResult onClick={handleCreate} />
+                <MealPlanResult
+                  mealPlanId={mealPlanId}
+                  onClick={handleCreate}
+                />
               )}
             </div>
           )}

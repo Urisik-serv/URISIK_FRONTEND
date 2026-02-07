@@ -40,3 +40,11 @@ export type CreateMealPlanResDto = {
 export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
 
 export type SlotItem = RecipeDTO & SlotRequest;
+
+export type confirmMealPlan = {
+  mealPlanId: number;
+  status: "DRAFT" | "CONFIRMED";
+  weekStartDate: string;
+  mealPlanGenerationCount: number;
+};
+export type ResponseConfirmMealPlanDto = CommonResponse<confirmMealPlan>;

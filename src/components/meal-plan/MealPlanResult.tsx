@@ -5,8 +5,11 @@ import AlertModal from "../../components/common/AlertModal";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { SlotItem } from "../../types/meal-plan";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { postConfirmMealPlan } from "../../api/meal-plan";
 
 type MealPlanResultProps = {
+  mealPlanId: number;
   onClick: () => void;
 };
 
@@ -20,7 +23,11 @@ const dayKor: Record<string, string> = {
   SATURDAY: "토",
   SUNDAY: "일",
 };
-export default function MealPlanResult({ onClick }: MealPlanResultProps) {
+
+export default function MealPlanResult({
+  mealPlanId,
+  onClick,
+}: MealPlanResultProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,7 +40,26 @@ export default function MealPlanResult({ onClick }: MealPlanResultProps) {
   console.log(data);
 
   const handleButton = () => {
-    navigate(`/meal-plan?tab=nextWeek`);
+    setIsOpen(true);
+  };
+  const { familyRoomId } = useFamilyStore.getState();
+
+  const handleClick = async () => {
+    try {
+      if (familyRoomId == null) {
+        alert("familyRoomId 없음");
+        return;
+      }
+      await postConfirmMealPlan({
+        familyRoomId: familyRoomId,
+        mealPlanId: mealPlanId,
+      });
+    } catch (error) {
+      alert("주간 식단 확정 실패" + error);
+    } finally {
+      console.log("주간 식단 확정 성공");
+      navigate(`/meal-plan?tab=nextWeek`);
+    }
   };
   return (
     <div>
@@ -44,7 +70,7 @@ export default function MealPlanResult({ onClick }: MealPlanResultProps) {
           mediumContent={`완료된 식단표는 [다음주 식단]에 \n저장됩니다.`}
           buttonText="확인"
           outsideText="탭해서 닫기"
-          onClick={handleButton}
+          onClick={handleClick}
           handleModal={() => setIsOpen(false)}
         />
       )}
@@ -100,7 +126,7 @@ export default function MealPlanResult({ onClick }: MealPlanResultProps) {
         </button>
         <button
           className="w-full h-14 rounded-xl cursor-pointer bg-primary-700 text-white"
-          onClick={() => setIsOpen(true)}
+          onClick={handleButton}
         >
           완료
         </button>
