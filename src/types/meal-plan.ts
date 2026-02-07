@@ -46,8 +46,8 @@ export type SlotItem = RecipeDTO & SlotRequest;
 /////////////////////////////////////////////
 export interface TodayMeal {
   mealType: MealType;
-  recipeId: number;
-  transformedRecipeId: number;
+  type: "RECIPE" | "TRANSFORMED_RECIPE";
+  id: number;
   title: string;
   imageUrl: string;
   ingredients: string;
