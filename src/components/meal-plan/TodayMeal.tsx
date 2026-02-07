@@ -23,7 +23,11 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
             ))}
           </p>
         </div>
-        <img src={data.imageUrl} alt={`${data.title} 이미지`} />
+        <img
+          src={data.imageUrl}
+          alt={`${data.title} 이미지`}
+          className="w-41 h-29 object-cover"
+        />
       </div>
       {!isDone ? (
         <Button
@@ -44,9 +48,7 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
         <p className="font-semibold text-primary-700">
           식재료 <span className="text-gray-600">1인 기준</span>
         </p>
-        <p className="font-normal text-gray-600">
-          {data.ingredients.split("\n")[1]}
-        </p>
+        <p className="font-normal text-gray-600">{data.ingredients}</p>
       </div>
       <p className="font-semibold text-primary-700 text-[14px] pb-2">레시피</p>
       <div className="flex flex-col gap-4 pb-29">
