@@ -37,3 +37,10 @@ export const allergyMap: Record<string, string> = {
   아황산류: "SULFITE",
   젤라틴: "EXTRACTED_INGREDIENTS",
 } as const;
+
+export const rolePicture: Record<string, string> = {
+  MOM: "/assets/profile/mom-picture.png",
+  DAD: "/assets/profile/dad-picture.png",
+  DAUGHTER: "/assets/profile/daughter-picture.png",
+  SON: "/assets/profile/son-picture.png",
+} as const;

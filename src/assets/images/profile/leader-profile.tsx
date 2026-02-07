@@ -1,17 +1,7 @@
-import mom from "../profile/mom-picture.png";
-import dad from "../profile/dad-picture.png";
-import daughter from "../profile/daughter-picture.png";
-import son from "../profile/son-picture.png";
+import { rolePicture } from "../../../constants/profile-record";
 import crown from "../profile/crown.svg";
 
 export default function LeaderProfile({ role }: { role: string }) {
-  const rolePicture: Record<string, string> = {
-    mom: mom,
-    dad: dad,
-    daughter: daughter,
-    son: son,
-  };
-
   return (
     <svg
       width="88"
