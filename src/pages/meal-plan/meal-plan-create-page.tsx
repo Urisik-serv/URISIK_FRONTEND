@@ -11,6 +11,7 @@ import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
 import AlertModal from "../../components/common/AlertModal";
 import { useNavigate } from "react-router-dom";
 import { getNextMonday } from "../../utils/date";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
@@ -18,6 +19,7 @@ const MealPlanCreatePage = () => {
   const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
   const { familyRoomId } = useFamilyStore.getState();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [lunchSlots, setLunchSlots] = useState<SlotRequest[]>([]);
   const [dinnerSlots, setDinnerSlots] = useState<SlotRequest[]>([]);
@@ -32,9 +34,13 @@ const MealPlanCreatePage = () => {
       regenerate: regenerate,
     };
     console.log(body);
+
+    if (step === "create") setStep("result");
+
+    setIsLoading(true); //로딩 시작
     try {
       if (familyRoomId == null) {
-        console.log("familyRoomId 없음");
+        alert("familyRoomId 없음");
         return;
       }
       const response = await postCreateMealPlans({
@@ -46,10 +52,12 @@ const MealPlanCreatePage = () => {
         JSON.stringify(changeAdditionalProp(response.result.slots)),
       );
     } catch (error) {
-      console.log("주간 식단 생성 실패", error);
+      alert("주간 식단 생성 실패" + error);
+    } finally {
+      setIsLoading(false); // 로딩 끝
     }
-    setStep("result");
   };
+
   return (
     <div>
       {isMember ? (
@@ -90,7 +98,7 @@ const MealPlanCreatePage = () => {
             </>
           )}
           {step === "result" && (
-            <>
+            <div className="flex flex-col min-h-[100dvh]">
               <PublicHeader
                 title={"식단 생성"}
                 onClick={() => setIsOpen(true)}
@@ -106,8 +114,14 @@ const MealPlanCreatePage = () => {
                   handleModal={() => setIsOpen(false)}
                 />
               )}
-              <MealPlanResult onClick={handleCreate} />
-            </>
+              {isLoading ? (
+                <div className="flex flex-1 h-full justify-center">
+                  <LoadingSpinner text="AI가 사용자에 맞춰서 식단을 생성하고 있어요" />
+                </div>
+              ) : (
+                <MealPlanResult onClick={handleCreate} />
+              )}
+            </div>
           )}
         </>
       )}
