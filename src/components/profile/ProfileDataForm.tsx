@@ -11,7 +11,7 @@ import OptionalLabel from "../family/OptionalLabel";
 import { patchProfile, postProfile } from "../../api/family-profile";
 
 interface ProfileDataFormProps {
-  isSelected: number;
+  isSelected: boolean;
   isEdit?: boolean; // 편집 모드 여부
   handlePicture?: () => void;
 }
@@ -142,15 +142,24 @@ export default function ProfileDataForm({
               <SelectButton name="없음" isSelected={selectedNone} />
             </button>
           ) : (
-            selectedAllergies.map((allergy) => (
+            <div>
               <button
-                key={allergy}
-                onClick={() => handleSelectAllergy(allergy)}
-                className="pt-[12px]"
+                onClick={() => handleAllergyChange(selectedNone)}
+                className="cursor-pointer pt-[12px]"
+                type="button"
               >
-                <SelectButton name={allergy} isSelected={isSelected > 0} />
+                <SelectButton name="없음" isSelected={selectedNone} />
               </button>
-            ))
+              {selectedAllergies.map((allergy) => (
+                <button
+                  key={allergy}
+                  onClick={() => handleSelectAllergy(allergy)}
+                  className="pt-[12px]"
+                >
+                  <SelectButton name={allergy} isSelected={true} />
+                </button>
+              ))}
+            </div>
           )}
         </div>
       </div>

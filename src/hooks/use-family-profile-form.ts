@@ -132,11 +132,11 @@ export const useFamilyProfileForm = () => {
   };
 
   // 영문으로 변환
-  let allergyList: string[] | boolean;
+  let allergyList: string[];
   if (Array.isArray(formData.allergies)) {
     allergyList = formData.allergies.map((item) => allergyMap[item]);
   } else {
-    allergyList = formData.allergies;
+    allergyList = ["NONE"];
   }
 
   const preferencesList = formData.preferences.map(
