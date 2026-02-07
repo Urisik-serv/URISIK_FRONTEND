@@ -1,6 +1,13 @@
 import type { AllergyResults } from "./allergy";
 import type { BaseResponse } from "./response";
 
+interface Allergy {
+  id: string;
+  name: string;
+  icon: string;
+  alternativeIngredients: string[];
+}
+
 export interface WishList {
   id: number;
   name: string;
@@ -17,7 +24,7 @@ export interface FamilyProfile {
   preferences: {
     likedFood: string[];
   };
-  allergyAndAlterIngredients: AllergyResults;
+  allergies: Allergy[];
   wishList: WishList[];
 }
 
@@ -44,7 +51,7 @@ export interface Profile {
   role: string;
   likedIngredients?: string;
   dislikedIngredients?: string;
-  allergy: string[];
+  allergyAndAlterIngredients: AllergyResults;
   dietPreferences: string[];
 }
 
