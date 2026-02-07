@@ -5,6 +5,9 @@ import CheckBoxEmpty from "../../assets/icons/check-box-empty.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { Agree } from "../../types/member";
+import PrivacyPolicy from "../terms-and-policies/privacy-policy";
+import { patchAgree } from "../../api/member";
 
 interface TermItem {
   index: number;
@@ -50,6 +53,17 @@ export default function TermsAgreementPage() {
     }
   };
 
+  const handleSubmit = async () => {
+    const request: Agree = {
+      serviceTermsAgreed: terms[0].isChecked,
+      privacyPolicyAgreed: terms[1].isChecked,
+      familyInfoAgreed: terms[2].isChecked,
+      aiNoticeAgreed: terms[3].isChecked,
+      marketingOptIn: terms[4].isChecked,
+    };
+
+    await patchAgree(request);
+  };
   return (
     <>
       <PublicHeader title={"약관 및 정책"} />
@@ -114,7 +128,7 @@ export default function TermsAgreementPage() {
             text={`다음`}
             type="button"
             disabled={!isValid()}
-            onClick={() => navigate("../family-create")}
+            onClick={handleSubmit}
           />
         </div>
       </div>
