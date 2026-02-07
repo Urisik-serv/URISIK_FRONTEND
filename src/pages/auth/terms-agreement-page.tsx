@@ -63,6 +63,7 @@ export default function TermsAgreementPage() {
     };
 
     await patchAgree(request);
+    navigate("/family-create");
   };
   return (
     <>
