@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { Profile } from "../../types/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
 import LeaderProfile from "../../assets/images/profile/leader-profile";
+import AllergyDataBox from "../../components/profile/AllergyDataBox";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -35,6 +36,10 @@ export default function MyProfilePage() {
     fetchProfile();
   }, [roomId]);
 
+  const allergies =
+    profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
+    [];
+
   const navigate = useNavigate();
 
   return (
@@ -61,13 +66,13 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             알레르기
           </div>
-          {/* {!profile?.allergy.includes("NONE") ? (
+          {!allergies?.includes("NONE") ? (
             <div>
-              {profile?.allergy.map((item) => (
-                <div className=" pb-[20px]">
+              {profile?.allergyAndAlterIngredients.map((item) => (
+                <div key={item.allergen} className=" pb-[20px]">
                   <AllergyDataBox
-                    name={item}
-                    //alternative={allergy.alternativeIngredients}
+                    name={item.allergen}
+                    alternative={item.alteredIngredients}
                   />
                 </div>
               ))}
@@ -78,7 +83,7 @@ export default function MyProfilePage() {
                 <ElementButton name="없음" />
               </div>
             </div>
-          )} */}
+          )}
         </div>
         <div>
           <div className="text-[16px] font-semibold leading-[24px]">
