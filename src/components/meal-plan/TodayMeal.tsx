@@ -8,6 +8,7 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
   const [isDone, setIsDone] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(false);
+  const step = data.instructions.replace(/\n/g, " ").split(/(?=\d+\.)/); // \n 을 모두 공백으로 변경, 숫자. 인 부분 기준으로 자르기
   return (
     <>
       <div className="flex justify-between items-center pt-3 pb-6">
@@ -49,7 +50,7 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
       </div>
       <p className="font-semibold text-primary-700 text-[14px] pb-2">레시피</p>
       <div className="flex flex-col gap-4 pb-29">
-        {data.instructions.split("\n").map((step) => (
+        {step.map((step) => (
           <div className="h-full flex justify-between items-center text-[14px] font-semibold">
             <div>
               <div className="flex flex-col gap-[1px] pb-[6px]">
