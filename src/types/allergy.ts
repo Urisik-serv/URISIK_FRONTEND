@@ -8,12 +8,7 @@ export type AllergyResults = AllergyResult[];
 
 export interface AllergyResult {
   allergen: string;
-  alternatives: Alternative[];
-}
-
-export interface Alternative {
-  name: string;
-  reason: string;
+  alteredIngredients: string[];
 }
 
 export type GetAllergyResultsResponse = BaseResponse<AllergyResults>;
