@@ -48,27 +48,45 @@ export default function MealPlanResult({ onClick }: MealPlanResultProps) {
           handleModal={() => setIsOpen(false)}
         />
       )}
-      <p className="pl-4 pt-6 font-semibold text-[24px] text-[#333333] pb-4 whitespace-pre-line">
+      <p className="pl-4 pt-6 font-semibold text-[24px] text-gray-800 pb-4 whitespace-pre-line">
         우리가족을 위한 식단표가 {"\n"}생성되었어요.
       </p>
       <div className="flex justify-end pr-[14px]">
         <button
-          className="flex gap-1 p-[10px] bg-[#efefef] rounded-lg font-medium text-[16px] cursor-pointer"
+          className="flex gap-1 p-[10px] bg-gray-200 rounded-lg font-medium text-[16px] cursor-pointer"
           onClick={onClick}
         >
           <img src={TryAgain} alt="다시 생성하기 아이콘" />
           다시 생성하기
         </button>
       </div>
-      <div className="flex gap-2 pt-2 px-4 overflow-x-auto">
+      <div className="flex gap-2 pt-12 pb-[27px] overflow-x-auto">
+        <div className="flex flex-col items-center gap-3 font-medium text-gray-500 text-[14px]">
+          <CalendarChipM text="" />
+          <p className="pl-4 pr-2 flex items-center text-center shrink-0 h-[82px] whitespace-nowrap">
+            점심
+          </p>
+          <p className="pl-4 pr-2 flex items-center text-center shrink-0 h-[82px] whitespace-nowrap">
+            저녁
+          </p>
+        </div>
         {Object.entries(data).map(([day, slots]) => {
           const date = dayKor[day] ?? day;
+          const lunch = slots.find((slot) => slot.mealType === "LUNCH");
+          const dinner = slots.find((slot) => slot.mealType === "DINNER");
           return (
             <div className="flex flex-col items-center gap-3" key={day}>
               <CalendarChipM text={date} />
-              {slots.map((slot) => (
-                <MenuChip text={slot.title} key="slot" />
-              ))}
+              {lunch ? (
+                <MenuChip text={lunch.title} key="slot" />
+              ) : (
+                <div className="w-[75px] h-[82px]" />
+              )}
+              {dinner ? (
+                <MenuChip text={dinner.title} key="slot" />
+              ) : (
+                <div className="w-[75px] h-[82px]" />
+              )}
             </div>
           );
         })}
