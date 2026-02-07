@@ -1,11 +1,11 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import profilePicture from "../../assets/profile/leader-mom.svg";
 import { useNavigate } from "react-router-dom";
 import ElementButton from "../../components/common/ElementButton";
 import { getProfile } from "../../api/family-profile";
 import { useEffect, useState } from "react";
 import type { Profile } from "../../types/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -43,7 +43,7 @@ export default function MyProfilePage() {
       <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-10">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
-            <img src={profilePicture} alt="내 프로필 사진" />
+            <LeaderProfile role={profile?.role ?? ""} />
             <div className="text-2xl font-semibold leading-[36px]">
               {profile?.nickname}
             </div>
