@@ -23,10 +23,10 @@ const MealPlanPage = () => {
   const { data: todayData, isError } = useGetTodayMealPlan(familyRoomId);
   console.log(todayData);
   useEffect(() => {
-    if (todayData?.result.meals.length == 1) {
+    if (todayData?.result?.meals.length == 1) {
       if (todayData.result.meals[0].mealType === "DINNER") setTodayTab("저녁");
     }
-  }, [todayData?.result.meals]);
+  }, [todayData?.result?.meals]);
 
   const lunchData = todayData?.result.meals.find(
     (data) => data.mealType === "LUNCH",
