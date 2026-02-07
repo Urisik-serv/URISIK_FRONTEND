@@ -145,7 +145,7 @@ export default function ProfileDataForm({
               />
             </button>
           ) : (
-            <div className="flex gap-[12px]">
+            <div className="flex flex-wrap gap-[12px]">
               <button
                 type="button"
                 className="cursor-pointer pt-[12px]"
