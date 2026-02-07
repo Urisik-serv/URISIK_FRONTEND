@@ -8,6 +8,9 @@ import { useAuth } from "../../hooks/use-auth";
 import { useProfileStore } from "../../stores/use-profile-store";
 import LeaderProfile from "../../assets/images/profile/leader-profile";
 import { roleMap, rolePicture } from "../../constants/profile-record";
+import BellIcon from "../../assets/mypage/bell.svg";
+import ListBox from "../../assets/mypage/list-box.svg";
+import Finance from "../../assets/mypage/finance.svg";
 
 const MyPage = () => {
   const { LogoutMutate } = useAuth();
@@ -53,7 +56,7 @@ const MyPage = () => {
           </button>
         </div>
         <div className="pt-[24px]">
-          <div className=" w-full flex flex-col py-[16px] px-[8px] items-start rounded-xl bg-gray-100 gap-[6px]">
+          <div className=" w-full flex flex-col py-[16px] px-[8px] items-start rounded-xl bg-primary-100 gap-[6px] border border-primary-300">
             <div className="text-[#333] text-[14px] font-semibold leading-[21px] tracking-[-0.28px]">
               우리 가족 식탁 온도
             </div>
@@ -73,22 +76,39 @@ const MyPage = () => {
           </div>
         </div>
         <div className="pt-[8px]">
-          <div className="h-[109px] flex gap-[8px] bg-gray-100 rounded-xl justify-between items-center">
-            <button className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]">
-              알림
-            </button>
-            <div className="w-0 h-[57px] border-l border-l-[#E2E2E2]" />
+          <div className="h-[109px] flex gap-[8px] bg-primary-100 border border-primary-300 rounded-xl justify-between items-center">
             <button
-              className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]"
+              onClick={() => navigate("notice")}
+              className="cursor-pointer w-[103px] flex flex-col items-center gap-[4px]"
+            >
+              <img src={BellIcon} alt="알림" className="size-[36px]" />
+              <div className="text-center text-primary-600 text-[14px] font-semibold leading-[24px">
+                알림
+              </div>
+            </button>
+            <div className="w-0 h-[57px] border-l border-l-primary-300" />
+            <button
+              className="cursor-pointer w-[103px] flex flex-col items-center gap-[4px]"
               onClick={() => {
                 navigate("/family-wishlist");
               }}
             >
-              위시리스트
+              <img src={ListBox} alt="위시리스트" className="size-[36px]" />
+              <div className="text-center text-primary-600 text-[14px] font-semibold leading-[24px]">
+                위시리스트
+              </div>
             </button>
-            <div className="w-0 h-[57px] border-l border-l-[#E2E2E2]" />
-            <button className="cursor-pointer w-[103px] text-center text-[16px] font-semibold leading-[24px]">
-              기록
+            <div className="w-0 h-[57px] border-l border-l-primary-300" />
+            <button
+              onClick={() => {
+                navigate("history");
+              }}
+              className="cursor-pointer w-[103px] flex flex-col items-center gap-[4px]"
+            >
+              <img src={Finance} alt="기록" className="size-[36px]" />
+              <div className="text-center text-primary-600 text-[16px] font-semibold leading-[24px]">
+                기록
+              </div>
             </button>
           </div>
         </div>
