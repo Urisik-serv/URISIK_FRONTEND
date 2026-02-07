@@ -5,7 +5,11 @@ import ProfileDataForm from "../../components/profile/ProfileDataForm";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { getProfile } from "../../api/family-profile";
 import { useProfileStore } from "../../stores/use-profile-store";
-import { allergyMap, rolePicture } from "../../constants/profile-record";
+import {
+  allergyMap,
+  roleMap,
+  rolePicture,
+} from "../../constants/profile-record";
 
 export default function ModifyProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +35,7 @@ export default function ModifyProfilePage() {
 
         setSavedFormData({
           nickname: res.nickname,
-          role: res.role,
+          role: roleMap[res.role],
           allergies:
             res.allergyAndAlterIngredients.length === 1 &&
             res.allergyAndAlterIngredients[0].allergen === "NONE"

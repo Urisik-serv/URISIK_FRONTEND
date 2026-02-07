@@ -1,18 +1,19 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import { useFamilyData } from "../../hooks/use-family-data";
-import profilePicture from "../../assets/profile/leader-mom.svg";
 import SpeechBubble from "../../components/mypage/SpeechBubble";
 import { useNavigate } from "react-router-dom";
 import ListItem from "../../components/mypage/ListItem";
 import { useState } from "react";
 import AlertModal from "../../components/common/AlertModal";
 import { useAuth } from "../../hooks/use-auth";
+import { useProfileStore } from "../../stores/use-profile-store";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
+import { roleMap, rolePicture } from "../../constants/profile-record";
 
 const MyPage = () => {
-  const { familyData } = useFamilyData();
   const { LogoutMutate } = useAuth();
 
-  const myData = familyData?.familyMembers[0];
+  const myData = useProfileStore.getState().savedFormData;
+  const isLeader = useProfileStore().isLeader;
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,9 +31,16 @@ const MyPage = () => {
       <div className="pt-[33px] w-[343px] mx-auto flex flex-col ">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
-            <img src={profilePicture} alt="내 프로필 사진" />
+            {isLeader ? (
+              <LeaderProfile role={roleMap[myData.role]} />
+            ) : (
+              <img
+                src={rolePicture[roleMap[myData.role]]}
+                className="size-[80px]"
+              />
+            )}
             <div className="text-2xl font-semibold leading-[36px]">
-              {myData?.name}
+              {myData.nickname}
             </div>
           </div>
           <button
@@ -99,7 +107,7 @@ const MyPage = () => {
         {isOpen && (
           <AlertModal
             title="안내창"
-            boldContent={`[${myData?.name}]님`}
+            boldContent={`[${myData.nickname}]님`}
             mediumContent="우리식에서 로그아웃할까요?"
             buttonText="로그아웃"
             outsideText="탭해서 취소"
