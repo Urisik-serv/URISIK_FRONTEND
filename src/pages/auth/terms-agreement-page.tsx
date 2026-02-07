@@ -6,7 +6,6 @@ import checkBox from "../../assets/icons/Check_box.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Agree } from "../../types/member";
-import PrivacyPolicy from "../terms-and-policies/privacy-policy";
 import { patchAgree } from "../../api/member";
 
 interface TermItem {
