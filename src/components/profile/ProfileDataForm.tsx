@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAllergySearch } from "../../hooks/use-allergy-search";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 
@@ -9,33 +9,41 @@ import RequiredLabel from "../family/RequiredLabel";
 import SelectButton from "../family/SelectButton";
 import OptionalLabel from "../family/OptionalLabel";
 import { patchProfile, postProfile } from "../../api/family-profile";
+import { useEffect, useRef } from "react";
+import StartScreen from "../../pages/auth/StartScreen";
 
 interface ProfileDataFormProps {
-  isSelected: boolean;
   isEdit?: boolean; // 편집 모드 여부
   handlePicture?: () => void;
 }
 
 export default function ProfileDataForm({
-  isSelected,
   isEdit,
   handlePicture,
 }: ProfileDataFormProps) {
   const {
     handleNickNameChange,
     handleRoleChange,
-    handleAllergyChange,
     handlePreferencesChange,
-    selectedNone,
     selectedRole,
     isCheckedPreference,
     handleLikeChange,
     handleDislikeChange,
     isValid,
     formData,
-    request,
     currentFamilyRoomId,
+    request,
   } = useFamilyProfileForm();
+
+  const {
+    selectedAllergies,
+    handleSelectAllergy: onSelectAllergy,
+    handleResetAllergy,
+  } = useAllergySearch();
+
+  const handleGoSearch = () => {
+    navigate("allergy-search");
+  };
 
   if (currentFamilyRoomId === null) {
     alert("가족방 정보가 존재하지 않습니다");
@@ -65,8 +73,6 @@ export default function ProfileDataForm({
     }
     console.log("제출된 폼 데이터:", formData);
   };
-
-  const { selectedAllergies, handleSelectAllergy } = useAllergySearch();
 
   const roles = ["엄마", "아빠", "아들", "딸"];
   const foods = ["한식", "중식", "일식", "양식", "디저트"];
@@ -129,31 +135,37 @@ export default function ProfileDataForm({
             type="text"
             placeholder="알레르기 입력하기"
             className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
-            onClick={() => navigate("allergy-search")}
+            onClick={handleGoSearch}
           />
         </div>
         <div className="flex gap-[12px]">
           {selectedAllergies.length == 0 ? (
             <button
-              onClick={() => handleAllergyChange(selectedNone)}
-              className="cursor-pointer pt-[12px]"
               type="button"
+              className="cursor-pointer pt-[12px]"
+              onClick={handleResetAllergy}
             >
-              <SelectButton name="없음" isSelected={selectedNone} />
+              <SelectButton
+                name="없음"
+                isSelected={selectedAllergies.length === 0}
+              />
             </button>
           ) : (
-            <div>
+            <div className="flex gap-[12px]">
               <button
-                onClick={() => handleAllergyChange(selectedNone)}
-                className="cursor-pointer pt-[12px]"
                 type="button"
+                className="cursor-pointer pt-[12px]"
+                onClick={handleResetAllergy}
               >
-                <SelectButton name="없음" isSelected={selectedNone} />
+                <SelectButton
+                  name="없음"
+                  isSelected={selectedAllergies.length === 0}
+                />
               </button>
               {selectedAllergies.map((allergy) => (
                 <button
                   key={allergy}
-                  onClick={() => handleSelectAllergy(allergy)}
+                  onClick={() => onSelectAllergy(allergy)}
                   className="pt-[12px]"
                 >
                   <SelectButton name={allergy} isSelected={true} />

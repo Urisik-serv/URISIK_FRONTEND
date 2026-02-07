@@ -10,6 +10,10 @@ export default function AllergiesSearchPage() {
 
   const navigate = useNavigate();
 
+  const handleComplete = () => {
+    navigate("/modify-profile", { replace: true });
+  };
+
   return (
     <>
       <PublicHeader title={""} />
@@ -30,7 +34,7 @@ export default function AllergiesSearchPage() {
               입력가능 키워드
             </div>
             <div className="flex gap-[12px] pt-[8px]">
-              {filteredAllergies.map((allergy) => (
+              {filteredAllergies?.map((allergy) => (
                 <button
                   key={allergy}
                   onClick={() => handleSelectAllergy(allergy)}
@@ -44,7 +48,7 @@ export default function AllergiesSearchPage() {
             </div>
           </div>
           <div className="pt-[420px]">
-            <Button text={"완료"} type="submit" onClick={() => navigate(-1)} />
+            <Button text={"완료"} type="submit" onClick={handleComplete} />
           </div>
         </div>
       </div>

@@ -13,11 +13,13 @@ export interface FamilyProfileFormData {
 
 interface ProfileStore {
   savedFormData: FamilyProfileFormData;
+  hasLoadedFromServer: boolean;
   setSavedFormData: (
     updater:
       | FamilyProfileFormData
       | ((prev: FamilyProfileFormData) => FamilyProfileFormData),
   ) => void;
+  markLoaded: () => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -30,12 +32,15 @@ export const useProfileStore = create<ProfileStore>((set) => ({
     dislikedIngredients: "",
     profilePicUrl: "",
   },
+  hasLoadedFromServer: false,
   setSavedFormData: (updater) =>
     set((state) => ({
       savedFormData:
         typeof updater === "function" ? updater(state.savedFormData) : updater,
     })),
+  markLoaded: () => set({ hasLoadedFromServer: true }),
 }));
+
 if (typeof window !== "undefined") {
   (window as any).profileStore = useProfileStore;
 }
