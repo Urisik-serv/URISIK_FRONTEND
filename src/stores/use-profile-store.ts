@@ -1,5 +1,5 @@
-// use-profile-store.ts
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface FamilyProfileFormData {
   nickname: string;
@@ -24,26 +24,35 @@ interface ProfileStore {
   saveIsLeader: (leader: boolean) => void;
 }
 
-export const useProfileStore = create<ProfileStore>((set) => ({
-  savedFormData: {
-    nickname: "",
-    role: "",
-    allergies: [],
-    preferences: [],
-    likedIngredients: "",
-    dislikedIngredients: "",
-    profilePicUrl: "",
-  },
-  hasLoadedFromServer: false,
-  setSavedFormData: (updater) =>
-    set((state) => ({
-      savedFormData:
-        typeof updater === "function" ? updater(state.savedFormData) : updater,
-    })),
-  markLoaded: () => set({ hasLoadedFromServer: true }),
-  isLeader: false,
-  saveIsLeader: (leader: boolean) => set({ isLeader: leader }),
-}));
+export const useProfileStore = create(
+  persist<ProfileStore>(
+    (set) => ({
+      savedFormData: {
+        nickname: "",
+        role: "",
+        allergies: [],
+        preferences: [],
+        likedIngredients: "",
+        dislikedIngredients: "",
+        profilePicUrl: "",
+      },
+      hasLoadedFromServer: false,
+      isLeader: false,
+      setSavedFormData: (updater) =>
+        set((state) => ({
+          savedFormData:
+            typeof updater === "function"
+              ? updater(state.savedFormData)
+              : updater,
+        })),
+      markLoaded: () => set({ hasLoadedFromServer: true }),
+      saveIsLeader: (leader: boolean) => set({ isLeader: leader }),
+    }),
+    {
+      name: "profile-store",
+    },
+  ),
+);
 
 if (typeof window !== "undefined") {
   (window as any).profileStore = useProfileStore;
