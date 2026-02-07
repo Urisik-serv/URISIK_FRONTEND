@@ -7,6 +7,8 @@ import type { Profile } from "../../types/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
 import LeaderProfile from "../../assets/images/profile/leader-profile";
 import AllergyDataBox from "../../components/profile/AllergyDataBox";
+import { getFamilyRoom } from "../../api/family-room";
+import { rolePicture } from "../../constants/profile-record";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -26,11 +28,15 @@ export default function MyProfilePage() {
     return;
   }
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [isLeader, setIsLeader] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       const profileData = await getProfile(roomId, -1);
+      const familyRoom = await getFamilyRoom();
       setProfile(profileData);
+      setIsLeader(familyRoom.result.capabilities.leader);
     };
 
     fetchProfile();
@@ -40,15 +46,20 @@ export default function MyProfilePage() {
     profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
     [];
 
-  const navigate = useNavigate();
-
   return (
     <>
       <PublicHeader title={"내 프로필"} />
       <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-10">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
-            <LeaderProfile role={profile?.role ?? ""} />
+            {isLeader ? (
+              <LeaderProfile role={profile?.role ?? ""} />
+            ) : (
+              <img
+                src={rolePicture[profile?.role ?? ""]}
+                className="size-[80px]"
+              />
+            )}
             <div className="text-2xl font-semibold leading-[36px]">
               {profile?.nickname}
             </div>

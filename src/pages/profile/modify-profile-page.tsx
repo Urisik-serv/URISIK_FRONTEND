@@ -5,8 +5,7 @@ import ProfileDataForm from "../../components/profile/ProfileDataForm";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { getProfile } from "../../api/family-profile";
 import { useProfileStore } from "../../stores/use-profile-store";
-import mom from "../../assets/images/profile/mom-picture.png";
-import { allergyMap } from "../../constants/profile-record";
+import { allergyMap, rolePicture } from "../../constants/profile-record";
 
 export default function ModifyProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +44,7 @@ export default function ModifyProfilePage() {
           preferences: res.dietPreferences ?? [],
           likedIngredients: res.likedIngredients ?? "",
           dislikedIngredients: res.dislikedIngredients ?? "",
-          profilePicUrl: mom,
+          profilePicUrl: rolePicture[res.role],
         });
         markLoaded();
       } catch (error) {
