@@ -20,6 +20,8 @@ interface ProfileStore {
       | ((prev: FamilyProfileFormData) => FamilyProfileFormData),
   ) => void;
   markLoaded: () => void;
+  isLeader: boolean;
+  saveIsLeader: (leader: boolean) => void;
 }
 
 export const useProfileStore = create<ProfileStore>((set) => ({
@@ -39,6 +41,8 @@ export const useProfileStore = create<ProfileStore>((set) => ({
         typeof updater === "function" ? updater(state.savedFormData) : updater,
     })),
   markLoaded: () => set({ hasLoadedFromServer: true }),
+  isLeader: false,
+  saveIsLeader: (leader: boolean) => set({ isLeader: leader }),
 }));
 
 if (typeof window !== "undefined") {

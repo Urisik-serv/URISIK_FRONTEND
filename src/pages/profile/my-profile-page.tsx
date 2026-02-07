@@ -9,6 +9,7 @@ import LeaderProfile from "../../assets/images/profile/leader-profile";
 import AllergyDataBox from "../../components/profile/AllergyDataBox";
 import { getFamilyRoom } from "../../api/family-room";
 import { rolePicture } from "../../constants/profile-record";
+import { useProfileStore } from "../../stores/use-profile-store";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -28,15 +29,15 @@ export default function MyProfilePage() {
     return;
   }
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [isLeader, setIsLeader] = useState(false);
   const navigate = useNavigate();
+  const { saveIsLeader, isLeader } = useProfileStore();
 
   useEffect(() => {
     const fetchProfile = async () => {
       const profileData = await getProfile(roomId, -1);
       const familyRoom = await getFamilyRoom();
       setProfile(profileData);
-      setIsLeader(familyRoom.result.capabilities.leader);
+      saveIsLeader(familyRoom.result.capabilities.leader);
     };
 
     fetchProfile();
