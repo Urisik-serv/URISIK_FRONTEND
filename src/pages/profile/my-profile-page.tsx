@@ -1,18 +1,51 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import { useFamilyData } from "../../hooks/use-family-data";
-import profilePicture from "../../assets/profile/leader-mom.svg";
-import AllergyDataBox from "../../components/profile/AllergyDataBox";
-import alertImage from "../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
-import SmallButton from "../../components/common/SmallCommonButton";
 import ElementButton from "../../components/common/ElementButton";
-import EntityItem from "../../components/common/EntityItem";
+import { getProfile } from "../../api/family-profile";
+import { useEffect, useState } from "react";
+import type { Profile } from "../../types/family-profile";
+import { useFamilyStore } from "../../stores/use-family-store";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
+import AllergyDataBox from "../../components/profile/AllergyDataBox";
+import { getFamilyRoom } from "../../api/family-room";
+import { rolePicture } from "../../constants/profile-record";
+import { useProfileStore } from "../../stores/use-profile-store";
 
 export default function MyProfilePage() {
-  const { familyData } = useFamilyData();
-  const myData = familyData?.familyMembers[0];
-  console.log(myData);
+  const preferenceMap: Record<string, string> = {
+    한식: "KOREAN",
+    중식: "CHINESE",
+    일식: "JAPANESE",
+    양식: "WESTERN",
+    디저트: "DESSERT",
+  };
+  const getKeyByValue = (value: string) => {
+    return Object.entries(preferenceMap).find(([_, v]) => v === value)?.[0];
+  };
+
+  const roomId = useFamilyStore.getState().familyRoomId;
+  if (roomId === null) {
+    alert("가족방 정보가 존재하지 않습니다");
+    return;
+  }
+  const [profile, setProfile] = useState<Profile | null>(null);
   const navigate = useNavigate();
+  const { saveIsLeader, isLeader } = useProfileStore();
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profileData = await getProfile(roomId, -1);
+      const familyRoom = await getFamilyRoom();
+      setProfile(profileData);
+      saveIsLeader(familyRoom.result.capabilities.leader);
+    };
+
+    fetchProfile();
+  }, [roomId]);
+
+  const allergies =
+    profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
+    [];
 
   return (
     <>
@@ -20,9 +53,16 @@ export default function MyProfilePage() {
       <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-10">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
-            <img src={profilePicture} alt="내 프로필 사진" />
+            {isLeader ? (
+              <LeaderProfile role={profile?.role ?? ""} />
+            ) : (
+              <img
+                src={rolePicture[profile?.role ?? ""]}
+                className="size-[80px]"
+              />
+            )}
             <div className="text-2xl font-semibold leading-[36px]">
-              {myData?.name}
+              {profile?.nickname}
             </div>
           </div>
           <button
@@ -34,24 +74,23 @@ export default function MyProfilePage() {
             </div>
           </button>
         </div>
-        <div className="pt-[24px]">
-          {(myData?.allergies?.length || 0) > 0 ? (
-            myData?.allergies.map((allergy) => (
-              <div className=" pb-[20px]">
-                <div className="text-[16px] font-semibold leading-[24px]">
-                  알레르기
+        <div className="pt-[24px] pb-[10px]">
+          <div className="text-[16px] font-semibold leading-[24px]">
+            알레르기
+          </div>
+          {!allergies?.includes("NONE") ? (
+            <div>
+              {profile?.allergyAndAlterIngredients.map((item) => (
+                <div key={item.allergen} className=" pb-[20px]">
+                  <AllergyDataBox
+                    name={item.allergen}
+                    alternative={item.alteredIngredients}
+                  />
                 </div>
-                <AllergyDataBox
-                  name={allergy.name}
-                  alternative={allergy.alternativeIngredients}
-                />
-              </div>
-            ))
+              ))}
+            </div>
           ) : (
             <div className="pb-[20px] ">
-              <div className="text-[16px] font-semibold leading-[24px]">
-                알레르기
-              </div>
               <div className="flex pt-2">
                 <ElementButton name="없음" />
               </div>
@@ -62,9 +101,9 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             선호 음식
           </div>
-          <div className="flex gap-[8px] pt-[8px]">
-            {myData?.preferences.likedFood.map((food) => (
-              <ElementButton name={food} />
+          <div className="flex gap-[8px] pt-[12px]">
+            {profile?.dietPreferences.map((food) => (
+              <ElementButton name={getKeyByValue(food) ?? food} />
             ))}
           </div>
         </div>
@@ -72,7 +111,7 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             내 위시리스트
           </div>
-          {myData?.wishList ? (
+          {/* {profile?.wishList ? (
             <div className="pt-[17px] flex flex-col gap-0">
               {myData?.wishList.map((item) => (
                 <EntityItem
@@ -99,7 +138,7 @@ export default function MyProfilePage() {
                 />
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>

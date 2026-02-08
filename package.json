@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.14",
+    "@tanstack/react-query-devtools": "^5.91.3",
     "axios": "^1.13.2",
     "framer-motion": "^12.27.4",
     "immer": "^11.1.3",
