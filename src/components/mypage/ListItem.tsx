@@ -1,7 +1,9 @@
 import { useNavigate, type To } from "react-router-dom";
 import ToggleButton from "./ToggleButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import chevronRight from "../../assets/icons/chevron-right-gray.svg";
+import { useQuery } from "@tanstack/react-query";
+import { getAlarm, patchAlarm } from "../../api/member";
 
 interface ListItemProps {
   to?: To;
@@ -10,10 +12,28 @@ interface ListItemProps {
 }
 
 export default function ListItem({ to, isOnOff, title }: ListItemProps) {
+  const { data } = useQuery({
+    queryKey: ["alarmPolicy"],
+    queryFn: getAlarm,
+  });
+
   const [isOn, setIsOn] = useState(false);
-  const handleToggle = () => {
-    setIsOn((prev) => !prev);
+
+  useEffect(() => {
+    if (data) {
+      setIsOn(data.alarmPolicy === "ALARM_AGREED");
+    }
+  }, [data]);
+
+  const handleToggle = async () => {
+    const next = !isOn;
+    setIsOn(next);
+
+    await patchAlarm({
+      alarmPolicy: next ? "ALARM_AGREED" : "ALARM_DISAGREED",
+    });
   };
+
   const navigate = useNavigate();
   const handleNavigate = () => {
     if (to) {

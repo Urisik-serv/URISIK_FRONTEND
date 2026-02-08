@@ -41,7 +41,7 @@ const HomePage = () => {
   };
 
   const handleModal = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_DISAGREE" });
+    await patchAlarm({ alarmPolicy: "ALARM_DISAGREED" });
     setIsModalOpen(false);
   };
 

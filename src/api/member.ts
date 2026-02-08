@@ -16,14 +16,14 @@ export const patchAgree = async (request: Agree): Promise<Agree> => {
 };
 
 // 알람 권한 수정 api 연결
-export const patchAlarm = async (
-  request: AlarmPolicy,
-): Promise<AlarmPolicy> => {
-  const { data } = await axiosInstance.patch<AlarmResponse>(
-    `/api/member/alarm`,
-    request,
-  );
-
+export const patchAlarm = async (body: {
+  alarmPolicy: "ALARM_AGREED" | "ALARM_DISAGREED";
+}) => {
+  const { data } = await axiosInstance.patch("/api/member/alarm", body, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return data.result;
 };
 

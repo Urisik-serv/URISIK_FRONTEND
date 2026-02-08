@@ -9,7 +9,7 @@ export interface Agree {
 }
 
 export interface AlarmPolicy {
-  alarmPolicy: "ALARM_AGREED" | "ALARM_DISAGREE";
+  alarmPolicy: "ALARM_AGREED" | "ALARM_DISAGREED";
 }
 
 export type AgreeResponse = BaseResponse<Agree>;
