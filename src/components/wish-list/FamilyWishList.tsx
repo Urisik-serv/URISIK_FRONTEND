@@ -92,10 +92,9 @@ const FamilyWishList = () => {
       )}
       <div className="pt-2">
         {familyWish?.pages.map((item) => {
-          const uniqueKey = getUniqueKey(
-            item.recipeId,
-            item.transformedRecipeId,
-          );
+          const recipeId = item.type == "RECIPE" ? item.id : null;
+          const transId = item.type == "TRANSFORMED_RECIPE" ? item.id : null;
+          const uniqueKey = getUniqueKey(recipeId, transId);
 
           return (
             <div className="flex items-center">
@@ -112,7 +111,7 @@ const FamilyWishList = () => {
               <MenuList
                 key={uniqueKey}
                 type="profile"
-                menu={item.recipeName}
+                menu={item.title}
                 clickable={true}
                 isSelected={false}
               />

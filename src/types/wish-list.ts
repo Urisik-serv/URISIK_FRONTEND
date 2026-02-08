@@ -1,12 +1,12 @@
 import type { BaseResponse, CursorBaseResponse } from "./response";
 
 export interface FamilyWishListResult {
-  recipeId: number;
-  transformedRecipeId: number;
-  recipeName: string;
-  foodImageUrl: string;
-  score: number;
-  foodCategory: {
+  type: "RECIPE" | "TRANSFORMED_RECIPE";
+  id: number;
+  title: string;
+  imageUrl: string;
+  avgScore: number;
+  category: {
     code: string;
     label: string;
   };
@@ -19,11 +19,16 @@ export interface FamilyWishListResult {
 interface WishListProfile {
   profileId: number;
   nickname: string;
+  profilePicUrl: string;
 }
 
 export interface FamilyWishListBody {
-  recipeId: number[];
-  transformedRecipeId: number[];
+  items: [
+    {
+      type: "RECIPE" | "TRANSFORMED_RECIPE";
+      id: number;
+    },
+  ];
 }
 
 export type ResponseFamilyWishLists = BaseResponse<FamilyWishListResult[]>;
@@ -48,6 +53,11 @@ export interface ProfileWishItems {
   foodImage: string;
   avgScore: number;
   recipeIngredients: string[];
+}
+
+export interface ProfileWishListBody {
+  recipeId: number[];
+  transformedRecipeId: number[];
 }
 
 export type ResponseProfileWish = CursorBaseResponse<{

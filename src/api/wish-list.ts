@@ -1,6 +1,7 @@
 import type { AxiosResponse } from "axios";
 import type {
   FamilyWishListBody,
+  ProfileWishListBody,
   ResponseAddWishLists,
   ResponseFamilyWishLists,
   ResponseProfileTransWish,
@@ -25,6 +26,19 @@ export const getFamilyWishList = async (
   console.log(res.data);
 
   return res;
+};
+
+// 가족 위시리스트 삭제
+export const deleteFamilyWishList = async (
+  familyRoomId: number | null,
+  DeleteFamilyWishList: FamilyWishListBody,
+): Promise<BaseResponse<{}>> => {
+  const { data } = await axiosInstance.delete(
+    `/api/family-rooms/${familyRoomId}/family-wishlist/items`,
+    { data: DeleteFamilyWishList },
+  );
+
+  return data;
 };
 
 // 프로필 위시리스트 조회
@@ -68,8 +82,8 @@ export const getProfileTransWishList = async (
 // 프로필 위시리스트 삭제
 export const deleteProfileWishList = async (
   familyRoomId: number | null,
-  DeleteProfileWishList: FamilyWishListBody,
-): Promise<ResponseAddWishLists> => {
+  DeleteProfileWishList: ProfileWishListBody,
+): Promise<ProfileWishListBody> => {
   const { data } = await axiosInstance.delete(
     `/api/family-rooms/${familyRoomId}/profile-wishes`,
     { data: DeleteProfileWishList },
@@ -78,24 +92,11 @@ export const deleteProfileWishList = async (
   return data;
 };
 
-// 가족 위시리스트 삭제
-export const deleteFamilyWishList = async (
-  familyRoomId: number | null,
-  DeleteFamilyWishList: FamilyWishListBody,
-): Promise<BaseResponse<{}>> => {
-  const { data } = await axiosInstance.delete(
-    `/api/family-rooms/${familyRoomId}/family-wishlist/items`,
-    { data: DeleteFamilyWishList },
-  );
-
-  return data;
-};
-
 // 위시리스트 추가
 export const postAddWishList = async (
   familyRoomId: number | null,
-  addRecipes: FamilyWishListBody,
-): Promise<ResponseAddWishLists> => {
+  addRecipes: ProfileWishListBody,
+): Promise<ProfileWishListBody> => {
   const { data } = await axiosInstance.post(
     `/api/family-rooms/${familyRoomId}/profile-wishes`,
     {
