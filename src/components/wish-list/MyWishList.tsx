@@ -13,7 +13,7 @@ import { useInView } from "react-intersection-observer";
 const MyWishList = () => {
   const [editMode, setEditMode] = useState(false);
 
-  const roomId = useFamilyStore.getState().familyRoomId;
+  const roomId = useFamilyStore((state) => state.familyRoomId);
   const {
     data: profileWish,
     isFetching: profileFetch,
@@ -104,7 +104,7 @@ const MyWishList = () => {
                 menu={item.transformedRecipeName}
                 img={item.foodImage}
                 clickable={true}
-                isSelected={isSelected}
+                isSelected={isSelected(uniqueKey)}
               />
             </div>
           );
@@ -132,7 +132,7 @@ const MyWishList = () => {
                 menu={item.recipeName}
                 img={item.foodImage}
                 clickable={true}
-                isSelected={isSelected}
+                isSelected={isSelected(uniqueKey)}
               />
             </div>
           );

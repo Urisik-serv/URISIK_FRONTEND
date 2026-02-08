@@ -50,7 +50,7 @@ export const getProfileWishList = async (
   const { data } = await axiosInstance.get(
     `/api/family-rooms/${familyRoomId}/profile-wishes/${profileId}`,
     {
-      params: { size, cursor },
+      params: { size, cursor: cursor || undefined },
     },
   );
 
@@ -67,9 +67,9 @@ export const getProfileTransWishList = async (
   cursor: number,
 ): Promise<ResponseProfileTransWish> => {
   const { data } = await axiosInstance.get(
-    `/api/family-rooms/${familyRoomId}/profile-wishes/${profileId}`,
+    `/api/family-rooms/${familyRoomId}/profile-wishes-trans/${profileId}`,
     {
-      params: { size, cursor },
+      params: { size, cursor: cursor || undefined },
     },
   );
 
@@ -98,12 +98,10 @@ export const postAddWishList = async (
 ): Promise<ProfileWishListBody> => {
   const { data } = await axiosInstance.post(
     `/api/family-rooms/${familyRoomId}/profile-wishes`,
-    {
-      addRecipes,
-    },
+    addRecipes,
   );
 
-  console.log(data);
+  console.log("위시리스트 추가: ", data);
 
   return data;
 };
