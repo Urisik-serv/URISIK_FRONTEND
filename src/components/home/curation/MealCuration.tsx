@@ -1,26 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MealCard from "./MealCard";
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
-import type { RecommendPopularRecipes } from "../../../types/recipes";
-import { getRecommendScore } from "../../../api/recommendations";
 import SortDropdown from "../../common/SortDropDown";
+import { useGetRecommendList } from "../../../hooks/queries/use-get-recommendations";
 
 const MealCuration = () => {
   const [sortType, setSortType] = useState("별점 순");
-  const [data, setData] = useState<RecommendPopularRecipes>();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getRecommendScore();
 
-        setData(response.result);
-      } catch (error) {
-        console.log("데이터 로딩 실패: ", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { data } = useGetRecommendList(sortType);
 
   return (
     <div className="pt-8">
