@@ -6,6 +6,7 @@ import {
   allergyMap,
   preferenceMap,
   roleMap,
+  rolePicture,
 } from "../constants/profile-record";
 
 export const useFamilyProfileForm = () => {
@@ -32,6 +33,7 @@ export const useFamilyProfileForm = () => {
     setSavedFormData((prev) => ({
       ...prev,
       role: prev.role === role ? "" : role,
+      profilePicUrl: rolePicture[roleMap[role]],
     }));
   };
 
