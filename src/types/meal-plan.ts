@@ -23,6 +23,7 @@ export type CreateMealPlan = {
 };
 
 export type MealPlanStatus = "DRAFT" | "CONFIRMED";
+
 export type RecipeDTO = {
   id: number;
   title: string;
@@ -37,6 +38,27 @@ export type CreateMealPlanResDto = {
   slots: MealPlanSlots;
 };
 
+//주간 식단 생성 api response
 export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
 
 export type SlotItem = RecipeDTO & SlotRequest;
+
+/////////////////////////////////////////////
+export interface TodayMeal {
+  mealType: MealType;
+  type: "RECIPE" | "TRANSFORMED_RECIPE";
+  id: number;
+  title: string;
+  imageUrl: string;
+  ingredients: string;
+  instructions: string;
+}
+export interface TodayMealPlan {
+  date: string;
+  mealPlanId: number;
+  weekStartDate: number;
+  meals: TodayMeal[];
+}
+
+//오늘의 식단 생성 api response
+export type ResponseTodayMealPlan = CommonResponse<TodayMealPlan>;
