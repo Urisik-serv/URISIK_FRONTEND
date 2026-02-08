@@ -10,6 +10,7 @@ export const useAuth = () => {
     mutationFn: postReissue,
     onSuccess: (res) => {
       setAccessToken(res.result.accessToken);
+      sessionStorage.setItem("showHomeModal", "true");
       setTimeout(() => {
         window.location.href = res.result.needAgreement ? "/onboarding" : "/";
       }, 1000);
