@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PageIndicator from "../../common/PageIndicator";
 import AllergyCard from "./AllergyCard";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import type { RecommendSafeRecipes } from "../../../types/recipes";
-import { getRecommendSafe } from "../../../api/recommendations";
 import useGetRecommendSafe from "../../../hooks/queries/use-get-safe-recipes";
 
 const AllergyCuration = () => {
