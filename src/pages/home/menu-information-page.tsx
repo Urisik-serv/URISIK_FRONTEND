@@ -9,8 +9,8 @@ import PageIndicator from "../../components/common/PageIndicator";
 import WishlistButton from "../../components/common/WishlistButton";
 import { getDetailRecipe } from "../../api/recipes";
 import type { DetailRecipe } from "../../types/recipes";
-import { postAddWishList } from "../../api/wish-list";
 import { useFamilyStore } from "../../stores/use-family-store";
+import usePostWishList from "../../hooks/queries/use-post-wishlist";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -29,8 +29,10 @@ const MenuInformationPage = () => {
     fetchData();
   }, []);
 
+  const roomId = useFamilyStore.getState().familyRoomId;
+  const { mutate: addWishList } = usePostWishList(roomId);
+
   const handleClick = async () => {
-    const roomId = useFamilyStore.getState().familyRoomId;
     const currentRecipeId = recipe?.recipeId;
 
     const directPayload = {
@@ -38,13 +40,7 @@ const MenuInformationPage = () => {
       transformedRecipeId: [],
     };
 
-    console.log("전송할 payload:", directPayload);
-
-    try {
-      await postAddWishList(roomId, directPayload);
-    } catch (error) {
-      console.error("위시리스트 추가 실패", error);
-    }
+    addWishList(directPayload);
   };
 
   return (
