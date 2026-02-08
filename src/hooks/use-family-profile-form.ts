@@ -46,28 +46,52 @@ export const useFamilyProfileForm = () => {
   };
 
   // 식단 선호도 핸들러
-  const [isCheckedPreference, setIsCheckedPreference] = useState(() => {
-    const foods = ["한식", "중식", "일식", "양식", "디저트"];
-    return foods.map((food: string) =>
-      savedFormData.preferences.includes(food),
+  const foods = ["한식", "중식", "일식", "양식", "디저트"];
+
+  const [isCheckedPreference, setIsCheckedPreference] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    setIsCheckedPreference(
+      foods.map((food) => savedFormData.preferences.includes(food)),
     );
-  });
+  }, [savedFormData.preferences]);
+
   const handlePreferencesChange = (foods: string[], index: number) => {
-    if (formData.preferences.includes(foods[index])) {
-      let newPreferences = formData.preferences.filter(
-        (item) => item !== foods[index],
+    const selectedFood = foods[index];
+
+    if (formData.preferences.includes(selectedFood)) {
+      const newPreferences = formData.preferences.filter(
+        (item) => item !== selectedFood,
       );
+
+      setFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
+      setSavedFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
       setIsCheckedPreference((prev) => {
         const newChecked = [...prev];
         newChecked[index] = false;
         return newChecked;
       });
-      setFormData({ ...formData, preferences: newPreferences });
     } else {
-      setFormData({
-        ...formData,
-        preferences: [...formData.preferences, foods[index]],
-      });
+      const newPreferences = [...formData.preferences, selectedFood];
+
+      setFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
+      setSavedFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
       setIsCheckedPreference((prev) => {
         const newChecked = [...prev];
         newChecked[index] = true;
