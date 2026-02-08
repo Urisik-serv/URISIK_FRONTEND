@@ -1,19 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import HomeProfileCard from "./HomeProfileCard";
 import { useEffect, useState } from "react";
-import type { FamilyMembers } from "../../../types/family-profile";
-import axios from "axios";
+import type { FamilyDetails } from "../../../types/family-profile";
+import { getProfiles } from "../../../api/family-profile";
+import { useFamilyStore } from "../../../stores/use-family-store";
 
 const FamilyProfile = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState<FamilyMembers | null>();
+  const [data, setData] = useState<FamilyDetails>();
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/data/family-data.json");
+        const res = await getProfiles(familyRoomId);
 
-        setData(res.data);
-        console.log(res);
+        setData(res);
+        console.log("프로필 데이터: ", res);
       } catch (error) {
         console.log("데이터 로딩 실패:", error);
       }
@@ -28,8 +30,8 @@ const FamilyProfile = () => {
         우리가족 프로필
       </p>
       <div className="flex self-stretch items-center gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-        {data?.familyMembers.map((profile) => (
-          <HomeProfileCard key={profile.id} data={profile} />
+        {data?.familyDetails.map((profile) => (
+          <HomeProfileCard key={profile.profileId} data={profile} />
         ))}
       </div>
       <button

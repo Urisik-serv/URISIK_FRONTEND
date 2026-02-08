@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { useShallow } from "zustand/shallow";
-import type { FamilyProfile } from "../types/family-profile";
+import type { FamilyDetail, FamilyProfile } from "../types/family-profile";
 
 interface modalActions {
-  isOpen: (data: FamilyProfile) => void;
+  isOpen: (data: FamilyDetail) => void;
   isClose: () => void;
 }
 interface modalState {
   open: boolean;
-  selectedData: FamilyProfile | null;
+  selectedData: FamilyDetail | null;
   actions: modalActions;
 }
 
@@ -18,7 +18,7 @@ export const useProfileModalStore = create(
     open: false,
     selectedData: null,
     actions: {
-      isOpen: (data: FamilyProfile) => {
+      isOpen: (data: FamilyDetail) => {
         set((state) => {
           state.open = true;
           state.selectedData = data;

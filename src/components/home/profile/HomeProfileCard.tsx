@@ -1,17 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import DefaultMomImg from "../../../assets/profile/default-mom.svg";
-import type { FamilyProfile } from "../../../types/family-profile";
+import type { FamilyDetail } from "../../../types/family-profile";
 import { useProfileModalActions } from "../../../hooks/use-profile-modal-store";
+import { getProfile } from "../../../api/family-profile";
+import { useEffect, useState } from "react";
+import { useFamilyStore } from "../../../stores/use-family-store";
 interface HomeProfileCardProps {
-  data: FamilyProfile;
+  data: FamilyDetail;
 }
 
 const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
   const navigate = useNavigate();
   const { isOpen } = useProfileModalActions();
 
-  // 서버와 연결하기 전까지 임시 myProfile 확인
-  const myProfile = data.name === "김엄마";
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const [nickname, setNickname] = useState("");
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profileData = await getProfile(familyRoomId, -1);
+      setNickname(profileData.nickname);
+    };
+
+    fetchProfile();
+  });
+  const myProfile = data.nickname === nickname;
 
   const handleClick = () => {
     if (myProfile) navigate("my-profile");
@@ -28,7 +40,7 @@ const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
         }`}
       />
       <p className="text-center text-neutral-500 text-sm font-normal leading-5">
-        {myProfile ? "내 프로필" : data.name}
+        {myProfile ? "내 프로필" : data.nickname}
       </p>
     </div>
   );
