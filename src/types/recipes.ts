@@ -74,23 +74,7 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
-export interface RecommendSafeRecipes {
-  recipes: [
-    {
-      id: string;
-      title: string;
-      imageUrl: string;
-      category: string;
-      avgScore: number;
-      reviewCount: number;
-      wishCount: number;
-      safe: boolean;
-    },
-  ];
-}
-
 export type ResponseDetailRecipe = CommonResponse<DetailRecipe>;
-export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
 
 // interface 사용시 extends
 export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
@@ -121,3 +105,42 @@ export interface Recipe {
 export interface FoodList {
   recipes: Recipe[];
 }
+
+//홈 화면 추천 레시피(상단)
+export interface RecommendSafeRecipes {
+  recipes: [
+    {
+      id: string;
+      title: string;
+      imageUrl: string;
+      category: string;
+      avgScore: number;
+      reviewCount: number;
+      wishCount: number;
+      transformed: boolean;
+      safe: boolean;
+    },
+  ];
+}
+
+export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
+
+// 홈 화면 추천 레시피 (하단)
+export interface RecommendPopularRecipes {
+  recipes: [
+    {
+      id: string;
+      title: string;
+      imageUrl: string;
+      category: string;
+      avgScore: number;
+      reviewCount: number;
+      wishCount: number;
+      safe: boolean;
+      description: string;
+      transformed: boolean;
+    },
+  ];
+}
+
+export type ResponseRecommendPopular = CommonResponse<RecommendPopularRecipes>;
