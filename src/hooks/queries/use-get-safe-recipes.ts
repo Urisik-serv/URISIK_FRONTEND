@@ -8,6 +8,8 @@ const useGetRecommendSafe = () => {
     queryKey: [QUERY_KEY.safeRecipeTop],
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 30,
+
+    select: (data) => data.result,
   });
 };
 
