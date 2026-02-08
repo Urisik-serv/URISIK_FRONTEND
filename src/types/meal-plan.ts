@@ -44,6 +44,11 @@ export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
 export type SlotItem = RecipeDTO & SlotRequest;
 
 /////////////////////////////////////////////
+export interface RecipeStep {
+  stepOrder: number;
+  description: string;
+  imageUrl: string;
+}
 export interface TodayMeal {
   mealType: MealType;
   type: "RECIPE" | "TRANSFORMED_RECIPE";
@@ -51,7 +56,7 @@ export interface TodayMeal {
   title: string;
   imageUrl: string;
   ingredients: string;
-  instructions: string;
+  recipeSteps: RecipeStep[];
 }
 export interface TodayMealPlan {
   date: string;
