@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { useShallow } from "zustand/shallow";
-import type { FamilyDetail, FamilyProfile } from "../types/family-profile";
+import type { FamilyDetail } from "../types/family-profile";
 
 interface modalActions {
   isOpen: (data: FamilyDetail) => void;
