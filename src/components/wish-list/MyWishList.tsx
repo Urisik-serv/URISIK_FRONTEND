@@ -1,50 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
 import CheckedBox from "../../assets/icons/Check_box.svg";
-
-interface Item {
-  id: number;
-  name: string;
-}
+import { useRecipeSelection } from "../../hooks/use-recipe-selection";
+import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
+import { useFamilyStore } from "../../stores/use-family-store";
+import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
+import { deleteProfileWishList } from "../../api/wish-list";
+import { useInView } from "react-intersection-observer";
 
 const MyWishList = () => {
-  // 임시 데이터
-  const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "바나나 프렌치토스트" },
-    { id: 2, name: "바나나 프렌치토스트" },
-    { id: 3, name: "바나나 프렌치토스트" },
-    { id: 4, name: "바나나 프렌치토스트" },
-    { id: 5, name: "바나나 프렌치토스트" },
-    { id: 6, name: "바나나 프렌치토스트" },
-    { id: 7, name: "바나나 프렌치토스트" },
-  ]);
   const [editMode, setEditMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const toggleSelectItem = (id: number) => {
-    if (!editMode) return;
 
-    setSelectedIds((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((itemId) => itemId !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+  const roomId = useFamilyStore.getState().familyRoomId;
+  const {
+    data: profileWish,
+    isFetching: profileFetch,
+    hasNextPage: profileNext,
+    fetchNextPage: fetchProfile,
+  } = useGetInfiniteProfileWishList(roomId, -1, 5);
+
+  const {
+    data: transWish,
+    isFetching: transFetch,
+    hasNextPage: transNext,
+    fetchNextPage: fetchTrans,
+  } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+
+  const [ref, inView] = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      !transFetch && transNext;
+      !profileFetch && profileNext;
+    }
+  }, [inView, transFetch, profileFetch, transNext, profileNext]);
+
+  const {
+    getUniqueKey,
+    toggleSelection,
+    selectedKeys,
+    resetSelection,
+    selectedPayload,
+    isSelected,
+  } = useRecipeSelection();
+
+  const handleDelete = async () => {
+    if (selectedKeys.length === 0) return;
+
+    console.log("삭제 요청 데이터:", selectedPayload);
+
+    try {
+      await deleteProfileWishList(roomId, selectedPayload);
+
+      resetSelection();
+      setEditMode(false);
+      // queryClient.invalidateQueries(...) // 쿼리 갱신 필요
+    } catch (error) {
+      console.error("삭제 실패", error);
+    }
   };
 
   const handleButtonClick = () => {
     if (!editMode) {
       setEditMode(true);
     } else {
-      if (selectedIds.length > 0) {
-        const newItems = items.filter((item) => !selectedIds.includes(item.id));
-        setItems(newItems);
-      }
-
-      setSelectedIds([]);
-      setEditMode(false);
+      handleDelete();
+      if (editMode) setEditMode(false);
     }
   };
 
@@ -53,31 +78,61 @@ const MyWishList = () => {
       <div className="flex justify-end">
         <EditButton
           onClick={handleButtonClick}
-          count={selectedIds.length}
+          count={selectedKeys.length}
           isEditMode={editMode}
         />
       </div>
       <div className="pt-2">
-        {items.map((item) => {
-          const isSelected = selectedIds.includes(item.id);
+        {transWish?.pages.map((item) => {
+          const uniqueKey = getUniqueKey(null, item.transformedRecipeId);
+
           return (
             <div className="flex items-center">
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
-                  src={`${isSelected ? CheckedBox : EmptyBox}`}
-                  alt={`${isSelected ? "선택됨" : "선택되지 않음"}`}
+                  src={`${isSelected(uniqueKey) ? CheckedBox : EmptyBox}`}
+                  alt={`${isSelected(uniqueKey) ? "선택됨" : "선택되지 않음"}`}
                   onClick={() => {
-                    toggleSelectItem(item.id);
+                    toggleSelection(uniqueKey);
                   }}
                 />
               )}
               <MenuList
-                key={item.id}
+                key={item.transformedRecipeId}
                 type="default"
-                menu={item.name}
+                menu={item.transformedRecipeName}
+                img={item.foodImage}
                 clickable={true}
-                isSelected={false}
+                isSelected={isSelected}
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div>
+        {profileWish?.pages.map((item) => {
+          const uniqueKey = getUniqueKey(item.recipeId, null);
+
+          return (
+            <div className="flex items-center">
+              {editMode && (
+                <img
+                  className="cursor-pointer w-6 h-6 shrink-0"
+                  src={`${isSelected(uniqueKey) ? CheckedBox : EmptyBox}`}
+                  alt={`${isSelected(uniqueKey) ? "선택됨" : "선택되지 않음"}`}
+                  onClick={() => {
+                    toggleSelection(uniqueKey);
+                  }}
+                />
+              )}
+              <MenuList
+                key={item.recipeId}
+                type="default"
+                menu={item.recipeName}
+                img={item.foodImage}
+                clickable={true}
+                isSelected={isSelected}
               />
             </div>
           );

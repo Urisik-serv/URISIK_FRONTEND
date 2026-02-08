@@ -65,7 +65,20 @@ export const getProfileTransWishList = async (
   return data;
 };
 
-// 위시리스트 삭제
+// 프로필 위시리스트 삭제
+export const deleteProfileWishList = async (
+  familyRoomId: number | null,
+  DeleteProfileWishList: FamilyWishListBody,
+): Promise<ResponseAddWishLists> => {
+  const { data } = await axiosInstance.delete(
+    `/api/family-rooms/${familyRoomId}/profile-wishes`,
+    { data: DeleteProfileWishList },
+  );
+
+  return data;
+};
+
+// 가족 위시리스트 삭제
 export const deleteFamilyWishList = async (
   familyRoomId: number | null,
   DeleteFamilyWishList: FamilyWishListBody,
