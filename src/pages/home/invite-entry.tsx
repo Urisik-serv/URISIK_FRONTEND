@@ -70,7 +70,7 @@ export default function InviteEntry() {
           buttonText="참여하기"
           outsideText="탭해서 닫기"
           onClick={acceptMutation}
-          handleModal={() => setIsOpen((prev) => !prev)}
+          handleModal={() => navigate("/")}
         />
       )}
     </>
