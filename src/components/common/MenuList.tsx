@@ -7,6 +7,7 @@ type MenuListMode = "default" | "rate" | "profile";
 interface MenuListProps {
   type?: MenuListMode;
   menu: string;
+  img?: string;
   clickable?: boolean; //선택기능이 필요한 컴포넌트인지
   onClick?: () => void;
   isSelected?: boolean;
@@ -15,6 +16,7 @@ interface MenuListProps {
 export default function MenuList({
   type = "default",
   menu,
+  img,
   clickable = false,
   onClick,
   isSelected = false,
@@ -25,7 +27,7 @@ export default function MenuList({
       onClick={clickable ? onClick : undefined}
     >
       <div className="flex gap-3">
-        <img className="size-13 rounded-lg bg-[#F5F1ED]" />
+        <img src={img} className="size-13 rounded-lg bg-[#F5F1ED]" />
 
         <div className="flex flex-col justify-between">
           <div className="flex items-center gap-[5px] font-semibold">
