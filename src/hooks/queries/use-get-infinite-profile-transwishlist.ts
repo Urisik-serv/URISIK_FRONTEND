@@ -1,16 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getProfileWishList } from "../../api/wish-list";
+import { getProfileTransWishList } from "../../api/wish-list";
 import { QUERY_KEY } from "../../constants/key";
 
-function useGetInfiniteProfileWishList(
+function useGetInfiniteProfileTransWishList(
   familyRoomId: number | null,
   profileId: number,
   size: number,
 ) {
   return useInfiniteQuery({
     queryFn: ({ pageParam }) =>
-      getProfileWishList(familyRoomId, profileId, size, pageParam),
-    queryKey: [QUERY_KEY.profileWish, familyRoomId, profileId, size],
+      getProfileTransWishList(familyRoomId, profileId, size, pageParam),
+    queryKey: [QUERY_KEY.profileTransWish, familyRoomId, profileId, size],
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.result.hasNext ? lastPage.result.nextCursor : undefined;
@@ -24,4 +24,4 @@ function useGetInfiniteProfileWishList(
   });
 }
 
-export default useGetInfiniteProfileWishList;
+export default useGetInfiniteProfileTransWishList;
