@@ -2,7 +2,6 @@ import type { AxiosResponse } from "axios";
 import type {
   FamilyWishListBody,
   ProfileWishListBody,
-  ResponseAddWishLists,
   ResponseFamilyWishLists,
   ResponseProfileTransWish,
   ResponseProfileWish,
