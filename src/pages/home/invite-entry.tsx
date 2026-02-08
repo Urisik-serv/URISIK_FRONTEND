@@ -37,6 +37,7 @@ export default function InviteEntry() {
 
   const { mutate: acceptMutation } = useMutation({
     mutationFn: () => {
+      console.log(token);
       if (!token) throw new Error("유효하지 않은 토큰입니다.");
       return postAcceptInvite(token);
     },
