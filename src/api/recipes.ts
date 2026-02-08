@@ -1,7 +1,6 @@
 import type {
   ResponseDetailRecipe,
   ResponseExternalRecipes,
-  ResponseRecommendSafe,
   ResponseSearchRecipes,
   SearchRecipesDto,
   SearchRecipesItem,
