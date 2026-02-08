@@ -4,9 +4,9 @@ import AllergyCard from "./AllergyCard";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import type { FoodList, RecommendSafeRecipes } from "../../../types/recipes";
-import axios from "axios";
-import { getRecommendSafe } from "../../../api/recipes";
+import type { RecommendSafeRecipes } from "../../../types/recipes";
+import { getRecommendSafe } from "../../../api/recommendations";
+import useGetRecommendSafe from "../../../hooks/queries/use-get-safe-recipes";
 
 const AllergyCuration = () => {
   // 슬라이드 효과
@@ -19,20 +19,7 @@ const AllergyCuration = () => {
     setActivePage(pageNum);
   };
 
-  const [data, setData] = useState<RecommendSafeRecipes>();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const recipe = await getRecommendSafe();
-
-        setData(recipe.result);
-      } catch (error) {
-        console.log("데이터 로딩 실패: ", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { data } = useGetRecommendSafe();
 
   return (
     <div>
