@@ -81,31 +81,6 @@ export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems
 
 export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
 
-export interface Recipe {
-  id: number;
-  title: string;
-  category: string;
-  tags: string[];
-  shortDescription: string;
-  rating: number;
-  pickedCount: number;
-  imageUrl: string;
-  meta: {
-    cookingTime: string;
-    difficulty: {
-      level: number;
-      label: string;
-    };
-    tastePoint: string;
-  };
-  descriptions: string[];
-  ingredients: string[];
-  isWishlisted: boolean;
-}
-export interface FoodList {
-  recipes: Recipe[];
-}
-
 //홈 화면 추천 레시피(상단)
 export interface RecommendSafeRecipes {
   recipes: [
