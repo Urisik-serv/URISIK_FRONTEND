@@ -8,7 +8,6 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import { useMutation } from "@tanstack/react-query";
 
 export default function InviteEntry() {
-  const [isOpen, setIsOpen] = useState(true);
   const [inviterName, setInviterName] = useState<string | null>(null);
   const { token } = useParams();
   const { getItem: getAccessToken } = useLocalStorage("accessToken");
@@ -62,17 +61,15 @@ export default function InviteEntry() {
   return (
     <>
       <HomePage />
-      {isOpen && (
-        <AlertModal
-          title={"초대장"}
-          boldContent={`${inviterName}님의\n 가족구성원에 초대되었어요`}
-          mediumContent="우리 가족 식단을 함께 관리해요"
-          buttonText="참여하기"
-          outsideText="탭해서 닫기"
-          onClick={acceptMutation}
-          handleModal={() => navigate("/")}
-        />
-      )}
+      <AlertModal
+        title={"초대장"}
+        boldContent={`${inviterName}님의\n 가족구성원에 초대되었어요`}
+        mediumContent="우리 가족 식단을 함께 관리해요"
+        buttonText="참여하기"
+        outsideText="탭해서 닫기"
+        onClick={acceptMutation}
+        handleModal={() => navigate("/")}
+      />
     </>
   );
 }
