@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
     <>
       <PublicHeader title={"약관 및 정책"} />
       <div className="pt-[24px] w-[343px] flex flex-col gap-[24px] mx-auto">
-        <div className="text-xl font-semibold tracking-[2px] text-primary-700">
+        <div className="text-xl font-semibold tracking-[2px] text-gray-800">
           개인정보 처리 방침
         </div>
         <Term

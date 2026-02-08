@@ -6,7 +6,6 @@ import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
 import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
-import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
 import MealPlanEditPage from "../pages/meal-plan/meal-plan-edit-page";
 import TermsAgreementPage from "../pages/auth/terms-agreement-page";
 import OnboardingPage from "../pages/auth/onboarding-page";
@@ -76,7 +75,6 @@ export const router = createBrowserRouter([
 
           { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
-          { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },

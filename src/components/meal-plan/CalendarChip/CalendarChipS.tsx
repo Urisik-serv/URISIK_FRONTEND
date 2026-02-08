@@ -1,12 +1,16 @@
-import { useState } from "react";
-
 type CalendarChipSProps = {
   text: string;
   type: "select" | "primary" | "gray";
+  isSelect?: boolean;
+  onClick?: () => void;
 };
 
-export default function CalendarChipS({ text, type }: CalendarChipSProps) {
-  const [select, setSelect] = useState(false);
+export default function CalendarChipS({
+  text,
+  type,
+  isSelect,
+  onClick,
+}: CalendarChipSProps) {
   let className =
     "w-[38px] h-9 rounded-xl flex items-center justify-center font-semibold border ";
 
@@ -16,7 +20,7 @@ export default function CalendarChipS({ text, type }: CalendarChipSProps) {
     className += "bg-gray-50 text-gray-400 border-0";
   } else {
     // type === "select"
-    if (select) {
+    if (isSelect) {
       className += "bg-primary-700 text-white cursor-pointer";
     } else {
       className +=
@@ -24,12 +28,12 @@ export default function CalendarChipS({ text, type }: CalendarChipSProps) {
     }
   }
 
-  const handleClick = () => {
-    if (type === "select") setSelect(!select);
-  };
-
   return (
-    <button type="button" className={className} onClick={handleClick}>
+    <button
+      type="button"
+      className={className}
+      onClick={type === "select" ? onClick : undefined}
+    >
       {text}
     </button>
   );
