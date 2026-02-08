@@ -38,17 +38,18 @@ export default function InviteEntry() {
     mutationFn: () => {
       console.log(token);
       if (!token) throw new Error("유효하지 않은 토큰입니다.");
+
+      if (!getAccessToken()) {
+        localStorage.setItem("loginRedirect", `/family-invite/${token}`);
+        navigate("/login");
+        return Promise.reject();
+      }
+
       return postAcceptInvite(token);
     },
     onSuccess: (res) => {
       setFamilyRoomId(res.familyRoomId);
-
-      if (getAccessToken()) {
-        navigate("/family-profile-create");
-      } else {
-        const nextStep = encodeURIComponent("/family-profile-create");
-        navigate(`/login?redirect=${nextStep}`);
-      }
+      navigate("/family-profile-create");
     },
     onError: (error: any) => {
       if (error.response?.data?.code === "FAMILY_JOIN_409") {
