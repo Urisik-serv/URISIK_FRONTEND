@@ -28,3 +28,29 @@ export const getRecommendScore = async (
 
   return data;
 };
+
+// 안전한 레시피
+export const getRecommendSafeScore = async (
+  category?: string,
+): Promise<ResponseRecommendPopular> => {
+  const { data } = await axiosInstance.get("/api/home/safe-high-score", {
+    params: category,
+  });
+
+  console.log("하단 추천 데이터: ", data);
+
+  return data;
+};
+
+// 위시순
+export const getRecommendWish = async (
+  category?: string,
+): Promise<ResponseRecommendPopular> => {
+  const { data } = await axiosInstance.get("/api/home/wish-high-score", {
+    params: category,
+  });
+
+  console.log("하단 추천 데이터: ", data);
+
+  return data;
+};
