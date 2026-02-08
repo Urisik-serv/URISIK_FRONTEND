@@ -1,7 +1,6 @@
-import { rolePicture } from "../../../constants/profile-record";
 import crown from "../profile/crown.svg";
 
-export default function LeaderProfile({ role }: { role: string }) {
+export default function LeaderProfile({ href }: { href: string }) {
   return (
     <svg
       width="88"
@@ -34,7 +33,7 @@ export default function LeaderProfile({ role }: { role: string }) {
         </clipPath>
       </defs>
       <image
-        href={rolePicture[role]}
+        href={href}
         x="5"
         y="17"
         width="78"
