@@ -1,11 +1,24 @@
 import { useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import DateRangeBlock from "../../components/mypage/DateRangeBlock";
-import { useHistoryData } from "../../hooks/use-history-data";
 import GetDateRangeModal from "../../components/mypage/GetDateRangeModal";
+import { useQuery } from "@tanstack/react-query";
+import { getMonthMealPlan } from "../../api/meal-plan";
+import { useFamilyStore } from "../../stores/use-family-store";
+import alertImage from "../../assets/images/alert-circle.png";
+import SmallButton from "../../components/common/SmallCommonButton";
 
 export default function History() {
-  const { historyData } = useHistoryData();
+  const familyRoomId = useFamilyStore((state) => state.familyRoomId);
+
+  const { data: historyData } = useQuery({
+    queryKey: ["historyData", familyRoomId],
+    queryFn: async () => {
+      return getMonthMealPlan(familyRoomId as number);
+    },
+    enabled: familyRoomId !== null,
+  });
+
   const [isOpen, setIsOpen] = useState(false);
   const handleModal = () => {
     setIsOpen((prev) => !prev);
@@ -28,16 +41,32 @@ export default function History() {
             기간조회
           </button>
         </div>
-        <div className="flex flex-col gap-[11px] pt-[8px]">
-          {historyData?.history?.map((history) => (
-            <DateRangeBlock
-              key={history.id}
-              startDate={history.started_at}
-              updateDate={history.updated_at}
-              dailyRecords={history.daily_records}
-            />
-          ))}
-        </div>
+        {(historyData?.result?.weeks?.length ?? 0) > 0 ? (
+          <div className="flex flex-col gap-[11px] pt-[8px]">
+            {historyData?.result.weeks.map((history) => (
+              <DateRangeBlock
+                key={history.mealPlanId}
+                weekStartDate={history.weekStartDate}
+                days={history.days}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col justify-center items-center gap-[11px] pt-30">
+            <img src={alertImage} alt="알림 아이콘" className="size-[76px]" />
+            <div className="text-center text-[16px] leading-[24px] text-[#4D4D4D]">
+              선택한 기간에는
+              <br /> 식단 기록이 없어요.
+            </div>
+            <div className="pt-[24px]">
+              <SmallButton
+                text={"다른 기간 조회하기"}
+                type="button"
+                onClick={handleModal}
+              />
+            </div>
+          </div>
+        )}
       </div>
       {isOpen && <GetDateRangeModal handleModal={handleModal} />}
     </>
