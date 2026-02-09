@@ -8,4 +8,9 @@ export interface Agree {
   marketingOptIn: boolean;
 }
 
+export interface AlarmPolicy {
+  alarmPolicy: "ALARM_AGREED" | "ALARM_DISAGREED";
+}
+
 export type AgreeResponse = BaseResponse<Agree>;
+export type AlarmResponse = BaseResponse<AlarmPolicy>;
