@@ -155,7 +155,7 @@ export const useFamilyData = () => {
           "스토어 업데이트 요청 직후:",
           useFamilyStore.getState().familyRoomId,
         );
-        navigate("/family-invite");
+        navigate("/invite");
       }
     } catch (error) {
       console.error("생성 실패:", error);

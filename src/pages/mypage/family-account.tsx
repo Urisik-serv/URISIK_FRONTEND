@@ -9,6 +9,7 @@ import {
 } from "../../api/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
+import { patchAgree } from "../../api/member";
 
 export default function FamilyAccount() {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
@@ -36,6 +37,22 @@ export default function FamilyAccount() {
       deleteProfile(familyRoomId as number, profileId),
   });
 
+  const { mutate: patchAgreeMutate } = useMutation({
+    mutationFn: () =>
+      patchAgree({
+        serviceTermsAgreed: false,
+        privacyPolicyAgreed: false,
+        familyInfoAgreed: false,
+        aiNoticeAgreed: false,
+        marketingOptIn: false,
+      }),
+  });
+
+  const handleDelete = (profileId: number) => {
+    deleteMutate(profileId);
+    patchAgreeMutate();
+  };
+
   const findKeyByValue = (record: Record<string, string>, value: string) => {
     return Object.entries(record).find(([_, v]) => v === value)?.[0];
   };
@@ -55,7 +72,7 @@ export default function FamilyAccount() {
             {myProfile?.nickname}
           </div>
         </div>
-        <div className="pt-[44px] flex flex-col items-start ">
+        <div className="pt-[44px] flex flex-col items-start w-[343px]">
           <div className="text-gray-800 text-xl font-semibold tracking-[0.2px]">
             우리가족
           </div>
@@ -75,7 +92,7 @@ export default function FamilyAccount() {
                         ? "border-b border-b-gray-200"
                         : ""
                     }
-                    deleteProfile={() => deleteMutate(member.profileId)}
+                    deleteProfile={() => handleDelete(member.profileId)}
                   />
                 );
               }
@@ -85,12 +102,12 @@ export default function FamilyAccount() {
             <ListItem
               title="가족원 초대하기"
               isOnOff={false}
-              to={"../../family-invite"}
+              to={"../../invite"}
             />
             <ListItem
               title="가족 계정 나가기"
               isOnOff={false}
-              deleteProfile={() => deleteMutate(myProfile?.profileId as number)}
+              deleteProfile={() => handleDelete(myProfile?.profileId as number)}
             />
           </div>
         </div>
