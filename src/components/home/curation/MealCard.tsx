@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import Rate from "../../common/Rate";
 import { postExteralRecipes } from "../../../api/recipes";
+import type { SearchRecipesItem } from "../../../types/recipes";
 
 interface MealCardProps {
   id: string;
@@ -11,7 +12,7 @@ interface MealCardProps {
   rating: number;
   img: string;
   type: string;
-  external: {} | null;
+  external: SearchRecipesItem["external"] | null;
 }
 const MealCard = ({
   id,
@@ -25,9 +26,11 @@ const MealCard = ({
 }: MealCardProps) => {
   const navigate = useNavigate();
   const handleOpenInfo = async () => {
+    const numId = Number(id);
     if (type === "RECIPE") {
-      const numId = Number(id);
-      navigate(`/menu-information/${numId}`);
+      navigate(`/menu-information/${numId}?type=RECIPE`);
+    } else if (type === "TRANSFORMED") {
+      navigate(`/menu-information/${numId}?type=TRANSFORMED`);
     } else {
       try {
         const response = await postExteralRecipes(external as any);
@@ -35,12 +38,6 @@ const MealCard = ({
 
         console.log("받아온 ID:", recipeId);
         console.log("전달한 external: ", JSON.stringify(external));
-
-        if (recipeId) {
-          navigate(`/menu-information/${recipeId}`);
-        } else {
-          console.error("Recipe ID가 없습니다.");
-        }
       } catch (error) {
         console.error("외부 레시피 저장 실패:", error);
       }

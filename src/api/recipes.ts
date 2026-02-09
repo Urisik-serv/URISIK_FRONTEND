@@ -2,6 +2,7 @@ import type {
   ResponseDetailRecipe,
   ResponseExternalRecipes,
   ResponseSearchRecipes,
+  ResponseTransformedRecipe,
   SearchRecipesDto,
   SearchRecipesItem,
 } from "../types/recipes";
@@ -20,7 +21,7 @@ export const getSearchRecipes = async (
 };
 
 export const postExteralRecipes = async (
-  external: SearchRecipesItem,
+  external: SearchRecipesItem["external"],
 ): Promise<ResponseExternalRecipes> => {
   const { data } = await axiosInstance.post("/api/recipes/external", external);
 
@@ -32,6 +33,16 @@ export const getDetailRecipe = async (
   recipeId: number,
 ): Promise<ResponseDetailRecipe> => {
   const { data } = await axiosInstance.get(`/api/recipes/${recipeId}`);
+
+  return data;
+};
+
+export const getTransRecipe = async (
+  transformedRecipeId: number,
+): Promise<ResponseTransformedRecipe> => {
+  const { data } = await axiosInstance.get(
+    `/api/transformed-recipes/${transformedRecipeId}`,
+  );
 
   return data;
 };
