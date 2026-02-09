@@ -24,6 +24,10 @@ export default function History() {
     setIsOpen((prev) => !prev);
   };
 
+  const formatDate = (date: string) => {
+    return date.replace(/-/g, ".");
+  };
+
   return (
     <>
       <PublicHeader title={"기록"} />
@@ -68,7 +72,13 @@ export default function History() {
           </div>
         )}
       </div>
-      {isOpen && <GetDateRangeModal handleModal={handleModal} />}
+      {isOpen && (
+        <GetDateRangeModal
+          handleModal={handleModal}
+          fromDate={formatDate(historyData?.result.fromDate ?? "")}
+          toDate={formatDate(historyData?.result.toDate ?? "")}
+        />
+      )}
     </>
   );
 }

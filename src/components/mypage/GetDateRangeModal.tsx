@@ -6,9 +6,15 @@ import { useState } from "react";
 
 interface ModalProps {
   handleModal: () => void;
+  fromDate: string;
+  toDate: string;
 }
 
-export default function GetDateRangeModal({ handleModal }: ModalProps) {
+export default function GetDateRangeModal({
+  handleModal,
+  fromDate,
+  toDate,
+}: ModalProps) {
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [dateRange, setDateRange] = useState("최근 1개월");
 
@@ -64,9 +70,9 @@ export default function GetDateRangeModal({ handleModal }: ModalProps) {
           </div>
 
           <div className="pt-[16px] flex justify-between gap-[12px]">
-            <DateBlock date="2025. 12. 5." />
+            <DateBlock date={fromDate} />
             <span className="flex items-center text-[18px]">~</span>
-            <DateBlock date="2026. 1. 5." />
+            <DateBlock date={toDate} />
           </div>
 
           <div className="pt-[25px]">
