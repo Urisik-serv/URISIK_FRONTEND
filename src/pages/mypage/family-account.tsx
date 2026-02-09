@@ -52,8 +52,8 @@ export default function FamilyAccount() {
   });
 
   const handleDelete = (profileId: number) => {
-    deleteMutate(profileId);
     patchAgreeMutate();
+    deleteMutate(profileId);
     // 전역 상태 비워주기
     resetProfile();
   };
