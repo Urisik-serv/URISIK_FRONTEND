@@ -7,8 +7,8 @@ import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
 import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
-import { deleteProfileWishList } from "../../api/wish-list";
 import { useInView } from "react-intersection-observer";
+import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 
 const MyWishList = () => {
   const [editMode, setEditMode] = useState(false);
@@ -48,13 +48,15 @@ const MyWishList = () => {
     isSelected,
   } = useRecipeSelection();
 
+  const { mutate: deleteWishlists } = useDeleteProfileWishLists(roomId);
+
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
 
     console.log("삭제 요청 데이터:", selectedPayload);
 
     try {
-      await deleteProfileWishList(roomId, selectedPayload);
+      deleteWishlists(selectedPayload);
 
       resetSelection();
       setEditMode(false);

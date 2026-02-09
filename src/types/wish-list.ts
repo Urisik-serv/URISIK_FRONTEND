@@ -16,7 +16,7 @@ export interface FamilyWishListResult {
   };
 }
 
-interface WishListProfile {
+export interface WishListProfile {
   profileId: number;
   nickname: string;
   profilePicUrl: string;
