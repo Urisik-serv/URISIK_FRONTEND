@@ -7,7 +7,7 @@ import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
 import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
-// import { useInView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const MyWishList = () => {
     isFetching: profileFetch,
     hasNextPage: profileNext,
     fetchNextPage: fetchProfile,
-  } = useGetInfiniteProfileWishList(roomId, -1, 5);
+  } = useGetInfiniteProfileWishList(roomId, -1, 3);
 
   const {
     data: transWish,
@@ -31,16 +31,24 @@ const MyWishList = () => {
 
   const navigate = useNavigate();
 
-  //const { ref, inView } = useInView({
-  //  threshold: 0,
-  //});
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
 
   useEffect(() => {
     if (inView) {
-      !transFetch && transNext;
-      !profileFetch && profileNext;
+      if (!transFetch && transNext) fetchTrans();
+      if (!profileFetch && profileNext) fetchProfile();
     }
-  }, [inView, transFetch, profileFetch, transNext, profileNext]);
+  }, [
+    inView,
+    transFetch,
+    profileFetch,
+    transNext,
+    profileNext,
+    fetchTrans,
+    fetchProfile,
+  ]);
 
   const {
     getUniqueKey,
@@ -144,6 +152,7 @@ const MyWishList = () => {
           );
         })}
       </div>
+      <div ref={ref} className="h-2"></div>
     </div>
   );
 };
