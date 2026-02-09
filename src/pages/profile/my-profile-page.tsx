@@ -64,11 +64,19 @@ export default function MyProfilePage() {
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
             {isLeader ? (
-              <LeaderProfile role={profile?.role ?? ""} />
+              <LeaderProfile
+                href={
+                  useProfileStore.getState().savedFormData.profilePicUrl ??
+                  rolePicture[profile?.role ?? ""]
+                }
+              />
             ) : (
               <img
-                src={rolePicture[profile?.role ?? ""]}
-                className="size-[80px]"
+                src={
+                  useProfileStore.getState().savedFormData.profilePicUrl ??
+                  rolePicture[profile?.role ?? ""]
+                }
+                className="size-[80px] rounded-full"
               />
             )}
             <div className="text-2xl font-semibold leading-[36px]">

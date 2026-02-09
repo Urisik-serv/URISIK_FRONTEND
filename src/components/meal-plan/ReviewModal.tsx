@@ -4,14 +4,17 @@ import Button from "../common/Button";
 import UnselectedStar from "../../assets/icons/star-unselected.svg";
 import SelectedStar from "../../assets/icons/star-selected.svg";
 import AlertModal from "../common/AlertModal";
+import type { createReview } from "../../types/review";
+import usePostReview from "../../hooks/use-post-review";
 
 type ReviewModalProps = {
+  recipeId: number;
   onClick: () => void;
 };
 
-type Preference = "LIKE" | "DISLIKE" | null;
+type Preference = boolean | null;
 
-export default function ReviewModal({ onClick }: ReviewModalProps) {
+export default function ReviewModal({ recipeId, onClick }: ReviewModalProps) {
   const [preference, setPreference] = useState<Preference>(null);
   const star = [1, 2, 3, 4, 5];
   const [score, setScore] = useState(0);
@@ -28,6 +31,26 @@ export default function ReviewModal({ onClick }: ReviewModalProps) {
   const onModalClick = () => {
     setIsOpen(false);
     onClick();
+  };
+
+  const { mutate } = usePostReview();
+
+  const handleSubmitReview = ({
+    recipeId,
+    score,
+    isFavorite,
+  }: createReview) => {
+    mutate(
+      { recipeId, score, isFavorite },
+      {
+        onSuccess: () => {
+          setIsOpen(true);
+        },
+        onError: (e: any) => {
+          alert(e.response?.data?.message);
+        },
+      },
+    );
   };
   return (
     <div className="fixed inset-0 z-30 flex justify-center items-end">
@@ -64,21 +87,35 @@ export default function ReviewModal({ onClick }: ReviewModalProps) {
           </div>
           <div className="flex justify-center gap-[10px]">
             <button
-              className={`px-[10px] py-2 rounded-lg cursor-pointer ${preference === "DISLIKE" ? "text-white bg-primary-700" : "text-black bg-[#F0F0F0]"}`}
-              onClick={() => handlebutton("DISLIKE")}
+              className={`px-[10px] py-2 rounded-lg cursor-pointer ${preference === false ? "text-white bg-primary-700" : "text-black bg-[#F0F0F0]"}`}
+              onClick={() => handlebutton(false)}
             >
               내 취향은 아니에요
             </button>
             <button
-              className={`px-[10px] py-2 rounded-lg cursor-pointer ${preference === "LIKE" ? "text-white bg-primary-700" : "text-black bg-[#F0F0F0]"}`}
-              onClick={() => handlebutton("LIKE")}
+              className={`px-[10px] py-2 rounded-lg cursor-pointer ${preference === true ? "text-white bg-primary-700" : "text-black bg-[#F0F0F0]"}`}
+              onClick={() => handlebutton(true)}
             >
               또 먹고 싶어요
             </button>
           </div>
         </div>
         <div className="w-full p-[10px] flex justify-center">
-          <Button type="button" text="등록" onClick={() => setIsOpen(true)} />
+          <Button
+            type="button"
+            text="등록"
+            onClick={() => {
+              const reviewData: createReview = {
+                recipeId,
+                score,
+              };
+              if (preference !== null) {
+                reviewData.isFavorite = preference;
+              }
+              console.log(reviewData);
+              handleSubmitReview(reviewData);
+            }}
+          />
         </div>
       </div>
     </div>

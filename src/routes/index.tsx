@@ -28,6 +28,7 @@ import FamilyAccount from "../pages/mypage/family-account";
 import MyProfilePage from "../pages/profile/my-profile-page";
 import History from "../pages/mypage/history";
 import LoginRedirectPage from "../pages/auth/login-redirect-page";
+import InviteEntry from "../pages/home/invite-entry";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +79,7 @@ export const router = createBrowserRouter([
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
+          { path: "family-invite/:token", element: <InviteEntry /> },
           { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",
