@@ -34,6 +34,8 @@ export const postConfirmMealPlan = async ({
   const { data } = await axiosInstance.post(
     `/api/family-rooms/${familyRoomId}/meal-plans/${mealPlanId}/confirm`,
   );
+  return data;
+};
 
 //오늘의 식단 조회 api
 export const getTodayMealPlan = async (
