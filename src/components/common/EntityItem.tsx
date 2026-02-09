@@ -8,8 +8,8 @@ interface EntityItemProps {
   name: string;
   category: string;
   tags: string;
-  id: number;
-  type: string;
+  id?: number;
+  type?: string;
   rating?: number;
   border?: string;
 }

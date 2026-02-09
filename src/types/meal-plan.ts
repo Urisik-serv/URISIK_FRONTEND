@@ -1,4 +1,4 @@
-import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export type DayOfWeek =
   | "MONDAY"
@@ -37,6 +37,6 @@ export type CreateMealPlanResDto = {
   slots: MealPlanSlots;
 };
 
-export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
+export type ResponseCreateMealPlanDto = BaseResponse<CreateMealPlanResDto>;
 
 export type SlotItem = RecipeDTO & SlotRequest;
