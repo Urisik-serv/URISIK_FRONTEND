@@ -3,12 +3,13 @@ import { useAllergySearch } from "../../hooks/use-allergy-search";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 
 import Button from "../common/Button";
-import DefaultMom from "../../assets/profile/default-mom.svg";
 import Camera from "../../assets/icons/camera.svg";
 import RequiredLabel from "../family/RequiredLabel";
 import SelectButton from "../family/SelectButton";
 import OptionalLabel from "../family/OptionalLabel";
 import { patchProfile, postProfile } from "../../api/family-profile";
+import { useProfileStore } from "../../stores/use-profile-store";
+import { roleMap, rolePicture } from "../../constants/profile-record";
 
 interface ProfileDataFormProps {
   isEdit?: boolean; // 편집 모드 여부
@@ -38,6 +39,8 @@ export default function ProfileDataForm({
     handleSelectAllergy: onSelectAllergy,
     handleResetAllergy,
   } = useAllergySearch();
+
+  const savedRole = useProfileStore.getState().savedFormData.role;
 
   const handleGoSearch = () => {
     navigate("allergy-search");
@@ -83,7 +86,14 @@ export default function ProfileDataForm({
       {isEdit && (
         <div className="h-[104px] mb-[5.5px]">
           <div className="pt-[24px] pb-0 flex flex-col items-center">
-            <img src={DefaultMom} alt="프로필 사진" className="w-[104px] m-0" />
+            <img
+              src={
+                useProfileStore.getState().savedFormData.profilePicUrl ??
+                rolePicture[roleMap[savedRole]]
+              }
+              alt="프로필 사진"
+              className="w-[104px] m-0 rounded-full"
+            />
             <button
               onClick={handlePicture}
               type="button"
