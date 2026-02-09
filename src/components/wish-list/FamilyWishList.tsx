@@ -7,7 +7,7 @@ import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-f
 import { useInView } from "react-intersection-observer";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
-import { deleteFamilyWishList } from "../../api/wish-list";
+import useDeleteFamilyWishLists from "../../hooks/mutations/use-delete-family-wishlists";
 
 const FamilyWishList = () => {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
@@ -41,24 +41,20 @@ const FamilyWishList = () => {
     toggleSelection,
     selectedKeys,
     resetSelection,
-    selectedPayload,
+    selectedFamilyPayload,
     isSelected,
   } = useRecipeSelection();
+
+  const { mutate: deleteWishlists } = useDeleteFamilyWishLists(familyRoomId);
 
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
 
-    console.log("삭제 요청 데이터:", selectedPayload);
+    console.log("삭제 요청 데이터:", selectedFamilyPayload);
 
-    try {
-      await deleteFamilyWishList(familyRoomId, selectedPayload);
-
-      resetSelection();
-      setEditMode(false);
-      // queryClient.invalidateQueries(...) // 쿼리 갱신 필요
-    } catch (error) {
-      console.error("삭제 실패", error);
-    }
+    deleteWishlists(selectedFamilyPayload);
+    resetSelection();
+    setEditMode(false);
   };
 
   const handleButtonClick = () => {
@@ -112,6 +108,9 @@ const FamilyWishList = () => {
                 key={uniqueKey}
                 type="profile"
                 menu={item.title}
+                img={item.imageUrl}
+                rate={item.avgScore}
+                profiles={item.sourceProfile.profiles}
                 clickable={true}
                 isSelected={false}
               />
