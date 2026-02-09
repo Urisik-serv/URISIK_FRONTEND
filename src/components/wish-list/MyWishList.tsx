@@ -9,6 +9,7 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
 import { useInView } from "react-intersection-observer";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
+import { useNavigate } from "react-router-dom";
 
 const MyWishList = () => {
   const [editMode, setEditMode] = useState(false);
@@ -27,6 +28,8 @@ const MyWishList = () => {
     hasNextPage: transNext,
     fetchNextPage: fetchTrans,
   } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+
+  const navigate = useNavigate();
 
   const [ref, inView] = useInView({
     threshold: 0,
@@ -101,6 +104,9 @@ const MyWishList = () => {
                 menu={item.transformedRecipeName}
                 img={item.foodImage}
                 clickable={true}
+                onClick={() =>
+                  navigate(`/menu-information/${item.transformedRecipeId}`)
+                }
                 isSelected={isSelected(uniqueKey)}
               />
             </div>
@@ -129,6 +135,7 @@ const MyWishList = () => {
                 menu={item.recipeName}
                 img={item.foodImage}
                 clickable={true}
+                onClick={() => navigate(`/menu-information/${item.recipeId}`)}
                 isSelected={isSelected(uniqueKey)}
               />
             </div>

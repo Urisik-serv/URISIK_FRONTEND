@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useDeleteFamilyWishLists from "../../hooks/mutations/use-delete-family-wishlists";
+import { useNavigate } from "react-router-dom";
 
 const FamilyWishList = () => {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
@@ -19,6 +20,8 @@ const FamilyWishList = () => {
   } = useGetInfiniteFamilyWishList(familyRoomId, 20);
   // isPending, isError 등은 나중에...
   // throttling도 고려해볼 문제..
+
+  const navigate = useNavigate();
 
   const [ref, inView] = useInView({
     threshold: 0,
@@ -111,6 +114,7 @@ const FamilyWishList = () => {
                 img={item.imageUrl}
                 rate={item.avgScore}
                 profiles={item.sourceProfile.profiles}
+                onClick={() => navigate(`/menu-information/${item.id}`)}
                 clickable={true}
                 isSelected={false}
               />
