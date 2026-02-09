@@ -2,6 +2,7 @@ import type {
   DeleteProfileResponse,
   GetProfileResponse,
   GetProfilesResponse,
+  PatchProfilePicResponse,
   postProfileRequest,
   PostProfileResponse,
   Profile,
@@ -62,4 +63,25 @@ export const deleteProfile = async (
     `/api/family-rooms/${familyRoomId}/profiles/${profileId}`,
   );
   return data;
+};
+
+// 프로필 사진 수정
+export const patchProfilePic = async (
+  familyRoomId: number,
+  file: File,
+): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const { data } = await axiosInstance.patch<PatchProfilePicResponse>(
+    `/api/family-rooms/${familyRoomId}/profile-pic`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
+
+  return data.result.profilePicUrl;
 };

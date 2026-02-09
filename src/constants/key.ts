@@ -5,4 +5,7 @@ export const LOCAL_STORAGE_KEY = {
 
 export const QUERY_KEY = {
   search: "searchRecipes",
+  familyWish: "familyWishList",
+  profileWish: "profileWish",
+  profileTransWish: "profileTransWish",
 };

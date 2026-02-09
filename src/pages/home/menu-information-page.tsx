@@ -9,6 +9,8 @@ import PageIndicator from "../../components/common/PageIndicator";
 import WishlistButton from "../../components/common/WishlistButton";
 import { getDetailRecipe } from "../../api/recipes";
 import type { DetailRecipe } from "../../types/recipes";
+import { useFamilyStore } from "../../stores/use-family-store";
+import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -26,6 +28,20 @@ const MenuInformationPage = () => {
     };
     fetchData();
   }, []);
+
+  const roomId = useFamilyStore.getState().familyRoomId;
+  const { mutate: addWishList } = usePostWishList(roomId);
+
+  const handleClick = async () => {
+    const currentRecipeId = recipe?.recipeId;
+
+    const directPayload = {
+      recipeId: currentRecipeId ? [currentRecipeId] : [],
+      transformedRecipeId: [],
+    };
+
+    addWishList(directPayload);
+  };
 
   return (
     <div>
@@ -72,7 +88,10 @@ const MenuInformationPage = () => {
             <MenuInfo title="레시피" recipes={recipe?.steps} />
           </div>
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
-            <WishlistButton isbig={true} />
+            <WishlistButton
+              isWishList={!recipe?.allergyWarning.hasRisk}
+              onClick={handleClick}
+            />
           </div>
           <UpButton />
         </div>

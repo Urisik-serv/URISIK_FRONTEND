@@ -35,11 +35,19 @@ const MyPage = () => {
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
             {isLeader ? (
-              <LeaderProfile role={roleMap[myData.role]} />
+              <LeaderProfile
+                href={
+                  useProfileStore.getState().savedFormData.profilePicUrl ??
+                  rolePicture[roleMap[myData.role]]
+                }
+              />
             ) : (
               <img
-                src={rolePicture[roleMap[myData.role]]}
-                className="size-[80px]"
+                src={
+                  useProfileStore.getState().savedFormData.profilePicUrl ??
+                  rolePicture[roleMap[myData.role]]
+                }
+                className="size-[80px] rounded-full"
               />
             )}
             <div className="text-2xl font-semibold leading-[36px]">
