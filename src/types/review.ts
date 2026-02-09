@@ -1,4 +1,4 @@
-import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export type createReview = {
   recipeId: number;
@@ -9,4 +9,4 @@ export type review = {
   reviewId: number;
   avgScore: number;
 };
-export type ResponseCreateReviewDto = CommonResponse<review>;
+export type ResponseCreateReviewDto = BaseResponse<review>;

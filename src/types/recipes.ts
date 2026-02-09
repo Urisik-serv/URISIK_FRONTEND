@@ -1,4 +1,4 @@
-import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export interface SearchRecipesDto {
   keyword: string;
@@ -73,12 +73,12 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
-export type ResponseDetailRecipe = CommonResponse<DetailRecipe>;
+export type ResponseDetailRecipe = BaseResponse<DetailRecipe>;
 
 // interface 사용시 extends
-export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
+export interface ResponseSearchRecipes extends BaseResponse<SearchRecipesItems> {}
 
-export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
+export interface ResponseExternalRecipes extends BaseResponse<ExternalRecipes> {}
 
 // 충돌 방지용 이전 mockdata type
 export interface Recipe {

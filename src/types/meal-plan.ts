@@ -1,4 +1,4 @@
-import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export type DayOfWeek =
   | "MONDAY"
@@ -39,7 +39,7 @@ export type CreateMealPlanResDto = {
 };
 
 //주간 식단 생성 api response
-export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
+export type ResponseCreateMealPlanDto = BaseResponse<CreateMealPlanResDto>;
 
 export type SlotItem = RecipeDTO & SlotRequest;
 
@@ -55,8 +55,7 @@ export type confirmMealPlan = {
   weekStartDate: string;
   mealPlanGenerationCount: number;
 };
-export type ResponseConfirmMealPlanDto = CommonResponse<confirmMealPlan>;
-
+export type ResponseConfirmMealPlanDto = BaseResponse<confirmMealPlan>;
 
 export interface TodayMeal {
   mealType: MealType;
@@ -75,11 +74,11 @@ export interface TodayMealPlan {
 }
 
 //오늘의 식단 생성 api response
-export type ResponseTodayMealPlan = CommonResponse<TodayMealPlan>;
+export type ResponseTodayMealPlan = BaseResponse<TodayMealPlan>;
 
 export interface ThisWeekMealPlan {
   mealPlanId: number;
   weekStartDate: string;
   slots: MealPlanSlots;
 }
-export type ResponseThisWeekMealPlan = CommonResponse<ThisWeekMealPlan>;
+export type ResponseThisWeekMealPlan = BaseResponse<ThisWeekMealPlan>;
