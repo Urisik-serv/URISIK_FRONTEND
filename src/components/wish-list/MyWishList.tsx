@@ -44,7 +44,7 @@ const MyWishList = () => {
     toggleSelection,
     selectedKeys,
     resetSelection,
-    selectedPayload,
+    selectedProfilePayload,
     isSelected,
   } = useRecipeSelection();
 
@@ -53,9 +53,9 @@ const MyWishList = () => {
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
 
-    console.log("삭제 요청 데이터:", selectedPayload);
+    console.log("삭제 요청 데이터:", selectedProfilePayload);
 
-    deleteWishlists(selectedPayload);
+    deleteWishlists(selectedProfilePayload);
 
     resetSelection();
     setEditMode(false);
