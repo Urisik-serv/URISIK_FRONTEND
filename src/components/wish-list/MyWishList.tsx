@@ -55,15 +55,10 @@ const MyWishList = () => {
 
     console.log("삭제 요청 데이터:", selectedPayload);
 
-    try {
-      deleteWishlists(selectedPayload);
+    deleteWishlists(selectedPayload);
 
-      resetSelection();
-      setEditMode(false);
-      // queryClient.invalidateQueries(...) // 쿼리 갱신 필요
-    } catch (error) {
-      console.error("삭제 실패", error);
-    }
+    resetSelection();
+    setEditMode(false);
   };
 
   const handleButtonClick = () => {
