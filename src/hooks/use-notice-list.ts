@@ -74,6 +74,7 @@ export const useNoticeList = () => {
       ago: ago(item.createdAt),
       isRead: item.isRead,
       key: item.createdAt,
+
     };
   });
 
