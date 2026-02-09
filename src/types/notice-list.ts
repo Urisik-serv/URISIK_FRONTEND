@@ -11,17 +11,18 @@ export interface NoticeLists {
 }
 
 export interface NoticeSort {
-  direction: "string";
-  nullHandling: "string";
-  ascending: true;
-  property: "string";
-  ignoreCase: true;
+  direction: string;
+  nullHandling: string;
+  ascending: boolean;
+  property: string;
+  ignoreCase: boolean;
 }
 
 export interface NoticeContent {
-  isRead: true;
-  type: "REVIEW_REMINDER";
-  createdAt: "2026-02-01T09:48:24.874Z";
+  isRead: boolean;
+  type: "REVIEW_REMINDER" | "MEAL_PLAN_REMINDER" | "TEMPERATURE";
+  createdAt: string;
+  mealPlanGenerationCount: number | null;
 }
 
 export interface ResponseNotice {
@@ -47,4 +48,10 @@ export interface ResponseNotice {
     empty: boolean;
   };
   errorDetail: {};
+}
+
+export interface Content {
+  icon: string;
+  title: string;
+  content: (params?: any) => string;
 }
