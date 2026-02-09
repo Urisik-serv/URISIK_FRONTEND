@@ -12,9 +12,10 @@ const FamilyProfile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (familyRoomId === null) return;
         const res = await getProfiles(familyRoomId);
 
-        setData(res);
+        setData(res.result);
         console.log("프로필 데이터: ", res);
       } catch (error) {
         console.log("데이터 로딩 실패:", error);

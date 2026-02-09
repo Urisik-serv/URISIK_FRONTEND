@@ -1,6 +1,8 @@
 import type {
   CreateMealPlan,
+  MonthResult,
   ResponseCreateMealPlanDto,
+  ResponseMonthMealPlan,
   ResponseThisWeekMealPlan,
   ResponseTodayMealPlan,
 } from "../types/meal-plan";
@@ -63,4 +65,14 @@ export const getWeekMealPlan = async ({
     { params: { date } },
   );
   return data;
+};
+
+// 최근 1개월 식단 조회 api
+export const getMonthMealPlan = async (
+  familyRoomId: number,
+): Promise<MonthResult> => {
+  const { data } = await axiosInstance.get<ResponseMonthMealPlan>(
+    `/api/family-rooms/${familyRoomId}/meal-plans/last-month`,
+  );
+  return data.result;
 };

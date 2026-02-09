@@ -1,19 +1,58 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import profile from "../../assets/profile/leader-mom.svg";
-import dadProfile from "../../assets/profile/dad-profile.svg";
-import daughterProfile from "../../assets/profile/daughter-profile.svg";
 import EntityItem from "../../components/common/EntityItem";
 import ListItem from "../../components/mypage/ListItem";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  deleteProfile,
+  getProfile,
+  getProfiles,
+} from "../../api/family-profile";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { roleMap, rolePicture } from "../../constants/profile-record";
 
 export default function FamilyAccount() {
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
+
+  const { data: myFamily = [] } = useQuery({
+    queryKey: ["myFamily"],
+    queryFn: async () => {
+      const res = await getProfiles(familyRoomId as number);
+      return res.result.familyDetails;
+    },
+    enabled: familyRoomId !== null,
+  });
+
+  const { data: myProfile } = useQuery({
+    queryKey: ["myProfile"],
+    queryFn: async () => {
+      const res = await getProfile(familyRoomId as number, -1);
+      return res;
+    },
+    enabled: familyRoomId !== null,
+  });
+
+  const { mutate: deleteMutate } = useMutation({
+    mutationFn: (profileId: number) =>
+      deleteProfile(familyRoomId as number, profileId),
+  });
+
+  const findKeyByValue = (record: Record<string, string>, value: string) => {
+    return Object.entries(record).find(([_, v]) => v === value)?.[0];
+  };
+
   return (
     <>
       <PublicHeader title={"가족계정"} />
       <div className="pt-[33px] flex flex-col items-center mx-auto">
         <div className="w-[80px]">
-          <img src={profile} alt="프로필 사진" />
+          <img
+            src={
+              myProfile?.profilePicUrl ?? rolePicture[myProfile?.role as string]
+            }
+            alt="프로필 사진"
+          />
           <div className="pt-[8px] text-center text-lg font-semibold tracking-[0.18px]">
-            김엄마(나)
+            {myProfile?.nickname}
           </div>
         </div>
         <div className="pt-[44px] flex flex-col items-start ">
@@ -21,19 +60,26 @@ export default function FamilyAccount() {
             우리가족
           </div>
           <div className="pt-[16px]">
-            <EntityItem
-              picture={dadProfile}
-              name="강아빠"
-              category="아빠"
-              tags="xxx년 xx월 xx일"
-              border="border-b-1 border-b-gray-200"
-            />
-            <EntityItem
-              picture={daughterProfile}
-              name="강민지"
-              category="딸"
-              tags="xxxx년 xx월 xx일"
-            />
+            {myFamily?.map((member, index) => {
+              if (member.profileId === myProfile?.profileId) {
+                return null;
+              } else {
+                return (
+                  <EntityItem
+                    key={member.profileId}
+                    picture={member.profilePicUrl ?? rolePicture[member.role]}
+                    name={member.nickname}
+                    category={findKeyByValue(roleMap, member.role) as string}
+                    border={
+                      index !== myFamily.length - 2
+                        ? "border-b border-b-gray-200"
+                        : ""
+                    }
+                    deleteProfile={() => deleteMutate(member.profileId)}
+                  />
+                );
+              }
+            })}
           </div>
           <div className="pt-[44px] flex flex-col w-full gap-[8px] ">
             <ListItem
@@ -41,7 +87,11 @@ export default function FamilyAccount() {
               isOnOff={false}
               to={"../../family-invite"}
             />
-            <ListItem title="가족 계정 나가기" isOnOff={false} />
+            <ListItem
+              title="가족 계정 나가기"
+              isOnOff={false}
+              deleteProfile={() => deleteMutate(myProfile?.profileId as number)}
+            />
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@ export type DayOfWeek =
   | "SUNDAY";
 
 export type MealType = "LUNCH" | "DINNER";
+export type Type = "RECIPE" | "TRANSFORMED_RECIPE";
 
 export type SlotRequest = {
   dayOfWeek: DayOfWeek;
@@ -72,6 +73,36 @@ export interface TodayMealPlan {
   weekStartDate: number;
   meals: TodayMeal[];
 }
+
+/////////////////////////////////////////////
+export interface MonthResult {
+  fromDate: string;
+  toDate: string;
+  weeks: Week[];
+}
+
+export interface Week {
+  mealPlanId: number;
+  weekStartDate: string;
+  days: Day[];
+}
+
+export interface Day {
+  dayOfWeek: DayOfWeek;
+  meals: MonthMeal[];
+}
+
+export interface MonthMeal {
+  mealType: MealType;
+  type: Type;
+  id: number;
+  title: string;
+  imageUrl: string;
+  ingredients: string;
+}
+
+// 이번달 식단 생성 api response
+export type ResponseMonthMealPlan = BaseResponse<MonthResult>;
 
 //오늘의 식단 생성 api response
 export type ResponseTodayMealPlan = BaseResponse<TodayMealPlan>;

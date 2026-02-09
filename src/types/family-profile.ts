@@ -46,13 +46,14 @@ export interface ProfileCreateResult {
 }
 
 export interface Profile {
-  isSuccess: boolean;
+  profileId: number;
   nickname: string;
   role: string;
   likedIngredients?: string;
   dislikedIngredients?: string;
   allergyAndAlterIngredients: AllergyResults;
   dietPreferences: string[];
+  profilePicUrl: string;
 }
 
 export interface FamilyDetails {
@@ -66,6 +67,10 @@ export interface FamilyDetail {
   profilePicUrl: string;
 }
 
+export interface IsDeleted {
+  isDeleted: boolean;
+} 
+ 
 export interface ProfilePicUrl {
   profilePicUrl: string;
 }
@@ -73,4 +78,5 @@ export interface ProfilePicUrl {
 export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
 export type GetProfileResponse = BaseResponse<Profile>;
 export type GetProfilesResponse = BaseResponse<FamilyDetails>;
+export type DeleteProfileResponse = BaseResponse<IsDeleted>;
 export type PatchProfilePicResponse = BaseResponse<ProfilePicUrl>;
