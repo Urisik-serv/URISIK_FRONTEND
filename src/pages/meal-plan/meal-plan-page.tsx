@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomeHeader from "../../components/header/HomeHeader";
 import TodayMeal from "../../components/meal-plan/TodayMeal";
 import WeekMeal from "../../components/meal-plan/WeekMeal";
@@ -7,6 +7,9 @@ import selectedSun from "../../assets/icons/sun-selected.svg";
 import unselectedSun from "../../assets/icons/sun-unselected.svg";
 import selectedMoon from "../../assets/icons/moon-selected.svg";
 import unselectedMoon from "../../assets/icons/moon-unselected.svg";
+import useGetTodayMealPlan from "../../hooks/queries/use-get-today-meal-plan";
+import { useFamilyStore } from "../../stores/use-family-store";
+import EmptyState from "../../components/common/EmptyState";
 
 const MealPlanPage = () => {
   const [searchParams] = useSearchParams();
@@ -15,6 +18,23 @@ const MealPlanPage = () => {
     tabParam === "nextWeek" ? "다음주 식단" : "오늘의 식단",
   );
   const [todayTab, setTodayTab] = useState<"점심" | "저녁">("점심");
+  const { familyRoomId } = useFamilyStore.getState();
+
+  const { data: todayData, isError } = useGetTodayMealPlan(familyRoomId);
+  console.log(todayData);
+  useEffect(() => {
+    if (todayData?.result?.meals.length == 1) {
+      if (todayData.result.meals[0].mealType === "DINNER") setTodayTab("저녁");
+    }
+  }, [todayData?.result?.meals]);
+
+  const lunchData = todayData?.result.meals.find(
+    (data) => data.mealType === "LUNCH",
+  );
+  const dinnerData = todayData?.result.meals.find(
+    (data) => data.mealType === "DINNER",
+  );
+  const tabData = todayTab === "점심" ? lunchData : dinnerData;
   return (
     <div>
       <HomeHeader />
@@ -63,7 +83,13 @@ const MealPlanPage = () => {
                 저녁
               </button>
             </div>
-            {todayTab === "점심" ? <TodayMeal /> : <TodayMeal />}
+            {isError || tabData === undefined ? (
+              <div className="pt-27">
+                <EmptyState text={`${todayTab}식단이 생성되지 않았어요.`} />
+              </div>
+            ) : (
+              <TodayMeal data={tabData} />
+            )}
           </>
         )}
         {tab == "이번주 식단" && <WeekMeal />}

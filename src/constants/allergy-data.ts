@@ -30,35 +30,87 @@ export const ALLERGY_DATA = [
 
 export const ALLERGY_ICON = [
   {
-    name: "대두",
+    name: "SOYBEAN",
     icon: "/assets/allergies/bean.svg",
   },
   {
-    name: "계란",
+    name: "EGG",
     icon: "/assets/allergies/egg.svg",
   },
   {
-    name: "생선",
+    name: "MACKEREL",
     icon: "/assets/allergies/fish.svg",
   },
   {
-    name: "우유",
+    name: "MILK",
     icon: "/assets/allergies/milk.svg",
   },
   {
-    name: "견과류",
+    name: "WALNUT",
     icon: "/assets/allergies/nuts.svg",
   },
   {
-    name: "땅콩",
+    name: "PEANUT",
     icon: "/assets/allergies/peanut.svg",
   },
   {
-    name: "새우",
+    name: "SHRIMP",
     icon: "/assets/allergies/shrimp.svg",
   },
   {
-    name: "밀",
+    name: "WHEAT",
     icon: "/assets/allergies/wheat.svg",
+  },
+  {
+    name: "CRAB",
+    icon: "/assets/allergies/crab.svg",
+  },
+  {
+    name: "SQUID",
+    icon: "/assets/allergies/squid.svg",
+  },
+  {
+    name: "OYSTER",
+    icon: "/assets/allergies/shellFish.svg",
+  },
+  {
+    name: "ABALONE",
+    icon: "/assets/allergies/shellFish.svg",
+  },
+  {
+    name: "MUSSEL",
+    icon: "/assets/allergies/shellFish.svg",
+  },
+  {
+    name: "BEEF",
+    icon: "/assets/allergies/meat.svg",
+  },
+  {
+    name: "PORK",
+    icon: "/assets/allergies/meat.svg",
+  },
+  {
+    name: "CHICKEN",
+    icon: "/assets/allergies/chicken.svg",
+  },
+  {
+    name: "PINE_NUT",
+    icon: "/assets/allergies/pineNut.svg",
+  },
+  {
+    name: "EXTRACTED_INGREDIENTS",
+    icon: "/assets/allergies/extracted.svg",
+  },
+  {
+    name: "SULFITE",
+    icon: "/assets/allergies/sulfile.svg",
+  },
+  {
+    name: "PEACH",
+    icon: "/assets/allergies/peach.svg",
+  },
+  {
+    name: "TOMATO",
+    icon: "/assets/allergies/tomato.svg",
   },
 ];

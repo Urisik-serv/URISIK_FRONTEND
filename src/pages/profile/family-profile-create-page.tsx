@@ -6,7 +6,7 @@ export default function FamilyProfileCreatePage() {
     <>
       <PublicHeader title={"프로필 생성"} />
       <div className="flex justify-center">
-        <ProfileDataForm isSelected={1} isEdit={false} />
+        <ProfileDataForm isEdit={false} />
       </div>
     </>
   );

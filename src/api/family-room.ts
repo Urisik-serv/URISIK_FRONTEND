@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useLocalStorage } from "../hooks/use-local-storage";
-import type { PostFamilyRoomRequest } from "../types/family-room";
 import type {
   GetFamilyRoomResponse,
+  PostFamilyRoomRequest,
   PostFamilyRoomResponse,
-} from "../types/response";
+} from "../types/family-room";
+
 import { axiosInstance } from "./axios/axios";
 
 // 가족방 생성
