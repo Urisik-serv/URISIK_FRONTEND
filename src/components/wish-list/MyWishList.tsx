@@ -31,9 +31,9 @@ const MyWishList = () => {
 
   const navigate = useNavigate();
 
-  const { ref, inView } = useInView({
-    threshold: 0,
-  });
+  //const { ref, inView } = useInView({
+  //  threshold: 0,
+  //});
 
   useEffect(() => {
     if (inView) {

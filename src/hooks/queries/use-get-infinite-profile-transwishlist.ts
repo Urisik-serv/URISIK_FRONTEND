@@ -12,7 +12,7 @@ function useGetInfiniteProfileTransWishList(
       getProfileTransWishList(familyRoomId, profileId, size, pageParam),
     queryKey: [QUERY_KEY.profileTransWish, familyRoomId, profileId, size],
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage) => {
       return lastPage.result.hasNext ? lastPage.result.nextCursor : undefined;
     },
     staleTime: 1000 * 60 * 5, // 5분
