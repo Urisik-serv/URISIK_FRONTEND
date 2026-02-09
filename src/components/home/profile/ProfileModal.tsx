@@ -9,19 +9,19 @@ import {
   useProfileModalInfo,
 } from "../../../hooks/use-profile-modal-store";
 import { useEffect, useState } from "react";
-import AllergyDataBox from "../../profile/AllergyDataBox";
-import ElementButton from "../../common/ElementButton";
-import EntityItem from "../../common/EntityItem";
-import SmallButton from "../../common/SmallCommonButton";
-import profilePicture from "../../../assets/profile/daughter-profile.svg";
-import alertImage from "../../../assets/images/alert-circle.png";
-import { useNavigate } from "react-router-dom";
+//import AllergyDataBox from "../../profile/AllergyDataBox";
+//import ElementButton from "../../common/ElementButton";
+//import EntityItem from "../../common/EntityItem";
+//import SmallButton from "../../common/SmallCommonButton";
+//import profilePicture from "../../../assets/profile/daughter-profile.svg";
+//import alertImage from "../../../assets/images/alert-circle.png";
+//import { useNavigate } from "react-router-dom";
 
 const ProfileModal = () => {
   const { isClose } = useProfileModalActions();
-  const { open, selectedData } = useProfileModalInfo();
+  const { open } = useProfileModalInfo(); // selectedData 필요
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const controls = useAnimation();
   const [isExpanded, setIsExpanded] = useState(false);
