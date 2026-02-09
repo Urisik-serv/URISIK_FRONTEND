@@ -49,19 +49,9 @@ export default function MyProfilePage() {
   }, [roomId]);
 
   // 위시리스트
-  const {
-    data: profileWish,
-    isFetching: profileFetch,
-    hasNextPage: profileNext,
-    fetchNextPage: fetchProfile,
-  } = useGetInfiniteProfileWishList(roomId, -1, 5);
+  const { data: profileWish } = useGetInfiniteProfileWishList(roomId, -1, 5);
 
-  const {
-    data: transWish,
-    isFetching: transFetch,
-    hasNextPage: transNext,
-    fetchNextPage: fetchTrans,
-  } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+  const { data: transWish } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
 
   const allergies =
     profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
