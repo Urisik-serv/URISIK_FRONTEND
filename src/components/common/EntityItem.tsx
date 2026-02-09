@@ -7,7 +7,6 @@ interface EntityItemProps {
   picture: string;
   name: string;
   category: string;
-  tags: string;
   id?: number;
   type?: string;
   rating?: number;
@@ -19,7 +18,7 @@ export default function EntityItem({
   picture,
   name,
   category,
-  tags,
+
   id,
   type,
   rating,
@@ -46,7 +45,6 @@ export default function EntityItem({
         <button
           onClick={deleteProfile}
           className="cursor-pointer absolute right-0 top-0 bottom-0 w-[93px] text-xl font-medium"
-
         >
           삭제
         </button>
@@ -63,7 +61,6 @@ export default function EntityItem({
                 src={picture}
                 alt={`${name} 사진`}
                 className="size-[52px] rounded-full object-cover"
-
               />
               <div className="flex flex-col gap-[11px] flex-1 min-w-0">
                 <div className="flex items-center gap-[5px]">
@@ -80,7 +77,6 @@ export default function EntityItem({
                   <div className="text-sm tracking-[-0.42px] text-gray-400 truncate shrink-0">
                     {category}
                   </div>
-
                 </div>
               </div>
             </div>
