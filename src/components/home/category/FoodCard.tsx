@@ -1,17 +1,13 @@
-import Korean from "../../../assets/category/korean.png";
-import Japanese from "../../../assets/category/japanese.png";
-import Chinese from "../../../assets/category/chinese.png";
-import Western from "../../../assets/category/western.png";
-import Bunsik from "../../../assets/category/bunsik.png";
+import Rice from "../../../assets/category/rice.png";
+import Soup from "../../../assets/category/soup.png";
+import Banchan from "../../../assets/category/banchan.png";
 import Dessert from "../../../assets/category/dessert.png";
 
 const categoryImages: Record<string, string> = {
-  한식: Korean,
-  일식: Japanese,
-  중식: Chinese,
-  양식: Western,
-  분식: Bunsik,
-  디저트: Dessert,
+  밥: Rice,
+  국: Soup,
+  반찬: Banchan,
+  후식: Dessert,
 };
 
 interface FoodCardProps {

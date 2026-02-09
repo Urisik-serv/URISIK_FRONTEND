@@ -61,12 +61,10 @@ const HomePage = () => {
                 <SearchBar keyword="" />
               </div>
               <div className="pt-5 gap-3 flex overflow-x-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                <FoodCard name="한식" />
-                <FoodCard name="일식" />
-                <FoodCard name="중식" />
-                <FoodCard name="양식" />
-                <FoodCard name="분식" />
-                <FoodCard name="디저트" />
+                <FoodCard name="밥" />
+                <FoodCard name="국" />
+                <FoodCard name="반찬" />
+                <FoodCard name="후식" />
               </div>
               <AllergyCuration />
               <MealCuration />

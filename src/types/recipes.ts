@@ -1,4 +1,4 @@
-import type { CommonResponse } from "./common";
+import type { BaseResponse } from "./response";
 
 export interface SearchRecipesDto {
   keyword: string;
@@ -73,35 +73,48 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
-export type ResponseDetailRecipe = CommonResponse<DetailRecipe>;
+export type ResponseDetailRecipe = BaseResponse<DetailRecipe>;
 
 // interface 사용시 extends
-export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
+export interface ResponseSearchRecipes extends BaseResponse<SearchRecipesItems> {}
 
-export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
+export interface ResponseExternalRecipes extends BaseResponse<ExternalRecipes> {}
 
-// 충돌 방지용 이전 mockdata type
-export interface Recipe {
-  id: number;
-  title: string;
-  category: string;
-  tags: string[];
-  shortDescription: string;
-  rating: number;
-  pickedCount: number;
-  imageUrl: string;
-  meta: {
-    cookingTime: string;
-    difficulty: {
-      level: number;
-      label: string;
-    };
-    tastePoint: string;
-  };
-  descriptions: string[];
-  ingredients: string[];
-  isWishlisted: boolean;
+//홈 화면 추천 레시피(상단)
+export interface RecommendSafeRecipes {
+  recipes: [
+    {
+      id: string;
+      title: string;
+      imageUrl: string;
+      category: string;
+      avgScore: number;
+      reviewCount: number;
+      wishCount: number;
+      transformed: boolean;
+      safe: boolean;
+    },
+  ];
 }
-export interface FoodList {
-  recipes: Recipe[];
+
+export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
+
+// 홈 화면 추천 레시피 (하단)
+export interface RecommendPopularRecipes {
+  recipes: [
+    {
+      id: string;
+      title: string;
+      imageUrl: string;
+      category: string;
+      avgScore: number;
+      reviewCount: number;
+      wishCount: number;
+      safe: boolean;
+      description: string;
+      transformed: boolean;
+    },
+  ];
 }
+
+export type ResponseRecommendPopular = BaseResponse<RecommendPopularRecipes>;
