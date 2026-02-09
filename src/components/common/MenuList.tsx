@@ -1,5 +1,6 @@
 import Rate from "./Rate";
 import Profile from "../../assets/images/empty-profile.png";
+import type { WishListProfile } from "../../types/wish-list";
 
 type MenuListMode = "default" | "rate" | "profile";
 //default: 기본, rate: 별점까지만 보이도록, profile: 별점+프로필까지 보이도록
@@ -11,6 +12,8 @@ interface MenuListProps {
   clickable?: boolean; //선택기능이 필요한 컴포넌트인지
   onClick?: () => void;
   isSelected?: boolean;
+  rate?: number;
+  profiles?: WishListProfile[];
 }
 
 export default function MenuList({
@@ -20,6 +23,8 @@ export default function MenuList({
   clickable = false,
   onClick,
   isSelected = false,
+  rate,
+  profiles,
 }: MenuListProps) {
   return (
     <div
@@ -33,13 +38,18 @@ export default function MenuList({
           <div className="flex items-center gap-[5px] font-semibold">
             <p>{menu}</p>
             {(type == "rate" || type == "profile") && (
-              <Rate px={12} rate={4.5} />
+              <Rate px={12} rate={rate} />
             )}
             {type == "profile" && (
               <div className="flex -space-x-2">
-                <img src={Profile} alt="프로필 이미지" className="size-6" />
-                <img src={Profile} alt="프로필 이미지" className="size-6" />
-                <img src={Profile} alt="프로필 이미지" className="size-6" />
+                {profiles?.map((profile) => (
+                  <img
+                    src={profile.profilePicUrl || Profile}
+                    key={profile.profileId}
+                    alt="프로필 이미지"
+                    className="size-6"
+                  />
+                ))}
               </div>
             )}
           </div>
