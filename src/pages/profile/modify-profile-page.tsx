@@ -48,7 +48,7 @@ export default function ModifyProfilePage() {
           preferences: res.dietPreferences ?? [],
           likedIngredients: res.likedIngredients ?? "",
           dislikedIngredients: res.dislikedIngredients ?? "",
-          profilePicUrl: rolePicture[res.role],
+          profilePicUrl: res.profilePicUrl ?? rolePicture[res.role],
         });
         markLoaded();
       } catch (error) {
