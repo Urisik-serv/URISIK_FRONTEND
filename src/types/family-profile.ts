@@ -1,3 +1,4 @@
+import type { AllergyResults } from "./allergy";
 import type { BaseResponse } from "./response";
 
 interface Allergy {
@@ -50,7 +51,7 @@ export interface Profile {
   role: string;
   likedIngredients?: string;
   dislikedIngredients?: string;
-  allergy: string[];
+  allergyAndAlterIngredients: AllergyResults;
   dietPreferences: string[];
 }
 
@@ -63,6 +64,11 @@ export interface FamilyDetail {
   profilePicUrl: string;
 }
 
+export interface ProfilePicUrl {
+  profilePicUrl: string;
+}
+
 export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
 export type GetProfileResponse = BaseResponse<Profile>;
 export type GetProfilesResponse = BaseResponse<FamilyDetails>;
+export type PatchProfilePicResponse = BaseResponse<ProfilePicUrl>;

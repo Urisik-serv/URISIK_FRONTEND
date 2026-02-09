@@ -1,11 +1,15 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import profilePicture from "../../assets/profile/leader-mom.svg";
 import { useNavigate } from "react-router-dom";
 import ElementButton from "../../components/common/ElementButton";
 import { getProfile } from "../../api/family-profile";
 import { useEffect, useState } from "react";
 import type { Profile } from "../../types/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
+import AllergyDataBox from "../../components/profile/AllergyDataBox";
+import { getFamilyRoom } from "../../api/family-room";
+import { rolePicture } from "../../constants/profile-record";
+import { useProfileStore } from "../../stores/use-profile-store";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -25,17 +29,23 @@ export default function MyProfilePage() {
     return;
   }
   const [profile, setProfile] = useState<Profile | null>(null);
+  const navigate = useNavigate();
+  const { saveIsLeader, isLeader } = useProfileStore();
 
   useEffect(() => {
     const fetchProfile = async () => {
       const profileData = await getProfile(roomId, -1);
+      const familyRoom = await getFamilyRoom();
       setProfile(profileData);
+      saveIsLeader(familyRoom.result.capabilities.leader);
     };
 
     fetchProfile();
   }, [roomId]);
 
-  const navigate = useNavigate();
+  const allergies =
+    profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
+    [];
 
   return (
     <>
@@ -43,7 +53,22 @@ export default function MyProfilePage() {
       <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-10">
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
-            <img src={profilePicture} alt="내 프로필 사진" />
+            {isLeader ? (
+              <LeaderProfile
+                href={
+                  useProfileStore.getState().savedFormData.profilePicUrl ??
+                  rolePicture[profile?.role ?? ""]
+                }
+              />
+            ) : (
+              <img
+                src={
+                  useProfileStore.getState().savedFormData.profilePicUrl ??
+                  rolePicture[profile?.role ?? ""]
+                }
+                className="size-[80px] rounded-full"
+              />
+            )}
             <div className="text-2xl font-semibold leading-[36px]">
               {profile?.nickname}
             </div>
@@ -61,13 +86,13 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             알레르기
           </div>
-          {/* {!profile?.allergy.includes("NONE") ? (
+          {!allergies?.includes("NONE") ? (
             <div>
-              {profile?.allergy.map((item) => (
-                <div className=" pb-[20px]">
+              {profile?.allergyAndAlterIngredients.map((item) => (
+                <div key={item.allergen} className=" pb-[20px]">
                   <AllergyDataBox
-                    name={item}
-                    //alternative={allergy.alternativeIngredients}
+                    name={item.allergen}
+                    alternative={item.alteredIngredients}
                   />
                 </div>
               ))}
@@ -78,7 +103,7 @@ export default function MyProfilePage() {
                 <ElementButton name="없음" />
               </div>
             </div>
-          )} */}
+          )}
         </div>
         <div>
           <div className="text-[16px] font-semibold leading-[24px]">
