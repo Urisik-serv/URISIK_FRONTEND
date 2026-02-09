@@ -1,8 +1,8 @@
 import { useState } from "react";
 import MealCard from "./MealCard";
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
-import SortDropdown from "../../common/SortDropDown";
 import { useGetRecommendList } from "../../../hooks/queries/use-get-recommendations";
+import SortDropdown from "../../common/SortDropdown";
 
 const MealCuration = () => {
   const [sortType, setSortType] = useState("별점 순");

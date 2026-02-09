@@ -89,12 +89,12 @@ const ProfileModal = () => {
         </div>
 
         <div className="px-4 pb-10 overflow-y-auto overscroll-contain h-full [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-          <div className="pt-15.5 w-full mx-auto flex flex-col pb-10">
+          {/*<div className="pt-15.5 w-full mx-auto flex flex-col pb-10">
             <div className="flex justify-between  w-full">
               <div className="flex gap-3 items-end">
                 <img src={profilePicture} alt="내 프로필 사진" />
                 <div className="text-2xl font-semibold leading-9">
-                  {selectedData?.name}
+                  {selectedData?.nickname}
                 </div>
               </div>
             </div>
@@ -169,7 +169,7 @@ const ProfileModal = () => {
                 </div>
               )}
             </div>
-          </div>
+          </div>*/}
         </div>
       </motion.div>
     </AnimatePresence>
