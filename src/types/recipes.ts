@@ -123,6 +123,7 @@ export interface RecommendSafeRecipes {
       id: string;
       title: string;
       imageUrl: string;
+      description: string;
       category: string;
       avgScore: number;
       reviewCount: number;
