@@ -8,7 +8,5 @@ export const getNotificationList = async (
     params: { size: size },
   });
 
-  console.log("📡 API 원본 응답:", data);
-
   return data;
 };
