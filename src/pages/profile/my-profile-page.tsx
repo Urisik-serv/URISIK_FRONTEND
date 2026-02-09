@@ -10,6 +10,11 @@ import AllergyDataBox from "../../components/profile/AllergyDataBox";
 import { getFamilyRoom } from "../../api/family-room";
 import { rolePicture } from "../../constants/profile-record";
 import { useProfileStore } from "../../stores/use-profile-store";
+import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
+import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
+import EntityItem from "../../components/common/EntityItem";
+import SmallButton from "../../components/common/SmallCommonButton";
+import alertImage from "../../assets/images/alert-circle.png";
 
 export default function MyProfilePage() {
   const preferenceMap: Record<string, string> = {
@@ -42,6 +47,21 @@ export default function MyProfilePage() {
 
     fetchProfile();
   }, [roomId]);
+
+  // 위시리스트
+  const {
+    data: profileWish,
+    isFetching: profileFetch,
+    hasNextPage: profileNext,
+    fetchNextPage: fetchProfile,
+  } = useGetInfiniteProfileWishList(roomId, -1, 5);
+
+  const {
+    data: transWish,
+    isFetching: transFetch,
+    hasNextPage: transNext,
+    fetchNextPage: fetchTrans,
+  } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
 
   const allergies =
     profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
@@ -111,15 +131,27 @@ export default function MyProfilePage() {
           <div className="text-[16px] font-semibold leading-[24px]">
             내 위시리스트
           </div>
-          {/* {profile?.wishList ? (
+          {profileWish || transWish ? (
             <div className="pt-[17px] flex flex-col gap-0">
-              {myData?.wishList.map((item) => (
+              {transWish?.pages.map((item) => (
                 <EntityItem
-                  picture={item.FoodImageUrl}
-                  name={item.name}
+                  picture={item.foodImage}
+                  name={item.transformedRecipeName}
+                  rating={item.avgScore}
                   category={item.category}
-                  tags={item.tags.join(", ")}
-                  key={item.id}
+                  tags={item.recipeIngredients.join(", ")}
+                  key={item.transformedRecipeId}
+                  border="border-b-1 border-b-gray-200"
+                />
+              ))}
+              {profileWish?.pages.map((item) => (
+                <EntityItem
+                  picture={item.foodImage}
+                  name={item.recipeName}
+                  rating={item.avgScore}
+                  category={item.category}
+                  tags={item.recipeIngredients.join(", ")}
+                  key={item.recipeId}
                   border="border-b-1 border-b-gray-200"
                 />
               ))}
@@ -138,7 +170,7 @@ export default function MyProfilePage() {
                 />
               </div>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </>
