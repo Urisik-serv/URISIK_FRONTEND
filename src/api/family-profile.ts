@@ -2,6 +2,7 @@ import type {
   FamilyDetails,
   GetProfileResponse,
   GetProfilesResponse,
+  PatchProfilePicResponse,
   postProfileRequest,
   PostProfileResponse,
   Profile,
@@ -51,4 +52,25 @@ export const getProfiles = async (
     `/api/family-rooms/${familyRoomId}/all-profiles`,
   );
   return data.result;
+};
+
+// 프로필 사진 수정
+export const patchProfilePic = async (
+  familyRoomId: number,
+  file: File,
+): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const { data } = await axiosInstance.patch<PatchProfilePicResponse>(
+    `/api/family-rooms/${familyRoomId}/profile-pic`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
+
+  return data.result.profilePicUrl;
 };
