@@ -22,6 +22,7 @@ export interface NoticeContent {
   isRead: boolean;
   type: "REVIEW_REMINDER" | "MEAL_PLAN_REMINDER" | "TEMPERATURE";
   createdAt: string;
+  mealPlanGenerationCount: number | null;
 }
 
 export interface ResponseNotice {
@@ -47,4 +48,10 @@ export interface ResponseNotice {
     empty: boolean;
   };
   errorDetail: {};
+}
+
+export interface Content {
+  icon: string;
+  title: string;
+  content: (params?: any) => string;
 }
