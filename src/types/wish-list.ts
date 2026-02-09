@@ -10,7 +10,7 @@ export interface FamilyWishListResult {
     code: string;
     label: string;
   };
-  usableForMealPlan: boolean;
+  ingredientsRaw: string;
   sourceProfile: {
     profiles: WishListProfile[];
   };

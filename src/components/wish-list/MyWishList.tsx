@@ -111,6 +111,7 @@ const MyWishList = () => {
                 type="default"
                 menu={item.transformedRecipeName}
                 category={item.category}
+                ingredients={item.recipeIngredients}
                 img={item.foodImage}
                 clickable={true}
                 onClick={() =>
@@ -143,6 +144,7 @@ const MyWishList = () => {
                 type="default"
                 menu={item.recipeName}
                 category={item.category}
+                ingredients={item.recipeIngredients}
                 img={item.foodImage}
                 clickable={true}
                 onClick={() => navigate(`/menu-information/${item.recipeId}`)}

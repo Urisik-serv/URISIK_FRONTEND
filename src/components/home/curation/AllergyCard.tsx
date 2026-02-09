@@ -29,7 +29,7 @@ const AllergyCard = ({
             <h1 className="text-zinc-800 text-[15px] font-semibold leading-6 pb-2 cursor-pointer">
               {title}
             </h1>
-            <p className="text-neutral-500 text-xs font-medium leading-5 cursor-pointer">
+            <p className="text-neutral-500 text-xs font-medium leading-5 cursor-pointer line-clamp-2">
               {shortDescription}
             </p>
           </div>
