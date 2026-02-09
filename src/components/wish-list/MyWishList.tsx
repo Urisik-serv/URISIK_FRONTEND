@@ -7,7 +7,7 @@ import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
 import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
-import { useInView } from "react-intersection-observer";
+// import { useInView } from "react-intersection-observer";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { useNavigate } from "react-router-dom";
 
