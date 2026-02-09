@@ -9,7 +9,7 @@ interface MenuListProps {
   type?: MenuListMode;
   menu: string;
   img?: string;
-  category: string;
+  category?: string;
   clickable?: boolean; //선택기능이 필요한 컴포넌트인지
   onClick?: () => void;
   isSelected?: boolean;
