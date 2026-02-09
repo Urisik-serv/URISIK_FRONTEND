@@ -11,7 +11,7 @@ import { axiosInstance } from "./axios/axios";
 
 // 프로필 조회
 export const getProfile = async (
-  familyRoomId: number,
+  familyRoomId: number | null,
   profileId: number,
 ): Promise<Profile> => {
   const { data } = await axiosInstance.get<GetProfileResponse>(
@@ -48,6 +48,7 @@ export const patchProfile = async (
 export const getProfiles = async (
   familyRoomId: number,
 ): Promise<GetProfilesResponse> => {
+
   const { data } = await axiosInstance.get<GetProfilesResponse>(
     `/api/family-rooms/${familyRoomId}/all-profiles`,
   );

@@ -38,12 +38,12 @@ export default function Footer() {
           className="
             absolute left-1/2 -translate-x-1/2 bottom-[clamp(32px,calc(56/375*100vw),56px)]
             flex flex-col justify-center items-center gap-1 
-            w-[clamp(40px,calc(68/375*100vw),68px)]
-            h-[clamp(40px,calc(68/375*100vw),68px)] 
+            w-[clamp(40px,calc(68/375*100vw),56px)]
+            h-[clamp(40px,calc(68/375*100vw),56px)] 
             rounded-full bg-primary-700 cursor-pointer"
           onClick={() => navigate("/meal-plan/create")}
         >
-          <img src={Note} className="size-6" alt="식단짜기 아이콘" />
+          <img src={Note} className="size-5" alt="식단짜기 아이콘" />
           <p className="text-white">식단 짜기</p>
         </button>
       </div>
