@@ -10,9 +10,12 @@ import {
 import { useFamilyStore } from "../../stores/use-family-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
 import { patchAgree } from "../../api/member";
+import { useProfileStore } from "../../stores/use-profile-store";
 
 export default function FamilyAccount() {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const { resetProfile } = useProfileStore();
+  const { resetFamilyData } = useFamilyStore();
 
   const { data: myFamily = [] } = useQuery({
     queryKey: ["myFamily"],
@@ -51,6 +54,9 @@ export default function FamilyAccount() {
   const handleDelete = (profileId: number) => {
     deleteMutate(profileId);
     patchAgreeMutate();
+    // 전역 상태 비워주기
+    resetProfile();
+    resetFamilyData();
   };
 
   const findKeyByValue = (record: Record<string, string>, value: string) => {
