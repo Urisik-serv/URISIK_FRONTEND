@@ -7,6 +7,7 @@ import { getMonthMealPlan } from "../../api/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import alertImage from "../../assets/images/alert-circle.png";
 import SmallButton from "../../components/common/SmallCommonButton";
+import type { Week } from "../../types/meal-plan";
 
 export default function History() {
   const familyRoomId = useFamilyStore((state) => state.familyRoomId);
@@ -45,9 +46,9 @@ export default function History() {
             기간조회
           </button>
         </div>
-        {(historyData?.result?.weeks?.length ?? 0) > 0 ? (
+        {(historyData?.weeks?.length ?? 0) > 0 ? (
           <div className="flex flex-col gap-[11px] pt-[8px]">
-            {historyData?.result.weeks.map((history) => (
+            {historyData?.weeks.map((history: Week) => (
               <DateRangeBlock
                 key={history.mealPlanId}
                 weekStartDate={history.weekStartDate}
@@ -75,8 +76,8 @@ export default function History() {
       {isOpen && (
         <GetDateRangeModal
           handleModal={handleModal}
-          fromDate={formatDate(historyData?.result.fromDate ?? "")}
-          toDate={formatDate(historyData?.result.toDate ?? "")}
+          fromDate={formatDate(historyData?.fromDate ?? "")}
+          toDate={formatDate(historyData?.toDate ?? "")}
         />
       )}
     </>

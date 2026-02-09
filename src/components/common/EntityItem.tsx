@@ -8,6 +8,7 @@ interface EntityItemProps {
   name: string;
   category: string;
   id?: number;
+  tags?: string;
   type?: string;
   rating?: number;
   border?: string;
@@ -18,7 +19,7 @@ export default function EntityItem({
   picture,
   name,
   category,
-
+  tags,
   id,
   type,
   rating,
@@ -81,6 +82,14 @@ export default function EntityItem({
                   <div className="text-sm tracking-[-0.42px] text-gray-400 truncate shrink-0">
                     {category}
                   </div>
+                  {tags && (
+                    <>
+                      <div className="w-0 h-3.5 bg-gray-400 border-r border-r-gray-400" />
+                      <div className="text-sm tracking-[-0.42px] text-gray-400 truncate">
+                        {tags}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
