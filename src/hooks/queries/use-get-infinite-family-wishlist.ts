@@ -12,8 +12,8 @@ function useGetInfiniteFamilyWishList(
     queryKey: [QUERY_KEY.familyWish, familyRoomId, size],
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => {
-      if (lastPage.headers["X-Has-Next"] === false) return undefined;
-      return lastPage.headers["X-Next-Cursor"];
+      if (lastPage.headers["x-has-next"] === false) return undefined;
+      return lastPage.headers["x-next-cursor"];
     },
     staleTime: 1000 * 60 * 5, // 5분
     gcTime: 1000 * 60 * 10, // 10분

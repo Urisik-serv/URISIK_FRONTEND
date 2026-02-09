@@ -17,21 +17,20 @@ const FamilyWishList = () => {
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useGetInfiniteFamilyWishList(familyRoomId, 20);
+  } = useGetInfiniteFamilyWishList(familyRoomId, 6);
   // isPending, isError 등은 나중에...
-  // throttling도 고려해볼 문제..
 
   const navigate = useNavigate();
 
-  const [ref, inView] = useInView({
+  const { ref, inView } = useInView({
     threshold: 0,
   });
 
   useEffect(() => {
-    if (inView) {
-      !isFetching && hasNextPage;
+    if (inView && hasNextPage && !isFetching) {
+      fetchNextPage();
     }
-  }, [inView, isFetching, hasNextPage]);
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   // 임시 수정가능 데이터
   const isAuth = false;
@@ -96,7 +95,7 @@ const FamilyWishList = () => {
           const uniqueKey = getUniqueKey(recipeId, transId);
 
           return (
-            <div className="flex items-center">
+            <div key={uniqueKey} className="flex items-center">
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -108,7 +107,6 @@ const FamilyWishList = () => {
                 />
               )}
               <MenuList
-                key={uniqueKey}
                 type="profile"
                 menu={item.title}
                 img={item.imageUrl}
@@ -122,6 +120,7 @@ const FamilyWishList = () => {
           );
         })}
       </div>
+      <div ref={ref} className="h-2"></div>
     </div>
   );
 };
