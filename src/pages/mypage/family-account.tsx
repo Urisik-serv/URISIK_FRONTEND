@@ -56,7 +56,6 @@ export default function FamilyAccount() {
     patchAgreeMutate();
     // 전역 상태 비워주기
     resetProfile();
-    resetFamilyData();
   };
 
   const findKeyByValue = (record: Record<string, string>, value: string) => {
