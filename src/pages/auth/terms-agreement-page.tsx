@@ -61,9 +61,23 @@ export default function TermsAgreementPage() {
       marketingOptIn: terms[4].isChecked,
     };
 
-    await patchAgree(request);
-    navigate("/family-create");
+    try {
+      await patchAgree(request);
+
+      const redirect = localStorage.getItem("loginRedirect");
+
+      if (redirect) {
+        localStorage.removeItem("loginRedirect");
+        navigate(redirect); 
+      } else {
+        navigate("/family-create"); 
+      }
+    } catch (error) {
+      console.error("약관 동의 처리 실패", error);
+      alert("약관 동의 처리 중 오류가 발생했습니다.");
+    }
   };
+
   return (
     <>
       <PublicHeader title={"약관 및 정책"} />
