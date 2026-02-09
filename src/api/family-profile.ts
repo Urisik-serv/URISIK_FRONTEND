@@ -1,5 +1,5 @@
 import type {
-  FamilyDetails,
+  DeleteProfileResponse,
   GetProfileResponse,
   GetProfilesResponse,
   postProfileRequest,
@@ -46,9 +46,20 @@ export const patchProfile = async (
 // 가족방 전체 프로필 조회
 export const getProfiles = async (
   familyRoomId: number,
-): Promise<FamilyDetails> => {
+): Promise<GetProfilesResponse> => {
   const { data } = await axiosInstance.get<GetProfilesResponse>(
     `/api/family-rooms/${familyRoomId}/all-profiles`,
   );
-  return data.result;
+  return data;
+};
+
+// 가족원(프로필) 삭제
+export const deleteProfile = async (
+  familyRoomId: number,
+  profileId: number,
+): Promise<DeleteProfileResponse> => {
+  const { data } = await axiosInstance.delete<DeleteProfileResponse>(
+    `/api/family-rooms/${familyRoomId}/profiles/${profileId}`,
+  );
+  return data;
 };
