@@ -138,6 +138,8 @@ export default function MyProfilePage() {
                   picture={item.foodImage}
                   name={item.transformedRecipeName}
                   rating={item.avgScore}
+                  type="TRANSFORMED_RECIPE"
+                  id={item.transformedRecipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
                   key={item.transformedRecipeId}
@@ -149,6 +151,8 @@ export default function MyProfilePage() {
                   picture={item.foodImage}
                   name={item.recipeName}
                   rating={item.avgScore}
+                  type="RECIPE"
+                  id={item.recipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
                   key={item.recipeId}
