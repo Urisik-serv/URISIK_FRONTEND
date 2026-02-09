@@ -20,7 +20,7 @@ export default function ListHeader({
   return (
     <div
       className={`flex px-[10px] py-1 rounded-lg text-4 gap-2 ${
-        isOpen ? "bg-[#FFF8D5]" : "bg-gray-200"
+        isOpen ? "bg-secondary-700" : "bg-gray-200"
       }`}
     >
       {toggleable && (

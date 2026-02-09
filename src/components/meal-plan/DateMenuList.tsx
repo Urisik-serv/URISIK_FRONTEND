@@ -35,7 +35,7 @@ export default function DateMenuList({
                 className="size-[66px] rounded-lg object-cover"
               />
               <div className="flex flex-1 flex-col justify-between">
-                <p className="font-semibold text-[14px] tracking-[-0.02em]">
+                <p className="font-semibold text-[14px] tracking-[-0.02em] text-gray-800">
                   {data.title}
                 </p>
                 {/* <p className="font-normal text-[12px] text-gray-800">
@@ -44,7 +44,7 @@ export default function DateMenuList({
               </div>
             </div>
             <div className="flex gap-[22px]">
-              <p className="shrink-0 w-[56px] h-[21px] font-semibold tracking-[-0.02em] text-center text-[14px]">
+              <p className="shrink-0 w-[56px] h-[21px] font-semibold tracking-[-0.02em] text-center text-[14px] text-gray-800">
                 식재료
               </p>
               <p className="font-normal text-[12px] text-gray-600">
@@ -53,7 +53,7 @@ export default function DateMenuList({
             </div>
             <div className="flex justify-end">
               <button
-                className="flex items-center font-semibold cursor-pointer text-[14px]"
+                className="flex items-center font-semibold cursor-pointer text-[14px] text-gray-800"
                 onClick={() => navigate(`/menu-information/${data.id}`)}
               >
                 레시피 자세히 보기 <img src={Right} alt="화살표 아이콘" />
