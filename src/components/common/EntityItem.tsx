@@ -28,6 +28,8 @@ export default function EntityItem({
   const { mutate: deleteWishlists } = useDeleteProfileWishLists(familyRoomId);
 
   const handleClick = async () => {
+    if (!id) return;
+
     const payload = {
       recipeId: type === "RECIPE" ? [id] : [],
       transformedRecipeId: type === "TRANSFORMED_RECIPE" ? [id] : [],
