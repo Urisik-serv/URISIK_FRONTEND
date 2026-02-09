@@ -1,22 +1,93 @@
+import { useRef } from "react";
+import { useProfileStore } from "../../stores/use-profile-store";
+import { roleMap, rolePicture } from "../../constants/profile-record";
+import { patchProfilePic } from "../../api/family-profile";
+import { useFamilyStore } from "../../stores/use-family-store";
+
 interface PictureModalProps {
   onClick: () => void;
 }
 
 export default function PictureModifyModal({ onClick }: PictureModalProps) {
+  const { setSavedFormData, savedFormData } = useProfileStore();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const familyRoomid = useFamilyStore.getState().familyRoomId;
+
+  const DefaultSelect = () => {
+    setSavedFormData((prev) => ({
+      ...prev,
+      profilePicUrl: rolePicture[roleMap[savedFormData.role]],
+    }));
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (familyRoomid === null) {
+      return;
+    }
+    const serverUrl = await patchProfilePic(familyRoomid, file);
+
+    setSavedFormData((prev) => ({
+      ...prev,
+      profilePicUrl: serverUrl,
+    }));
+  };
+
+  const handleTakePhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (familyRoomid === null) {
+      return;
+    }
+    const serverUrl = await patchProfilePic(familyRoomid, file);
+
+    setSavedFormData((prev) => ({
+      ...prev,
+      profilePicUrl: serverUrl,
+    }));
+  };
+
   return (
     <>
       <div className="fixed inset-0 z-50 bg-black/30 flex flex-col items-center justify-end">
         <div className="pb-[26px] w-[353px] flex flex-col items-center gap-[8px]">
           <div className="self-stretch h-40 py-4 bg-[#FF885A] rounded-[10px] outline-none inline-flex flex-col justify-start items-center gap-4">
-            <button className="cursor-pointer text-center text-white text-lg font-medium  leading-5">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="cursor-pointer text-center text-white text-lg font-medium  leading-5"
+            >
               앨범에서 사진 선택
             </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={handleFileSelect}
+            />
             <div className="w-[350px] h-0 border-t border-t-[0.60px] border-white"></div>
-            <button className="cursor-pointer text-center text-white text-lg font-medium  leading-5">
+            <button
+              onClick={() => cameraInputRef.current?.click()}
+              className="cursor-pointer text-center text-white text-lg font-medium  leading-5"
+            >
               사진 촬영
             </button>
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              hidden
+              ref={cameraInputRef}
+              onChange={handleTakePhoto}
+            />
+
             <div className="w-[350px] h-0 border-t border-t-[0.60px] border-white"></div>
-            <button className="cursor-pointer text-center text-white text-lg font-medium  leading-5">
+            <button
+              onClick={DefaultSelect}
+              className="cursor-pointer text-center text-white text-lg font-medium  leading-5"
+            >
               캐릭터 프로필 적용
             </button>
           </div>

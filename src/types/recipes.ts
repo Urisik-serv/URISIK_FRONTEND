@@ -1,4 +1,3 @@
-import type { CommonResponse } from "./common";
 import type { BaseResponse } from "./response";
 
 export interface SearchRecipesDto {
@@ -74,12 +73,12 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
-export type ResponseDetailRecipe = CommonResponse<DetailRecipe>;
+export type ResponseDetailRecipe = BaseResponse<DetailRecipe>;
 
 // interface 사용시 extends
-export interface ResponseSearchRecipes extends CommonResponse<SearchRecipesItems> {}
+export interface ResponseSearchRecipes extends BaseResponse<SearchRecipesItems> {}
 
-export interface ResponseExternalRecipes extends CommonResponse<ExternalRecipes> {}
+export interface ResponseExternalRecipes extends BaseResponse<ExternalRecipes> {}
 
 //홈 화면 추천 레시피(상단)
 export interface RecommendSafeRecipes {
@@ -118,4 +117,4 @@ export interface RecommendPopularRecipes {
   ];
 }
 
-export type ResponseRecommendPopular = CommonResponse<RecommendPopularRecipes>;
+export type ResponseRecommendPopular = BaseResponse<RecommendPopularRecipes>;

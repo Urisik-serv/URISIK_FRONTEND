@@ -1,53 +1,71 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
 import CheckedBox from "../../assets/icons/Check_box.svg";
+import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
+import { useInView } from "react-intersection-observer";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { useRecipeSelection } from "../../hooks/use-recipe-selection";
+import useDeleteFamilyWishLists from "../../hooks/mutations/use-delete-family-wishlists";
+import { useNavigate } from "react-router-dom";
 
-interface Item {
-  id: number;
-  name: string;
-}
 const FamilyWishList = () => {
-  // 임시 데이터
-  const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "바나나 프렌치토스트" },
-    { id: 2, name: "바나나 프렌치토스트" },
-    { id: 3, name: "바나나 프렌치토스트" },
-    { id: 4, name: "바나나 프렌치토스트" },
-    { id: 5, name: "바나나 프렌치토스트" },
-    { id: 6, name: "바나나 프렌치토스트" },
-    { id: 7, name: "바나나 프렌치토스트" },
-  ]);
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const {
+    data: familyWish,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useGetInfiniteFamilyWishList(familyRoomId, 6);
+  // isPending, isError 등은 나중에...
+
+  const navigate = useNavigate();
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   // 임시 수정가능 데이터
   const isAuth = false;
 
   const [editMode, setEditMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-  const toggleSelectItem = (id: number) => {
-    if (!editMode) return;
 
-    setSelectedIds((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((itemId) => itemId !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
+  // 커스텀 훅
+  const {
+    getUniqueKey,
+    toggleSelection,
+    selectedKeys,
+    resetSelection,
+    selectedFamilyPayload,
+    isSelected,
+  } = useRecipeSelection();
+
+  const { mutate: deleteWishlists } = useDeleteFamilyWishLists(familyRoomId);
+
+  const handleDelete = async () => {
+    if (selectedKeys.length === 0) return;
+
+    console.log("삭제 요청 데이터:", selectedFamilyPayload);
+
+    deleteWishlists(selectedFamilyPayload);
+    resetSelection();
+    setEditMode(false);
   };
 
   const handleButtonClick = () => {
     if (!editMode) {
       setEditMode(true);
     } else {
-      if (selectedIds.length > 0) {
-        const newItems = items.filter((item) => !selectedIds.includes(item.id));
-        setItems(newItems);
-      }
-
-      setSelectedIds([]);
-      setEditMode(false);
+      // 편집 모드에서 버튼을 다시 누르면 삭제 로직 실행
+      handleDelete();
+      if (editMode) setEditMode(false);
     }
   };
 
@@ -65,30 +83,37 @@ const FamilyWishList = () => {
         <div className="flex justify-end">
           <EditButton
             onClick={handleButtonClick}
-            count={selectedIds.length}
+            count={selectedKeys.length}
             isEditMode={editMode}
           />
         </div>
       )}
       <div className="pt-2">
-        {items.map((item) => {
-          const isSelected = selectedIds.includes(item.id);
+        {familyWish?.pages.map((item) => {
+          const recipeId = item.type == "RECIPE" ? item.id : null;
+          const transId = item.type == "TRANSFORMED_RECIPE" ? item.id : null;
+          const uniqueKey = getUniqueKey(recipeId, transId);
+
           return (
-            <div className="flex items-center">
+            <div key={uniqueKey} className="flex items-center">
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
-                  src={`${isSelected ? CheckedBox : EmptyBox}`}
-                  alt={`${isSelected ? "선택됨" : "선택되지 않음"}`}
+                  src={`${isSelected(uniqueKey) ? CheckedBox : EmptyBox}`}
+                  alt={`${isSelected(uniqueKey) ? "선택됨" : "선택되지 않음"}`}
                   onClick={() => {
-                    toggleSelectItem(item.id);
+                    toggleSelection(uniqueKey);
                   }}
                 />
               )}
               <MenuList
-                key={item.id}
                 type="profile"
-                menu={item.name}
+                menu={item.title}
+                img={item.imageUrl}
+                rate={item.avgScore}
+                category={item.category.label}
+                profiles={item.sourceProfile.profiles}
+                onClick={() => navigate(`/menu-information/${item.id}`)}
                 clickable={true}
                 isSelected={false}
               />
@@ -96,6 +121,7 @@ const FamilyWishList = () => {
           );
         })}
       </div>
+      <div ref={ref} className="h-2"></div>
     </div>
   );
 };

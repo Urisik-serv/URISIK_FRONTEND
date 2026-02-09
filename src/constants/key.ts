@@ -9,4 +9,7 @@ export const QUERY_KEY = {
   safeHighScore: "safeScore",
   safeRecipeTop: "safeTop",
   highScore: "highScore",
+  familyWish: "familyWishList",
+  profileWish: "profileWish",
+  profileTransWish: "profileTransWish",
 };

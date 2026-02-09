@@ -1,25 +1,32 @@
 import { useState } from "react";
-import CreamPasta from "../../assets/sample/cream-pasta.png";
+// import CreamPasta from "../../assets/sample/cream-pasta.png";
 import Button from "../common/Button";
 import ReviewModal from "./ReviewModal";
+import type { TodayMeal } from "../../types/meal-plan";
 
-export default function TodayMeal() {
+export default function TodayMeal({ data }: { data: TodayMeal }) {
   const [isDone, setIsDone] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(false);
   return (
     <>
       <div className="flex justify-between items-center pt-3 pb-6">
-        {isOpen && <ReviewModal onClick={handleOpen} />}
+        {isOpen && <ReviewModal recipeId={data.id} onClick={handleOpen} />}
         <div>
-          <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p>
-          <p className="font-semibold text-[18px] tracking-[0.01em]">
-            코코넛밀크로 만드는
-            <br />
-            크림 파스타!
+          {/* <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p> */}
+          <p className="font-semibold text-[18px] tracking-[0.01em] text-gray-600">
+            {data.title.split(" ").map((title, idx) => (
+              <>
+                {title} {idx % 2 === 1 && <br />}
+              </>
+            ))}
           </p>
         </div>
-        <img src={CreamPasta} alt="크림파스타" />
+        <img
+          src={data.imageUrl}
+          alt={`${data.title} 이미지`}
+          className="w-41 h-29 object-cover rounded-lg"
+        />
       </div>
       {!isDone ? (
         <Button
@@ -40,30 +47,25 @@ export default function TodayMeal() {
         <p className="font-semibold text-primary-700">
           식재료 <span className="text-gray-600">1인 기준</span>
         </p>
-        <p className="font-normal text-gray-600">
-          바나나 한묶음, 코코넛 밀크 3개, 해바라기 소스 3개, 땅콩 3개, 바나나
-          한묶음, 코코넛 밀크 3개
-        </p>
+        <p className="font-normal text-gray-600">{data.ingredients}</p>
       </div>
       <p className="font-semibold text-primary-700 text-[14px] pb-2">레시피</p>
       <div className="flex flex-col gap-4 pb-29">
-        {[1, 2, 3, 4].map((n) => (
-          <div className="h-full flex justify-between items-center text-[14px] font-semibold">
+        {data.recipeSteps.map((step) => (
+          <div className="h-full flex justify-between items-center text-[14px] font-semibold gap-3">
             <div>
               <div className="flex flex-col gap-[1px] pb-[6px]">
-                <p>{n}단계</p>
-                <p className=" text-[20px] ">재료손질</p>
+                <p className="text-gray-350">{step.stepOrder}단계</p>
+                {/* <p className=" text-[20px] ">재료손질</p> */}
               </div>
-              <p className="font-normal">
-                단계별 설명 설명 설명 설명
-                <br />
-                단계별 설명 설명 설명 설명
+              <p className="font-normal text-gray-800">
+                {step.description.slice(3)}
               </p>
             </div>
             <img
-              src={CreamPasta}
-              alt="크림파스타"
-              className="w-36 h-26 shrink-0"
+              src={step.imageUrl}
+              alt={`${step.stepOrder}단계 이미지`}
+              className="w-36 h-26 shrink-0 object-cover rounded-lg"
             />
           </div>
         ))}

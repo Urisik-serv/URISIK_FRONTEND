@@ -66,6 +66,11 @@ export interface FamilyDetail {
   profilePicUrl: string;
 }
 
+export interface ProfilePicUrl {
+  profilePicUrl: string;
+}
+
 export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
 export type GetProfileResponse = BaseResponse<Profile>;
 export type GetProfilesResponse = BaseResponse<FamilyDetails>;
+export type PatchProfilePicResponse = BaseResponse<ProfilePicUrl>;
