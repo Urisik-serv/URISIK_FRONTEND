@@ -1,4 +1,5 @@
 import logo from "../../assets/logos/main-logo.svg";
+import { ScaleLoader } from "react-spinners";
 
 export default function StartScreen() {
   return (
@@ -17,6 +18,9 @@ export default function StartScreen() {
             가족 단위의 식단 관리 서비스
           </span>
         </div>
+      </div>
+      <div className="pt-20">
+        <ScaleLoader color="#FF885A" />
       </div>
     </div>
   );

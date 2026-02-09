@@ -5,6 +5,8 @@ import CheckBoxEmpty from "../../assets/icons/check-box-empty.svg";
 import checkBox from "../../assets/icons/Check_box.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { Agree } from "../../types/member";
+import { patchAgree } from "../../api/member";
 
 interface TermItem {
   index: number;
@@ -50,14 +52,29 @@ export default function TermsAgreementPage() {
     }
   };
 
-  const handleCompleteOnboarding = () => {
-    const redirect = localStorage.getItem("loginRedirect");
+  const handleSubmit = async () => {
+    const request: Agree = {
+      serviceTermsAgreed: terms[0].isChecked,
+      privacyPolicyAgreed: terms[1].isChecked,
+      familyInfoAgreed: terms[2].isChecked,
+      aiNoticeAgreed: terms[3].isChecked,
+      marketingOptIn: terms[4].isChecked,
+    };
 
-    if (redirect) {
-      localStorage.removeItem("loginRedirect");
-      navigate(redirect);
-    } else {
-      navigate("../family-create");
+    try {
+      await patchAgree(request);
+
+      const redirect = localStorage.getItem("loginRedirect");
+
+      if (redirect) {
+        localStorage.removeItem("loginRedirect");
+        navigate(redirect); 
+      } else {
+        navigate("/family-create"); 
+      }
+    } catch (error) {
+      console.error("약관 동의 처리 실패", error);
+      alert("약관 동의 처리 중 오류가 발생했습니다.");
     }
   };
 
@@ -125,7 +142,7 @@ export default function TermsAgreementPage() {
             text={`다음`}
             type="button"
             disabled={!isValid()}
-            onClick={handleCompleteOnboarding}
+            onClick={handleSubmit}
           />
         </div>
       </div>

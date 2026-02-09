@@ -7,7 +7,7 @@ export default function TermsOfService() {
     <>
       <PublicHeader title={"약관 및 정책"} />
       <div className="pt-[24px] w-[343px] flex flex-col gap-[24px] mx-auto">
-        <div className="text-xl font-semibold tracking-[2px] text-primary-700">
+        <div className="text-xl font-semibold tracking-[2px] text-gray-800">
           서비스 이용 약관
         </div>
         <Term

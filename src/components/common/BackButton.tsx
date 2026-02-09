@@ -4,15 +4,21 @@ import BackIcon from "../../assets/icons/chevron-left.svg";
 interface BackButtonProps {
   to?: number | To;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function BackButton({
   to = -1,
   className = "",
+  onClick,
 }: BackButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
     if (typeof to === "number") {
       navigate(to);
     } else {
