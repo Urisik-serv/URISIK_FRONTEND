@@ -3,10 +3,11 @@ import HeartFull from "../../../assets/icons/heart-full.svg";
 import { useNavigate } from "react-router-dom";
 
 interface AllergyCardProps {
-  id: number;
+  id: string;
   title: string;
   shortDescription: string;
   pickedCount: number;
+  img: string;
 }
 
 const AllergyCard = ({
@@ -14,6 +15,7 @@ const AllergyCard = ({
   title,
   shortDescription,
   pickedCount,
+  img,
 }: AllergyCardProps) => {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -39,7 +41,7 @@ const AllergyCard = ({
           </div>
         </div>
         <img
-          src={SampleImg}
+          src={img || SampleImg}
           alt="음식 이미지"
           className="w-32 h-32 rounded-lg object-cover cursor-pointer"
           onClick={handleClick}

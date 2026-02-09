@@ -1,8 +1,6 @@
-import { useSwiper } from "swiper/react";
 import layerImg from "../../assets/images/onboarding2.png";
 
 export default function SecondStep() {
-  const swiper = useSwiper();
   return (
     <>
       <div className="flex flex-col h-full">
@@ -17,17 +15,9 @@ export default function SecondStep() {
           </div>
         </div>
         <div className="pt-[20px] flex justify-center gap-[3px]">
-          <div
-            className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer"
-            onClick={() => swiper.slidePrev()}
-          />
+          <div className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer" />
           <div className="w-[26px] h-[6px] rounded-md bg-[#FF885A]" />
-          <div
-            className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer"
-            onClick={() => {
-              swiper.slideNext();
-            }}
-          />
+          <div className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer" />
         </div>
       </div>
     </>

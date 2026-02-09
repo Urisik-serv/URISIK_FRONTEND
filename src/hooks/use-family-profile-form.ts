@@ -1,67 +1,97 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useProfileStore } from "../stores/use-profile-store";
+import type { postProfileRequest } from "../types/family-profile";
+import { useFamilyStore } from "../stores/use-family-store";
+import {
+  allergyMap,
+  preferenceMap,
+  roleMap,
+  rolePicture,
+} from "../constants/profile-record";
 
 export const useFamilyProfileForm = () => {
   const { savedFormData, setSavedFormData } = useProfileStore();
   const [formData, setFormData] = useState(savedFormData);
 
-  useEffect(() => {
-    setFormData(savedFormData);
-  }, [savedFormData]);
+  const hasSynced = useRef(false);
 
   useEffect(() => {
-    setSavedFormData(formData);
-  }, [formData]);
+    if (hasSynced.current) return;
+    setFormData(savedFormData);
+    hasSynced.current = true;
+  }, [savedFormData]);
 
   // 닉네임 핸들러
   const handleNickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, nickname: e.target.value });
+    setSavedFormData({ ...formData, nickname: e.target.value });
   };
 
   // 역할 핸들러
-  const [selectedRole, setSelectedRole] = useState<string>(savedFormData.role);
+  const selectedRole = savedFormData.role;
   const handleRoleChange = (role: string) => {
-    if (!selectedRole || selectedRole !== role) {
-      setSelectedRole(role);
-      setFormData({ ...formData, role: role });
-    } else {
-      setSelectedRole("");
-      setFormData({ ...formData, role: "" });
-    }
+    setSavedFormData((prev) => ({
+      ...prev,
+      role: prev.role === role ? "" : role,
+      profilePicUrl: rolePicture[roleMap[role]],
+    }));
   };
 
   // 알레르기 핸들러
-  const [selectedNone, setSelectedRoleNone] = useState<boolean>(false);
   const handleAllergyChange = (allergies: string[] | boolean) => {
-    if (typeof allergies === "boolean") {
-      setSelectedRoleNone((prev) => !prev);
-    }
-    setFormData({ ...formData, allergies: allergies });
+    setFormData((prev) => ({
+      ...prev,
+      allergies,
+    }));
   };
 
   // 식단 선호도 핸들러
-  const [isCheckedPreference, setIsCheckedPreference] = useState(() => {
-    const foods = ["한식", "중식", "일식", "양식", "디저트"];
-    return foods.map((food: string) =>
-      savedFormData.preferences.includes(food),
+  const foods = ["한식", "중식", "일식", "양식", "디저트"];
+
+  const [isCheckedPreference, setIsCheckedPreference] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    setIsCheckedPreference(
+      foods.map((food) => savedFormData.preferences.includes(food)),
     );
-  });
+  }, [savedFormData.preferences]);
+
   const handlePreferencesChange = (foods: string[], index: number) => {
-    if (formData.preferences.includes(foods[index])) {
-      let newPreferences = formData.preferences.filter(
-        (item) => item !== foods[index],
+    const selectedFood = foods[index];
+
+    if (formData.preferences.includes(selectedFood)) {
+      const newPreferences = formData.preferences.filter(
+        (item) => item !== selectedFood,
       );
+
+      setFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
+      setSavedFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
       setIsCheckedPreference((prev) => {
         const newChecked = [...prev];
         newChecked[index] = false;
         return newChecked;
       });
-      setFormData({ ...formData, preferences: newPreferences });
     } else {
-      setFormData({
-        ...formData,
-        preferences: [...formData.preferences, foods[index]],
-      });
+      const newPreferences = [...formData.preferences, selectedFood];
+
+      setFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
+      setSavedFormData((prev) => ({
+        ...prev,
+        preferences: newPreferences,
+      }));
+
       setIsCheckedPreference((prev) => {
         const newChecked = [...prev];
         newChecked[index] = true;
@@ -73,11 +103,13 @@ export const useFamilyProfileForm = () => {
   // 좋아하는 식재료 핸들러
   const handleLikeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, likedIngredients: e.target.value });
+    setSavedFormData({ ...formData, likedIngredients: e.target.value });
   };
 
   // 싫어하는 식재료 핸들러
   const handleDislikeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, dislikedIngredients: e.target.value });
+    setSavedFormData({ ...formData, dislikedIngredients: e.target.value });
   };
 
   // 폼 유효성 검사
@@ -92,14 +124,28 @@ export const useFamilyProfileForm = () => {
     );
   };
 
-  // 폼 제출 핸들러
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isValid()) {
-      alert("필수 항목을 모두 입력해주세요.");
-    }
-    console.log("제출된 폼 데이터:", formData);
+  // 영문으로 변환
+  let allergyList: string[];
+  if (Array.isArray(formData.allergies)) {
+    allergyList = formData.allergies.map((item) => allergyMap[item]);
+  } else {
+    allergyList = ["NONE"];
+  }
+
+  const preferencesList = formData.preferences.map(
+    (item) => preferenceMap[item],
+  );
+
+  const request: postProfileRequest = {
+    nickname: formData.nickname,
+    role: roleMap[formData.role],
+    likedIngredients: formData.likedIngredients,
+    dislikedIngredients: formData.dislikedIngredients,
+    allergy: Array.isArray(allergyList) ? allergyList : [],
+    dietPreferences: preferencesList,
   };
+
+  const currentFamilyRoomId = useFamilyStore.getState().familyRoomId;
 
   return {
     formData,
@@ -107,12 +153,13 @@ export const useFamilyProfileForm = () => {
     handleRoleChange,
     handleAllergyChange,
     handlePreferencesChange,
-    selectedNone,
     selectedRole,
     isCheckedPreference,
     handleLikeChange,
     handleDislikeChange,
-    handleSubmit,
     isValid,
+    request,
+    currentFamilyRoomId,
+    setSavedFormData,
   };
 };

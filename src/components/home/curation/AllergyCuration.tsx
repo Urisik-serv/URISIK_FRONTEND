@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PageIndicator from "../../common/PageIndicator";
 import AllergyCard from "./AllergyCard";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import type { FoodList } from "../../../types/recipe-list";
-import axios from "axios";
+import useGetRecommendSafe from "../../../hooks/queries/use-get-safe-recipes";
 
 const AllergyCuration = () => {
   // 슬라이드 효과
@@ -18,21 +17,7 @@ const AllergyCuration = () => {
     setActivePage(pageNum);
   };
 
-  // mock data fetching
-  const [data, setData] = useState<FoodList | null>(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/recipe-list.json");
-
-        setData(response.data);
-      } catch (error) {
-        console.log("데이터 로딩 실패: ", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { data } = useGetRecommendSafe();
 
   return (
     <div>
@@ -61,8 +46,9 @@ const AllergyCuration = () => {
                 key={recipe.id}
                 id={recipe.id}
                 title={recipe.title}
-                shortDescription={recipe.shortDescription}
-                pickedCount={recipe.pickedCount}
+                img={recipe.imageUrl}
+                shortDescription=""
+                pickedCount={recipe.wishCount}
               />
             </SwiperSlide>
           ))}

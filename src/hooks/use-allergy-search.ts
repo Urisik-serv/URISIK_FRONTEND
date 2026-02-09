@@ -1,18 +1,27 @@
 import { useMemo, useState } from "react";
-import { useDebounce } from "./use-debounce";
-import { ALLERGY_DATA } from "../constants/allergy-data";
 import { useProfileStore } from "../stores/use-profile-store";
+import { ALLERGY_DATA } from "../constants/allergy-data";
+import useDebounce from "./use-debounce";
 
 export const useAllergySearch = () => {
   const [keyword, setKeyword] = useState("");
   const { savedFormData, setSavedFormData } = useProfileStore();
-  const selectedAllergies = Array.isArray(savedFormData.allergies)
-    ? savedFormData.allergies
-    : [];
+
+  const selectedAllergies = useMemo(
+    () =>
+      Array.isArray(savedFormData.allergies) ? savedFormData.allergies : [],
+    [savedFormData.allergies],
+  );
+
+  const handleResetAllergy = () => {
+    setSavedFormData((prev) => ({ ...prev, allergies: [] }));
+  };
+
   const debounce = useDebounce(keyword, 500);
 
   const filteredAllergies = useMemo(() => {
-    if (!debounce) return [];
+    if (!debounce || !ALLERGY_DATA) return [];
+
     return ALLERGY_DATA.filter(
       (allergy) =>
         allergy.name.includes(debounce) || allergy.category.includes(debounce),
@@ -32,15 +41,15 @@ export const useAllergySearch = () => {
     setSavedFormData((prev) => ({ ...prev, allergies: nextAllergies }));
   };
 
-  const isSelected = (allergy: string) => {
-    return selectedAllergies.includes(allergy);
-  };
+  const isSelected = (allergy: string) => selectedAllergies.includes(allergy);
 
   return {
+    keyword,
     selectedAllergies,
-    filteredAllergies,
+    filteredAllergies: filteredAllergies || [],
     handleSearch,
     handleSelectAllergy,
     isSelected,
+    handleResetAllergy,
   };
 };

@@ -5,6 +5,8 @@ import FoodCard from "../../components/home/category/FoodCard";
 import AllergyCuration from "../../components/home/curation/AllergyCuration";
 import MealCuration from "../../components/home/curation/MealCuration";
 import FamilyProfile from "../../components/home/profile/FamilyProfile";
+import ProfileModal from "../../components/home/profile/ProfileModal";
+import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -17,6 +19,8 @@ const HomePage = () => {
   const openSearchBar = () => {
     navigate(location.pathname, { state: { showSearch: true } });
   };
+
+  const { open } = useProfileModalInfo();
 
   return (
     <>
@@ -31,18 +35,17 @@ const HomePage = () => {
                 <FamilyProfile />
               </div>
               <div onClick={openSearchBar}>
-                <SearchBar />
+                <SearchBar keyword="" />
               </div>
               <div className="pt-5 gap-3 flex overflow-x-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                <FoodCard name="한식" />
-                <FoodCard name="일식" />
-                <FoodCard name="중식" />
-                <FoodCard name="양식" />
-                <FoodCard name="분식" />
-                <FoodCard name="디저트" />
+                <FoodCard name="밥" />
+                <FoodCard name="국" />
+                <FoodCard name="반찬" />
+                <FoodCard name="후식" />
               </div>
               <AllergyCuration />
               <MealCuration />
+              {open && <ProfileModal />}
               <UpButton />
             </div>
           </main>

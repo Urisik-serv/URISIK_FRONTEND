@@ -3,39 +3,77 @@ import { useAllergySearch } from "../../hooks/use-allergy-search";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 
 import Button from "../common/Button";
-import DefaultMom from "../../assets/profile/default-mom.svg";
 import Camera from "../../assets/icons/camera.svg";
 import RequiredLabel from "../family/RequiredLabel";
 import SelectButton from "../family/SelectButton";
 import OptionalLabel from "../family/OptionalLabel";
+import { patchProfile, postProfile } from "../../api/family-profile";
+import { useProfileStore } from "../../stores/use-profile-store";
+import { roleMap, rolePicture } from "../../constants/profile-record";
 
 interface ProfileDataFormProps {
-  isSelected: number;
   isEdit?: boolean; // 편집 모드 여부
   handlePicture?: () => void;
 }
 
 export default function ProfileDataForm({
-  isSelected,
   isEdit,
   handlePicture,
 }: ProfileDataFormProps) {
   const {
     handleNickNameChange,
     handleRoleChange,
-    handleAllergyChange,
     handlePreferencesChange,
-    selectedNone,
     selectedRole,
     isCheckedPreference,
     handleLikeChange,
     handleDislikeChange,
-    handleSubmit,
     isValid,
     formData,
+    currentFamilyRoomId,
+    request,
   } = useFamilyProfileForm();
 
-  const { selectedAllergies, handleSelectAllergy } = useAllergySearch();
+  const {
+    selectedAllergies,
+    handleSelectAllergy: onSelectAllergy,
+    handleResetAllergy,
+  } = useAllergySearch();
+
+  const savedRole = useProfileStore.getState().savedFormData.role;
+
+  const handleGoSearch = () => {
+    navigate("allergy-search");
+  };
+
+  if (currentFamilyRoomId === null) {
+    alert("가족방 정보가 존재하지 않습니다");
+    return;
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (isEdit) {
+        const res = await patchProfile(currentFamilyRoomId, request);
+        console.log(res.result);
+      } else {
+        const res = await postProfile(currentFamilyRoomId, request);
+        console.log(res.result);
+      }
+    } catch (error) {
+      if (isEdit) {
+        console.error("프로필 편집 실패:", error);
+      } else {
+        console.error("프로필 생성 실패:", error);
+      }
+    }
+
+    if (!isValid()) {
+      alert("필수 항목을 모두 입력해주세요.");
+    }
+    console.log("제출된 폼 데이터:", formData);
+  };
 
   const roles = ["엄마", "아빠", "아들", "딸"];
   const foods = ["한식", "중식", "일식", "양식", "디저트"];
@@ -49,9 +87,12 @@ export default function ProfileDataForm({
         <div className="h-[104px] mb-[5.5px]">
           <div className="pt-[24px] pb-0 flex flex-col items-center">
             <img
-              src={DefaultMom}
-              alt="엄마 기본 프로필 사진"
-              className="w-[104px] m-0"
+              src={
+                useProfileStore.getState().savedFormData.profilePicUrl ??
+                rolePicture[roleMap[savedRole]]
+              }
+              alt="프로필 사진"
+              className="w-[104px] m-0 rounded-full"
             />
             <button
               onClick={handlePicture}
@@ -86,10 +127,7 @@ export default function ProfileDataForm({
               type="button"
               className="cursor-pointer"
             >
-              <SelectButton
-                name={role}
-                number={selectedRole === role ? 1 : 0}
-              />
+              <SelectButton name={role} isSelected={selectedRole === role} />
             </button>
           ))}
         </div>
@@ -101,28 +139,43 @@ export default function ProfileDataForm({
             type="text"
             placeholder="알레르기 입력하기"
             className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
-            onClick={() => navigate("allergy-search")}
+            onClick={handleGoSearch}
           />
         </div>
         <div className="flex gap-[12px]">
           {selectedAllergies.length == 0 ? (
             <button
-              onClick={() => handleAllergyChange(selectedNone)}
-              className="cursor-pointer pt-[12px]"
               type="button"
+              className="cursor-pointer pt-[12px]"
+              onClick={handleResetAllergy}
             >
-              <SelectButton name="없음" number={selectedNone ? 1 : 0} />
+              <SelectButton
+                name="없음"
+                isSelected={selectedAllergies.length === 0}
+              />
             </button>
           ) : (
-            selectedAllergies.map((allergy) => (
+            <div className="flex flex-wrap gap-[12px]">
               <button
-                key={allergy}
-                onClick={() => handleSelectAllergy(allergy)}
-                className="pt-[12px]"
+                type="button"
+                className="cursor-pointer pt-[12px]"
+                onClick={handleResetAllergy}
               >
-                <SelectButton name={allergy} number={isSelected} />
+                <SelectButton
+                  name="없음"
+                  isSelected={selectedAllergies.length === 0}
+                />
               </button>
-            ))
+              {selectedAllergies.map((allergy) => (
+                <button
+                  key={allergy}
+                  onClick={() => onSelectAllergy(allergy)}
+                  className="pt-[12px]"
+                >
+                  <SelectButton name={allergy} isSelected={true} />
+                </button>
+              ))}
+            </div>
           )}
         </div>
       </div>
@@ -138,7 +191,7 @@ export default function ProfileDataForm({
             >
               <SelectButton
                 name={food}
-                number={isCheckedPreference[index] ? 1 : 0}
+                isSelected={isCheckedPreference[index]}
               />
             </button>
           ))}
@@ -169,7 +222,12 @@ export default function ProfileDataForm({
         </div>
       </div>
       <div className="pt-[131px] ">
-        <Button text={"완료"} type="submit" disabled={!isValid()} />
+        <Button
+          onClick={() => navigate("/")}
+          text={"완료"}
+          type="submit"
+          disabled={!isValid()}
+        />
       </div>
     </form>
   );

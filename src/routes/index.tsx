@@ -6,7 +6,6 @@ import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
 import MealPlanCreatePage from "../pages/meal-plan/meal-plan-create-page";
-import MealPlanResultPage from "../pages/meal-plan/meal-plan-result-page";
 import MealPlanEditPage from "../pages/meal-plan/meal-plan-edit-page";
 import TermsAgreementPage from "../pages/auth/terms-agreement-page";
 import OnboardingPage from "../pages/auth/onboarding-page";
@@ -16,7 +15,6 @@ import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
 import MenuInformationPage from "../pages/home/menu-information-page";
-import MealPlanIngredientsPage from "../pages/meal-plan/meal-plan-ingredients-page";
 import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
 import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
@@ -29,6 +27,8 @@ import NoticePage from "../pages/mypage/notice-page";
 import FamilyAccount from "../pages/mypage/family-account";
 import MyProfilePage from "../pages/profile/my-profile-page";
 import History from "../pages/mypage/history";
+import LoginRedirectPage from "../pages/auth/login-redirect-page";
+import InviteEntry from "../pages/home/invite-entry";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "login/callback",
+        element: <LoginRedirectPage />,
       },
       {
         path: "signup",
@@ -72,14 +76,10 @@ export const router = createBrowserRouter([
 
           { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
-          { path: "meal-plan/result", element: <MealPlanResultPage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
-          {
-            path: "meal-plan/ingredients",
-            element: <MealPlanIngredientsPage />,
-          },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "family-invite", element: <FamilyInvitePage /> },
+          { path: "family-invite/:token", element: <InviteEntry /> },
           { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",
