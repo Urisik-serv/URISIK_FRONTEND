@@ -9,6 +9,7 @@ interface MenuListProps {
   type?: MenuListMode;
   menu: string;
   img?: string;
+  category: string;
   clickable?: boolean; //선택기능이 필요한 컴포넌트인지
   onClick?: () => void;
   isSelected?: boolean;
@@ -20,6 +21,7 @@ export default function MenuList({
   type = "default",
   menu,
   img,
+  category,
   clickable = false,
   onClick,
   isSelected = false,
@@ -54,7 +56,7 @@ export default function MenuList({
             )}
           </div>
           <div className="flex gap-[5px] font-medium text-[14px] text-gray-400">
-            <p>디저트</p>
+            <p>{category}</p>
             <p>|</p>
             <p>대체 식재료</p>
           </div>

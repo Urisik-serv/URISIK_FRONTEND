@@ -111,6 +111,7 @@ const FamilyWishList = () => {
                 menu={item.title}
                 img={item.imageUrl}
                 rate={item.avgScore}
+                category={item.category.label}
                 profiles={item.sourceProfile.profiles}
                 onClick={() => navigate(`/menu-information/${item.id}`)}
                 clickable={true}

@@ -31,7 +31,7 @@ const MyWishList = () => {
 
   const navigate = useNavigate();
 
-  const [ref, inView] = useInView({
+  const { ref, inView } = useInView({
     threshold: 0,
   });
 
@@ -87,7 +87,7 @@ const MyWishList = () => {
           const uniqueKey = getUniqueKey(null, item.transformedRecipeId);
 
           return (
-            <div className="flex items-center">
+            <div key={item.transformedRecipeId} className="flex items-center">
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -102,6 +102,7 @@ const MyWishList = () => {
                 key={item.transformedRecipeId}
                 type="default"
                 menu={item.transformedRecipeName}
+                category={item.category}
                 img={item.foodImage}
                 clickable={true}
                 onClick={() =>
@@ -118,7 +119,7 @@ const MyWishList = () => {
           const uniqueKey = getUniqueKey(item.recipeId, null);
 
           return (
-            <div className="flex items-center">
+            <div key={item.recipeId} className="flex items-center">
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -133,6 +134,7 @@ const MyWishList = () => {
                 key={item.recipeId}
                 type="default"
                 menu={item.recipeName}
+                category={item.category}
                 img={item.foodImage}
                 clickable={true}
                 onClick={() => navigate(`/menu-information/${item.recipeId}`)}
