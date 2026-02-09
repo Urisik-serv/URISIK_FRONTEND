@@ -10,7 +10,7 @@ import WishlistButton from "../../components/common/WishlistButton";
 import { getDetailRecipe } from "../../api/recipes";
 import type { DetailRecipe } from "../../types/recipes";
 import { useFamilyStore } from "../../stores/use-family-store";
-import usePostWishList from "../../hooks/queries/use-post-wishlist";
+import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
