@@ -43,6 +43,12 @@ export type ResponseCreateMealPlanDto = CommonResponse<CreateMealPlanResDto>;
 
 export type SlotItem = RecipeDTO & SlotRequest;
 
+export interface RecipeStep {
+  stepOrder: number;
+  description: string;
+  imageUrl: string;
+}
+
 export type confirmMealPlan = {
   mealPlanId: number;
   status: "DRAFT" | "CONFIRMED";
@@ -51,6 +57,7 @@ export type confirmMealPlan = {
 };
 export type ResponseConfirmMealPlanDto = CommonResponse<confirmMealPlan>;
 
+
 export interface TodayMeal {
   mealType: MealType;
   type: "RECIPE" | "TRANSFORMED_RECIPE";
@@ -58,7 +65,7 @@ export interface TodayMeal {
   title: string;
   imageUrl: string;
   ingredients: string;
-  instructions: string;
+  recipeSteps: RecipeStep[];
 }
 export interface TodayMealPlan {
   date: string;
@@ -69,3 +76,10 @@ export interface TodayMealPlan {
 
 //오늘의 식단 생성 api response
 export type ResponseTodayMealPlan = CommonResponse<TodayMealPlan>;
+
+export interface ThisWeekMealPlan {
+  mealPlanId: number;
+  weekStartDate: string;
+  slots: MealPlanSlots;
+}
+export type ResponseThisWeekMealPlan = CommonResponse<ThisWeekMealPlan>;

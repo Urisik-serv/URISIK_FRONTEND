@@ -63,7 +63,7 @@ const MealPlanPage = () => {
           <>
             <div className="flex pt-4 w-full font-[14px] font-medium">
               <button
-                className={`py-2 w-full rounded-lg flex flex-col items-center ${todayTab === "점심" ? "bg-[#fff3ee] text-primary-700" : "text-[#c7c7c7] cursor-pointer"}`}
+                className={`py-2 w-full rounded-lg flex flex-col items-center ${todayTab === "점심" ? "bg-primary-100 text-primary-700" : "text-gray-350 cursor-pointer"}`}
                 onClick={() => setTodayTab("점심")}
               >
                 <img
@@ -73,7 +73,7 @@ const MealPlanPage = () => {
                 점심
               </button>
               <button
-                className={`py-2 w-full rounded-lg flex flex-col items-center ${todayTab === "저녁" ? "bg-[#fff3ee] text-primary-700" : "text-[#c7c7c7] cursor-pointer"}`}
+                className={`py-2 w-full rounded-lg flex flex-col items-center ${todayTab === "저녁" ? "bg-primary-100 text-primary-700" : "text-gray-350 cursor-pointer"}`}
                 onClick={() => setTodayTab("저녁")}
               >
                 <img
@@ -92,8 +92,8 @@ const MealPlanPage = () => {
             )}
           </>
         )}
-        {tab == "이번주 식단" && <WeekMeal />}
-        {tab == "다음주 식단" && <WeekMeal />}
+        {tab == "이번주 식단" && <WeekMeal weekType="THIS" />}
+        {tab == "다음주 식단" && <WeekMeal weekType="NEXT" />}
       </div>
     </div>
   );

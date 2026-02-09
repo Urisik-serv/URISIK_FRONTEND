@@ -51,7 +51,7 @@ const MealPlanCreatePage = () => {
       setMealPlanId(response.result.mealPlanId);
       sessionStorage.setItem(
         "mealPlan",
-        JSON.stringify(changeAdditionalProp(response.result.slots)),
+        JSON.stringify(changeAdditionalProp(response.result.slots, "DAY")),
       );
     } catch (error: any) {
       alert(error.response?.data?.message);

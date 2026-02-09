@@ -8,14 +8,13 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
   const [isDone, setIsDone] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(false);
-  const step = data.instructions.replace(/\n/g, " ").split(/(?=\d+\.)/); // \n 을 모두 공백으로 변경, 숫자. 인 부분 기준으로 자르기
   return (
     <>
       <div className="flex justify-between items-center pt-3 pb-6">
         {isOpen && <ReviewModal recipeId={data.id} onClick={handleOpen} />}
         <div>
           {/* <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p> */}
-          <p className="font-semibold text-[18px] tracking-[0.01em]">
+          <p className="font-semibold text-[18px] tracking-[0.01em] text-gray-600">
             {data.title.split(" ").map((title, idx) => (
               <>
                 {title} {idx % 2 === 1 && <br />}
@@ -26,7 +25,7 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
         <img
           src={data.imageUrl}
           alt={`${data.title} 이미지`}
-          className="w-41 h-29 object-cover"
+          className="w-41 h-29 object-cover rounded-lg"
         />
       </div>
       {!isDone ? (
@@ -52,20 +51,22 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
       </div>
       <p className="font-semibold text-primary-700 text-[14px] pb-2">레시피</p>
       <div className="flex flex-col gap-4 pb-29">
-        {step.map((step) => (
-          <div className="h-full flex justify-between items-center text-[14px] font-semibold">
+        {data.recipeSteps.map((step) => (
+          <div className="h-full flex justify-between items-center text-[14px] font-semibold gap-3">
             <div>
               <div className="flex flex-col gap-[1px] pb-[6px]">
-                <p>{step[0]}단계</p>
+                <p className="text-gray-350">{step.stepOrder}단계</p>
                 {/* <p className=" text-[20px] ">재료손질</p> */}
               </div>
-              <p className="font-normal">{step.slice(3)}</p>
+              <p className="font-normal text-gray-800">
+                {step.description.slice(3)}
+              </p>
             </div>
-            {/* <img
-              src={CreamPasta}
-              alt="크림파스타"
-              className="w-36 h-26 shrink-0"
-            /> */}
+            <img
+              src={step.imageUrl}
+              alt={`${step.stepOrder}단계 이미지`}
+              className="w-36 h-26 shrink-0 object-cover rounded-lg"
+            />
           </div>
         ))}
       </div>
