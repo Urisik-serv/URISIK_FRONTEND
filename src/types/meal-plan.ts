@@ -94,3 +94,9 @@ export type ResponseTodayMealPlan = CommonResponse<TodayMealPlan>;
 
 // 이번달 식단 생성 api response
 export type ResponseMonthMealPlan = BaseResponse<MonthResult>;
+export interface ThisWeekMealPlan {
+  mealPlanId: number;
+  weekStartDate: string;
+  slots: MealPlanSlots;
+}
+export type ResponseThisWeekMealPlan = BaseResponse<ThisWeekMealPlan>;
