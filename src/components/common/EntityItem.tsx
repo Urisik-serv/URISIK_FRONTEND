@@ -11,7 +11,7 @@ interface EntityItemProps {
   type?: string;
   rating?: number;
   border?: string;
-  deleteProfile: () => void;
+  deleteProfile?: () => void;
 }
 
 export default function EntityItem({
@@ -29,21 +29,25 @@ export default function EntityItem({
   const { mutate: deleteWishlists } = useDeleteProfileWishLists(familyRoomId);
 
   const handleClick = async () => {
-    if (!id) return;
+    if (deleteProfile) {
+      deleteProfile();
+    } else {
+      if (!id) return;
 
-    const payload = {
-      recipeId: type === "RECIPE" ? [id] : [],
-      transformedRecipeId: type === "TRANSFORMED_RECIPE" ? [id] : [],
-    };
+      const payload = {
+        recipeId: type === "RECIPE" ? [id] : [],
+        transformedRecipeId: type === "TRANSFORMED_RECIPE" ? [id] : [],
+      };
 
-    deleteWishlists(payload);
+      deleteWishlists(payload);
+    }
   };
 
   return (
     <>
       <div className="relative overflow-hidden bg-gray-100 ">
         <button
-          onClick={deleteProfile}
+          onClick={handleClick}
           className="cursor-pointer absolute right-0 top-0 bottom-0 w-[93px] text-xl font-medium"
         >
           삭제
