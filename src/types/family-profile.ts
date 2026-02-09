@@ -55,7 +55,9 @@ export interface Profile {
   dietPreferences: string[];
 }
 
-export type FamilyDetails = FamilyDetail[];
+export interface FamilyDetails {
+  familyDetails: FamilyDetail[];
+}
 
 export interface FamilyDetail {
   profileId: number;
