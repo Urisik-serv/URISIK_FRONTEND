@@ -43,7 +43,7 @@ const MealPlanCreatePage = () => {
       });
       sessionStorage.setItem(
         "mealPlan",
-        JSON.stringify(changeAdditionalProp(response.result.slots)),
+        JSON.stringify(changeAdditionalProp(response.result.slots, "DAY")),
       );
     } catch (error) {
       console.log("주간 식단 생성 실패", error);

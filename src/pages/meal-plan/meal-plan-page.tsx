@@ -92,8 +92,8 @@ const MealPlanPage = () => {
             )}
           </>
         )}
-        {tab == "이번주 식단" && <WeekMeal />}
-        {tab == "다음주 식단" && <WeekMeal />}
+        {tab == "이번주 식단" && <WeekMeal weekType="THIS" />}
+        {tab == "다음주 식단" && <WeekMeal weekType="NEXT" />}
       </div>
     </div>
   );

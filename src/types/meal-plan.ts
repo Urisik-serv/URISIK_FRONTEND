@@ -67,3 +67,10 @@ export interface TodayMealPlan {
 
 //오늘의 식단 생성 api response
 export type ResponseTodayMealPlan = CommonResponse<TodayMealPlan>;
+
+export interface ThisWeekMealPlan {
+  mealPlanId: number;
+  weekStartDate: string;
+  slots: MealPlanSlots;
+}
+export type ResponseThisWeekMealPlan = CommonResponse<ThisWeekMealPlan>;
