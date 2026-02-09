@@ -50,6 +50,17 @@ export default function TermsAgreementPage() {
     }
   };
 
+  const handleCompleteOnboarding = () => {
+    const redirect = localStorage.getItem("loginRedirect");
+
+    if (redirect) {
+      localStorage.removeItem("loginRedirect");
+      navigate(redirect);
+    } else {
+      navigate("../family-create");
+    }
+  };
+
   return (
     <>
       <PublicHeader title={"약관 및 정책"} />
@@ -114,7 +125,7 @@ export default function TermsAgreementPage() {
             text={`다음`}
             type="button"
             disabled={!isValid()}
-            onClick={() => navigate("../family-create")}
+            onClick={handleCompleteOnboarding}
           />
         </div>
       </div>
