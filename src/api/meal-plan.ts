@@ -67,12 +67,21 @@ export const getWeekMealPlan = async ({
   return data;
 };
 
-// 최근 1개월 식단 조회 api
+// 기간 별 식단 조회 api
 export const getMonthMealPlan = async (
   familyRoomId: number,
+  fromDate: string,
+  toDate: string,
 ): Promise<MonthResult> => {
   const { data } = await axiosInstance.get<ResponseMonthMealPlan>(
-    `/api/family-rooms/${familyRoomId}/meal-plans/last-month`,
+    `/api/family-rooms/${familyRoomId}/meal-plans/history`,
+    {
+      params: {
+        fromDate,
+        toDate,
+      },
+    },
   );
+
   return data.result;
 };
