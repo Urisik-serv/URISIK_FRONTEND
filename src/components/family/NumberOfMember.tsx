@@ -1,5 +1,5 @@
-import { Minus } from "../common/Minus";
-import { Plus } from "../common/Plus";
+import { Minus } from "../common/icon/Minus";
+import { Plus } from "../common/icon/Plus";
 
 interface NumberOfMemberProps {
   number: number;
