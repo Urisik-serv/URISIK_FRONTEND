@@ -137,7 +137,10 @@ const ProfileModal = () => {
           <div className="pt-15.5 w-full mx-auto flex flex-col pb-10">
             <div className="flex justify-between  w-full">
               <div className="flex gap-3 items-end">
-                <img src={profilePicture} alt="내 프로필 사진" />
+                <img
+                  src={selectedData?.profilePicUrl || profilePicture}
+                  alt="내 프로필 사진"
+                />
                 <div className="text-2xl font-semibold leading-9">
                   {selectedData?.nickname}
                 </div>
