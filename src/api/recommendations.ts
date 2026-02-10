@@ -5,9 +5,7 @@ import type {
 import { axiosInstance } from "./axios/axios";
 
 // 홈 안전 레시피 추천 API
-export const getRecommendSafe = async (
-  category?: string,
-): Promise<ResponseRecommendSafe> => {
+export const getRecommendSafe = async (): Promise<ResponseRecommendSafe> => {
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/safe-recipes",
   );
@@ -25,7 +23,7 @@ export const getRecommendScore = async (
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/high-score",
     {
-      params: category || undefined,
+      params: { category: category || undefined },
     },
   );
 
@@ -41,7 +39,7 @@ export const getRecommendSafeScore = async (
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/safe-high-score",
     {
-      params: category || undefined,
+      params: { category: category || undefined },
     },
   );
 
@@ -55,7 +53,7 @@ export const getRecommendWish = async (
   category?: string,
 ): Promise<ResponseRecommendPopular> => {
   const { data } = await axiosInstance.get("/api/recommendations/home/wish", {
-    params: category || undefined,
+    params: { category: category || undefined },
   });
 
   console.log("하단 추천 데이터: ", data);
