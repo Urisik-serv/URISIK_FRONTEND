@@ -19,17 +19,22 @@
 /* 헤더 */
 .rdp-chevron {
   fill: #ff885a;
+  transform: translateY(10px);
 }
 .rdp-caption {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 8px 12px;
+  position: relative;
 }
 
 .rdp-caption_label {
   font-size: 18px;
   font-weight: 600;
+  position: relative;
+  top: -15px;
+  left: 12px;
 }
 
 .rdp-nav {
@@ -37,11 +42,6 @@
   justify-content: end;
   padding: 0 12px 0 0;
   gap: 8px;
-}
-
-.rdp-caption_label {
-  font-size: 18px;
-  font-weight: 600;
 }
 
 .rdp-nav_button {
@@ -79,7 +79,7 @@
   z-index: 2;
 }
 
-/* 오늘 날짜 (파란색 ❌) */
+/* 오늘 날짜  */
 .rdp-day_today .rdp-day_button {
   color: #ff885a;
   font-weight: 600;
