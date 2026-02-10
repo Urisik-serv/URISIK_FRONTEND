@@ -18,7 +18,7 @@
 
 /* 헤더 */
 .rdp-chevron {
-  fill: #ff885a;
+  fill: black;
   transform: translateY(10px);
 }
 .rdp-caption {
@@ -51,11 +51,20 @@
   cursor: pointer;
 }
 
+.rdp-button_previous:first-child .rdp-chevron {
+  transform: translate(7px, 10px);
+}
+
 /* 요일 */
 .rdp-head_cell {
   font-size: 14px;
   color: #666;
   padding-bottom: 8px;
+}
+
+.rdp-weekday {
+  transform: translateY(-10px);
+  color: #ff885a;
 }
 
 /* 날짜 공통 */
