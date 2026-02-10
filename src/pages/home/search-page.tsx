@@ -52,7 +52,7 @@ const SearchingPage = () => {
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
               인기 검색어
             </p>
-            <div className="h-48 px-5 py-3.5 bg-zinc-100 rounded-lg flex flex-col justify-start items-start gap-4">
+            <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4">
               <p className="text-neutral-400 text-xs font-normal leading-4">
                 오후 8시 순위
               </p>
