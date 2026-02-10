@@ -56,6 +56,8 @@ const MealPlanEditPage = () => {
       setSelected({ day, mealType });
     }
   };
+
+  console.log("지금 선택된 것", selected);
   return (
     <div>
       <PublicHeader title={"식단 수정"} />
@@ -75,6 +77,8 @@ const MealPlanEditPage = () => {
           </div>
           {Object.entries(data).map(([day, slots], dayIndex) => {
             const isDaySelected = selected.day === day;
+            const isLunchSelected = selected.mealType === "LUNCH";
+            const isDinnerSelected = selected.mealType === "DINNER";
 
             const date = dayKor[day] ?? day;
             const lunch = slots.find((slot) => slot.mealType === "LUNCH");
@@ -83,12 +87,22 @@ const MealPlanEditPage = () => {
               <div className="flex flex-col items-center gap-3" key={day}>
                 <CalendarChipM text={date} isSelect={isDaySelected} />
                 {lunch ? (
-                  <MenuChip text={lunch.title} clickable={true} isSelect />
+                  <MenuChip
+                    text={lunch.title}
+                    clickable={true}
+                    isSelect={isDaySelected && isLunchSelected}
+                    onClick={() => handleSelect(day, "LUNCH")}
+                  />
                 ) : (
                   <div className="w-[75px] h-[82px]" />
                 )}
                 {dinner ? (
-                  <MenuChip text={dinner.title} key="slot" />
+                  <MenuChip
+                    text={dinner.title}
+                    clickable={true}
+                    isSelect={isDaySelected && isDinnerSelected}
+                    onClick={() => handleSelect(day, "DINNER")}
+                  />
                 ) : (
                   <div className="w-[75px] h-[82px]" />
                 )}
