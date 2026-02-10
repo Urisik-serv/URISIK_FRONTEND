@@ -129,9 +129,9 @@ export const useFamilyProfileForm = () => {
     allergyList = ["NONE"];
   }
 
-  const preferencesList = formData.preferences.map(
-    (item) => preferenceMap[item],
-  );
+  const preferencesList = formData.preferences
+    .map((item) => preferenceMap[item])
+    .filter((item) => item != null);
 
   const request: postProfileRequest = {
     nickname: formData.nickname,

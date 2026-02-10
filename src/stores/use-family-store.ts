@@ -11,10 +11,11 @@ interface FamilyStore extends PostFamilyRoomRequest {
 
 const initialState: PostFamilyRoomRequest & { familyRoomId: number | null } = {
   familyRoomId: null,
-  familySize: 0,
   familyComposition: {
     hasMother: true,
     hasFather: true,
+    hasGrandFather: false,
+    hasGrandMother: false,
     sonCount: 0,
     daughterCount: 0,
   },

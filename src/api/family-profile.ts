@@ -48,7 +48,6 @@ export const patchProfile = async (
 export const getProfiles = async (
   familyRoomId: number,
 ): Promise<GetProfilesResponse> => {
-
   const { data } = await axiosInstance.get<GetProfilesResponse>(
     `/api/family-rooms/${familyRoomId}/all-profiles`,
   );

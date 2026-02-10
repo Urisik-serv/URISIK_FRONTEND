@@ -11,6 +11,8 @@ interface ModalProps {
   onApplyDate: (from: string, to: string) => void;
   fromDate: string;
   toDate: string;
+  setDateRange: (text: string) => void;
+  dateRange: string;
 }
 
 export default function GetDateRangeModal({
@@ -18,9 +20,11 @@ export default function GetDateRangeModal({
   onApplyDate,
   fromDate,
   toDate,
+  setDateRange,
+  dateRange,
 }: ModalProps) {
   const [isOpenDropDown, setIsOpenDropDown] = useState(false);
-  const [dateRange, setDateRange] = useState("최근 1개월");
+
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [range, setRange] = useState<DateRange | undefined>(undefined);
 
@@ -52,10 +56,12 @@ export default function GetDateRangeModal({
   const handleApplyDate = () => {
     if (!range?.from) return;
 
-    setFrom(formatDate(range.from));
-    setTo(formatDate(range.to));
+    setFrom((range?.from ?? new Date()).toISOString().slice(0, 10));
+    setTo((range?.to ?? new Date()).toISOString().slice(0, 10));
 
     setCalendarOpen(false);
+
+    setDateRange(`${from} ~ ${to}`);
   };
 
   return (
@@ -94,7 +100,6 @@ export default function GetDateRangeModal({
                 <div className="h-[1px] w-full bg-gray-300" />
                 <button
                   onClick={() => {
-                    setDateRange("직접 선택");
                     setIsOpenDropDown(false);
                     setCalendarOpen(true);
                   }}

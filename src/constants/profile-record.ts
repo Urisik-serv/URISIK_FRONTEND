@@ -1,8 +1,12 @@
+import type { Role } from "../types/family-profile";
+
 export const roleMap: Record<string, string> = {
   엄마: "MOM",
   아빠: "DAD",
   아들: "SON",
   딸: "DAUGHTER",
+  할머니: "GRANDMOTHER",
+  할아버지: "GRANDFATHER",
 } as const;
 
 export const preferenceMap: Record<string, string> = {
@@ -43,4 +47,13 @@ export const rolePicture: Record<string, string> = {
   DAD: "/assets/profile/dad-picture.png",
   DAUGHTER: "/assets/profile/daughter-picture.png",
   SON: "/assets/profile/son-picture.png",
+  GRANDMOTHER: "/assets/profile/grandmother-picture.png",
+  GRANDFATHER: "/assets/profile/grandfather-picture.png",
+} as const;
+
+export const POLICY_BY_ROLE: Record<Role, string> = {
+  MOM: "MOTHER_ONLY",
+  DAD: "FATHER_ONLY",
+  GRANDMOTHER: "GRANDMOTHER_ONLY",
+  GRANDFATHER: "GRANDFATHER_ONLY",
 } as const;

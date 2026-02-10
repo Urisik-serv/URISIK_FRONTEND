@@ -65,6 +65,7 @@ export default function ProfileDataForm({
     e.preventDefault();
     try {
       if (isEdit) {
+        console.log("보내는 데이터:", JSON.stringify(request, null, 2));
         const res = await patchProfile(currentFamilyRoomId, request);
         console.log(res.result);
       } else {
