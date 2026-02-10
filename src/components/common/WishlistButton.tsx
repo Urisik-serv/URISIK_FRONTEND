@@ -29,7 +29,7 @@ const WishlistButton = ({
       />
       <p className="text-xl font-semibold tracking-tight leading-none">
         {isSafe
-          ? `위시리스트 ${isWishList ? "해제" : "추가"}`
+          ? `위시리스트 ${isWishList ? "해제" : "담기"}`
           : "우리 가족 버전"}
       </p>
     </button>

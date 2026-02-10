@@ -1,6 +1,7 @@
 import type {
   ResponseDetailRecipe,
   ResponseExternalRecipes,
+  ResponsePostTransRecipe,
   ResponseSearchRecipes,
   ResponseTransformedRecipe,
   SearchRecipesDto,
@@ -42,6 +43,16 @@ export const getTransRecipe = async (
 ): Promise<ResponseTransformedRecipe> => {
   const { data } = await axiosInstance.get(
     `/api/transformed-recipes/${transformedRecipeId}`,
+  );
+
+  return data;
+};
+
+export const postTransRecipe = async (
+  recipeId: number,
+): Promise<ResponsePostTransRecipe> => {
+  const { data } = await axiosInstance.post(
+    `/api/transformed-recipes/${recipeId}/transform`,
   );
 
   return data;

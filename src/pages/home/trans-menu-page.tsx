@@ -1,0 +1,110 @@
+import { useEffect, useState } from "react";
+import type { DetailRecipe, TransformedRecipe } from "../../types/recipes";
+import { useParams } from "react-router-dom";
+import PublicHeader from "../../components/header/PublicHeader";
+import { getDetailRecipe, getTransRecipe } from "../../api/recipes";
+import usePostWishList from "../../hooks/mutations/use-post-wishlist";
+import { useFamilyStore } from "../../stores/use-family-store";
+import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
+import DetailContent from "../../components/home/detailPage/detailContent";
+import WishlistButton from "../../components/common/WishlistButton";
+import UpButton from "../../components/common/UpButton";
+import DownImg from "../../assets/icons/chevron-down-gray300.svg";
+import UpImg from "../../assets/icons/chevron-up-gray.svg";
+import Rate from "../../components/common/Rate";
+
+const TransMenuPage = () => {
+  const { menuId } = useParams();
+  const recipeId = Number(menuId);
+  const [transRecipe, setTransRecipe] = useState<TransformedRecipe>();
+  const [recipe, setRecipe] = useState<DetailRecipe>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const transData = await getTransRecipe(recipeId);
+        console.log("변형 레시피 요청 성공: ", transData.result);
+        setTransRecipe(transData.result);
+        const data = await getDetailRecipe(transData.result.baseRecipeId);
+        console.log("일반 레시피 요청 성공: ", data);
+        setRecipe(data.result);
+      } catch (error) {
+        console.log("레시피 로딩 실패: ", error);
+      }
+    };
+    fetchData();
+  }, [recipeId]);
+
+  const roomId = useFamilyStore.getState().familyRoomId;
+  const { mutate: addWishList } = usePostWishList(roomId);
+
+  const handleClick = async () => {
+    const currentRecipeId = transRecipe?.transformedRecipeId;
+
+    const directPayload = {
+      recipeId: [],
+      transformedRecipeId: currentRecipeId ? [currentRecipeId] : [],
+    };
+
+    addWishList(directPayload);
+  };
+
+  const [showOrigin, setShowOrigin] = useState(false);
+
+  return (
+    <div>
+      <PublicHeader title={"메뉴 정보"} />
+      <ImageIndicator
+        imgUrl={recipe?.images.small}
+        name={recipe?.title}
+        wishCount={recipe?.wishCount}
+      />
+
+      <div className="px-4 pt-8 rounded-t-3xl -mt-10 relative z-10 bg-white">
+        <div>
+          <div className="pb-20">
+            <h1 className="text-2xl font-semibold pb-3 leading-9 text-gray-800">
+              {transRecipe?.title}
+            </h1>
+            <div className="flex justify-start gap-2 pb-10">
+              <p className="text-gray-400 text-base font-medium leading-6">
+                {recipe?.category}
+              </p>
+              <Rate px={16} rate={transRecipe?.avgScore} />
+            </div>
+            <div
+              className="flex flex-col"
+              onClick={() => setShowOrigin(!showOrigin)}
+            >
+              <div className="flex pb-7">
+                <p
+                  className={`text-base font-semibold leading-6 ${showOrigin ? "text-gray-800" : "text-gray-500"}`}
+                >
+                  원형 메뉴 보기
+                </p>
+                <img
+                  className="w-6 h-6"
+                  src={showOrigin ? UpImg : DownImg}
+                  alt={showOrigin ? "위 화살표" : "아래 화살표"}
+                />
+              </div>
+              {showOrigin && (
+                <div className="pb-7">
+                  <div className="p-3 rounded-lg outline-1 outline-gray-200">
+                    <DetailContent recipe={recipe} />
+                  </div>
+                </div>
+              )}
+            </div>
+            <DetailContent transRecipe={transRecipe} />
+          </div>
+          <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
+            <WishlistButton onClick={handleClick} isSafe={true} />
+          </div>
+          <UpButton />
+        </div>
+      </div>
+    </div>
+  );
+};
+export default TransMenuPage;

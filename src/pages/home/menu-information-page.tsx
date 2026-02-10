@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Rate from "../../components/common/Rate";
-import MenuInfo from "../../components/common/MenuInfo";
 import UpButton from "../../components/common/UpButton";
 import WishlistButton from "../../components/common/WishlistButton";
 import { getDetailRecipe, postTransRecipe } from "../../api/recipes";
@@ -11,6 +9,7 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
 import DetailContent from "../../components/home/detailPage/detailContent";
+import Rate from "../../components/common/Rate";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -31,7 +30,7 @@ const MenuInformationPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [recipeId]);
 
   const roomId = useFamilyStore.getState().familyRoomId;
   const { mutate: addWishList } = usePostWishList(roomId);
@@ -66,8 +65,19 @@ const MenuInformationPage = () => {
       />
 
       <div className="px-4 pt-8 rounded-t-3xl -mt-10 relative z-10 bg-white">
-        <div>
-          <DetailContent recipe={recipe} />
+        <div className="pb-20">
+          <div>
+            <h1 className="text-2xl font-semibold pb-3 leading-9 text-gray-800">
+              {recipe?.title}
+            </h1>
+            <div className="flex justify-start gap-2 pb-10">
+              <p className="text-gray-400 text-base font-medium leading-6">
+                {recipe?.category}
+              </p>
+              <Rate px={16} rate={recipe?.avgScore} />
+            </div>
+            <DetailContent recipe={recipe} />
+          </div>
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
             <WishlistButton
               onClick={handleClick}
