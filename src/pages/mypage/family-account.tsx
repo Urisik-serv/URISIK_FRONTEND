@@ -15,7 +15,6 @@ import { useProfileStore } from "../../stores/use-profile-store";
 export default function FamilyAccount() {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
   const { resetProfile } = useProfileStore();
-  const { resetFamilyData } = useFamilyStore();
 
   const { data: myFamily = [] } = useQuery({
     queryKey: ["myFamily"],
