@@ -34,10 +34,6 @@ export default function History() {
     setIsOpen(false); // 적용 시 모달 닫기
   };
 
-  const formatDate = (date: string) => {
-    return date.replace(/-/g, ".");
-  };
-
   return (
     <>
       <PublicHeader title={"기록"} />
