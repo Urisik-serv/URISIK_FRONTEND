@@ -1,0 +1,150 @@
+/* 기본 리셋 */
+.rdp {
+  --accent: #ff885a;
+  font-family: inherit;
+}
+
+.rdp-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.rdp th,
+.rdp td {
+  text-align: center;
+  padding: 0;
+}
+
+/* 헤더 */
+.rdp-chevron {
+  fill: #ff885a;
+}
+.rdp-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 12px;
+}
+
+.rdp-caption_label {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rdp-nav {
+  display: flex;
+  justify-content: end;
+  padding: 0 12px 0 0;
+  gap: 8px;
+}
+
+.rdp-caption_label {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rdp-nav_button {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+/* 요일 */
+.rdp-head_cell {
+  font-size: 14px;
+  color: #666;
+  padding-bottom: 8px;
+}
+
+/* 날짜 공통 */
+.rdp-day {
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.rdp-day_button {
+  all: unset;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #111;
+  position: relative;
+  z-index: 2;
+}
+
+/* 오늘 날짜 (파란색 ❌) */
+.rdp-day_today .rdp-day_button {
+  color: #ff885a;
+  font-weight: 600;
+}
+
+/* range middle (자연스럽게) */
+
+.rdp-range_middle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -22px; /* ← start 쪽으로 반 칸 */
+  right: -22px; /* ← end 쪽으로 반 칸 */
+  background-color: #ffe7df;
+  z-index: 1;
+}
+
+/* 왼쪽 끝 middle */
+.rdp-range_middle:first-child::before {
+  border-top-left-radius: 9999px;
+  border-bottom-left-radius: 9999px;
+}
+
+/* 오른쪽 끝 middle */
+.rdp-range_middle:last-child::before {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+}
+
+/* 숫자는 위로 */
+.rdp-range_middle .rdp-day_button {
+  color: #ff885a;
+  font-weight: 500;
+  position: relative;
+  z-index: 4;
+}
+
+/* range start / end */
+.rdp-range_start::before,
+.rdp-range_end::before,
+.rdp-day_selected::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ff885a;
+  border-radius: 9999px;
+  z-index: 3;
+}
+
+.rdp-range_start .rdp-day_button,
+.rdp-range_end .rdp-day_button,
+.rdp-day_selected .rdp-day_button {
+  color: #fff;
+  font-weight: 600;
+  z-index: 4;
+}
+
+/* 포커스 / hover 제거 */
+
+.rdp-day_button:focus,
+.rdp-day_button:focus-visible {
+  outline: none;
+}
+
+.rdp-day_button:hover {
+  background: none;
+}

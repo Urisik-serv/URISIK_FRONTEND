@@ -12,10 +12,13 @@ import type { Week } from "../../types/meal-plan";
 export default function History() {
   const familyRoomId = useFamilyStore((state) => state.familyRoomId);
 
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   const { data: historyData } = useQuery({
-    queryKey: ["historyData", familyRoomId],
+    queryKey: ["historyData", familyRoomId, startDate, endDate],
     queryFn: async () => {
-      return getMonthMealPlan(familyRoomId as number);
+      return getMonthMealPlan(familyRoomId as number, startDate, endDate);
     },
     enabled: familyRoomId !== null,
   });
@@ -23,6 +26,12 @@ export default function History() {
   const [isOpen, setIsOpen] = useState(false);
   const handleModal = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleDateSelection = (from: string, to: string) => {
+    setStartDate(from);
+    setEndDate(to);
+    setIsOpen(false); // 적용 시 모달 닫기
   };
 
   const formatDate = (date: string) => {
@@ -76,8 +85,9 @@ export default function History() {
       {isOpen && (
         <GetDateRangeModal
           handleModal={handleModal}
-          fromDate={formatDate(historyData?.fromDate ?? "")}
-          toDate={formatDate(historyData?.toDate ?? "")}
+          onApplyDate={handleDateSelection}
+          fromDate={startDate || historyData?.fromDate || ""}
+          toDate={endDate || historyData?.toDate || ""}
         />
       )}
     </>
