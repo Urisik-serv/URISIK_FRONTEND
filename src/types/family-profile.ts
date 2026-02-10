@@ -69,13 +69,13 @@ export interface FamilyDetail {
 
 export interface IsDeleted {
   isDeleted: boolean;
-} 
- 
+}
+
 export interface ProfilePicUrl {
   profilePicUrl: string;
 }
 
-export type PostProfileResponse = BaseResponse<ProfileCreateResult>;
+export type PostProfileResponse = BaseResponse<postProfileRequest>;
 export type GetProfileResponse = BaseResponse<Profile>;
 export type GetProfilesResponse = BaseResponse<FamilyDetails>;
 export type DeleteProfileResponse = BaseResponse<IsDeleted>;
