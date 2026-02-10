@@ -4,10 +4,13 @@ import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import { useGetRecommendList } from "../../../hooks/queries/use-get-recommendations";
 import SortDropdown from "../../common/SortDropdown";
 
-const MealCuration = () => {
+interface MealCurationProps {
+  category: string | undefined;
+}
+const MealCuration = ({ category }: MealCurationProps) => {
   const [sortType, setSortType] = useState("별점 순");
 
-  const { data } = useGetRecommendList(sortType);
+  const { data } = useGetRecommendList(sortType, category);
 
   return (
     <div className="pt-8">
