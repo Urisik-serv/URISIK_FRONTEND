@@ -83,7 +83,6 @@ export interface DetailRecipe {
 export interface TransfomedRecipe {
   transformedRecipeId: number;
   title: string;
-  imageUrl: string;
   baseRecipeId: number;
   ingredients: string[];
   steps: [
