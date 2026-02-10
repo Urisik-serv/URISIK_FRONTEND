@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackButton from "../../components/common/BackButton";
 import ElementButton from "../../components/common/ElementButton";
 import RankButton from "../../components/common/RankButton";
@@ -7,6 +7,8 @@ import useDebounce from "../../hooks/use-debounce";
 import MealCard from "../../components/home/curation/MealCard";
 import useGetSearchRecipes from "../../hooks/queries/use-get-search-recipes";
 import { useRecentSearch } from "../../hooks/use-recent-search";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { getProfile } from "../../api/family-profile";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -20,6 +22,18 @@ const SearchingPage = () => {
   const { data: recipes } = useGetSearchRecipes(debouncedKeyword, 0, 6);
 
   const { keywords, removeKeyword } = useRecentSearch();
+
+  // 내 정보
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const [nickname, setNickname] = useState("");
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profileData = await getProfile(familyRoomId, -1);
+      setNickname(profileData.nickname);
+    };
+
+    fetchProfile();
+  });
 
   return (
     <div className="flex pt-[30px] justify-center items-start flex-col">
@@ -45,7 +59,7 @@ const SearchingPage = () => {
           </div>
           <div className="pb-7.5">
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
-              00님 취향에 맞는 메뉴를 추천해요
+              {nickname || "사용자"}님 취향에 맞는 메뉴를 추천해요
             </p>
             <div className="flex gap-1.5">
               <ElementButton name="스프" />
