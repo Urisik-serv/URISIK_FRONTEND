@@ -7,7 +7,7 @@ import { axiosInstance } from "./axios/axios";
 // 홈 안전 레시피 추천 API
 export const getRecommendSafe = async (): Promise<ResponseRecommendSafe> => {
   const { data } = await axiosInstance.get(
-    "/api/home/recommendations/safe-recipes-top",
+    "/api/recommendations/home/safe-recipes",
   );
 
   console.log("추천 데이터:", data);
@@ -20,9 +20,12 @@ export const getRecommendSafe = async (): Promise<ResponseRecommendSafe> => {
 export const getRecommendScore = async (
   category?: string,
 ): Promise<ResponseRecommendPopular> => {
-  const { data } = await axiosInstance.get("/api/home/high-score", {
-    params: category,
-  });
+  const { data } = await axiosInstance.get(
+    "/api/recommendations/home/high-score",
+    {
+      params: category,
+    },
+  );
 
   console.log("하단 추천 데이터: ", data);
 
@@ -33,9 +36,12 @@ export const getRecommendScore = async (
 export const getRecommendSafeScore = async (
   category?: string,
 ): Promise<ResponseRecommendPopular> => {
-  const { data } = await axiosInstance.get("/api/home/safe-high-score", {
-    params: category,
-  });
+  const { data } = await axiosInstance.get(
+    "/api/recommendations/home/safe-high-score",
+    {
+      params: category,
+    },
+  );
 
   console.log("하단 추천 데이터: ", data);
 
@@ -46,9 +52,12 @@ export const getRecommendSafeScore = async (
 export const getRecommendWish = async (
   category?: string,
 ): Promise<ResponseRecommendPopular> => {
-  const { data } = await axiosInstance.get("/api/home/wish-high-score", {
-    params: category,
-  });
+  const { data } = await axiosInstance.get(
+    "/api/recommendations/home/high-wish",
+    {
+      params: category,
+    },
+  );
 
   console.log("하단 추천 데이터: ", data);
 

@@ -1,28 +1,84 @@
-import { useEffect, useState } from "react";
-import type { NoticeLists } from "../types/notice-list";
-import axios from "axios";
 import { getNotificationList } from "../api/notifications";
+import { useQuery } from "@tanstack/react-query";
+import { noticeMap } from "../constants/notice-record";
 
 export const useNoticeList = () => {
-  const [noticeList, setNoticeList] = useState<NoticeLists | null>(null);
+  const { data } = useQuery({
+    queryKey: ["notice"],
+    queryFn: async () => {
+      return await getNotificationList(10);
+    },
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get<NoticeLists>(
-          "/public/data/notice-list.json",
-        );
+  const ago = (createdAt: string) => {
+    const now = new Date();
+    const target = new Date(createdAt);
 
-        const response = await getNotificationList(10);
+    const diffMs = now.getTime() - target.getTime();
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
 
-        setNoticeList(res.data);
-        console.log(response); // 실제 api 연동
-      } catch (error) {
-        console.log("데이터 로딩 실패:", error);
-      }
+    const nowDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const targetDate = new Date(
+      target.getFullYear(),
+      target.getMonth(),
+      target.getDate(),
+    );
+    const diffDays = Math.floor(
+      (nowDate.getTime() - targetDate.getTime()) / (1000 * 60 * 60 * 24),
+    );
+
+    if (diffSeconds < 60) {
+      return "방금 전";
+    }
+
+    if (diffMinutes < 60) {
+      return `${diffMinutes}분 전`;
+    }
+
+    if (diffHours < 24 && diffDays === 0) {
+      return `${diffHours}시간 전`;
+    }
+
+    if (diffDays === 1) {
+      return "어제";
+    }
+
+    return `${diffDays}일 전`;
+  };
+
+  const getTemp = (mealPlanCount: number) => {
+    if (mealPlanCount === 5) {
+      return "25°C";
+    } else if (mealPlanCount === 6) {
+      return "50°C";
+    } else if (mealPlanCount === 10) {
+      return "100°C";
+    }
+  };
+
+  let generation;
+  const noticeList = data?.result.content.map((item) => {
+    let content;
+    if (item.type === "TEMPERATURE" && item.mealPlanGenerationCount !== null) {
+      const temp = getTemp(item.mealPlanGenerationCount);
+      generation = item.mealPlanGenerationCount;
+      content = noticeMap[item.type].content(temp);
+    } else {
+      content = noticeMap[item.type].content();
+    }
+
+    return {
+      icon: noticeMap[item.type].icon,
+      title: noticeMap[item.type].title,
+      content: content,
+      ago: ago(item.createdAt),
+      isRead: item.isRead,
+      key: item.createdAt,
+
     };
-    fetchData();
-  }, []);
+  });
 
-  return { noticeList };
+  return { noticeList, generation };
 };

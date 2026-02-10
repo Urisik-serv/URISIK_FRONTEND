@@ -28,6 +28,13 @@ export interface SearchRecipesItem {
     imageLarge: string;
     ingredientsRaw: string;
     instructionsRaw: string;
+    steps: [
+      {
+        order: number;
+        description: string;
+        imageUrl: string;
+      },
+    ];
   };
 }
 
@@ -73,7 +80,36 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
+export interface TransfomedRecipe {
+  transformedRecipeId: number;
+  title: string;
+  imageUrl: string;
+  baseRecipeId: number;
+  ingredients: string[];
+  steps: [
+    {
+      order: number;
+      description: string;
+    },
+  ];
+  substitutionSummary: [
+    {
+      allergen: string;
+      replacedWith: string;
+      reason: string;
+    },
+  ];
+  allergyWarning: {
+    hasRisk: boolean;
+    allergens: string[];
+  };
+  reviewCount: number;
+  avgScore: number;
+  wishCount: number;
+}
+
 export type ResponseDetailRecipe = BaseResponse<DetailRecipe>;
+export type ResponseTransformedRecipe = BaseResponse<TransfomedRecipe>;
 
 // interface 사용시 extends
 export interface ResponseSearchRecipes extends BaseResponse<SearchRecipesItems> {}
@@ -87,6 +123,7 @@ export interface RecommendSafeRecipes {
       id: string;
       title: string;
       imageUrl: string;
+      description: string;
       category: string;
       avgScore: number;
       reviewCount: number;

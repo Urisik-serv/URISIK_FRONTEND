@@ -22,6 +22,7 @@ interface ProfileStore {
   markLoaded: () => void;
   isLeader: boolean;
   saveIsLeader: (leader: boolean) => void;
+  resetProfile: () => void;
 }
 
 export const useProfileStore = create(
@@ -47,6 +48,20 @@ export const useProfileStore = create(
         })),
       markLoaded: () => set({ hasLoadedFromServer: true }),
       saveIsLeader: (leader: boolean) => set({ isLeader: leader }),
+      resetProfile: () =>
+        set({
+          savedFormData: {
+            nickname: "",
+            role: "",
+            allergies: [],
+            preferences: [],
+            likedIngredients: "",
+            dislikedIngredients: "",
+            profilePicUrl: "",
+          },
+          hasLoadedFromServer: false,
+          isLeader: false,
+        }),
     }),
     {
       name: "profile-store",

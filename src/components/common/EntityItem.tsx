@@ -7,11 +7,12 @@ interface EntityItemProps {
   picture: string;
   name: string;
   category: string;
-  tags: string;
   id?: number;
+  tags?: string;
   type?: string;
   rating?: number;
   border?: string;
+  deleteProfile?: () => void;
 }
 
 export default function EntityItem({
@@ -23,27 +24,32 @@ export default function EntityItem({
   type,
   rating,
   border,
+  deleteProfile,
 }: EntityItemProps) {
   const familyRoomId = useFamilyStore((data) => data.familyRoomId);
   const { mutate: deleteWishlists } = useDeleteProfileWishLists(familyRoomId);
 
   const handleClick = async () => {
-    if (!id) return;
+    if (deleteProfile) {
+      deleteProfile();
+    } else {
+      if (!id) return;
 
-    const payload = {
-      recipeId: type === "RECIPE" ? [id] : [],
-      transformedRecipeId: type === "TRANSFORMED_RECIPE" ? [id] : [],
-    };
+      const payload = {
+        recipeId: type === "RECIPE" ? [id] : [],
+        transformedRecipeId: type === "TRANSFORMED_RECIPE" ? [id] : [],
+      };
 
-    deleteWishlists(payload);
+      deleteWishlists(payload);
+    }
   };
 
   return (
     <>
       <div className="relative overflow-hidden bg-gray-100 ">
         <button
-          className="absolute right-0 top-0 bottom-0 w-[93px] text-xl font-medium"
           onClick={handleClick}
+          className="cursor-pointer absolute right-0 top-0 bottom-0 w-[93px] text-xl font-medium"
         >
           삭제
         </button>
@@ -59,7 +65,7 @@ export default function EntityItem({
               <img
                 src={picture}
                 alt={`${name} 사진`}
-                className="w-13 h-13 shrink-0 rounded-lg object-cover"
+                className="size-[52px] rounded-full object-cover"
               />
               <div className="flex flex-col gap-[11px] flex-1 min-w-0">
                 <div className="flex items-center gap-[5px]">
@@ -76,10 +82,14 @@ export default function EntityItem({
                   <div className="text-sm tracking-[-0.42px] text-gray-400 truncate shrink-0">
                     {category}
                   </div>
-                  <div className="w-0 h-3.5 bg-gray-400 border-r border-r-gray-400" />
-                  <div className="text-sm tracking-[-0.42px] text-gray-400 truncate">
-                    {tags}
-                  </div>
+                  {tags && (
+                    <>
+                      <div className="w-0 h-3.5 bg-gray-400 border-r border-r-gray-400" />
+                      <div className="text-sm tracking-[-0.42px] text-gray-400 truncate">
+                        {tags}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
