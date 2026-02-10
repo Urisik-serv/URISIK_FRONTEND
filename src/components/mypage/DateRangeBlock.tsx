@@ -1,5 +1,5 @@
 import { useState } from "react";
-import chevronDownIcon from "../../assets/icons/chevron-down-gray400.svg";
+import chevronDownIcon from "../../assets/icons/chevron-down-gray.svg";
 import chevronUpIcon from "../../assets/icons/chevron-up-gray.svg";
 import chevronRightIcon from "../../assets/icons/chevron-right-gray.svg";
 import type { Day } from "../../types/meal-plan";
