@@ -40,7 +40,7 @@ export default function InviteEntry() {
       if (!token) throw new Error("유효하지 않은 토큰입니다.");
 
       if (!getAccessToken()) {
-        localStorage.setItem("loginRedirect", `/family-invite/${token}`);
+        localStorage.setItem("loginRedirect", `/invite/${token}`);
         navigate("/login");
         return Promise.reject();
       }
