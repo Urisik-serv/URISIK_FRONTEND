@@ -223,7 +223,7 @@ export default function ProfileDataForm({
       </div>
       <div className="pt-[131px] ">
         <Button
-          onClick={() => navigate("/")}
+          onClick={isEdit ? () => navigate("/") : () => navigate("/invite")}
           text={"완료"}
           type="submit"
           disabled={!isValid()}

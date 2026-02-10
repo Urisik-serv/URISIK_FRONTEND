@@ -78,8 +78,8 @@ export const router = createBrowserRouter([
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
-          { path: "family-invite", element: <FamilyInvitePage /> },
-          { path: "family-invite/:token", element: <InviteEntry /> },
+          { path: "invite", element: <FamilyInvitePage /> },
+          { path: "invite/:token", element: <InviteEntry /> },
           { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",

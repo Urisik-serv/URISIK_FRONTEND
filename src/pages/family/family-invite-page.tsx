@@ -10,6 +10,8 @@ import { postInviteToken } from "../../api/invite";
 export default function FamilyInvitePage() {
   const navigate = useNavigate();
   const { familyRoomId } = useFamilyStore();
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   const handleInvite = async (): Promise<string | undefined> => {
     if (familyRoomId == null) {
       alert(`가족방을 찾을 수 없습니다`);
@@ -21,23 +23,39 @@ export default function FamilyInvitePage() {
 
   // 카카오톡 페이지로 넘어가도록
   const InviteByKakao = async () => {
-    const kakaoUrl = await handleInvite();
-
-    console.log("kakaoUrl =", kakaoUrl);
-    console.log("type =", typeof kakaoUrl);
-
-    if (!kakaoUrl) {
-      alert("초대 링크 생성에 실패했습니다.");
+    if (!isMobile) {
+      alert("카카오톡 공유는 모바일에서만 가능합니다.");
       return;
     }
 
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+      alert("카카오 SDK가 준비되지 않았습니다.");
+      return;
+    }
+
+    const kakaoUrl = await handleInvite();
+    if (!kakaoUrl) return;
+
     window.Kakao.Share.sendDefault({
-      objectType: "text",
-      text: `가족방에 초대했어요!\n${kakaoUrl}`,
-      link: {
-        mobileWebUrl: kakaoUrl,
-        webUrl: kakaoUrl,
+      objectType: "feed",
+      content: {
+        title: "가족방에 초대했어요!",
+        description: "아래 버튼을 눌러 참여해주세요",
+        imageUrl: "https://your-image.png",
+        link: {
+          mobileWebUrl: kakaoUrl,
+          webUrl: kakaoUrl,
+        },
       },
+      buttons: [
+        {
+          title: "가족방 참여하기",
+          link: {
+            mobileWebUrl: kakaoUrl,
+            webUrl: kakaoUrl,
+          },
+        },
+      ],
     });
   };
 

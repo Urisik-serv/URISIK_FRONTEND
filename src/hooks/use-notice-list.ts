@@ -58,10 +58,12 @@ export const useNoticeList = () => {
     }
   };
 
+  let generation;
   const noticeList = data?.result.content.map((item) => {
     let content;
     if (item.type === "TEMPERATURE" && item.mealPlanGenerationCount !== null) {
       const temp = getTemp(item.mealPlanGenerationCount);
+      generation = item.mealPlanGenerationCount;
       content = noticeMap[item.type].content(temp);
     } else {
       content = noticeMap[item.type].content();
@@ -74,8 +76,9 @@ export const useNoticeList = () => {
       ago: ago(item.createdAt),
       isRead: item.isRead,
       key: item.createdAt,
+
     };
   });
 
-  return noticeList;
+  return { noticeList, generation };
 };
