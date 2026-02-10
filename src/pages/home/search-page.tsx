@@ -6,6 +6,7 @@ import SearchBar from "../../components/common/SearchBar";
 import useDebounce from "../../hooks/use-debounce";
 import MealCard from "../../components/home/curation/MealCard";
 import useGetSearchRecipes from "../../hooks/queries/use-get-search-recipes";
+import { useRecentSearch } from "../../hooks/use-recent-search";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -18,7 +19,7 @@ const SearchingPage = () => {
   }
   const { data: recipes } = useGetSearchRecipes(debouncedKeyword, 0, 6);
 
-  const handleClose = () => {};
+  const { keywords, removeKeyword } = useRecentSearch();
 
   return (
     <div className="flex pt-[30px] justify-center items-start flex-col">
@@ -33,7 +34,13 @@ const SearchingPage = () => {
               최근 검색어
             </p>
             <div className="flex gap-1.5">
-              <ElementButton name="불고기" onClose={handleClose} />
+              {keywords.map((recent) => (
+                <ElementButton
+                  name={recent}
+                  onClose={() => removeKeyword(recent)}
+                  onClick={() => setKeyword(recent)}
+                />
+              ))}
             </div>
           </div>
           <div className="pb-7.5">
