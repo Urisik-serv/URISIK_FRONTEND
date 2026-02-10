@@ -75,6 +75,8 @@ export interface ProfilePicUrl {
   profilePicUrl: string;
 }
 
+export type Role = "MOM" | "DAD" | "GRANDMOTHER" | "GRANDFATHER";
+
 export type PostProfileResponse = BaseResponse<postProfileRequest>;
 export type GetProfileResponse = BaseResponse<Profile>;
 export type GetProfilesResponse = BaseResponse<FamilyDetails>;
