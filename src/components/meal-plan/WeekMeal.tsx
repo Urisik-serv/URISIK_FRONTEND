@@ -8,6 +8,7 @@ import EmptyState from "../common/EmptyState";
 import CalendarChipS from "./CalendarChip/CalendarChipS";
 import DateMenuList from "./DateMenuList";
 import ListHeader from "./ListHeader";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export type weekMealProps = {
   weekType: "THIS" | "NEXT";
@@ -40,7 +41,11 @@ export default function WeekMeal({ weekType }: weekMealProps) {
     );
   }
   if (isLoading) {
-    return <div>로딩스피너 추가 예정</div>;
+    return (
+      <div className="w-full pt-60">
+        <LoadingSpinner />
+      </div>
+    );
   }
   const weekData = changeAdditionalProp(data?.result.slots || {}, "WEEK");
   const listHeaderDate =

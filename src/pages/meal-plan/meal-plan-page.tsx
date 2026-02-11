@@ -10,6 +10,7 @@ import unselectedMoon from "../../assets/icons/moon-unselected.svg";
 import useGetTodayMealPlan from "../../hooks/queries/use-get-today-meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import EmptyState from "../../components/common/EmptyState";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MealPlanPage = () => {
   const [searchParams] = useSearchParams();
@@ -24,7 +25,11 @@ const MealPlanPage = () => {
   const [todayTab, setTodayTab] = useState<"점심" | "저녁">("점심");
   const { familyRoomId } = useFamilyStore.getState();
 
-  const { data: todayData, isError } = useGetTodayMealPlan(familyRoomId);
+  const {
+    data: todayData,
+    isError,
+    isLoading,
+  } = useGetTodayMealPlan(familyRoomId);
   useEffect(() => {
     if (todayData?.result?.meals.length == 1) {
       if (todayData.result.meals[0].mealType === "DINNER") setTodayTab("저녁");
@@ -86,12 +91,21 @@ const MealPlanPage = () => {
                 저녁
               </button>
             </div>
-            {isError || tabData === undefined ? (
-              <div className="pt-27">
-                <EmptyState text={`${todayTab}식단이 생성되지 않았어요.`} />
+            {isLoading ? (
+              <div className="w-full pt-60">
+                {" "}
+                <LoadingSpinner />
               </div>
             ) : (
-              <TodayMeal key={todayTab} data={tabData} />
+              <>
+                {isError || !tabData ? (
+                  <div className="pt-27">
+                    <EmptyState text={`${todayTab}식단이 생성되지 않았어요.`} />
+                  </div>
+                ) : (
+                  <TodayMeal key={todayTab} data={tabData} />
+                )}
+              </>
             )}
           </>
         )}
