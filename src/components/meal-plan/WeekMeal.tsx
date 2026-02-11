@@ -67,7 +67,10 @@ export default function WeekMeal({ weekType }: weekMealProps) {
     "SUNDAY",
   ];
   const todayIdx = new Date().getDay();
-  const adjustedIdx = todayIdx === 0 ? 6 : todayIdx - 1;
+
+  const adjustedIdx =
+    weekType === "THIS" ? (todayIdx === 0 ? 6 : todayIdx - 1) : 0;
+
   //오늘~앞으로 날
   const futureDays = dayNames.slice(adjustedIdx).map((day) => ({
     dayKor: dayKorMap[day],

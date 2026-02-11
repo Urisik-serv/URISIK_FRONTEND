@@ -38,12 +38,14 @@ export function getThisMonday(baseDate = new Date()) {
 export function getWeekOfMonth(date = new Date()) {
   const d = new Date(date);
   const month = d.getMonth() + 1;
-  const firstDate = new Date(d.getFullYear(), d.getMonth(), 1);
+  const day = d.getDate();
 
-  // 1일에서 오늘까지 몇 밤 지났는지 + 1일의 요일 보정
-  const offset = firstDate.getDay() === 0 ? 6 : firstDate.getDay() - 1;
-  const week = Math.ceil((d.getDate() + offset) / 7);
+  const week = Math.ceil(day / 7);
 
   const weekNames = ["첫째주", "둘째주", "셋째주", "넷째주", "다섯째주"];
-  return { month, weekKor: weekNames[week - 1] || "오류" };
+
+  return {
+    month,
+    weekKor: weekNames[week - 1],
+  };
 }
