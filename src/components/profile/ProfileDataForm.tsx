@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAllergySearch } from "../../hooks/use-allergy-search";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 
 import Button from "../common/Button";

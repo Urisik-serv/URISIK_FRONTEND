@@ -150,7 +150,6 @@ export default function MyProfilePage() {
                   name={item.transformedRecipeName}
                   rating={item.avgScore}
                   type="TRANSFORMED_RECIPE"
-                  id={item.transformedRecipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
                   border="border-b border-gray-200"

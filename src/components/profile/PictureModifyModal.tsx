@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useProfileStore } from "../../stores/use-profile-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
-import { patchProfilePic } from "../../api/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { Check } from "../common/icon/Check";
 import { usePatchProfilePic } from "../../hooks/mutations/use-patch-profile-pic";
@@ -12,7 +11,7 @@ interface PictureModalProps {
   onClick: () => void;
 }
 
-export default function PictureModifyModal({ onClick }: PictureModalProps) {
+export default function fyModal({ onClick }: PictureModalProps) {
   const { setSavedFormData, savedFormData } = useProfileStore();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
