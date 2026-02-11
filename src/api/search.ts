@@ -1,16 +1,14 @@
-import type { RecommendSearch } from "../types/recipes";
+import type { RecommendSearch, ResponsePopularSearch } from "../types/recipes";
 import type { BaseResponse } from "../types/response";
 import { axiosInstance } from "./axios/axios";
 
 export const postPopularSearch = async () => {
-  const { data } = await axiosInstance.post(
-    "/api/search/admin/search/popular/batch",
-  );
+  const { data } = await axiosInstance.post("/api/search/admin/popular/batch");
 
   return data;
 };
 
-export const getPopularSearch = async (): Promise<BaseResponse<string[]>> => {
+export const getPopularSearch = async (): Promise<ResponsePopularSearch> => {
   const { data } = await axiosInstance.get("/api/search/popular");
 
   return data;

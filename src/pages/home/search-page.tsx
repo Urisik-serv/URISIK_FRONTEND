@@ -8,14 +8,14 @@ import MealCard from "../../components/home/curation/MealCard";
 import useGetSearchRecipes from "../../hooks/queries/use-get-search-recipes";
 import { useRecentSearch } from "../../hooks/use-recent-search";
 import { useFamilyStore } from "../../stores/use-family-store";
-import { getProfile } from "../../api/family-profile";
 import {
   getPopularSearch,
   getRecommendSearch,
   postPopularSearch,
 } from "../../api/search";
-import type { RecommendSearch } from "../../types/recipes";
+import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
+import { formatRankingTime } from "../../utils/date";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -31,23 +31,33 @@ const SearchingPage = () => {
   const { keywords, removeKeyword } = useRecentSearch();
 
   // 내 정보
-  const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const familyRoomId = useFamilyStore((state) => state.familyRoomId);
   const nickname = useMyProfileStore((state) => state.nickname);
 
   // 추천 검색어
   const [recommend, setRecommend] = useState<RecommendSearch>();
 
   // 인기검색어 TOP8
-  const [popular, setPopular] = useState<string[]>([]);
+  const [popular, setPopular] = useState<PopularSearches>();
 
   useEffect(() => {
     const fetchData = async () => {
-      const recommendData = await getRecommendSearch(familyRoomId);
-      setRecommend(recommendData.result);
+      try {
+        const recommendData = await getRecommendSearch(familyRoomId);
+        setRecommend(recommendData.result);
+      } catch (error) {
+        console.warn("추천 검색어 로딩 실패 :", error);
+        setRecommend({ recipeName: ["4점 이상 리뷰가 1개 이상 필요합니다!"] });
+      }
 
-      await postPopularSearch();
-      const popularData = await getPopularSearch();
-      setPopular(popularData.result);
+      try {
+        await postPopularSearch();
+        const popularData = await getPopularSearch();
+        setPopular(popularData.result);
+        console.log("인기 검색어 로딩 성공:", popularData.result);
+      } catch (error) {
+        console.error("인기 검색어 로딩 실패:", error);
+      }
     };
 
     fetchData();
@@ -85,7 +95,11 @@ const SearchingPage = () => {
             </p>
             <div className="flex gap-1.5">
               {recommend?.recipeName.map((recommendName) => (
-                <ElementButton name={recommendName} />
+                <ElementButton
+                  key={recommendName}
+                  name={recommendName}
+                  onClick={() => setKeyword(recommendName)}
+                />
               ))}
             </div>
           </div>
@@ -95,57 +109,18 @@ const SearchingPage = () => {
             </p>
             <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4">
               <p className="text-neutral-400 text-xs font-normal leading-4">
-                오후 8시 순위
+                {formatRankingTime(popular?.windowEnd)}
               </p>
-              <div className="grid grid-rows-4 grid-flow-col gap-x-10.5 gap-y-4">
-                <RankButton
-                  rank={1}
-                  name={popular[0]}
-                  up={true}
-                  onClick={() => setKeyword(popular[0])}
-                />
-                <RankButton
-                  rank={2}
-                  name={popular[1]}
-                  up={true}
-                  onClick={() => setKeyword(popular[1])}
-                />
-                <RankButton
-                  rank={3}
-                  name={popular[2]}
-                  up={false}
-                  onClick={() => setKeyword(popular[2])}
-                />
-                <RankButton
-                  rank={4}
-                  name={popular[3]}
-                  up={true}
-                  onClick={() => setKeyword(popular[3])}
-                />
-                <RankButton
-                  rank={5}
-                  name={popular[4]}
-                  up={true}
-                  onClick={() => setKeyword(popular[4])}
-                />
-                <RankButton
-                  rank={6}
-                  name={popular[5]}
-                  up={false}
-                  onClick={() => setKeyword(popular[5])}
-                />
-                <RankButton
-                  rank={7}
-                  name={popular[6]}
-                  up={false}
-                  onClick={() => setKeyword(popular[6])}
-                />
-                <RankButton
-                  rank={8}
-                  name={popular[7]}
-                  up={true}
-                  onClick={() => setKeyword(popular[7])}
-                />
+              <div className="grid grid-rows-4 grid-flow-col gap-x-10.5 gap-y-4 w-full">
+                {popular?.keywords.slice(0, 8).map((item) => (
+                  <RankButton
+                    key={item.keyword}
+                    rank={item.rank}
+                    change={item.change}
+                    name={item.keyword}
+                    onClick={() => setKeyword(item.keyword)}
+                  />
+                ))}
               </div>
             </div>
           </div>
