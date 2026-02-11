@@ -16,7 +16,6 @@ const MenuInformationPage = () => {
   const [recipe, setRecipe] = useState<DetailRecipe>();
 
   const navigate = useNavigate();
-  const type = new URLSearchParams(useLocation().search).get("type");
   const recipeId = Number(menuId);
 
   useEffect(() => {
