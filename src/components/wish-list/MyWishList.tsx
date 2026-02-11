@@ -120,7 +120,6 @@ const MyWishList = () => {
                     `/menu-information/${item.transformedRecipeId}?type=TRANSFORMED`,
                   )
                 }
-                isSelected={isSelected(uniqueKey)}
               />
             </div>
           );
@@ -154,7 +153,6 @@ const MyWishList = () => {
                 onClick={() =>
                   navigate(`/menu-information/${item.recipeId}?type=RECIPE`)
                 }
-                isSelected={isSelected(uniqueKey)}
               />
             </div>
           );

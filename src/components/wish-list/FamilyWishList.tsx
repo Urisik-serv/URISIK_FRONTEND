@@ -128,7 +128,6 @@ const FamilyWishList = () => {
                 profiles={item.sourceProfile.profiles}
                 onClick={() => handleClick(item)}
                 clickable={true}
-                isSelected={false}
               />
             </div>
           );
