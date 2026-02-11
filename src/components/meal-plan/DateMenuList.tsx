@@ -27,7 +27,7 @@ export default function DateMenuList({
     >
       <div className="flex flex-col gap-[10px]">
         {data.map((data) => (
-          <div className="flex flex-col gap-4 p-4">
+          <div key={data.id} className="flex flex-col gap-4 p-4">
             <div className="flex gap-[14px]">
               <img
                 src={data.imageUrl}

@@ -15,7 +15,6 @@ export type weekMealProps = {
 export default function WeekMeal({ weekType }: weekMealProps) {
   const { familyRoomId } = useFamilyStore();
   const isLeader = useProfileStore().isLeader;
-  console.log(isLeader);
   const baseDate = new Date();
   const date =
     weekType === "THIS" ? getThisMonday(baseDate) : getNextMonday(baseDate); //이번주/다음주 시작 월요일 날짜
@@ -91,7 +90,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
         {futureDays.map((day) => {
           if (day.meals.length > 0) {
             return (
-              <div className="flex gap-3">
+              <div key={day.dayKor} className="flex gap-3">
                 <CalendarChipS text={day.dayKor} type="primary" />
                 <DateMenuList isSelect={true} data={day.meals} />
               </div>
@@ -101,7 +100,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
         {pastDays.map((day) => {
           if (day.meals.length > 0) {
             return (
-              <div className="flex gap-3">
+              <div key={day.dayKor} className="flex gap-3">
                 <CalendarChipS text={day.dayKor} type="gray" />
                 <DateMenuList isSelect={false} data={day.meals} />
               </div>

@@ -24,9 +24,9 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
 
           <p className="font-semibold text-[18px] tracking-[0.01em] text-gray-600">
             {data.title.split(" ").map((title, idx) => (
-              <>
+              <span key={idx}>
                 {title} {idx % 2 === 1 && <br />}
-              </>
+              </span>
             ))}
           </p>
         </div>

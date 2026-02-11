@@ -25,7 +25,6 @@ const MealPlanPage = () => {
   const { familyRoomId } = useFamilyStore.getState();
 
   const { data: todayData, isError } = useGetTodayMealPlan(familyRoomId);
-  console.log(todayData);
   useEffect(() => {
     if (todayData?.result?.meals.length == 1) {
       if (todayData.result.meals[0].mealType === "DINNER") setTodayTab("저녁");
@@ -96,8 +95,8 @@ const MealPlanPage = () => {
             )}
           </>
         )}
-        {tab == "이번주 식단" && <WeekMeal weekType="THIS" />}
-        {tab == "다음주 식단" && <WeekMeal weekType="NEXT" />}
+        {tab == "이번주 식단" && <WeekMeal key="THIS" weekType="THIS" />}
+        {tab == "다음주 식단" && <WeekMeal key="NEXT" weekType="NEXT" />}
       </div>
     </div>
   );
