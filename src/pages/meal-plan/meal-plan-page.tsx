@@ -15,7 +15,11 @@ const MealPlanPage = () => {
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get("tab");
   const [tab, setTab] = useState<"오늘의 식단" | "이번주 식단" | "다음주 식단">(
-    tabParam === "nextWeek" ? "다음주 식단" : "오늘의 식단",
+    tabParam === "NEXT"
+      ? "다음주 식단"
+      : tabParam === "THIS"
+        ? "이번주 식단"
+        : "오늘의 식단",
   );
   const [todayTab, setTodayTab] = useState<"점심" | "저녁">("점심");
   const { familyRoomId } = useFamilyStore.getState();
@@ -23,7 +27,6 @@ const MealPlanPage = () => {
   const { data: todayData, isError } = useGetTodayMealPlan(familyRoomId);
   console.log(todayData);
   useEffect(() => {
-
     if (todayData?.result?.meals.length == 1) {
       if (todayData.result.meals[0].mealType === "DINNER") setTodayTab("저녁");
     }

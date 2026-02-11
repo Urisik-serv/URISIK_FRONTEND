@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useGetWeekMealPlan from "../../hooks/queries/use-get-week-meal";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useProfileStore } from "../../stores/use-profile-store";
@@ -19,6 +20,8 @@ export default function WeekMeal({ weekType }: weekMealProps) {
   const date =
     weekType === "THIS" ? getThisMonday(baseDate) : getNextMonday(baseDate); //이번주/다음주 시작 월요일 날짜
   const { data, isError, isLoading } = useGetWeekMealPlan(familyRoomId!, date);
+
+  const navigate = useNavigate();
   if (isError) {
     return (
       <div className="pt-43">
@@ -26,6 +29,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
           <EmptyState
             text="아직 식단이 생성되지 않았어요"
             buttonText="식단 생성"
+            onClick={() => navigate(`/meal-plan/create?week=${weekType}`)}
           />
         ) : (
           <EmptyState

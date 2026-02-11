@@ -9,8 +9,8 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import MealPlanResult from "../../components/meal-plan/MealPlanResult";
 import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
 import AlertModal from "../../components/common/AlertModal";
-import { useNavigate } from "react-router-dom";
-import { getNextMonday } from "../../utils/date";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MealPlanCreatePage = () => {
@@ -21,6 +21,9 @@ const MealPlanCreatePage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const weekParam = searchParams.get("week");
+
   const [mealPlanId, setMealPlanId] = useState<number>(0);
   const [lunchSlots, setLunchSlots] = useState<SlotRequest[]>([]);
   const [dinnerSlots, setDinnerSlots] = useState<SlotRequest[]>([]);
@@ -30,7 +33,7 @@ const MealPlanCreatePage = () => {
 
   const handleCreate = async () => {
     const body: CreateMealPlan = {
-      weekStartDate: getNextMonday(),
+      weekStartDate: weekParam === "THIS" ? getThisMonday() : getNextMonday(),
       selectedSlots: [...lunchSlots, ...dinnerSlots],
       regenerate: regenerate,
     };
@@ -125,6 +128,7 @@ const MealPlanCreatePage = () => {
                 <MealPlanResult
                   mealPlanId={mealPlanId}
                   onClick={handleCreate}
+                  weekParam={weekParam}
                 />
               )}
             </div>

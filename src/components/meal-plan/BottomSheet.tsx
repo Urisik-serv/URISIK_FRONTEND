@@ -7,8 +7,9 @@ import AlertModal from "../common/AlertModal";
 
 type BottomSheetProps = {
   open: boolean;
+  weekParam: string | null;
 };
-export default function BottomSheet({ open }: BottomSheetProps) {
+export default function BottomSheet({ open, weekParam }: BottomSheetProps) {
   const [tab, setTab] = useState<"common" | "recommend">("common");
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +32,11 @@ export default function BottomSheet({ open }: BottomSheetProps) {
   }, [open]);
 
   const handleButton = () => {
-    navigate(`/meal-plan?tab=nextWeek`);
+    if (weekParam === "THIS") {
+      navigate(`/meal-plan?tab=THIS`);
+    } else {
+      navigate(`/meal-plan?tab=NEXT`);
+    }
   };
   return (
     <div className="w-[375px] fixed bottom-0 p-[10px] rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] overflow-hidden bg-white flex flex-col items-center">

@@ -3,6 +3,7 @@ import PublicHeader from "../../components/header/PublicHeader";
 import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM";
 import MenuChip from "../../components/meal-plan/MenuChip";
 import BottomSheet from "../../components/meal-plan/BottomSheet";
+import { useSearchParams } from "react-router-dom";
 
 const MealPlanEditPage = () => {
   const data = [
@@ -19,6 +20,9 @@ const MealPlanEditPage = () => {
     menuIndex: number | null;
   }>({ dayIndex: null, menuIndex: null });
   const [open, setOpen] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const weekParam = searchParams.get("week");
 
   const hasOpenedRef = useRef(false);
   useEffect(() => {
@@ -70,7 +74,7 @@ const MealPlanEditPage = () => {
           );
         })}
       </div>
-      <BottomSheet open={open} />
+      <BottomSheet open={open} weekParam={weekParam} />
     </div>
   );
 };
