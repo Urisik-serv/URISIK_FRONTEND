@@ -153,7 +153,14 @@ export default function MyProfilePage() {
                   id={item.transformedRecipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
-                  border="border-b border-gray-200"
+
+                  key={item.transformedRecipeId}
+                  border="border-b-1 border-b-gray-200"
+                  onClick={() =>
+                    navigate(
+                      `/menu-information/${item.transformedRecipeId}?type=TRANSFORMED`,
+                    )
+                  }
                 />
               ))}
 
@@ -167,7 +174,12 @@ export default function MyProfilePage() {
                   id={item.recipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
-                  border="border-b border-gray-200"
+
+                  key={item.recipeId}
+                  border="border-b-1 border-b-gray-200"
+                  onClick={() =>
+                    navigate(`/menu-information/${item.recipeId}?type=RECIPE`)
+                  }
                 />
               ))}
             </div>

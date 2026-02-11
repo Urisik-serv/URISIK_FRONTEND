@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import Rate from "../../common/Rate";
-import { postExteralRecipes } from "../../../api/recipes";
+import { postExternalRecipes } from "../../../api/recipes";
 import type { SearchRecipesItem } from "../../../types/recipes";
+import SafeMark from "../../common/SafeMark";
 
 interface MealCardProps {
   id: string;
@@ -12,6 +13,8 @@ interface MealCardProps {
   rating: number;
   img: string;
   type: string;
+  typeBool?: boolean;
+  isSafe?: boolean;
   external: SearchRecipesItem["external"] | null;
 }
 const MealCard = ({
@@ -22,9 +25,17 @@ const MealCard = ({
   rating,
   img,
   type,
+  typeBool,
+  isSafe,
   external,
 }: MealCardProps) => {
   const navigate = useNavigate();
+
+  if (typeBool !== undefined) {
+    if (typeBool) type = "TRANSFORMED";
+    else type = "RECIPE";
+  }
+
   const handleOpenInfo = async () => {
     const numId = Number(id);
     if (type === "RECIPE") {
@@ -33,11 +44,12 @@ const MealCard = ({
       navigate(`/menu-information/${numId}?type=TRANSFORMED`);
     } else {
       try {
-        const response = await postExteralRecipes(external as any);
+        const response = await postExternalRecipes(external as any);
         const recipeId = response.result.recipeId;
 
         console.log("받아온 ID:", recipeId);
         console.log("전달한 external: ", JSON.stringify(external));
+        navigate(`/menu-information/${recipeId}?type=RECIPE`);
       } catch (error) {
         console.error("외부 레시피 저장 실패:", error);
       }
@@ -54,7 +66,7 @@ const MealCard = ({
       />
       <div className="flex flex-col items-start gap-1.5 flex-1 min-w-0">
         <h2
-          className="text-zinc-800 text-base font-semibold leading-5 cursor-pointer truncate w-full"
+          className="text-gray-800 text-base font-semibold leading-5 cursor-pointer truncate w-full"
           onClick={handleOpenInfo}
         >
           {title}
@@ -68,8 +80,9 @@ const MealCard = ({
           </p>
           <Rate px={12} rate={rating} />
         </div>
+        <SafeMark isSafe={isSafe} />
         <p
-          className="text-zinc-800 text-base font-normal cursor-pointer line-clamp-2 w-full"
+          className="text-gray-600 text-base font-normal cursor-pointer line-clamp-2 w-full leading-6"
           onClick={handleOpenInfo}
         >
           {shortDescription}
