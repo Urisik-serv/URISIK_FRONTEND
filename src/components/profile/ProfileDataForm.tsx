@@ -35,7 +35,6 @@ export default function ProfileDataForm({
     currentFamilyRoomId,
     request,
     isPreferenceSelected,
-    handleAllergyChange,
   } = useFamilyProfileForm();
 
   const selectedAllergies = useProfileStore((s) => s.savedFormData.allergies);
@@ -156,7 +155,7 @@ export default function ProfileDataForm({
             onClick={handleGoSearch}
           />
         </div>
-        <div className="flex gap-[12px]">
+        <div className="flex gap-[12px] flex-wrap">
           {selectedAllergies.length == 0 ? (
             <button
               type="button"
