@@ -45,23 +45,21 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
         />
       )}
 
-      <div className="flex flex-col gap-2 text-[14px] pt-11 pb-7">
-        <p className="font-semibold text-primary-700">
-          식재료 <span className="text-gray-600">1인 기준</span>
-        </p>
+      <div className="flex flex-col gap-3 text-[14px] pt-11 pb-8">
+        <p className="font-semibold text-gray-800 text-[16px]">재료</p>
 
         <p className="font-normal text-gray-600">{data.ingredients}</p>
       </div>
-      <p className="font-semibold text-primary-700 text-[14px] pb-2">레시피</p>
+      <p className="font-semibold text-gray-800 text-[16px] pb-4">레시피</p>
       <div className="flex flex-col gap-4 pb-29">
         {data.recipeSteps.map((step) => (
-          <div className="h-full flex justify-between items-center text-[14px] font-semibold gap-3">
+          <div className="h-full flex justify-between text-[14px] font-semibold gap-3">
             <div>
-              <div className="flex flex-col gap-[1px] pb-[6px]">
-                <p className="text-gray-350">{step.stepOrder}단계</p>
+              <div className="flex flex-col gap-[1px] pb-3">
+                <p className="text-gray-350 font-medium">{step.stepOrder}</p>
                 {/* <p className=" text-[20px] ">재료손질</p> */}
               </div>
-              <p className="font-normal text-gray-800">
+              <p className="font-normal text-gray-600">
                 {step.description.slice(3)}
               </p>
             </div>
