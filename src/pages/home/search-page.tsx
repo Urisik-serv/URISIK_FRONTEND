@@ -36,20 +36,24 @@ const SearchingPage = () => {
   });
 
   return (
-    <div className="flex pt-[30px] justify-center items-start flex-col">
-      <div className="flex justify-center items-center self-stretch px-4 gap-1 pb-7.5">
+    <div className="flex pt-[30px] justify-center items-start flex-col w-full">
+      <div className="flex justify-center items-center self-stretch px-4 gap-1 pb-7.5 w-full">
         <BackButton />
         <SearchBar keyword={keyword} onChange={(e) => setKeyword(e)} />
       </div>
       {keyword === "" ? (
-        <div className="flex flex-col px-4 py-2">
+        <div className="flex flex-col px-4 py-2 w-full">
           <div className="pb-7.5">
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
               최근 검색어
             </p>
-            <div className="flex gap-1.5">
+            <div
+              className="flex gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden
+              [scrollbar-width:none] "
+            >
               {keywords.map((recent) => (
                 <ElementButton
+                  key={recent}
                   name={recent}
                   onClose={() => removeKeyword(recent)}
                   onClick={() => setKeyword(recent)}
