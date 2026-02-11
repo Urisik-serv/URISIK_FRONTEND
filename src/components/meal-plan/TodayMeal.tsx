@@ -12,7 +12,13 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
   return (
     <>
       <div className="flex justify-between items-center pt-3 pb-6">
-        {isOpen && <ReviewModal recipeId={data.id} onClick={handleOpen} />}
+        {isOpen && (
+          <ReviewModal
+            recipeId={data.id}
+            onClick={handleOpen}
+            type={data.type}
+          />
+        )}
         <div>
           {/* <p className="font-normal text-[16px] leading-[1.5]">우유대신,</p> */}
 

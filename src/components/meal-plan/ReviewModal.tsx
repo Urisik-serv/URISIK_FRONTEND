@@ -10,11 +10,16 @@ import usePostReview from "../../hooks/use-post-review";
 type ReviewModalProps = {
   recipeId: number;
   onClick: () => void;
+  type: "TRANSFORMED_RECIPE" | "RECIPE";
 };
 
 type Preference = boolean | null;
 
-export default function ReviewModal({ recipeId, onClick }: ReviewModalProps) {
+export default function ReviewModal({
+  recipeId,
+  onClick,
+  type,
+}: ReviewModalProps) {
   const [preference, setPreference] = useState<Preference>(null);
   const star = [1, 2, 3, 4, 5];
   const [score, setScore] = useState(0);
@@ -41,13 +46,14 @@ export default function ReviewModal({ recipeId, onClick }: ReviewModalProps) {
     isFavorite,
   }: createReview) => {
     mutate(
-      { recipeId, score, isFavorite },
+      { recipeId, score, isFavorite, type },
       {
         onSuccess: () => {
           setIsOpen(true);
         },
         onError: (e: any) => {
           alert(e.response?.data?.message);
+          onClick();
         },
       },
     );

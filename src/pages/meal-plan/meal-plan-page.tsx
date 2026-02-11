@@ -92,7 +92,7 @@ const MealPlanPage = () => {
                 <EmptyState text={`${todayTab}식단이 생성되지 않았어요.`} />
               </div>
             ) : (
-              <TodayMeal data={tabData} />
+              <TodayMeal key={todayTab} data={tabData} />
             )}
           </>
         )}
