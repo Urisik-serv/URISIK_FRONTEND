@@ -49,6 +49,7 @@ const AllergyCuration = () => {
                 img={recipe.imageUrl}
                 shortDescription={recipe.description}
                 pickedCount={recipe.wishCount}
+                type={recipe.transformed}
               />
             </SwiperSlide>
           ))}

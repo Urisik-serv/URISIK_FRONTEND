@@ -8,6 +8,7 @@ interface AllergyCardProps {
   shortDescription: string;
   pickedCount: number;
   img: string;
+  type?: boolean;
 }
 
 const AllergyCard = ({
@@ -16,10 +17,16 @@ const AllergyCard = ({
   shortDescription,
   pickedCount,
   img,
+  type,
 }: AllergyCardProps) => {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/menu-information/${id}`);
+  const handleClick = async () => {
+    const numId = Number(id);
+    if (type === false) {
+      navigate(`/menu-information/${numId}?type=RECIPE`);
+    } else {
+      navigate(`/menu-information/${numId}?type=TRANSFORMED`);
+    }
   };
   return (
     <div className="py-3 px-2.5 rounded-xl border-2 border-[#ECECEC]">
