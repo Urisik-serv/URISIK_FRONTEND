@@ -116,7 +116,7 @@ export type ResponseThisWeekMealPlan = BaseResponse<ThisWeekMealPlan>;
 
 /////////
 export interface Updates {
-  selectedSlots: {
+  selectedSlot: {
     mealType: MealType;
     dayOfWeek: DayOfWeek;
   };
