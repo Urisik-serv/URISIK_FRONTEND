@@ -1,6 +1,5 @@
 import PageIndicator from "../../common/PageIndicator";
 import WhiteHeart from "../../../assets/icons/heart-white.svg";
-import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 
 interface ImageIndicatorProps {
   imgUrl?: string;
@@ -12,7 +11,7 @@ const ImageIndicator = ({ imgUrl, name, wishCount }: ImageIndicatorProps) => {
   return (
     <div className="relative h-72 w-full">
       <img
-        src={SampleImg}
+        src={imgUrl}
         alt={`${name} 사진`}
         className="h-full w-full object-cover shrink-0"
       />
