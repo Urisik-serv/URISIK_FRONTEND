@@ -8,8 +8,8 @@ export interface PostFamilyRoomRequest {
 export interface FamilyComposition {
   hasMother: boolean;
   hasFather: boolean;
-  hasGrandFather: boolean;
   hasGrandMother: boolean;
+  hasGrandFather: boolean;
   sonCount: number;
   daughterCount: number;
 }
