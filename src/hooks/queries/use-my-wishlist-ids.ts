@@ -13,7 +13,7 @@ export const getWishlistKey = (type: WishReqType, id: number | undefined) => {
 
 export const useMyWishlistIds = (
   familyRoomId: number | null,
-  profileId: number | null,
+  profileId: number | undefined,
 ) => {
   return useQuery({
     queryKey: [QUERY_KEY.myWishlistIds, familyRoomId, profileId],
