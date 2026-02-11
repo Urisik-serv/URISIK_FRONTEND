@@ -4,10 +4,12 @@ import type { DetailRecipeStep } from "../../types/recipes";
 interface IngredientAndRecipeProps {
   ingredients: string[] | string;
   step: RecipeStep[] | DetailRecipeStep[];
+  type?: "TRANS" | "ELSE";
 }
 const IngredientAndRecipe = ({
   ingredients,
   step,
+  type = "ELSE",
 }: IngredientAndRecipeProps) => {
   const stepData = step.map((step) => {
     if ("stepOrder" in step) {
@@ -46,7 +48,9 @@ const IngredientAndRecipe = ({
                 {/* <p className=" text-[20px] ">재료손질</p> */}
               </div>
               <p className="font-normal text-gray-600">
-                {step.description.slice(3)}
+                {type === "TRANS"
+                  ? step.description
+                  : step.description.slice(3)}
               </p>
             </div>
             <img

@@ -83,12 +83,7 @@ export interface TransformedRecipe {
   title: string;
   baseRecipeId: number;
   ingredients: string[];
-  steps: [
-    {
-      order: number;
-      description: string;
-    },
-  ];
+  steps: DetailRecipeStep[];
   substitutionSummary: [
     {
       allergen: string;

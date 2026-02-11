@@ -7,7 +7,6 @@ import { getDetailRecipe, postTransRecipe } from "../../api/recipes";
 import type { DetailRecipe } from "../../types/recipes";
 import { useFamilyStore } from "../../stores/use-family-store";
 import usePostWishList from "../../hooks/mutations/use-post-wishlist";
-import IngredientAndRecipe from "../../components/common/IngredientAndRecipe";
 import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
 import DetailContent from "../../components/home/detailPage/DetailContent";
 import Rate from "../../components/common/Rate";
@@ -55,7 +54,6 @@ const MenuInformationPage = () => {
     }
   };
 
-  if (!recipe) return <div>로딩 중...</div>; //후에 로딩스피너 추가
   return (
     <div>
       <PublicHeader title={"메뉴 정보"} />
@@ -79,10 +77,6 @@ const MenuInformationPage = () => {
             </div>
             <DetailContent recipe={recipe} />
           </div>
-          <IngredientAndRecipe
-            step={recipe?.steps}
-            ingredients={recipe?.ingredients}
-          />
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
             <WishlistButton
               onClick={handleClick}
