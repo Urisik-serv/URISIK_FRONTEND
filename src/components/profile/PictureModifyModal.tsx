@@ -68,7 +68,7 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
               className="cursor-pointer flex justify-between text-start px-5 w-full  text-white text-lg font-medium  leading-5"
             >
               <div>앨범에서 사진 선택</div>
-              {isCheck === "file" && <Check />}
+              {isCheck === "file" && <Check fillColor="white" />}
             </button>
             <input
               ref={fileInputRef}
@@ -86,7 +86,7 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
               className="cursor-pointer flex justify-between text-start px-5 w-full text-white text-lg font-medium  leading-5"
             >
               <div>사진 촬영</div>
-              {isCheck === "camera" && <Check />}
+              {isCheck === "camera" && <Check fillColor="white" />}
             </button>
             <input
               type="file"
@@ -103,7 +103,7 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
               className="cursor-pointer flex justify-between text-start px-5 w-full text-white text-lg font-medium  leading-5"
             >
               <div>캐릭터 프로필 적용</div>
-              {isCheck === "default" && <Check />}{" "}
+              {isCheck === "default" && <Check fillColor="white" />}
             </button>
           </div>
         </div>
