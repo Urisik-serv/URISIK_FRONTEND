@@ -22,7 +22,7 @@ export const allergyMap: Record<string, string> = {
   우유: "MILK",
   메밀: "BUCKWHEAT",
   땅콩: "PEANUT",
-  대두: "SOYBEAN",
+  대두: "SOY",
   밀: "WHEAT",
   잣: "PINE_NUT",
   호두: "WALNUT",
@@ -38,7 +38,7 @@ export const allergyMap: Record<string, string> = {
   닭고기: "CHICKEN",
   돼지고기: "PORK",
   쇠고기: "BEEF",
-  아황산류: "SULFITE",
+  아황산류: "SULFITES",
   젤라틴: "EXTRACTED_INGREDIENTS",
 } as const;
 
