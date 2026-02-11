@@ -1,4 +1,4 @@
-export const Check = () => {
+export const Check = ({ fillColor }: { fillColor: string }) => {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
       <g clip-path="url(#clip0_3360_7076)">
@@ -10,7 +10,7 @@ export const Check = () => {
       </g>
       <defs>
         <clipPath id="clip0_3360_7076">
-          <rect width="18" height="18" fill="white" />
+          <rect width="18" height="18" fill={fillColor} />
         </clipPath>
       </defs>
     </svg>
