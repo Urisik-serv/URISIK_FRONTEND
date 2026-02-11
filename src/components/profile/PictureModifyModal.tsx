@@ -4,6 +4,9 @@ import { roleMap, rolePicture } from "../../constants/profile-record";
 import { patchProfilePic } from "../../api/family-profile";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { Check } from "../common/icon/Check";
+import { usePatchProfilePic } from "../../hooks/mutations/use-patch-profile-pic";
+import PublicHeader from "../header/PublicHeader";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 interface PictureModalProps {
   onClick: () => void;
@@ -16,6 +19,10 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
   const familyRoomid = useFamilyStore.getState().familyRoomId;
   const [isCheck, setIsCheck] = useState("");
 
+  const { mutate: uploadPic, isPending } = usePatchProfilePic(
+    familyRoomid as number,
+  );
+
   const DefaultSelect = () => {
     setIsCheck("default");
     setSavedFormData((prev) => ({
@@ -24,33 +31,34 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
     }));
   };
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-    if (familyRoomid === null) {
-      return;
-    }
-    const serverUrl = await patchProfilePic(familyRoomid, file);
+    if (!file || !familyRoomid) return;
 
-    setSavedFormData((prev) => ({
-      ...prev,
-      profilePicUrl: serverUrl,
-    }));
+    uploadPic(file, {
+      onSuccess: (serverUrl) => {
+        setSavedFormData((prev) => ({
+          ...prev,
+          profilePicUrl: serverUrl,
+        }));
+      },
+      onError: () => {
+        fileInputRef.current && (fileInputRef.current.value = "");
+        cameraInputRef.current && (cameraInputRef.current.value = "");
+      },
+    });
   };
 
-  const handleTakePhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    if (familyRoomid === null) {
-      return;
-    }
-    const serverUrl = await patchProfilePic(familyRoomid, file);
-
-    setSavedFormData((prev) => ({
-      ...prev,
-      profilePicUrl: serverUrl,
-    }));
-  };
+  if (isPending) {
+    return (
+      <>
+        <PublicHeader title="내 프로필" />
+        <div className="flex justify-center py-20">
+          <LoadingSpinner text="로딩 중..." />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -75,7 +83,7 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
               type="file"
               accept="image/*"
               hidden
-              onChange={handleFileSelect}
+              onChange={handleImageUpload}
             />
             <div className="w-[350px] h-0 border-t border-t-[0.60px] border-white"></div>
             <button
@@ -94,7 +102,7 @@ export default function PictureModifyModal({ onClick }: PictureModalProps) {
               capture="environment"
               hidden
               ref={cameraInputRef}
-              onChange={handleTakePhoto}
+              onChange={handleImageUpload}
             />
 
             <div className="w-[350px] h-0 border-t border-t-[0.60px] border-white"></div>
