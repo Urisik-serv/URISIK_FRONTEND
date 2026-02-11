@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UpButton from "../../components/common/UpButton";
 import WishlistButton from "../../components/common/WishlistButton";
 import { getDetailRecipe, postTransRecipe } from "../../api/recipes";
