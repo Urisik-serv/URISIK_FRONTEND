@@ -1,44 +1,23 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import EntityItem from "../../components/common/EntityItem";
 import ListItem from "../../components/mypage/ListItem";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  deleteProfile,
-  getProfile,
-  getProfiles,
-} from "../../api/family-profile";
+import { useMutation } from "@tanstack/react-query";
+
 import { useFamilyStore } from "../../stores/use-family-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
 import { patchAgree } from "../../api/member";
 import { useProfileStore } from "../../stores/use-profile-store";
+import { useFamilyProfiles } from "../../hooks/queries/use-get-family-profiles";
+import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
+import { useDeleteProfile } from "../../hooks/queries/use-delete-profile";
 
 export default function FamilyAccount() {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
   const { resetProfile } = useProfileStore();
 
-  // 훅으로 뺄 예정
-  const { data: myFamily = [] } = useQuery({
-    queryKey: ["myFamily"],
-    queryFn: async () => {
-      const res = await getProfiles(familyRoomId as number);
-      return res.result.familyDetails;
-    },
-    enabled: familyRoomId !== null,
-  });
-
-  const { data: myProfile } = useQuery({
-    queryKey: ["myProfile"],
-    queryFn: async () => {
-      const res = await getProfile(familyRoomId as number, -1);
-      return res;
-    },
-    enabled: familyRoomId !== null,
-  });
-
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: (profileId: number) =>
-      deleteProfile(familyRoomId as number, profileId),
-  });
+  const { data: myFamily = [] } = useFamilyProfiles(familyRoomId);
+  const { data: myProfile } = useMyProfile(familyRoomId);
+  const { mutate: deleteMutate } = useDeleteProfile(familyRoomId as number);
 
   const { mutate: patchAgreeMutate } = useMutation({
     mutationFn: () =>
@@ -52,8 +31,10 @@ export default function FamilyAccount() {
   });
 
   const handleDelete = (profileId: number) => {
-    patchAgreeMutate();
-    deleteMutate(profileId);
+    patchAgreeMutate(undefined, {
+      onSuccess: () => deleteMutate(profileId),
+    });
+
     // 전역 상태 비워주기
     resetProfile();
   };
@@ -69,13 +50,14 @@ export default function FamilyAccount() {
         <div className="w-[80px]">
           <img
             src={
-              myProfile?.profilePicUrl ?? rolePicture[myProfile?.role as string]
+              myProfile?.profile.profilePicUrl ??
+              rolePicture[myProfile?.profile.role as string]
             }
             alt="프로필 사진"
             className="rounded-full"
           />
           <div className="pt-[8px] text-center text-lg font-semibold tracking-[0.18px]">
-            {myProfile?.nickname}
+            {myProfile?.profile.nickname}
           </div>
         </div>
         <div className="pt-[44px] flex flex-col items-start w-[343px]">
@@ -84,7 +66,7 @@ export default function FamilyAccount() {
           </div>
           <div className="pt-[16px]">
             {myFamily?.map((member, index) => {
-              if (member.profileId === myProfile?.profileId) {
+              if (member.profileId === myProfile?.profile.profileId) {
                 return null;
               } else {
                 return (
@@ -113,7 +95,9 @@ export default function FamilyAccount() {
             <ListItem
               title="가족 계정 나가기"
               isOnOff={false}
-              deleteProfile={() => handleDelete(myProfile?.profileId as number)}
+              deleteProfile={() =>
+                handleDelete(myProfile?.profile.profileId as number)
+              }
             />
           </div>
         </div>
