@@ -101,7 +101,8 @@ const SearchingPage = () => {
               key={item.id}
               id={item.id}
               title={item.title}
-              shortDescription=""
+              shortDescription={item.description}
+              isSafe={item.safe}
               category={item.category}
               rating={item.avgScore}
               img={item.imageUrl}

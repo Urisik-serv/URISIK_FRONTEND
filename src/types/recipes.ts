@@ -14,6 +14,9 @@ export interface SearchRecipesItem {
   category: string;
   avgScore: number;
   reviewCount: number;
+  wishCount: boolean;
+  description: string;
+  safe: boolean;
   external: {
     rcpSeq: string;
     rcpNm: string;
