@@ -33,10 +33,18 @@ const DetailContent = ({ recipe, transRecipe }: DetailContentProps) => {
         )}
       </div>
       <div className="pb-12">
-        <MenuInfo title="재료" sentences={recipe?.ingredients} />
+        {isTrans ? (
+          <MenuInfo title="재료" sentences={transRecipe.ingredients} />
+        ) : (
+          <MenuInfo title="재료" sentences={recipe?.ingredients} />
+        )}
       </div>
       <div>
-        <MenuInfo title="레시피" recipes={recipe?.steps} />
+        {isTrans ? (
+          <MenuInfo title="레시피" recipes={transRecipe.steps} />
+        ) : (
+          <MenuInfo title="레시피" recipes={recipe?.steps} />
+        )}
       </div>
     </div>
   );
