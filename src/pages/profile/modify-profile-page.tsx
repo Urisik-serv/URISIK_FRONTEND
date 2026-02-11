@@ -33,7 +33,7 @@ export default function ModifyProfilePage() {
       <>
         <PublicHeader title="프로필 편집" />
         <div className="flex justify-center py-10">
-          <LoadingSpinner text="로딩중입니다" />
+          <LoadingSpinner text="로딩중..." />
         </div>
       </>
     );

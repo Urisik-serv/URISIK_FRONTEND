@@ -10,13 +10,28 @@ import { useProfileStore } from "../../stores/use-profile-store";
 import { useFamilyProfiles } from "../../hooks/queries/use-get-family-profiles";
 import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
 import { useDeleteProfile } from "../../hooks/queries/use-delete-profile";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import ErrorUI from "../../components/common/ErrorUI";
+import toast from "react-hot-toast";
 
 export default function FamilyAccount() {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
   const { resetProfile } = useProfileStore();
 
-  const { data: myFamily = [] } = useFamilyProfiles(familyRoomId);
-  const { data: myProfile } = useMyProfile(familyRoomId);
+  const {
+    data: myFamily = [],
+    isPending: familyLoading,
+    isError: familyError,
+    refetch: refetchFamily,
+  } = useFamilyProfiles(familyRoomId);
+
+  const {
+    data: myProfile,
+    isPending: profileLoading,
+    isError: profileError,
+    refetch: refetchProfile,
+  } = useMyProfile(familyRoomId);
+
   const { mutate: deleteMutate } = useDeleteProfile(familyRoomId as number);
 
   const { mutate: patchAgreeMutate } = useMutation({
@@ -33,6 +48,9 @@ export default function FamilyAccount() {
   const handleDelete = (profileId: number) => {
     patchAgreeMutate(undefined, {
       onSuccess: () => deleteMutate(profileId),
+      onError: () => {
+        toast.error("약관 철회에 실패했습니다.");
+      },
     });
 
     // 전역 상태 비워주기
@@ -43,6 +61,36 @@ export default function FamilyAccount() {
     return Object.entries(record).find(([_, v]) => v === value)?.[0];
   };
 
+  const isLoading = familyLoading || profileLoading;
+  const isError = familyError || profileError;
+
+  if (isLoading) {
+    return (
+      <>
+        <PublicHeader title="가족계정" />
+        <div className="flex justify-center py-20">
+          <LoadingSpinner text="로딩 중..." />
+        </div>
+      </>
+    );
+  }
+
+  const handleRetry = () => {
+    refetchFamily();
+    refetchProfile();
+  };
+
+  if (isError) {
+    return (
+      <>
+        <PublicHeader title="프로필 편집" />
+        <ErrorUI
+          message="프로필을 불러오지 못했습니다."
+          onRetry={handleRetry}
+        />
+      </>
+    );
+  }
   return (
     <>
       <PublicHeader title={"가족계정"} />

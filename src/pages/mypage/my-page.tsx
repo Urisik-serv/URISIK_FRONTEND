@@ -34,7 +34,7 @@ const MyPage = () => {
   if (LogoutIsPending) {
     return (
       <div className="w-full h-dvh flex justify-center items-center">
-        <LoadingSpinner text="로딩중 입니다" />
+        <LoadingSpinner text="로딩중..." />
       </div>
     );
   }
