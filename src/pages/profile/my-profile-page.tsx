@@ -152,8 +152,6 @@ export default function MyProfilePage() {
                   type="TRANSFORMED_RECIPE"
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
-
-                  key={item.transformedRecipeId}
                   border="border-b-1 border-b-gray-200"
                   onClick={() =>
                     navigate(
@@ -173,8 +171,6 @@ export default function MyProfilePage() {
                   id={item.recipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
-
-                  key={item.recipeId}
                   border="border-b-1 border-b-gray-200"
                   onClick={() =>
                     navigate(`/menu-information/${item.recipeId}?type=RECIPE`)

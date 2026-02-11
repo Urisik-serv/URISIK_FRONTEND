@@ -61,8 +61,6 @@ export const useFamilyProfileForm = () => {
   };
 
   // 선호도
-  const foods = ["한식", "중식", "일식", "양식", "디저트"];
-
   const isPreferenceSelected = (food: string) =>
     formData.preferences.includes(food);
 
