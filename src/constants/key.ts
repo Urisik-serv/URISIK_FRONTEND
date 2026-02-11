@@ -13,4 +13,5 @@ export const QUERY_KEY = {
   familyWish: "familyWishList",
   profileWish: "profileWish",
   profileTransWish: "profileTransWish",
+  myWishlistIds: "myWishlistIds",
 };
