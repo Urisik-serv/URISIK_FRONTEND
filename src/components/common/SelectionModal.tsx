@@ -1,15 +1,15 @@
 import { Check } from "./icon/Check";
 
 export interface SelectionModalProps {
-  handleModal: () => void;
+  handleModal?: () => void;
   // 항목별 텍스트
   firstSelectionText: string;
   secondSelectionText: string;
   thirdSelectionText: string;
   // 항목별 onClick함수
-  firstSelectionOnClick: () => void;
-  secondSelectionOnClick: () => void;
-  thirdSelectionOnClick: () => void;
+  firstSelectionOnClick?: () => void;
+  secondSelectionOnClick?: () => void;
+  thirdSelectionOnClick?: () => void;
   // 컴포넌트 사용하는 곳에서 각 항목별 클릭 함수에
   // 예:setIsCheck("firstSelection") 추가해 주세요!
   // => 체크 표시에 사용
