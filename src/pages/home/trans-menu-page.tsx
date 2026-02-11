@@ -6,7 +6,7 @@ import { getDetailRecipe, getTransRecipe } from "../../api/recipes";
 import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
 import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
-import DetailContent from "../../components/home/detailPage/detailContent";
+import DetailContent from "../../components/home/detailPage/DetailContent";
 import WishlistButton from "../../components/common/WishlistButton";
 import UpButton from "../../components/common/UpButton";
 import DownImg from "../../assets/icons/chevron-down-gray300.svg";
