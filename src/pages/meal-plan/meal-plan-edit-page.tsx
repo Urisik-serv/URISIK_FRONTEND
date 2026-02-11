@@ -10,7 +10,7 @@ import {
   type SlotItem,
 } from "../../types/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
-import { patchEditMealPlans } from "../../api/meal-plan";
+import { patchEditMealPlans, postConfirmMealPlan } from "../../api/meal-plan";
 import { useNavigate } from "react-router-dom";
 
 type mealPlanResponse = Record<string, SlotItem[]>;
@@ -129,19 +129,24 @@ const MealPlanEditPage = () => {
         mealPlanId: mealPlanId,
         updates: updateList,
       });
+      await postConfirmMealPlan({
+        familyRoomId: familyRoomId,
+        mealPlanId: mealPlanId,
+      });
     } catch (e) {
       alert("다시 시도해주세요" + e);
     } finally {
       navigate(`/meal-plan?tab=nextWeek`);
     }
   };
+
   return (
     <div>
       <PublicHeader title={"식단 수정"} />
       <p className="pl-4 pt-6 font-semibold text-[24px] text-[#333333] pb-11 whitespace-pre-line">
         수정하고 싶은 요일을 선택하고,{"\n"}내가 원하는 메뉴로 바꿔요.
       </p>
-      <div className="flex gap-2 pb-[27px] overflow-x-auto">
+      <div className="flex gap-2 pb-[27px] overflow-x-auto pr-4">
         <div className="flex flex-col items-center gap-3 font-medium text-gray-500 text-[14px]">
           <CalendarChipM text="" />
           <p className="pl-4 pr-2 flex items-center text-center shrink-0 h-[82px] whitespace-nowrap">
