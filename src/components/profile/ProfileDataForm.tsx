@@ -10,6 +10,7 @@ import OptionalLabel from "../family/OptionalLabel";
 import { patchProfile, postProfile } from "../../api/family-profile";
 import { useProfileStore } from "../../stores/use-profile-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
+import { useEffect } from "react";
 
 interface ProfileDataFormProps {
   isEdit?: boolean; // 편집 모드 여부
@@ -32,6 +33,7 @@ export default function ProfileDataForm({
     formData,
     currentFamilyRoomId,
     request,
+    handleAllergyChange,
   } = useFamilyProfileForm();
 
   const {
@@ -41,6 +43,14 @@ export default function ProfileDataForm({
   } = useAllergySearch();
 
   const savedRole = useProfileStore.getState().savedFormData.role;
+
+  useEffect(() => {
+    if (selectedAllergies.length === 0) {
+      handleAllergyChange(false);
+    } else {
+      handleAllergyChange(selectedAllergies);
+    }
+  }, [selectedAllergies]);
 
   const handleGoSearch = () => {
     navigate("allergy-search");
@@ -55,6 +65,7 @@ export default function ProfileDataForm({
     e.preventDefault();
     try {
       if (isEdit) {
+        console.log("보내는 데이터:", JSON.stringify(request, null, 2));
         const res = await patchProfile(currentFamilyRoomId, request);
         console.log(res.result);
       } else {

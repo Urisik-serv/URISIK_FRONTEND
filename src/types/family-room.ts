@@ -1,7 +1,6 @@
 import type { BaseResponse } from "./response";
 
 export interface PostFamilyRoomRequest {
-  familySize: number;
   familyComposition: FamilyComposition;
   familyPolicy: string;
 }
@@ -9,6 +8,8 @@ export interface PostFamilyRoomRequest {
 export interface FamilyComposition {
   hasMother: boolean;
   hasFather: boolean;
+  hasGrandFather: boolean;
+  hasGrandMother: boolean;
   sonCount: number;
   daughterCount: number;
 }

@@ -34,30 +34,22 @@ export default function DateMenuList({
                 alt="음식 이미지"
                 className="size-[66px] rounded-lg object-cover"
               />
-              <div className="flex flex-1 flex-col justify-between">
+              <div className="flex flex-1 flex-col justify-between gap-1.5">
                 <p className="font-semibold text-[14px] tracking-[-0.02em] text-gray-800">
                   {data.title}
                 </p>
-                {/* <p className="font-normal text-[12px] text-gray-800">
-                새우볶음밥 느낌 그대로, 갑각류 없이도 씹는 맛은 살렸어요.
-              </p> */}
+                <p className="font-normal text-[12px] text-gray-800 leading-[18px]">
+                  {data.ingredients}
+                </p>
+                <div className="flex justify-end pt-1.5">
+                  <button
+                    className="flex items-center font-semibold cursor-pointer text-[14px] text-gray-800"
+                    onClick={() => navigate(`/menu-information/${data.id}`)}
+                  >
+                    레시피 자세히 보기 <img src={Right} alt="화살표 아이콘" />
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="flex gap-[22px]">
-              <p className="shrink-0 w-[56px] h-[21px] font-semibold tracking-[-0.02em] text-center text-[14px] text-gray-800">
-                식재료
-              </p>
-              <p className="font-normal text-[12px] text-gray-600">
-                {data.ingredients}
-              </p>
-            </div>
-            <div className="flex justify-end">
-              <button
-                className="flex items-center font-semibold cursor-pointer text-[14px] text-gray-800"
-                onClick={() => navigate(`/menu-information/${data.id}`)}
-              >
-                레시피 자세히 보기 <img src={Right} alt="화살표 아이콘" />
-              </button>
             </div>
           </div>
         ))}

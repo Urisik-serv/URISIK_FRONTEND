@@ -1,5 +1,5 @@
-import plusIcon from "../../assets/icons/plus.svg";
-import minusIcon from "../../assets/icons/minus.svg";
+import { Minus } from "../common/icon/Minus";
+import { Plus } from "../common/icon/Plus";
 
 interface NumberOfMemberProps {
   number: number;
@@ -16,26 +16,22 @@ export default function NumberOfMember({
 }: NumberOfMemberProps) {
   return (
     <>
-      <div className="flex justify-start items-center gap-3">
-        <button
-          disabled={isBlocked}
-          onClick={decrement}
-          className="cursor-pointer w-8 h-8 bg-zinc-100 rounded-2xl flex justify-center items-center gap-2.5"
-        >
-          <img src={minusIcon} alt="인원 감소" />
-        </button>
-        <div className="w-7 px-2.5 pb-0.5 border-b border-black inline-flex flex-col justify-center items-center gap-2.5">
-          <div className="self-stretch justify-start text-black text-lg font-semibold font-['Pretendard'] leading-7">
+      <div className="h-9 px-3 bg-gray-100 rounded-full">
+        <div className="z-50 flex justify-center items-center h-full gap-2">
+          <button
+            onClick={decrement}
+            disabled={isBlocked}
+            className="flex items-center"
+          >
+            <Minus />
+          </button>
+          <div className="bg-white px-3 rounded-full text-center text-primary-700 text-lg font-semibold leading-[28.62px]">
             {number}
           </div>
+          <button onClick={increment} className="flex items-center">
+            <Plus />
+          </button>
         </div>
-        <button
-          disabled={isBlocked}
-          onClick={increment}
-          className="cursor-pointer w-8 h-8 bg-zinc-100 rounded-2xl flex justify-center items-center gap-2.5"
-        >
-          <img src={plusIcon} alt="인원 증가" />
-        </button>
       </div>
     </>
   );

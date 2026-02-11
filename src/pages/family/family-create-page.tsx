@@ -1,4 +1,3 @@
-import FamilyTotalNumber from "../../components/family/FamilyTotalNumber";
 import PublicHeader from "../../components/header/PublicHeader";
 import NumberOfMember from "../../components/family/NumberOfMember";
 import Button from "../../components/common/Button";
@@ -7,9 +6,6 @@ import { useFamilyData } from "../../hooks/use-family-data";
 
 export default function FamilyCreatePage() {
   const {
-    familyNumber,
-    setFamilyNumber,
-    SetAvailableFamilyNumber,
     select,
     familyCounts,
     increment,
@@ -28,24 +24,11 @@ export default function FamilyCreatePage() {
           가정 정보
         </div>
         <div className="pt-[40px]">
-          <div className=" text-zinc-800 text-base font-semibold  leading-6">
-            가족 인원 수
+          <div className=" text-zinc-800 text-base font-semibold leading-6">
+            가족 구성원
           </div>
-          <div className="flex items-center pt-[8px] gap-[8px]">
-            <FamilyTotalNumber
-              familyNumber={familyNumber}
-              setFamilyNumber={setFamilyNumber}
-              setAvailableNumber={SetAvailableFamilyNumber}
-            />
-            <span className="text-zinc-800 text-base font-semibold leading-6">
-              인
-            </span>
-          </div>
-          <div className="pt-[32px] flex flex-col gap-[8px]">
-            <div className=" text-zinc-800 text-base font-semibold leading-6">
-              가족 구성원
-            </div>
-            <div className="flex gap-[12px]">
+          <div className="flex flex-col gap-[12px]">
+            <div className="flex gap-[12px] pt-5">
               <button onClick={() => select("mom")}>
                 <SelectButton
                   name="엄마"
@@ -56,6 +39,20 @@ export default function FamilyCreatePage() {
                 <SelectButton
                   name="아빠"
                   isSelected={familyCounts["dad"] > 0}
+                />
+              </button>
+            </div>
+            <div className="flex gap-[12px]">
+              <button onClick={() => select("grandMother")}>
+                <SelectButton
+                  name="할머니"
+                  isSelected={familyCounts["grandMother"] > 0}
+                />
+              </button>
+              <button onClick={() => select("grandFather")}>
+                <SelectButton
+                  name="할아버지"
+                  isSelected={familyCounts["grandFather"] > 0}
                 />
               </button>
             </div>
@@ -95,13 +92,29 @@ export default function FamilyCreatePage() {
                 (식단 관리자)
               </span>
             </div>
-            <div className="flex gap-[12px]">
-              <button onClick={() => handleLeader("mom")}>
-                <SelectButton name="엄마" isSelected={isLeader["mom"]} />
-              </button>
-              <button onClick={() => handleLeader("dad")}>
-                <SelectButton name="아빠" isSelected={isLeader["dad"]} />
-              </button>
+            <div className="flex flex-col gap-3 pt-1">
+              <div className="flex gap-[12px]">
+                <button onClick={() => handleLeader("mom")}>
+                  <SelectButton name="엄마" isSelected={isLeader["mom"]} />
+                </button>
+                <button onClick={() => handleLeader("dad")}>
+                  <SelectButton name="아빠" isSelected={isLeader["dad"]} />
+                </button>
+              </div>
+              <div className="flex gap-[12px]">
+                <button onClick={() => handleLeader("grandMother")}>
+                  <SelectButton
+                    name="할머니"
+                    isSelected={isLeader["grandMother"]}
+                  />
+                </button>
+                <button onClick={() => handleLeader("grandFather")}>
+                  <SelectButton
+                    name="할아버지"
+                    isSelected={isLeader["grandFather"]}
+                  />
+                </button>
+              </div>
             </div>
           </div>
           <div className="pt-[264px]">

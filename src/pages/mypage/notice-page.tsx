@@ -1,9 +1,29 @@
+import { useEffect, useRef } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import NoticeBlock from "../../components/mypage/NoticeBlock";
 import { useNoticeList } from "../../hooks/use-notice-list";
+import NotificationSkeleton from "../../components/mypage/NotificationSkeleton";
 
 export default function NoticePage() {
-  const { noticeList } = useNoticeList();
+  const { noticeList, isFetching, data, setSize } = useNoticeList();
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!observerRef.current || data?.result.last) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isFetching) {
+          setSize((prev) => prev + 10);
+        }
+      },
+      { threshold: 1 },
+    );
+
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [isFetching, data?.result.last]);
 
   return (
     <>
@@ -28,6 +48,13 @@ export default function NoticePage() {
             />
           ),
         )}
+        <div ref={observerRef} className="h-1" />
+
+        {isFetching &&
+          data?.result.last &&
+          Array.from({ length: 3 }).map((_, i) => (
+            <NotificationSkeleton key={i} />
+          ))}
       </div>
     </>
   );

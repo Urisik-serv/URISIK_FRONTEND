@@ -117,9 +117,6 @@ export const useFamilyProfileForm = () => {
     return (
       formData.nickname.length > 0 &&
       formData.role.length > 0 &&
-      (typeof formData.allergies === "boolean"
-        ? formData.allergies === false
-        : formData.allergies.length > 0) &&
       formData.preferences.length > 0
     );
   };
@@ -132,16 +129,16 @@ export const useFamilyProfileForm = () => {
     allergyList = ["NONE"];
   }
 
-  const preferencesList = formData.preferences.map(
-    (item) => preferenceMap[item],
-  );
+  const preferencesList = formData.preferences
+    .map((item) => preferenceMap[item])
+    .filter((item) => item != null);
 
   const request: postProfileRequest = {
     nickname: formData.nickname,
     role: roleMap[formData.role],
     likedIngredients: formData.likedIngredients,
     dislikedIngredients: formData.dislikedIngredients,
-    allergy: Array.isArray(allergyList) ? allergyList : [],
+    allergy: allergyList,
     dietPreferences: preferencesList,
   };
 
