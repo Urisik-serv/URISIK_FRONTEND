@@ -178,3 +178,8 @@ export interface RecommendPopularRecipes {
 }
 
 export type ResponseRecommendPopular = BaseResponse<RecommendPopularRecipes>;
+
+// 리뷰 기반 추천 레시피 검색어
+export interface RecommendSearch {
+  recipeName: string[];
+}
