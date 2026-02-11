@@ -21,10 +21,13 @@ export const getSearchRecipes = async (
   return data;
 };
 
-export const postExteralRecipes = async (
+export const postExternalRecipes = async (
   external: SearchRecipesItem["external"],
 ): Promise<ResponseExternalRecipes> => {
-  const { data } = await axiosInstance.post("/api/recipes/external", external);
+  const { data } = await axiosInstance.post(
+    "/api/recipes/external/import",
+    external,
+  );
 
   console.log("요청 성공: ", data);
   return data;

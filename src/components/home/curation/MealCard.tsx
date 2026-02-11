@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import Rate from "../../common/Rate";
-import { postExteralRecipes } from "../../../api/recipes";
+import { postExternalRecipes } from "../../../api/recipes";
 import type { SearchRecipesItem } from "../../../types/recipes";
 import SafeMark from "../../common/SafeMark";
 
@@ -44,11 +44,12 @@ const MealCard = ({
       navigate(`/menu-information/${numId}?type=TRANSFORMED`);
     } else {
       try {
-        const response = await postExteralRecipes(external as any);
+        const response = await postExternalRecipes(external as any);
         const recipeId = response.result.recipeId;
 
         console.log("받아온 ID:", recipeId);
         console.log("전달한 external: ", JSON.stringify(external));
+        navigate(`/menu-information/${recipeId}?type=RECIPE`);
       } catch (error) {
         console.error("외부 레시피 저장 실패:", error);
       }
