@@ -10,6 +10,12 @@ import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
 import DetailContent from "../../components/home/detailPage/DetailContent";
 import Rate from "../../components/common/Rate";
+import {
+  getWishlistKey,
+  useMyWishlistIds,
+} from "../../hooks/queries/use-my-wishlist-ids";
+import { useMyProfileStore } from "../../stores/use-my-profile-store";
+import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -31,20 +37,31 @@ const MenuInformationPage = () => {
     fetchData();
   }, [recipeId]);
 
+  // 내 정보
   const roomId = useFamilyStore.getState().familyRoomId;
-  const { mutate: addWishList } = usePostWishList(roomId);
+  const profileId = useMyProfileStore((state) => state.myProfileId);
 
-  const isWishList = recipe?.allergyWarning.hasRisk ? false : true;
+  const { mutate: addWishList } = usePostWishList(roomId);
+  const { mutate: deleteWishList } = useDeleteProfileWishLists(roomId);
+
+  const isSafe = recipe?.allergyWarning.hasRisk ? false : true;
+
+  // 위시리스트 포함여부 로직
+  const { data: wishlistIds } = useMyWishlistIds(roomId, profileId);
+  const wishKey = getWishlistKey("RECIPE", recipe?.recipeId);
+  const isWishList = wishlistIds?.has(wishKey);
 
   const handleClick = async () => {
-    if (isWishList) {
-      const currentRecipeId = recipe?.recipeId;
+    const currentRecipeId = recipe?.recipeId;
 
-      const directPayload = {
-        recipeId: currentRecipeId ? [currentRecipeId] : [],
-        transformedRecipeId: [],
-      };
+    const directPayload = {
+      recipeId: currentRecipeId ? [currentRecipeId] : [],
+      transformedRecipeId: [],
+    };
 
+    if (isSafe && isWishList) {
+      deleteWishList(directPayload);
+    } else if (isSafe) {
       addWishList(directPayload);
     } else {
       const transData = await postTransRecipe(recipeId);
@@ -80,7 +97,8 @@ const MenuInformationPage = () => {
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
             <WishlistButton
               onClick={handleClick}
-              isSafe={!recipe?.allergyWarning.hasRisk}
+              isSafe={isSafe}
+              isWishList={isWishList}
             />
           </div>
           <UpButton />

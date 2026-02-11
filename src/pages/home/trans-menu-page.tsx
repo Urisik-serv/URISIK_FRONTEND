@@ -12,6 +12,12 @@ import UpButton from "../../components/common/UpButton";
 import DownImg from "../../assets/icons/chevron-down-gray300.svg";
 import UpImg from "../../assets/icons/chevron-up-gray.svg";
 import Rate from "../../components/common/Rate";
+import {
+  getWishlistKey,
+  useMyWishlistIds,
+} from "../../hooks/queries/use-my-wishlist-ids";
+import { useMyProfileStore } from "../../stores/use-my-profile-store";
+import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 
 const TransMenuPage = () => {
   const { menuId } = useParams();
@@ -35,8 +41,22 @@ const TransMenuPage = () => {
     fetchData();
   }, [recipeId]);
 
+  // 내 정보, 내 roomId
   const roomId = useFamilyStore.getState().familyRoomId;
+  const profileId = useMyProfileStore((state) => state.myProfileId);
+
   const { mutate: addWishList } = usePostWishList(roomId);
+  const { mutate: deleteWishList } = useDeleteProfileWishLists(roomId);
+
+  const [showOrigin, setShowOrigin] = useState(false);
+
+  // 위시리스트 포함여부 로직
+  const { data: wishlistIds } = useMyWishlistIds(roomId, profileId);
+  const wishKey = getWishlistKey(
+    "TRANSFORMED",
+    transRecipe?.transformedRecipeId,
+  );
+  const isWishList = wishlistIds?.has(wishKey);
 
   const handleClick = async () => {
     const currentRecipeId = transRecipe?.transformedRecipeId;
@@ -45,11 +65,12 @@ const TransMenuPage = () => {
       recipeId: [],
       transformedRecipeId: currentRecipeId ? [currentRecipeId] : [],
     };
-
-    addWishList(directPayload);
+    if (isWishList) {
+      deleteWishList(directPayload);
+    } else {
+      addWishList(directPayload);
+    }
   };
-
-  const [showOrigin, setShowOrigin] = useState(false);
 
   return (
     <div>
@@ -99,7 +120,11 @@ const TransMenuPage = () => {
             <DetailContent transRecipe={transRecipe} />
           </div>
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
-            <WishlistButton onClick={handleClick} isSafe={true} />
+            <WishlistButton
+              onClick={handleClick}
+              isSafe={true}
+              isWishList={isWishList}
+            />
           </div>
           <UpButton />
         </div>
