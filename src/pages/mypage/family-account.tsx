@@ -16,6 +16,7 @@ export default function FamilyAccount() {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
   const { resetProfile } = useProfileStore();
 
+  // 훅으로 뺄 예정
   const { data: myFamily = [] } = useQuery({
     queryKey: ["myFamily"],
     queryFn: async () => {
@@ -71,6 +72,7 @@ export default function FamilyAccount() {
               myProfile?.profilePicUrl ?? rolePicture[myProfile?.role as string]
             }
             alt="프로필 사진"
+            className="rounded-full"
           />
           <div className="pt-[8px] text-center text-lg font-semibold tracking-[0.18px]">
             {myProfile?.nickname}
