@@ -152,8 +152,8 @@ export const useFamilyData = () => {
       familyComposition: {
         hasMother: familyCounts["mom"] > 0,
         hasFather: familyCounts["dad"] > 0,
-        hasGrandFather: familyCounts["grandMother"] > 0,
-        hasGrandMother: familyCounts["grandFather"] > 0,
+        hasGrandMother: familyCounts["grandMother"] > 0,
+        hasGrandFather: familyCounts["grandFather"] > 0,
         sonCount: familyCounts["son"],
         daughterCount: familyCounts["daughter"],
       },

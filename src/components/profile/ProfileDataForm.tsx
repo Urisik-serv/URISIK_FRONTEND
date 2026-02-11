@@ -131,10 +131,10 @@ export default function ProfileDataForm({
       <div className=" w-[343px] ">
         <RequiredLabel title="역할" />
         <div className="pt-[12px] flex gap-[12px] flex-wrap">
-          {roles.map((role) => (
+          {roles.map((role, index) => (
             <button
               onClick={() => handleRoleChange(role)}
-              key={role}
+              key={`${role}-${index}`}
               type="button"
               className="cursor-pointer"
             >
@@ -177,9 +177,9 @@ export default function ProfileDataForm({
                   isSelected={selectedAllergies.length === 0}
                 />
               </button>
-              {selectedAllergies.map((allergy) => (
+              {selectedAllergies.map((allergy, index) => (
                 <button
-                  key={allergy}
+                  key={`${allergy}-${index}`}
                   onClick={() => onSelectAllergy(allergy)}
                   className="pt-[12px]"
                 >
@@ -198,7 +198,7 @@ export default function ProfileDataForm({
               className="cursor-pointer"
               type="button"
               onClick={() => handlePreferencesChange(foods, index)}
-              key={index}
+              key={`${food}-${index}`}
             >
               <SelectButton
                 name={food}
