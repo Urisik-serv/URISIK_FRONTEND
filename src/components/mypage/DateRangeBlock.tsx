@@ -1,9 +1,8 @@
 import { useState } from "react";
-import chevronDownIcon from "../../assets/icons/chevron-down-gray.svg";
-import chevronUpIcon from "../../assets/icons/chevron-up-gray.svg";
 import type { Day } from "../../types/meal-plan";
 import { useNavigate } from "react-router-dom";
 import Right from "../../assets/icons/chevron-right-gray.svg";
+import Chevron from "../common/icon/Chevron";
 
 interface DateRangeBlockProps {
   weekStartDate: string;
@@ -37,7 +36,7 @@ export default function DateRangeBlock({
               onClick={handleOpen}
               className="cursor-pointer flex items-center size-[24px] justify-center"
             >
-              <img src={chevronUpIcon} alt="열림" />
+              <Chevron rotate={180} color="#D4D4D8" />
             </button>
             <div className="font-semibold text-[16px] tracking-[-0.32px] leading-[24px]">
               {handleRangeDate(weekStartDate)}
@@ -93,9 +92,9 @@ export default function DateRangeBlock({
       ) : (
         <div className="w-[343px] h-[32px] flex justify-start items-center gap-[8px] px-[10px] py-[4px] rounded-lg bg-gray-200">
           <button onClick={handleOpen} className="cursor-pointer">
-            <img src={chevronDownIcon} alt="닫힘" />
+            <Chevron color="#71717A" />
           </button>
-          <div className="font-semibold text-gray-600 text-[16px] tracking-[-0.32px] leading-[24px]">
+          <div className="font-semibold text-gray-500 text-[16px] tracking-[-0.32px] leading-[24px]">
             {handleRangeDate(weekStartDate)}
           </div>
         </div>
