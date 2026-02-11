@@ -36,7 +36,7 @@ const IngredientAndRecipe = ({
         </p>
       </div>
       <p className="font-medium text-gray-800 text-[16px] pb-4">레시피</p>
-      <div className="flex flex-col gap-4 pb-29">
+      <div className="flex flex-col gap-4">
         {stepData.map((step, idx) => (
           <div
             key={idx}

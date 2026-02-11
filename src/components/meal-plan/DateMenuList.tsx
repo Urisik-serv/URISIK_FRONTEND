@@ -44,7 +44,11 @@ export default function DateMenuList({
                 <div className="flex justify-end pt-1.5">
                   <button
                     className="flex items-center font-semibold cursor-pointer text-[14px] text-gray-800"
-                    onClick={() => navigate(`/menu-information/${data.id}`)}
+                    onClick={() =>
+                      navigate(
+                        `/meal-plan/detail?menuId=${data.id}&type=${data.type}`,
+                      )
+                    }
                   >
                     레시피 자세히 보기 <img src={Right} alt="화살표 아이콘" />
                   </button>

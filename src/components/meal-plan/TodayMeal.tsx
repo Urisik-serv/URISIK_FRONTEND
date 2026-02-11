@@ -45,7 +45,7 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
           onClick={() => setIsOpen(true)}
         />
       )}
-      <div className="pt-11">
+      <div className="pt-11 pb-29">
         <IngredientAndRecipe
           ingredients={data.ingredients}
           step={data.recipeSteps}
