@@ -12,9 +12,10 @@ import ListBox from "../../assets/mypage/list-box.svg";
 import Finance from "../../assets/mypage/finance.svg";
 import { TemperBar } from "../../components/mypage/TemperBar";
 import { useNoticeList } from "../../hooks/use-notice-list";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MyPage = () => {
-  const { LogoutMutate } = useAuth();
+  const { LogoutMutate, LogoutIsPending } = useAuth();
   const { generation } = useNoticeList();
 
   const myData = useProfileStore.getState().savedFormData;
@@ -29,6 +30,14 @@ const MyPage = () => {
   const handleLogout = () => {
     LogoutMutate();
   };
+
+  if (LogoutIsPending) {
+    return (
+      <div className="w-full h-dvh flex justify-center items-center">
+        <LoadingSpinner text="로딩중 입니다" />
+      </div>
+    );
+  }
 
   return (
     <>
