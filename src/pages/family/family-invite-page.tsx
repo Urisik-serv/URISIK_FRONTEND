@@ -5,63 +5,56 @@ import LinkImage from "../../assets/images/link.png";
 import Button from "../../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { useFamilyStore } from "../../stores/use-family-store";
-import { postInviteToken } from "../../api/invite";
+import { useInvite } from "../../hooks/mutations/use-invite";
 
 export default function FamilyInvitePage() {
   const navigate = useNavigate();
   const { familyRoomId } = useFamilyStore();
 
-  const handleInvite = async (): Promise<string | undefined> => {
-    if (familyRoomId == null) {
-      alert(`가족방을 찾을 수 없습니다`);
-      return;
-    }
-    const res = await postInviteToken(familyRoomId);
-    return res.inviteUrl;
-  };
+  const { mutateAsync: createInvite, isPending: isInviting } =
+    useInvite(familyRoomId);
 
   // 카카오톡 페이지로 넘어가도록
-  const InviteByKakao = () => {
+  const InviteByKakao = async () => {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
       alert("카카오 SDK가 준비되지 않았습니다.");
       return;
     }
 
-    handleInvite().then((kakaoUrl) => {
-      if (!kakaoUrl) return;
+    try {
+      const { inviteUrl } = await createInvite();
 
       window.Kakao.Share.sendDefault({
         objectType: "feed",
         content: {
           title: "가족방에 초대받았어요!",
-          description: `초대 링크: ${kakaoUrl}`,
+          description: "아래 버튼을 눌러 참여해주세요",
           imageUrl: "",
           link: {
-            webUrl: kakaoUrl,
-            mobileWebUrl: kakaoUrl,
+            webUrl: inviteUrl,
+            mobileWebUrl: inviteUrl,
           },
         },
         buttons: [
           {
             title: "가족방 참여하기",
             link: {
-              webUrl: kakaoUrl,
-              mobileWebUrl: kakaoUrl,
+              webUrl: inviteUrl,
+              mobileWebUrl: inviteUrl,
             },
           },
         ],
       });
-    });
+    } catch {}
   };
 
-  // 클립보드에 초대 링크 자동 복사
+  // 클립보드에 초대링크 자동 복사
   const InviteByLink = async () => {
-    const link = await handleInvite();
-    if (link == null) {
-      alert("초대 링크가 생성되지 않았습니다.");
-      return;
-    }
-    await navigator.clipboard.writeText(link);
+    try {
+      const { inviteUrl } = await createInvite();
+      await navigator.clipboard.writeText(inviteUrl);
+      alert("링크가 복사되었습니다.");
+    } catch {}
   };
   return (
     <>
@@ -114,6 +107,7 @@ export default function FamilyInvitePage() {
               onClick={() => {
                 navigate("/");
               }}
+              disabled={isInviting}
             />
           </div>
         </div>

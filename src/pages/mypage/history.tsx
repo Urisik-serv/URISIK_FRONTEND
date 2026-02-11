@@ -40,14 +40,14 @@ export default function History() {
       <PublicHeader title={"기록"} />
       <div className="w-[343px] mx-auto relative">
         <div className="flex justify-start pt-[24px]">
-          <div className="text-2xl font-semibold leading-[36px]">
+          <div className="text-xl font-semibold leading-[36px]">
             {dateRange} {dateRange === "최근 1개월" ? "식단기록" : ""}
           </div>
         </div>
         <div className="pt-[16px] flex justify-end">
           <button
             onClick={handleModal}
-            className="cursor-pointer w-[70px] p-10px text-center text-white text-[16px] font-medium leading-[16px] tracking-[-0.48px] bg-primary-700 rounded-lg p-[8px]"
+            className="cursor-pointer w-[70px] p-10px text-center text-white text-[16px] font-medium leading-[16px] tracking-[-0.48px] bg-gray-100 rounded-lg p-[8px]"
           >
             기간조회
           </button>

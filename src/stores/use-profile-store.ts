@@ -5,7 +5,7 @@ import { rolePicture } from "../constants/profile-record";
 export interface FamilyProfileFormData {
   nickname: string;
   role: string;
-  allergies: string[] | boolean;
+  allergies: string[];
   preferences: string[];
   likedIngredients?: string;
   dislikedIngredients?: string;

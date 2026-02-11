@@ -1,50 +1,55 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AlertModal from "../../components/common/AlertModal";
 import HomePage from "./home-page";
 import { useNavigate, useParams } from "react-router-dom";
 import { getInviteToken, postAcceptInvite } from "../../api/invite";
 import { useLocalStorage } from "../../hooks/use-local-storage";
 import { useFamilyStore } from "../../stores/use-family-store";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 export default function InviteEntry() {
-  const [inviterName, setInviterName] = useState<string | null>(null);
   const { token } = useParams();
-  const { getItem: getAccessToken } = useLocalStorage("accessToken");
   const navigate = useNavigate();
+  const { getItem: getAccessToken } = useLocalStorage("accessToken");
   const { setFamilyRoomId } = useFamilyStore();
 
+  // 초대 토큰 조회
+  const { data, isLoading } = useQuery({
+    queryKey: ["inviteToken", token],
+    queryFn: () => {
+      if (!token) throw new Error("토큰 없음");
+      return getInviteToken(token);
+    },
+    enabled: !!token,
+    retry: false,
+  });
+
   useEffect(() => {
-    const fetchInviterName = async () => {
-      if (!token) return;
+    if (!data) return;
 
-      try {
-        const inviteRes = await getInviteToken(token);
-        if (inviteRes.expired) {
-          alert("유효하지 않은 토큰입니다.");
-          return;
-        }
+    if (data.expired) {
+      alert("유효하지 않은 토큰입니다.");
+      navigate("/");
+    }
+  }, [data, navigate]);
 
-        setInviterName(inviteRes.inviterName);
-      } catch (error) {
-        console.error("초대 정보 조회 실패", error);
-      }
-    };
+  const inviterName = data?.inviterName ?? null;
 
-    fetchInviterName();
-  }, [token]);
+  if (isLoading) {
+    return (
+      <>
+        <div className="flex justify-center py-20">
+          <LoadingSpinner text="로딩 중..." />
+        </div>
+      </>
+    );
+  }
 
-  const { mutate: acceptMutation } = useMutation({
+  // 초대 수락
+  const { mutate: acceptInvite, isPending: isAccepting } = useMutation({
     mutationFn: () => {
-      console.log(token);
-      if (!token) throw new Error("유효하지 않은 토큰입니다.");
-
-      if (!getAccessToken()) {
-        localStorage.setItem("loginRedirect", `/invite/${token}`);
-        navigate("/login");
-        return Promise.reject();
-      }
-
+      if (!token) throw new Error("토큰 없음");
       return postAcceptInvite(token);
     },
     onSuccess: (res) => {
@@ -59,6 +64,17 @@ export default function InviteEntry() {
       }
     },
   });
+
+  const handleAccept = () => {
+    if (!getAccessToken()) {
+      localStorage.setItem("loginRedirect", `/invite/${token}`);
+      navigate("/login");
+      return;
+    }
+
+    acceptInvite();
+  };
+
   return (
     <>
       <HomePage />
@@ -68,8 +84,9 @@ export default function InviteEntry() {
         mediumContent="우리 가족 식단을 함께 관리해요"
         buttonText="참여하기"
         outsideText="탭해서 닫기"
-        onClick={acceptMutation}
+        onClick={handleAccept}
         handleModal={() => navigate("/")}
+        disabled={isAccepting}
       />
     </>
   );
