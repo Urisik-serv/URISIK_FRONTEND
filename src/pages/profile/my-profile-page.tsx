@@ -98,8 +98,8 @@ export default function MyProfilePage() {
           </div>
           {!allergies?.includes("NONE") ? (
             <div>
-              {profile?.allergyAndAlterIngredients.map((item) => (
-                <div key={item.allergen} className=" pb-[20px]">
+              {profile?.allergyAndAlterIngredients.map((item, index) => (
+                <div key={`${item.allergen}-${index}`} className=" pb-[20px]">
                   <AllergyDataBox
                     name={item.allergen}
                     alternative={item.alteredIngredients}
@@ -120,8 +120,11 @@ export default function MyProfilePage() {
             선호 음식
           </div>
           <div className="flex gap-[8px] pt-[12px]">
-            {profile?.dietPreferences.map((food) => (
-              <ElementButton name={getKeyByValue(food) ?? food} />
+            {profile?.dietPreferences.map((food, index) => (
+              <ElementButton
+                key={`${food}-${index}`}
+                name={getKeyByValue(food) ?? food}
+              />
             ))}
           </div>
         </div>

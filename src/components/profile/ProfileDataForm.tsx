@@ -86,7 +86,7 @@ export default function ProfileDataForm({
     console.log("제출된 폼 데이터:", formData);
   };
 
-  const roles = ["엄마", "아빠", "아들", "딸"];
+  const roles = ["엄마", "아빠", "아들", "딸", "할머니", "할아버지"];
   const foods = ["한식", "중식", "일식", "양식", "디저트"];
   const navigate = useNavigate();
   return (
@@ -130,11 +130,11 @@ export default function ProfileDataForm({
       </div>
       <div className=" w-[343px] ">
         <RequiredLabel title="역할" />
-        <div className="pt-[12px] flex gap-[12px] ">
-          {roles.map((role) => (
+        <div className="pt-[12px] flex gap-[12px] flex-wrap">
+          {roles.map((role, index) => (
             <button
               onClick={() => handleRoleChange(role)}
-              key={role}
+              key={`${role}-${index}`}
               type="button"
               className="cursor-pointer"
             >
@@ -177,9 +177,9 @@ export default function ProfileDataForm({
                   isSelected={selectedAllergies.length === 0}
                 />
               </button>
-              {selectedAllergies.map((allergy) => (
+              {selectedAllergies.map((allergy, index) => (
                 <button
-                  key={allergy}
+                  key={`${allergy}-${index}`}
                   onClick={() => onSelectAllergy(allergy)}
                   className="pt-[12px]"
                 >
@@ -198,7 +198,7 @@ export default function ProfileDataForm({
               className="cursor-pointer"
               type="button"
               onClick={() => handlePreferencesChange(foods, index)}
-              key={index}
+              key={`${food}-${index}`}
             >
               <SelectButton
                 name={food}
