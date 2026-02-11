@@ -3,18 +3,26 @@ import { getProfile } from "../../api/family-profile";
 import { getFamilyRoom } from "../../api/family-room";
 
 export const useMyProfile = (roomId: number | null) => {
-  return useQuery({
+  const profileQuery = useQuery({
     queryKey: ["myProfile", roomId],
-    queryFn: async () => {
-      const profile = await getProfile(roomId, -1);
-      const familyRoom = await getFamilyRoom();
-
-      return {
-        profile,
-        isLeader: familyRoom.result.capabilities.leader,
-      };
-    },
+    queryFn: () => getProfile(roomId!, -1),
     enabled: !!roomId,
     staleTime: 1000 * 60 * 5,
   });
+
+  const familyRoomQuery = useQuery({
+    queryKey: ["familyRoom"],
+    queryFn: getFamilyRoom,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    ...profileQuery,
+    data: profileQuery.data
+      ? {
+          profile: profileQuery.data,
+          isLeader: familyRoomQuery.data?.result.capabilities.leader,
+        }
+      : undefined,
+  };
 };

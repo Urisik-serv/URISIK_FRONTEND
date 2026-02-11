@@ -6,6 +6,7 @@ interface AlertModalProps {
   outsideText?: "탭해서 취소" | "탭해서 닫기";
   handleModal?: () => void;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 export default function AlertModal({
@@ -16,6 +17,7 @@ export default function AlertModal({
   outsideText,
   handleModal,
   onClick,
+  disabled,
 }: AlertModalProps) {
   return (
     <div>
@@ -32,6 +34,7 @@ export default function AlertModal({
           </div>
           <div className="px-6 pt-[48px] w-full">
             <button
+              disabled={disabled}
               onClick={onClick}
               className="cursor-pointer py-[16px] px-[8px] rounded-xl bg-primary-700 text-white text-xl font-semibold leading-[22px] w-full"
             >
