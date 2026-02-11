@@ -1,5 +1,5 @@
 import { useState } from "react";
-import chevronDownIcon from "../../assets/icons/chevron-down-gray400.svg";
+import chevronDownIcon from "../../assets/icons/chevron-down-gray.svg";
 import chevronUpIcon from "../../assets/icons/chevron-up-gray.svg";
 import type { Day } from "../../types/meal-plan";
 import { useNavigate } from "react-router-dom";

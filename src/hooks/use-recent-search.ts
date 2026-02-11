@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { LOCAL_STORAGE_KEY } from "../constants/key";
 const MAX_SIZE = 10; // 최대 저장 개수
 
@@ -17,36 +17,41 @@ export const useRecentSearch = () => {
     }
   }, []);
 
-  const addKeyword = (text: string) => {
+  const addKeyword = useCallback((text: string) => {
     if (!text.trim()) return;
 
-    const newKeyword = text.trim();
+    setKeywords((prev) => {
+      const newKeyword = text.trim();
 
-    const nextKeywords = [
-      newKeyword,
-      ...keywords.filter((k) => k !== newKeyword),
-    ].slice(0, MAX_SIZE);
+      const nextKeywords = [
+        newKeyword,
+        ...prev.filter((k) => k !== newKeyword),
+      ].slice(0, MAX_SIZE);
 
-    setKeywords(nextKeywords);
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY.recentSearch,
-      JSON.stringify(nextKeywords),
-    );
-  };
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY.recentSearch,
+        JSON.stringify(nextKeywords),
+      );
 
-  const removeKeyword = (text: string) => {
-    const nextKeywords = keywords.filter((k) => k !== text);
-    setKeywords(nextKeywords);
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY.recentSearch,
-      JSON.stringify(nextKeywords),
-    );
-  };
+      return nextKeywords;
+    });
+  }, []);
 
-  const clearKeywords = () => {
+  const removeKeyword = useCallback((text: string) => {
+    setKeywords((prev) => {
+      const nextKeywords = prev.filter((k) => k !== text);
+      localStorage.setItem(
+        LOCAL_STORAGE_KEY.recentSearch,
+        JSON.stringify(nextKeywords),
+      );
+      return nextKeywords;
+    });
+  }, []);
+
+  const clearKeywords = useCallback(() => {
     setKeywords([]);
     localStorage.removeItem(LOCAL_STORAGE_KEY.recentSearch);
-  };
+  }, []);
 
   return {
     keywords,

@@ -10,7 +10,7 @@ const ElementButton = ({ onClick, onClose, name }: ElementButtonProps) => {
   return (
     <div
       onClick={onClick}
-      className={`px-3 py-1 bg-gray-100 rounded flex justify-center items-center gap-1 ${
+      className={`px-3 py-1 bg-gray-100 rounded flex justify-center items-center gap-1 cursor-pointer shrink-0 ${
         onClose && "pr-2"
       }`}
     >

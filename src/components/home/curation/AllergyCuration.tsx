@@ -47,8 +47,9 @@ const AllergyCuration = () => {
                 id={recipe.id}
                 title={recipe.title}
                 img={recipe.imageUrl}
-                shortDescription=""
+                shortDescription={recipe.description}
                 pickedCount={recipe.wishCount}
+                type={recipe.transformed}
               />
             </SwiperSlide>
           ))}

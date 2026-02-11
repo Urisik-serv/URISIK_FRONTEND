@@ -110,11 +110,15 @@ const MyWishList = () => {
                 key={item.transformedRecipeId}
                 type="default"
                 menu={item.transformedRecipeName}
+                isSafe={item.foodSafety}
                 category={item.category}
+                ingredients={item.recipeIngredients}
                 img={item.foodImage}
                 clickable={true}
                 onClick={() =>
-                  navigate(`/menu-information/${item.transformedRecipeId}`)
+                  navigate(
+                    `/menu-information/${item.transformedRecipeId}?type=TRANSFORMED`,
+                  )
                 }
                 isSelected={isSelected(uniqueKey)}
               />
@@ -143,9 +147,13 @@ const MyWishList = () => {
                 type="default"
                 menu={item.recipeName}
                 category={item.category}
+                isSafe={item.foodSafety}
+                ingredients={item.recipeIngredients}
                 img={item.foodImage}
                 clickable={true}
-                onClick={() => navigate(`/menu-information/${item.recipeId}`)}
+                onClick={() =>
+                  navigate(`/menu-information/${item.recipeId}?type=RECIPE`)
+                }
                 isSelected={isSelected(uniqueKey)}
               />
             </div>
