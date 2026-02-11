@@ -30,6 +30,11 @@ export const useFamilyProfileForm = () => {
   // 역할 핸들러
   const selectedRole = savedFormData.role;
   const handleRoleChange = (role: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      role: prev.role === role ? "" : role,
+    }));
+
     setSavedFormData((prev) => ({
       ...prev,
       role: prev.role === role ? "" : role,
