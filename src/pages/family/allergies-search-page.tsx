@@ -45,7 +45,7 @@ export default function AllergiesSearchPage() {
             <div className="text-[#282828] text-sm leading-[21px]">
               입력가능 키워드
             </div>
-            <div className="flex gap-[12px] pt-[8px]">
+            <div className="flex gap-[12px] pt-[8px] flex-wrap">
               {filteredAllergies?.map((allergy) => (
                 <button
                   key={allergy}
