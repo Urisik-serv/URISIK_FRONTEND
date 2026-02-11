@@ -1,67 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import PictureModifyModal from "../../components/profile/PictureModifyModal";
 import ProfileDataForm from "../../components/profile/ProfileDataForm";
 import { useFamilyStore } from "../../stores/use-family-store";
-import { getProfile } from "../../api/family-profile";
 import { useProfileStore } from "../../stores/use-profile-store";
-import {
-  allergyMap,
-  roleMap,
-  rolePicture,
-} from "../../constants/profile-record";
+import { useGetProfile } from "../../hooks/queries/use-get-profile";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import ErrorUI from "../../components/common/ErrorUI";
 
 export default function ModifyProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
   const familyRoomId = useFamilyStore((s) => s.familyRoomId);
-  const { setSavedFormData, hasLoadedFromServer, markLoaded } =
-    useProfileStore();
+  const { setSavedFormData } = useProfileStore();
+
+  const { data, isPending, isError, refetch } = useGetProfile(familyRoomId);
 
   const handleModal = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const findKeyByValue = (record: Record<string, string>, value: string) => {
-    return Object.entries(record).find(([_, v]) => v === value)?.[0];
-  };
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
-    if (familyRoomId === null) return;
-    if (hasLoadedFromServer) return;
+    if (data && !hasInitialized.current) {
+      setSavedFormData(data);
+      hasInitialized.current = true;
+    }
+  }, [data, setSavedFormData]);
 
-    const fetchProfile = async () => {
-      try {
-        const res = await getProfile(familyRoomId, -1);
+  if (isPending) {
+    return (
+      <>
+        <PublicHeader title="프로필 편집" />
+        <div className="flex justify-center py-10">
+          <LoadingSpinner text="로딩중..." />
+        </div>
+      </>
+    );
+  }
 
-        setSavedFormData({
-          nickname: res.nickname,
-          role: roleMap[res.role],
-          allergies:
-            res.allergyAndAlterIngredients.length === 1 &&
-            res.allergyAndAlterIngredients[0].allergen === "NONE"
-              ? false
-              : (res.allergyAndAlterIngredients
-                  .map((item: { allergen: string }) =>
-                    findKeyByValue(allergyMap, item.allergen),
-                  )
-                  .filter(Boolean) as string[]),
-          preferences: res.dietPreferences ?? [],
-          likedIngredients: res.likedIngredients ?? "",
-          dislikedIngredients: res.dislikedIngredients ?? "",
-          profilePicUrl: res.profilePicUrl ?? rolePicture[res.role],
-        });
-        markLoaded();
-      } catch (error) {
-        console.error("프로필 조회 실패", error);
-      }
-    };
-
-    fetchProfile();
-  }, [familyRoomId, setSavedFormData]);
+  if (isError) {
+    return (
+      <>
+        <PublicHeader title="프로필 편집" />
+        <ErrorUI message="프로필을 불러오지 못했습니다." onRetry={refetch} />
+      </>
+    );
+  }
 
   return (
     <>
-      <PublicHeader title={"프로필 편집"} />
+      <PublicHeader title="프로필 편집" />
       <div className="flex justify-center">
         <ProfileDataForm isEdit={true} handlePicture={handleModal} />
       </div>

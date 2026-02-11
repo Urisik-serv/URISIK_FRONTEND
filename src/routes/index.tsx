@@ -14,7 +14,6 @@ import FamilyInvitePage from "../pages/family/family-invite-page";
 import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
-import MenuInformationPage from "../pages/home/menu-information-page";
 import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
 import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
@@ -30,6 +29,7 @@ import History from "../pages/mypage/history";
 import LoginRedirectPage from "../pages/auth/login-redirect-page";
 import InviteEntry from "../pages/home/invite-entry";
 import MealPlanDetailPage from "../pages/meal-plan/meal-plan-detail-page";
+import MenuPageDispatcher from "../components/home/detailPage/MenuPageDispatcher";
 
 export const router = createBrowserRouter([
   {
@@ -102,7 +102,7 @@ export const router = createBrowserRouter([
           { path: "my-profile", element: <MyProfilePage /> },
           {
             path: "menu-information/:menuId",
-            element: <MenuInformationPage />,
+            element: <MenuPageDispatcher />,
           },
           {
             path: "ai-recomendation-notice",

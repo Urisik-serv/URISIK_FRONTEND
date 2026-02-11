@@ -11,8 +11,8 @@ import {
 
 export const useFamilyProfileForm = () => {
   const { savedFormData, setSavedFormData } = useProfileStore();
-  const [formData, setFormData] = useState(savedFormData);
 
+  const [formData, setFormData] = useState(savedFormData);
   const hasSynced = useRef(false);
 
   useEffect(() => {
@@ -21,118 +21,92 @@ export const useFamilyProfileForm = () => {
     hasSynced.current = true;
   }, [savedFormData]);
 
-  // 닉네임 핸들러
+  // 닉네임
   const handleNickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, nickname: e.target.value });
-    setSavedFormData({ ...formData, nickname: e.target.value });
+    const value = e.target.value;
+
+    setFormData((prev) => ({ ...prev, nickname: value }));
+    setSavedFormData((prev) => ({ ...prev, nickname: value }));
   };
 
-  // 역할 핸들러
-  const selectedRole = savedFormData.role;
+  // 역할
+  const selectedRole = formData.role;
+
   const handleRoleChange = (role: string) => {
+    const nextRole = formData.role === role ? "" : role;
+
     setFormData((prev) => ({
       ...prev,
-      role: prev.role === role ? "" : role,
+      role: nextRole,
     }));
 
     setSavedFormData((prev) => ({
       ...prev,
-      role: prev.role === role ? "" : role,
+      role: nextRole,
       profilePicUrl: rolePicture[roleMap[role]],
     }));
   };
 
-  // 알레르기 핸들러
-  const handleAllergyChange = (allergies: string[] | boolean) => {
+  // 알레르기
+  const handleAllergyChange = (allergies: string[]) => {
     setFormData((prev) => ({
+      ...prev,
+      allergies,
+    }));
+
+    setSavedFormData((prev) => ({
       ...prev,
       allergies,
     }));
   };
 
-  // 식단 선호도 핸들러
-  const foods = ["한식", "중식", "일식", "양식", "디저트"];
-
-  const [isCheckedPreference, setIsCheckedPreference] = useState<boolean[]>([]);
-
-  useEffect(() => {
-    setIsCheckedPreference(
-      foods.map((food) => savedFormData.preferences.includes(food)),
-    );
-  }, [savedFormData.preferences]);
+  // 선호도
+  const isPreferenceSelected = (food: string) =>
+    formData.preferences.includes(food);
 
   const handlePreferencesChange = (foods: string[], index: number) => {
     const selectedFood = foods[index];
 
+    let newPreferences;
+
     if (formData.preferences.includes(selectedFood)) {
-      const newPreferences = formData.preferences.filter(
+      newPreferences = formData.preferences.filter(
         (item) => item !== selectedFood,
       );
-
-      setFormData((prev) => ({
-        ...prev,
-        preferences: newPreferences,
-      }));
-
-      setSavedFormData((prev) => ({
-        ...prev,
-        preferences: newPreferences,
-      }));
-
-      setIsCheckedPreference((prev) => {
-        const newChecked = [...prev];
-        newChecked[index] = false;
-        return newChecked;
-      });
     } else {
-      const newPreferences = [...formData.preferences, selectedFood];
-
-      setFormData((prev) => ({
-        ...prev,
-        preferences: newPreferences,
-      }));
-
-      setSavedFormData((prev) => ({
-        ...prev,
-        preferences: newPreferences,
-      }));
-
-      setIsCheckedPreference((prev) => {
-        const newChecked = [...prev];
-        newChecked[index] = true;
-        return newChecked;
-      });
+      newPreferences = [...formData.preferences, selectedFood];
     }
+
+    setFormData((prev) => ({
+      ...prev,
+      preferences: newPreferences,
+    }));
+
+    setSavedFormData((prev) => ({
+      ...prev,
+      preferences: newPreferences,
+    }));
   };
 
-  // 좋아하는 식재료 핸들러
+  // 좋아하는 식재료
   const handleLikeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, likedIngredients: e.target.value });
-    setSavedFormData({ ...formData, likedIngredients: e.target.value });
+    const value = e.target.value;
+
+    setFormData((prev) => ({ ...prev, likedIngredients: value }));
+    setSavedFormData((prev) => ({ ...prev, likedIngredients: value }));
   };
 
-  // 싫어하는 식재료 핸들러
+  // 싫어하는 식재료
   const handleDislikeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, dislikedIngredients: e.target.value });
-    setSavedFormData({ ...formData, dislikedIngredients: e.target.value });
+    const value = e.target.value;
+
+    setFormData((prev) => ({ ...prev, dislikedIngredients: value }));
+    setSavedFormData((prev) => ({ ...prev, dislikedIngredients: value }));
   };
 
-  // 폼 유효성 검사
-  const isValid = () => {
-    return (
-      formData.nickname.length > 0 &&
-      formData.role.length > 0 &&
-      formData.preferences.length > 0
-    );
-  };
-
-  // 영문으로 변환
-  let allergyList: string[];
-  if (Array.isArray(formData.allergies)) {
-    allergyList = formData.allergies.map((item) => allergyMap[item]);
-  } else {
-    allergyList = ["NONE"];
-  }
+  // request 생성
+  const savedAllergies = useProfileStore((s) => s.savedFormData.allergies);
+  let allergyList = savedAllergies.map((item) => allergyMap[item]);
 
   const preferencesList = formData.preferences
     .map((item) => preferenceMap[item])
@@ -156,12 +130,10 @@ export const useFamilyProfileForm = () => {
     handleAllergyChange,
     handlePreferencesChange,
     selectedRole,
-    isCheckedPreference,
+    isPreferenceSelected,
     handleLikeChange,
     handleDislikeChange,
-    isValid,
     request,
     currentFamilyRoomId,
-    setSavedFormData,
   };
 };
