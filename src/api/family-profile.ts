@@ -12,7 +12,7 @@ import { axiosInstance } from "./axios/axios";
 // 프로필 조회
 export const getProfile = async (
   familyRoomId: number | null,
-  profileId: number,
+  profileId: number | undefined,
 ): Promise<Profile> => {
   const { data } = await axiosInstance.get<GetProfileResponse>(
     `/api/family-rooms/${familyRoomId}/profiles/${profileId}`,

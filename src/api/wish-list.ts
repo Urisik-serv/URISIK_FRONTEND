@@ -43,7 +43,7 @@ export const deleteFamilyWishList = async (
 // 프로필 위시리스트 조회
 export const getProfileWishList = async (
   familyRoomId: number | null,
-  profileId: number,
+  profileId: number | undefined,
   size: number,
   cursor: number,
 ): Promise<ResponseProfileWish> => {
@@ -62,7 +62,7 @@ export const getProfileWishList = async (
 // 프로필 변형레시피 위시리스트 조회
 export const getProfileTransWishList = async (
   familyRoomId: number | null,
-  profileId: number,
+  profileId: number | undefined,
   size: number,
   cursor: number,
 ): Promise<ResponseProfileTransWish> => {

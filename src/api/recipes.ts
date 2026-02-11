@@ -1,6 +1,7 @@
 import type {
   ResponseDetailRecipe,
   ResponseExternalRecipes,
+  ResponsePostTransRecipe,
   ResponseSearchRecipes,
   ResponseTransformedRecipe,
   SearchRecipesDto,
@@ -20,10 +21,13 @@ export const getSearchRecipes = async (
   return data;
 };
 
-export const postExteralRecipes = async (
+export const postExternalRecipes = async (
   external: SearchRecipesItem["external"],
 ): Promise<ResponseExternalRecipes> => {
-  const { data } = await axiosInstance.post("/api/recipes/external", external);
+  const { data } = await axiosInstance.post(
+    "/api/recipes/external/import",
+    external,
+  );
 
   console.log("요청 성공: ", data);
   return data;
@@ -42,6 +46,16 @@ export const getTransRecipe = async (
 ): Promise<ResponseTransformedRecipe> => {
   const { data } = await axiosInstance.get(
     `/api/transformed-recipes/${transformedRecipeId}`,
+  );
+
+  return data;
+};
+
+export const postTransRecipe = async (
+  recipeId: number,
+): Promise<ResponsePostTransRecipe> => {
+  const { data } = await axiosInstance.post(
+    `/api/transformed-recipes/${recipeId}/transform`,
   );
 
   return data;

@@ -145,6 +145,11 @@ export default function MyProfilePage() {
                   tags={item.recipeIngredients.join(", ")}
                   key={item.transformedRecipeId}
                   border="border-b-1 border-b-gray-200"
+                  onClick={() =>
+                    navigate(
+                      `/menu-information/${item.transformedRecipeId}?type=TRANSFORMED`,
+                    )
+                  }
                 />
               ))}
               {profileWish?.pages.map((item) => (
@@ -158,6 +163,9 @@ export default function MyProfilePage() {
                   tags={item.recipeIngredients.join(", ")}
                   key={item.recipeId}
                   border="border-b-1 border-b-gray-200"
+                  onClick={() =>
+                    navigate(`/menu-information/${item.recipeId}?type=RECIPE`)
+                  }
                 />
               ))}
             </div>
