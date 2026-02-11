@@ -8,7 +8,7 @@ import type { DetailRecipe } from "../../types/recipes";
 import { useFamilyStore } from "../../stores/use-family-store";
 import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
-import DetailContent from "../../components/home/detailPage/detailContent";
+import DetailContent from "../../components/home/detailPage/DetailContent";
 import Rate from "../../components/common/Rate";
 
 const MenuInformationPage = () => {
@@ -59,7 +59,7 @@ const MenuInformationPage = () => {
     <div>
       <PublicHeader title={"메뉴 정보"} />
       <ImageIndicator
-        imgUrl={recipe?.images.small}
+        imgUrl={recipe?.images.small || recipe?.images.large}
         name={recipe?.title}
         wishCount={recipe?.wishCount}
       />

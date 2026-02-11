@@ -55,7 +55,7 @@ const TransMenuPage = () => {
     <div>
       <PublicHeader title={"메뉴 정보"} />
       <ImageIndicator
-        imgUrl={recipe?.images.small}
+        imgUrl={recipe?.images.small || recipe?.images.large}
         name={recipe?.title}
         wishCount={recipe?.wishCount}
       />
