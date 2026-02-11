@@ -1,8 +1,4 @@
-import type {
-  ResponseIsRead,
-  ResponseNotice,
-  ResponseSSE,
-} from "../types/notice-list";
+import type { ResponseIsRead, ResponseNotice } from "../types/notice-list";
 import { axiosInstance } from "./axios/axios";
 
 // 알림 목록 조회
@@ -16,14 +12,6 @@ export const getNotificationList = async (
     },
   );
 
-  return data;
-};
-
-// 알림용 SSE 연결
-export const getSSE = async (): Promise<ResponseSSE> => {
-  const { data } = await axiosInstance.get<ResponseSSE>(
-    "/api/notifications/subscribe",
-  );
   return data;
 };
 
