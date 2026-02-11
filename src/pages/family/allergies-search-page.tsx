@@ -11,7 +11,7 @@ export default function AllergiesSearchPage() {
   const navigate = useNavigate();
 
   const handleComplete = () => {
-    navigate("/modify-profile", { replace: true });
+    navigate(-1);
   };
 
   return (
