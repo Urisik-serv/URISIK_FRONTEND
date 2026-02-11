@@ -5,13 +5,11 @@ import useDebounce from "./use-debounce";
 
 export const useAllergySearch = () => {
   const [keyword, setKeyword] = useState("");
-  const { savedFormData, setSavedFormData } = useProfileStore();
-
-  const selectedAllergies = useMemo(
-    () =>
-      Array.isArray(savedFormData.allergies) ? savedFormData.allergies : [],
-    [savedFormData.allergies],
+  const selectedAllergies = useProfileStore(
+    (state) => state.savedFormData.allergies,
   );
+
+  const setSavedFormData = useProfileStore((state) => state.setSavedFormData);
 
   const handleResetAllergy = () => {
     setSavedFormData((prev) => ({ ...prev, allergies: [] }));
