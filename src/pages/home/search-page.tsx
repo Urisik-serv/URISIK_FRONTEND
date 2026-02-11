@@ -15,6 +15,7 @@ import {
   postPopularSearch,
 } from "../../api/search";
 import type { RecommendSearch } from "../../types/recipes";
+import { useMyProfileStore } from "../../stores/use-my-profile-store";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -31,7 +32,7 @@ const SearchingPage = () => {
 
   // 내 정보
   const familyRoomId = useFamilyStore.getState().familyRoomId;
-  const [nickname, setNickname] = useState("");
+  const nickname = useMyProfileStore((state) => state.nickname);
 
   // 추천 검색어
   const [recommend, setRecommend] = useState<RecommendSearch>();
@@ -41,9 +42,6 @@ const SearchingPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const profileData = await getProfile(familyRoomId, -1);
-      setNickname(profileData.nickname);
-
       const recommendData = await getRecommendSearch(familyRoomId);
       setRecommend(recommendData.result);
 
