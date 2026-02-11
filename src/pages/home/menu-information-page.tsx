@@ -3,7 +3,6 @@ import PublicHeader from "../../components/header/PublicHeader";
 import { useParams } from "react-router-dom";
 import WhiteHeart from "../../assets/icons/heart-white.svg";
 import Rate from "../../components/common/Rate";
-import MenuInfo from "../../components/common/MenuInfo";
 import UpButton from "../../components/common/UpButton";
 import PageIndicator from "../../components/common/PageIndicator";
 import WishlistButton from "../../components/common/WishlistButton";
@@ -11,6 +10,7 @@ import { getDetailRecipe } from "../../api/recipes";
 import type { DetailRecipe } from "../../types/recipes";
 import { useFamilyStore } from "../../stores/use-family-store";
 import usePostWishList from "../../hooks/mutations/use-post-wishlist";
+import IngredientAndRecipe from "../../components/common/IngredientAndRecipe";
 
 const MenuInformationPage = () => {
   const { menuId } = useParams();
@@ -43,6 +43,7 @@ const MenuInformationPage = () => {
     addWishList(directPayload);
   };
 
+  if (!recipe) return <div>로딩 중...</div>; //후에 로딩스피너 추가
   return (
     <div>
       <PublicHeader title={"메뉴 정보"} />
@@ -81,12 +82,10 @@ const MenuInformationPage = () => {
               sentences={recipe?.descriptions}
             />*/}
           </div>
-          <div className="pb-5">
-            <MenuInfo title="재료" sentences={recipe?.ingredients} />
-          </div>
-          <div className="pb-20">
-            <MenuInfo title="레시피" recipes={recipe?.steps} />
-          </div>
+          <IngredientAndRecipe
+            step={recipe?.steps}
+            ingredients={recipe?.ingredients}
+          />
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
             <WishlistButton
               isWishList={!recipe?.allergyWarning.hasRisk}

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../common/Button";
 import ReviewModal from "./ReviewModal";
 import type { TodayMeal } from "../../types/meal-plan";
+import IngredientAndRecipe from "../common/IngredientAndRecipe";
 
 export default function TodayMeal({ data }: { data: TodayMeal }) {
   const [isDone, setIsDone] = useState(false);
@@ -44,32 +45,11 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
           onClick={() => setIsOpen(true)}
         />
       )}
-
-      <div className="flex flex-col gap-3 text-[14px] pt-11 pb-8">
-        <p className="font-semibold text-gray-800 text-[16px]">재료</p>
-
-        <p className="font-normal text-gray-600">{data.ingredients}</p>
-      </div>
-      <p className="font-semibold text-gray-800 text-[16px] pb-4">레시피</p>
-      <div className="flex flex-col gap-4 pb-29">
-        {data.recipeSteps.map((step) => (
-          <div className="h-full flex justify-between text-[14px] font-semibold gap-3">
-            <div>
-              <div className="flex flex-col gap-[1px] pb-3">
-                <p className="text-gray-350 font-medium">{step.stepOrder}</p>
-                {/* <p className=" text-[20px] ">재료손질</p> */}
-              </div>
-              <p className="font-normal text-gray-600">
-                {step.description.slice(3)}
-              </p>
-            </div>
-            <img
-              src={step.imageUrl}
-              alt={`${step.stepOrder}단계 이미지`}
-              className="w-36 h-26 shrink-0 object-cover rounded-lg"
-            />
-          </div>
-        ))}
+      <div className="pt-11">
+        <IngredientAndRecipe
+          ingredients={data.ingredients}
+          step={data.recipeSteps}
+        />
       </div>
     </>
   );

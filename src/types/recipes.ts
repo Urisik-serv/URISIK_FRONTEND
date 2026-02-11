@@ -28,13 +28,7 @@ export interface SearchRecipesItem {
     imageLarge: string;
     ingredientsRaw: string;
     instructionsRaw: string;
-    steps: [
-      {
-        order: number;
-        description: string;
-        imageUrl: string;
-      },
-    ];
+    steps: DetailRecipe[];
   };
 }
 
@@ -50,6 +44,7 @@ export interface ExternalRecipes {
 export interface DetailRecipeStep {
   order: number;
   description: string;
+  imageUrl: string;
 }
 
 export interface DetailRecipe {
