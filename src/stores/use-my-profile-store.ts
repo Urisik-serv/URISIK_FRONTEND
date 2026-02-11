@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { getProfile } from "../api/family-profile";
 
 interface MyProfileState {
-  myProfileId: number | null;
+  myProfileId: number | undefined;
   nickname: string;
 
   fetchMyProfile: (familyRoomId: number) => Promise<void>;
@@ -12,7 +12,7 @@ interface MyProfileState {
 export const useMyProfileStore = create<MyProfileState>()(
   persist(
     (set) => ({
-      myProfileId: null,
+      myProfileId: undefined,
       nickname: "",
 
       fetchMyProfile: async (familyRoomId: number) => {
