@@ -11,7 +11,7 @@ import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 import AlertModal from "../../components/common/AlertModal";
-import { patchAlarm } from "../../api/member";
+import { usePatchAlarm } from "../../hooks/queries/use-patch-alarm";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -35,13 +35,15 @@ const HomePage = () => {
     }
   }, []);
 
-  const handleAlarm = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_AGREED" });
+  const { mutate: updateAlarm } = usePatchAlarm();
+
+  const handleAlarm = () => {
+    updateAlarm({ alarmPolicy: "ALARM_AGREED" });
     setIsModalOpen(false);
   };
 
-  const handleModal = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_DISAGREED" });
+  const handleModal = () => {
+    updateAlarm({ alarmPolicy: "ALARM_DISAGREED" });
     setIsModalOpen(false);
   };
 
