@@ -72,14 +72,15 @@ export const useNoticeList = () => {
       content = noticeMap[item.type].content();
     }
 
+    const generateTempId = () => Date.now() + Math.floor(Math.random() * 1000);
+
     return {
       icon: noticeMap[item.type].icon,
       title: noticeMap[item.type].title,
       content: content,
       ago: ago(item.createdAt),
       isRead: item.isRead,
-      key: crypto.randomUUID(),
-      id: crypto.randomUUID(),
+      key: generateTempId(),
     };
   });
 

@@ -7,6 +7,19 @@ import NotificationSkeleton from "../../components/mypage/NotificationSkeleton";
 export default function NoticePage() {
   const { noticeList, isFetching, data, setSize } = useNoticeList();
   const observerRef = useRef<HTMLDivElement | null>(null);
+  // api 수정이 완료되면 주석 삭제하겠습니다
+
+  // const { mutate: readNotification } = useReadNotification();
+
+  // useEffect(() => {
+  //   if (!noticeList) return;
+
+  //   noticeList
+  //     .filter((item) => !item.isRead)
+  //     .forEach((item) => {
+  //       readNotification(item.key);
+  //     });
+  // }, [noticeList]);
 
   useEffect(() => {
     if (!observerRef.current || data?.result.last) return;
@@ -36,7 +49,7 @@ export default function NoticePage() {
             content: string;
             ago: string;
             isRead: boolean;
-            key: string;
+            key: number;
           }) => (
             <NoticeBlock
               key={item.key}
