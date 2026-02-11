@@ -3,8 +3,9 @@ import { useMutation } from "@tanstack/react-query";
 import { getFamilyRoom, postFamilyRoom } from "../api/family-room";
 import { useFamilyStore } from "../stores/use-family-store";
 import { useNavigate } from "react-router-dom";
-import type { FamilyMembers } from "../types/family-profile";
+import type { FamilyMembers, Role } from "../types/family-profile";
 import axios from "axios";
+import { POLICY_BY_ROLE } from "../constants/profile-record";
 
 export const useFamilyData = () => {
   // 다른 파일 코드 에러 방지
@@ -29,18 +30,19 @@ export const useFamilyData = () => {
   // ---------------------------------------------------------------
   const navigate = useNavigate();
 
-  const [familyNumber, setFamilyNumber] = useState(3);
-  const [availableFamilyNumber, SetAvailableFamilyNumber] =
-    useState(familyNumber);
   const [familyCounts, setFamilyCounts] = useState({
     dad: 0,
     mom: 0,
     son: 0,
     daughter: 0,
+    grandMother: 0,
+    grandFather: 0,
   });
   const [isLeader, setIsLeader] = useState({
     dad: false,
     mom: false,
+    grandMother: false,
+    grandFather: false,
   });
 
   const {
@@ -67,8 +69,11 @@ export const useFamilyData = () => {
   // 토글
   const select = (role: keyof typeof familyCounts) => {
     const isTurningOn = familyCounts[role] === 0;
-    const isParent = role === "mom" || role === "dad";
-    if (isTurningOn && availableFamilyNumber <= 0) return;
+    const isParent =
+      role === "mom" ||
+      role === "dad" ||
+      role === "grandMother" ||
+      role === "grandFather";
 
     setFamilyCounts((prev) => ({
       ...prev,
@@ -82,20 +87,14 @@ export const useFamilyData = () => {
         [role]: false,
       }));
     }
-
-    SetAvailableFamilyNumber((prev) => (isTurningOn ? prev - 1 : prev + 1));
   };
 
   // 자식 증가
   const increment = (role: keyof typeof familyCounts) => {
-    if (availableFamilyNumber > 0) {
-      setFamilyCounts((prev) => ({
-        ...prev,
-        [role]: prev[role] + 1,
-      }));
-
-      SetAvailableFamilyNumber((prev) => prev - 1);
-    }
+    setFamilyCounts((prev) => ({
+      ...prev,
+      [role]: prev[role] + 1,
+    }));
   };
 
   // 자식 감소
@@ -105,22 +104,41 @@ export const useFamilyData = () => {
         ...prev,
         [role]: prev[role] - 1,
       }));
-
-      SetAvailableFamilyNumber((prev) => prev + 1);
     }
   };
 
   // 방장 설정
-  const handleLeader = (role: "mom" | "dad") => {
+  const handleLeader = (
+    role: "mom" | "dad" | "grandFather" | "grandMother",
+  ) => {
     if (familyCounts[role] > 0) {
       setIsLeader((prev) => ({
         mom: role === "mom" ? !prev.mom : false,
         dad: role === "dad" ? !prev.dad : false,
+        grandFather: role === "grandFather" ? !prev.grandFather : false,
+        grandMother: role === "grandMother" ? !prev.grandMother : false,
       }));
     }
   };
 
-  const canAdjustChildren = familyCounts["mom"] > 0 || familyCounts["dad"] > 0;
+  // 방장 반환
+  const returnLeader = (): Role => {
+    if (isLeader.dad) {
+      return "DAD";
+    } else if (isLeader.mom) {
+      return "MOM";
+    } else if (isLeader.grandFather) {
+      return "GRANDFATHER";
+    } else {
+      return "GRANDMOTHER";
+    }
+  };
+
+  const canAdjustChildren =
+    familyCounts["mom"] > 0 ||
+    familyCounts["dad"] > 0 ||
+    familyCounts["grandMother"] > 0 ||
+    familyCounts["grandFather"] > 0;
 
   const { mutateAsync: createFamilyMutation } = useMutation({
     mutationFn: postFamilyRoom,
@@ -128,17 +146,14 @@ export const useFamilyData = () => {
 
   // 전역 상태 저장
   const handleSubmit = async () => {
-    const currentPolicy = isLeader.mom
-      ? "MOTHER_ONLY"
-      : isLeader.dad
-        ? "FATHER_ONLY"
-        : "MOTHER_ONLY";
+    const currentPolicy = POLICY_BY_ROLE[returnLeader()];
 
     const requestData = {
-      familySize: familyNumber,
       familyComposition: {
         hasMother: familyCounts["mom"] > 0,
         hasFather: familyCounts["dad"] > 0,
+        hasGrandMother: familyCounts["grandMother"] > 0,
+        hasGrandFather: familyCounts["grandFather"] > 0,
         sonCount: familyCounts["son"],
         daughterCount: familyCounts["daughter"],
       },
@@ -164,9 +179,6 @@ export const useFamilyData = () => {
 
   return {
     familyData,
-    familyNumber,
-    setFamilyNumber,
-    SetAvailableFamilyNumber,
     select,
     familyCounts,
     increment,

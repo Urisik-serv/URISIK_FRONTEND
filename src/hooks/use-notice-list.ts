@@ -1,13 +1,16 @@
 import { getNotificationList } from "../api/notifications";
 import { useQuery } from "@tanstack/react-query";
 import { noticeMap } from "../constants/notice-record";
+import { useState } from "react";
+import type { ResponseNotice } from "../types/notice-list";
 
 export const useNoticeList = () => {
-  const { data } = useQuery({
-    queryKey: ["notice"],
-    queryFn: async () => {
-      return await getNotificationList(10);
-    },
+  const [size, setSize] = useState(10);
+
+  const { data, isFetching } = useQuery<ResponseNotice>({
+    queryKey: ["notice", size],
+    queryFn: () => getNotificationList(size),
+    placeholderData: (previousData) => previousData,
   });
 
   const ago = (createdAt: string) => {
@@ -75,10 +78,10 @@ export const useNoticeList = () => {
       content: content,
       ago: ago(item.createdAt),
       isRead: item.isRead,
-      key: item.createdAt,
-
+      key: crypto.randomUUID(),
+      id: crypto.randomUUID(),
     };
   });
 
-  return { noticeList, generation };
+  return { noticeList, generation, isFetching, data, setSize };
 };

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { rolePicture } from "../constants/profile-record";
 
 export interface FamilyProfileFormData {
   nickname: string;
@@ -25,20 +26,23 @@ interface ProfileStore {
   resetProfile: () => void;
 }
 
+const defaultFormData: FamilyProfileFormData = {
+  nickname: "",
+  role: "",
+  allergies: [],
+  preferences: [],
+  likedIngredients: "",
+  dislikedIngredients: "",
+  profilePicUrl: rolePicture["MOM"],
+};
+
 export const useProfileStore = create(
   persist<ProfileStore>(
     (set) => ({
-      savedFormData: {
-        nickname: "",
-        role: "",
-        allergies: [],
-        preferences: [],
-        likedIngredients: "",
-        dislikedIngredients: "",
-        profilePicUrl: "",
-      },
+      savedFormData: defaultFormData,
       hasLoadedFromServer: false,
       isLeader: false,
+
       setSavedFormData: (updater) =>
         set((state) => ({
           savedFormData:
@@ -46,25 +50,37 @@ export const useProfileStore = create(
               ? updater(state.savedFormData)
               : updater,
         })),
+
       markLoaded: () => set({ hasLoadedFromServer: true }),
+
       saveIsLeader: (leader: boolean) => set({ isLeader: leader }),
+
       resetProfile: () =>
         set({
-          savedFormData: {
-            nickname: "",
-            role: "",
-            allergies: [],
-            preferences: [],
-            likedIngredients: "",
-            dislikedIngredients: "",
-            profilePicUrl: "",
-          },
+          savedFormData: defaultFormData,
           hasLoadedFromServer: false,
           isLeader: false,
         }),
     }),
     {
       name: "profile-store",
+      version: 2,
+
+      migrate: (persistedState: any) => {
+        const state = persistedState ?? {};
+
+        return {
+          ...state,
+          savedFormData: {
+            ...defaultFormData,
+            ...state.savedFormData,
+            preferences: state.savedFormData?.preferences ?? [],
+            allergies: state.savedFormData?.allergies ?? [],
+            profilePicUrl:
+              state.savedFormData?.profilePicUrl || rolePicture["MOM"],
+          },
+        };
+      },
     },
   ),
 );

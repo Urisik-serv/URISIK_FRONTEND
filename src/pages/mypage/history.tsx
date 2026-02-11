@@ -11,11 +11,15 @@ import type { Week } from "../../types/meal-plan";
 
 export default function History() {
   const familyRoomId = useFamilyStore((state) => state.familyRoomId);
+  const [dateRange, setDateRange] = useState("최근 1개월");
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const { data: historyData } = useQuery({
-    queryKey: ["historyData", familyRoomId],
+    queryKey: ["historyData", familyRoomId, startDate, endDate],
     queryFn: async () => {
-      return getMonthMealPlan(familyRoomId as number);
+      return getMonthMealPlan(familyRoomId as number, startDate, endDate);
     },
     enabled: familyRoomId !== null,
   });
@@ -25,8 +29,10 @@ export default function History() {
     setIsOpen((prev) => !prev);
   };
 
-  const formatDate = (date: string) => {
-    return date.replace(/-/g, ".");
+  const handleDateSelection = (from: string, to: string) => {
+    setStartDate(from);
+    setEndDate(to);
+    setIsOpen(false); // 적용 시 모달 닫기
   };
 
   return (
@@ -35,7 +41,7 @@ export default function History() {
       <div className="w-[343px] mx-auto relative">
         <div className="flex justify-start pt-[24px]">
           <div className="text-2xl font-semibold leading-[36px]">
-            최근 1개월 식단 기록
+            {dateRange} {dateRange === "최근 1개월" ? "식단기록" : ""}
           </div>
         </div>
         <div className="pt-[16px] flex justify-end">
@@ -76,8 +82,11 @@ export default function History() {
       {isOpen && (
         <GetDateRangeModal
           handleModal={handleModal}
-          fromDate={formatDate(historyData?.fromDate ?? "")}
-          toDate={formatDate(historyData?.toDate ?? "")}
+          onApplyDate={handleDateSelection}
+          fromDate={startDate || historyData?.fromDate || ""}
+          toDate={endDate || historyData?.toDate || ""}
+          dateRange={dateRange}
+          setDateRange={setDateRange}
         />
       )}
     </>
