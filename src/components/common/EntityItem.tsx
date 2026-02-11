@@ -13,6 +13,7 @@ interface EntityItemProps {
   rating?: number;
   border?: string;
   deleteProfile?: () => void;
+  onClick?: () => void;
 }
 
 export default function EntityItem({
@@ -25,6 +26,7 @@ export default function EntityItem({
   rating,
   border,
   deleteProfile,
+  onClick,
 }: EntityItemProps) {
   const familyRoomId = useFamilyStore((data) => data.familyRoomId);
   const { mutate: deleteWishlists } = useDeleteProfileWishLists(familyRoomId);
@@ -59,6 +61,7 @@ export default function EntityItem({
           className="relative bg-white"
         >
           <div
+            onClick={onClick}
             className={`w-[343px] h-[72px] p-[10px] ${border} text-xl leading-[20px] tracking-[-0.6px]`}
           >
             <div className=" flex gap-[12px]">
