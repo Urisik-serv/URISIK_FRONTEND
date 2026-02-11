@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import CreamPasta from "../../assets/sample/cream-pasta.png";
 import Button from "../common/Button";
 import ReviewModal from "./ReviewModal";
 import type { TodayMeal } from "../../types/meal-plan";
