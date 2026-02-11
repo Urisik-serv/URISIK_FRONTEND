@@ -1,5 +1,6 @@
 import type { DetailRecipe, TransformedRecipe } from "../../../types/recipes";
 import MenuInfo from "../../common/MenuInfo";
+import SafeMark from "../../common/SafeMark";
 
 interface DetailContentProps {
   recipe?: DetailRecipe;
@@ -17,11 +18,7 @@ const DetailContent = ({ recipe, transRecipe }: DetailContentProps) => {
               <p className="text-gray-800 text-[14px] font-medium leading-6">
                 알레르기 위험도
               </p>
-              <p
-                className={`text-white text-xs font-semibold leading-4 px-[7px] py-px flex items-center rounded-xl ${recipe?.allergyWarning.hasRisk ? "bg-primary-700" : "bg-teal-400"}`}
-              >
-                {recipe?.allergyWarning.hasRisk ? "위험" : "안전"}
-              </p>
+              <SafeMark isSafe={!recipe?.allergyWarning.hasRisk} />
             </div>
             {recipe?.allergyWarning.hasRisk && (
               <p className="text-[13px] text-gray-500 font-medium leading-5">
