@@ -1,6 +1,7 @@
 import Rate from "./Rate";
 import Profile from "../../assets/images/empty-profile.png";
 import type { WishListProfile } from "../../types/wish-list";
+import SafeMark from "./SafeMark";
 
 type MenuListMode = "default" | "rate" | "profile";
 //default: 기본, rate: 별점까지만 보이도록, profile: 별점+프로필까지 보이도록
@@ -14,6 +15,7 @@ interface MenuListProps {
   onClick?: () => void;
   isSelected?: boolean;
   ingredients?: string | string[];
+  isSafe?: string;
   rate?: number;
   profiles?: WishListProfile[];
 }
@@ -27,12 +29,15 @@ export default function MenuList({
   onClick,
   isSelected = false,
   ingredients,
+  isSafe,
   rate,
   profiles,
 }: MenuListProps) {
   const displayIngredients = Array.isArray(ingredients)
     ? ingredients.join(", ")
     : ingredients;
+
+  const safe = isSafe === "SAFE" || isSafe === "SAFETY";
 
   return (
     <div
@@ -50,21 +55,33 @@ export default function MenuList({
             )}
             {type == "profile" && (
               <div className="flex -space-x-2">
-                {profiles?.map((profile) => (
-                  <img
-                    src={profile.profilePicUrl || Profile}
-                    key={profile.profileId}
-                    alt="프로필 이미지"
-                    className="size-6 object-cover rounded-full"
-                  />
-                ))}
+                {profiles?.map((profile) => {
+                  {
+                    /* const profileImageSrc =
+  profile.profilePicUrl && profile.profilePicUrl !== "테스트용 url"
+    ? profile.profilePicUrl
+    : rolePicture[profile.];*/
+                    // 대체 이미지로 넣을 role값이 없음
+                  }
+                  return (
+                    <img
+                      src={profile.profilePicUrl || Profile}
+                      key={profile.profileId}
+                      alt="프로필 이미지"
+                      className="size-6 object-cover rounded-full"
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
-          <div className="flex gap-[5px] font-medium text-[14px] text-gray-400 truncate">
-            <p>{category}</p>
-            <p>|</p>
-            <p>{displayIngredients}</p>
+          <div className="flex gap-2">
+            <SafeMark isWish={!!safe} isSafe={safe} />
+            <div className="flex gap-[5px] font-medium text-[14px] text-gray-400 truncate">
+              <p>{category}</p>
+              <p>|</p>
+              <p>{displayIngredients}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ export interface FamilyWishListResult {
   title: string;
   imageUrl: string;
   avgScore: number;
+  allergyStatus: string;
   category: {
     code: string;
     label: string;
@@ -43,6 +44,7 @@ export interface ProfileTransWishItems {
   foodImage: string;
   avgScore: number;
   recipeIngredients: string[];
+  foodSafety: string;
 }
 
 export interface ProfileWishItems {
@@ -53,6 +55,7 @@ export interface ProfileWishItems {
   foodImage: string;
   avgScore: number;
   recipeIngredients: string[];
+  foodSafety: string;
 }
 
 export interface ProfileWishListBody {
