@@ -34,8 +34,10 @@ const MealCuration = ({ category }: MealCurationProps) => {
           rating={recipe.avgScore}
           category={recipe.category}
           img={recipe.imageUrl || SampleImg}
+          isSafe={recipe.safe}
           external={null}
-          type="RECIPE"
+          type=""
+          typeBool={recipe.transformed}
         />
       ))}
     </div>
