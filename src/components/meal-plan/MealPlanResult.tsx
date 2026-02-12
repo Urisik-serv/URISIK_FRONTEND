@@ -13,7 +13,7 @@ type MealPlanResultProps = {
   mealPlanId: number;
   onClick: () => void;
   weekParam: string | null;
-  isLoading;
+  isLoading: boolean;
 };
 
 type mealPlanResponse = Record<string, SlotItem[]>;
