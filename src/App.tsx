@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import KakaoProvider from "./providers/kakao-provider";
 import { Toaster } from "react-hot-toast";
+import SSEProvider from "./providers/SSE-provider";
 
 function App() {
   const queryClient = new QueryClient();
@@ -14,7 +15,9 @@ function App() {
       <Toaster />
       <QueryClientProvider client={queryClient}>
         <KakaoProvider>
-          <RouterProvider router={router} />
+          <SSEProvider>
+            <RouterProvider router={router} />
+          </SSEProvider>
         </KakaoProvider>
         {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
       </QueryClientProvider>
