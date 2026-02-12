@@ -154,6 +154,7 @@ export default function MyProfilePage() {
                   name={item.transformedRecipeName}
                   rating={item.avgScore}
                   type="TRANSFORMED_RECIPE"
+                  isSafe={item.foodSafety === "SAFETY"}
                   isWish={true}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
@@ -174,6 +175,7 @@ export default function MyProfilePage() {
                   rating={item.avgScore}
                   type="RECIPE"
                   isWish={true}
+                  isSafe={item.foodSafety === "SAFETY"}
                   id={item.recipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}

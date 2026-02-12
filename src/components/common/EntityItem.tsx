@@ -12,6 +12,7 @@ interface EntityItemProps {
   id?: number;
   tags?: string;
   type?: string;
+  isSafe?: boolean;
   isWish?: boolean;
   rating?: number;
   border?: string;
@@ -26,6 +27,7 @@ export default function EntityItem({
   tags,
   id,
   type,
+  isSafe,
   isWish = false,
   rating,
   border,
@@ -103,7 +105,7 @@ export default function EntityItem({
                   )}
                 </div>
                 <div className="flex gap-[5px] items-center">
-                  {isWish && <SafeMark isWish={false} isSafe={true} />}
+                  {isWish && <SafeMark isWish={false} isSafe={isSafe} />}
                   <div className="text-sm tracking-[-0.42px] text-gray-400 truncate shrink-0">
                     {category}
                   </div>
