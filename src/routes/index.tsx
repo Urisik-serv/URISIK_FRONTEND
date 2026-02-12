@@ -14,7 +14,6 @@ import FamilyInvitePage from "../pages/family/family-invite-page";
 import FamilyProfileCreatePage from "../pages/profile/family-profile-create-page";
 import AllergiesSearchPage from "../pages/family/allergies-search-page";
 import FamilyWishListPage from "../pages/family/family-wishlist-page";
-import MenuInformationPage from "../pages/home/menu-information-page";
 import ModifyProfilePage from "../pages/profile/modify-profile-page";
 import TermsAndPolicies from "../pages/mypage/terms-and-policies";
 import AiRecommendationNotice from "../pages/terms-and-policies/ai-recommendation-notice";
@@ -29,6 +28,8 @@ import MyProfilePage from "../pages/profile/my-profile-page";
 import History from "../pages/mypage/history";
 import LoginRedirectPage from "../pages/auth/login-redirect-page";
 import InviteEntry from "../pages/home/invite-entry";
+import MealPlanDetailPage from "../pages/meal-plan/meal-plan-detail-page";
+import MenuPageDispatcher from "../components/home/detailPage/MenuPageDispatcher";
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +59,7 @@ export const router = createBrowserRouter([
         path: "onboarding",
         element: <OnboardingPage />,
       },
+      { path: "invite/:token", element: <InviteEntry /> },
 
       // Protected Routes (로그인 필요), 이후 페이지는 여기에 라우팅
       // 지금은 인증이 없을 때 접근 가능하게 해놓음
@@ -77,9 +79,10 @@ export const router = createBrowserRouter([
           { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
+          { path: "meal-plan/detail", element: <MealPlanDetailPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
-          { path: "family-invite", element: <FamilyInvitePage /> },
-          { path: "family-invite/:token", element: <InviteEntry /> },
+          { path: "invite", element: <FamilyInvitePage /> },
+
           { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",
@@ -100,7 +103,7 @@ export const router = createBrowserRouter([
           { path: "my-profile", element: <MyProfilePage /> },
           {
             path: "menu-information/:menuId",
-            element: <MenuInformationPage />,
+            element: <MenuPageDispatcher />,
           },
           {
             path: "ai-recomendation-notice",

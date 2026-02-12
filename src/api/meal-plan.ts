@@ -2,9 +2,11 @@ import type {
   CreateMealPlan,
   MonthResult,
   ResponseCreateMealPlanDto,
+  ResponseEditMealPlanDto,
   ResponseMonthMealPlan,
   ResponseThisWeekMealPlan,
   ResponseTodayMealPlan,
+  Updates,
 } from "../types/meal-plan";
 import { axiosInstance } from "./axios/axios";
 
@@ -21,8 +23,23 @@ export const postCreateMealPlans = async ({
     createMeal,
   );
 
-  console.log("식단 생성 api", data);
+  return data;
+};
 
+//주간 식단 수정 api
+export const patchEditMealPlans = async ({
+  familyRoomId,
+  mealPlanId,
+  updates,
+}: {
+  familyRoomId: number;
+  mealPlanId: number;
+  updates: Updates[];
+}): Promise<ResponseEditMealPlanDto> => {
+  const { data } = await axiosInstance.patch(
+    `/api/family-rooms/${familyRoomId}/meal-plans/${mealPlanId}`,
+    { updates },
+  );
   return data;
 };
 
@@ -47,7 +64,6 @@ export const getTodayMealPlan = async (
   const { data } = await axiosInstance.get(
     `/api/family-rooms/${familyRoomId}/meal-plans/today`,
   );
-  console.log(data);
 
   return data;
 };
@@ -67,12 +83,21 @@ export const getWeekMealPlan = async ({
   return data;
 };
 
-// 최근 1개월 식단 조회 api
+// 기간 별 식단 조회 api
 export const getMonthMealPlan = async (
   familyRoomId: number,
+  fromDate: string,
+  toDate: string,
 ): Promise<MonthResult> => {
   const { data } = await axiosInstance.get<ResponseMonthMealPlan>(
-    `/api/family-rooms/${familyRoomId}/meal-plans/last-month`,
+    `/api/family-rooms/${familyRoomId}/meal-plans/history`,
+    {
+      params: {
+        fromDate,
+        toDate,
+      },
+    },
   );
+
   return data.result;
 };

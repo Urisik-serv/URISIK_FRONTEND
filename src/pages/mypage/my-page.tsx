@@ -1,5 +1,4 @@
 import PublicHeader from "../../components/header/PublicHeader";
-import SpeechBubble from "../../components/mypage/SpeechBubble";
 import { useNavigate } from "react-router-dom";
 import ListItem from "../../components/mypage/ListItem";
 import { useState } from "react";
@@ -11,9 +10,13 @@ import { roleMap, rolePicture } from "../../constants/profile-record";
 import BellIcon from "../../assets/mypage/bell.svg";
 import ListBox from "../../assets/mypage/list-box.svg";
 import Finance from "../../assets/mypage/finance.svg";
+import { TemperBar } from "../../components/mypage/TemperBar";
+import { useNoticeList } from "../../hooks/use-notice-list";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MyPage = () => {
-  const { LogoutMutate } = useAuth();
+  const { LogoutMutate, LogoutIsPending } = useAuth();
+  const { generation } = useNoticeList();
 
   const myData = useProfileStore.getState().savedFormData;
   const isLeader = useProfileStore().isLeader;
@@ -27,6 +30,14 @@ const MyPage = () => {
   const handleLogout = () => {
     LogoutMutate();
   };
+
+  if (LogoutIsPending) {
+    return (
+      <div className="w-full h-dvh flex justify-center items-center">
+        <LoadingSpinner text="로딩중..." />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -68,12 +79,7 @@ const MyPage = () => {
             <div className="text-[#333] text-[14px] font-semibold leading-[21px] tracking-[-0.28px]">
               우리 가족 식탁 온도
             </div>
-            <div className="flex justify-center w-full">
-              <SpeechBubble text="따뜻해지는 중이에요" />
-            </div>
-            <div className="w-[327px] h-[10px] bg-white rounded-[10px] relative">
-              <div className="w-[173px] h-[10px] bg-primary-700 rounded-[10px] absolute top-0" />
-            </div>
+            <TemperBar generationNumber={generation ?? 0} />
             <div className="flex gap-[44px] text-gray-400 text-[12px] text-center font-semibold leading-[18px] tracking-[-0.24px]">
               <div>0°C</div>
               <div>25°C</div>

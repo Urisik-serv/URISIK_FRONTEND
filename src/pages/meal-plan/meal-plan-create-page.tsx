@@ -9,9 +9,10 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import MealPlanResult from "../../components/meal-plan/MealPlanResult";
 import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
 import AlertModal from "../../components/common/AlertModal";
-import { useNavigate } from "react-router-dom";
-import { getNextMonday } from "../../utils/date";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
@@ -20,6 +21,9 @@ const MealPlanCreatePage = () => {
   const { familyRoomId } = useFamilyStore.getState();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const weekParam = searchParams.get("week");
 
   const [mealPlanId, setMealPlanId] = useState<number>(0);
   const [lunchSlots, setLunchSlots] = useState<SlotRequest[]>([]);
@@ -30,13 +34,11 @@ const MealPlanCreatePage = () => {
 
   const handleCreate = async () => {
     const body: CreateMealPlan = {
-      weekStartDate: getNextMonday(),
+      weekStartDate: weekParam === "THIS" ? getThisMonday() : getNextMonday(),
       selectedSlots: [...lunchSlots, ...dinnerSlots],
       regenerate: regenerate,
     };
     console.log(body);
-
-    if (step === "create") setStep("result");
 
     setIsLoading(true); //로딩 시작
     try {
@@ -53,8 +55,17 @@ const MealPlanCreatePage = () => {
         "mealPlan",
         JSON.stringify(changeAdditionalProp(response.result.slots, "DAY")),
       );
+      sessionStorage.setItem(
+        "mealPlanId",
+        JSON.stringify(response.result.mealPlanId),
+      );
+      if (step === "create") setStep("result");
     } catch (error: any) {
-      alert(error.response?.data?.message);
+      if (error.response?.data?.code === "MEAL_PLAN_409") {
+        toast.error("이미 생성된 다음주 식단이 있어요");
+      } else {
+        toast.error(error.response?.data?.message);
+      }
       navigate(`/`);
     } finally {
       setIsLoading(false); // 로딩 끝
@@ -125,6 +136,7 @@ const MealPlanCreatePage = () => {
                 <MealPlanResult
                   mealPlanId={mealPlanId}
                   onClick={handleCreate}
+                  weekParam={weekParam}
                 />
               )}
             </div>

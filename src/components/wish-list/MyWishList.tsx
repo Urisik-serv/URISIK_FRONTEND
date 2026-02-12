@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
-import CheckedBox from "../../assets/icons/Check_box.svg";
+import CheckedBox from "../../assets/icons/check-box.svg";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
@@ -95,7 +95,10 @@ const MyWishList = () => {
           const uniqueKey = getUniqueKey(null, item.transformedRecipeId);
 
           return (
-            <div key={item.transformedRecipeId} className="flex items-center">
+            <div
+              key={item.transformedRecipeId}
+              className="flex items-center border-b border-gray-200"
+            >
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -106,18 +109,24 @@ const MyWishList = () => {
                   }}
                 />
               )}
-              <MenuList
-                key={item.transformedRecipeId}
-                type="default"
-                menu={item.transformedRecipeName}
-                category={item.category}
-                img={item.foodImage}
-                clickable={true}
-                onClick={() =>
-                  navigate(`/menu-information/${item.transformedRecipeId}`)
-                }
-                isSelected={isSelected(uniqueKey)}
-              />
+              <div className="flex-1 min-w-0">
+                <MenuList
+                  key={item.transformedRecipeId}
+                  type="default"
+                  menu={item.transformedRecipeName}
+                  isSafe={item.foodSafety}
+                  category={item.category}
+                  ingredients={item.recipeIngredients}
+                  img={item.foodImage}
+                  clickable={true}
+                  onClick={() =>
+                    navigate(
+                      `/menu-information/${item.transformedRecipeId}?type=TRANSFORMED`,
+                    )
+                  }
+                  hasBorder={false}
+                />
+              </div>
             </div>
           );
         })}
@@ -127,7 +136,10 @@ const MyWishList = () => {
           const uniqueKey = getUniqueKey(item.recipeId, null);
 
           return (
-            <div key={item.recipeId} className="flex items-center">
+            <div
+              key={item.recipeId}
+              className="flex items-center border-b border-gray-200"
+            >
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -138,16 +150,22 @@ const MyWishList = () => {
                   }}
                 />
               )}
-              <MenuList
-                key={item.recipeId}
-                type="default"
-                menu={item.recipeName}
-                category={item.category}
-                img={item.foodImage}
-                clickable={true}
-                onClick={() => navigate(`/menu-information/${item.recipeId}`)}
-                isSelected={isSelected(uniqueKey)}
-              />
+              <div className="flex-1 min-w-0">
+                <MenuList
+                  key={item.recipeId}
+                  type="default"
+                  menu={item.recipeName}
+                  category={item.category}
+                  isSafe={item.foodSafety}
+                  ingredients={item.recipeIngredients}
+                  img={item.foodImage}
+                  clickable={true}
+                  onClick={() =>
+                    navigate(`/menu-information/${item.recipeId}?type=RECIPE`)
+                  }
+                  hasBorder={false}
+                />
+              </div>
             </div>
           );
         })}

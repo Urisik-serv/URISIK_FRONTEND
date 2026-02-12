@@ -14,6 +14,9 @@ export interface SearchRecipesItem {
   category: string;
   avgScore: number;
   reviewCount: number;
+  wishCount: boolean;
+  description: string;
+  safe: boolean;
   external: {
     rcpSeq: string;
     rcpNm: string;
@@ -28,13 +31,7 @@ export interface SearchRecipesItem {
     imageLarge: string;
     ingredientsRaw: string;
     instructionsRaw: string;
-    steps: [
-      {
-        order: number;
-        description: string;
-        imageUrl: string;
-      },
-    ];
+    steps: DetailRecipe[];
   };
 }
 
@@ -50,6 +47,7 @@ export interface ExternalRecipes {
 export interface DetailRecipeStep {
   order: number;
   description: string;
+  imageUrl: string;
 }
 
 export interface DetailRecipe {
@@ -80,18 +78,12 @@ export interface DetailRecipe {
   avgScore: number;
 }
 
-export interface TransfomedRecipe {
+export interface TransformedRecipe {
   transformedRecipeId: number;
   title: string;
-  imageUrl: string;
   baseRecipeId: number;
   ingredients: string[];
-  steps: [
-    {
-      order: number;
-      description: string;
-    },
-  ];
+  steps: DetailRecipeStep[];
   substitutionSummary: [
     {
       allergen: string;
@@ -108,8 +100,29 @@ export interface TransfomedRecipe {
   wishCount: number;
 }
 
+export interface PostTransformedRecipe {
+  transformedRecipeId: number;
+  title: string;
+  baseRecipeId: number;
+  ingredients: string[];
+  steps: [
+    {
+      order: number;
+      description: string;
+    },
+  ];
+  substitutionSummary: [
+    {
+      allergen: string;
+      replacedWith: string;
+      reason: string;
+    },
+  ];
+}
+
 export type ResponseDetailRecipe = BaseResponse<DetailRecipe>;
-export type ResponseTransformedRecipe = BaseResponse<TransfomedRecipe>;
+export type ResponseTransformedRecipe = BaseResponse<TransformedRecipe>;
+export type ResponsePostTransRecipe = BaseResponse<PostTransformedRecipe>;
 
 // interface 사용시 extends
 export interface ResponseSearchRecipes extends BaseResponse<SearchRecipesItems> {}
@@ -155,3 +168,21 @@ export interface RecommendPopularRecipes {
 }
 
 export type ResponseRecommendPopular = BaseResponse<RecommendPopularRecipes>;
+
+// 리뷰 기반 추천 레시피 검색어
+export interface RecommendSearch {
+  recipeName: string[];
+}
+
+export interface PopularKeyword {
+  keyword: string;
+  rank: number;
+  change: "UP" | "DOWN" | "SAME";
+}
+export interface PopularSearches {
+  windowStart: string;
+  windowEnd: string;
+  keywords: PopularKeyword[];
+}
+
+export type ResponsePopularSearch = BaseResponse<PopularSearches>;

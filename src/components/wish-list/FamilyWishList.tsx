@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
-import CheckedBox from "../../assets/icons/Check_box.svg";
+import CheckedBox from "../../assets/icons/check-box.svg";
 import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
 import { useInView } from "react-intersection-observer";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useDeleteFamilyWishLists from "../../hooks/mutations/use-delete-family-wishlists";
 import { useNavigate } from "react-router-dom";
+import type { FamilyWishListResult } from "../../types/wish-list";
+import { useFamilyData } from "../../hooks/use-family-data";
 
 const FamilyWishList = () => {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
@@ -32,8 +34,8 @@ const FamilyWishList = () => {
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
-  // 임시 수정가능 데이터
-  const isAuth = false;
+  // 방장 권한 확인
+  const { isLeader } = useFamilyData();
 
   const [editMode, setEditMode] = useState(false);
 
@@ -69,6 +71,14 @@ const FamilyWishList = () => {
     }
   };
 
+  const handleClick = (item: FamilyWishListResult) => {
+    if (item.type === "RECIPE") {
+      navigate(`/menu-information/${item.id}?type=RECIPE`);
+    } else if (item.type === "TRANSFORMED_RECIPE") {
+      navigate(`/menu-information/${item.id}?type=TRANSFORMED`);
+    }
+  };
+
   return (
     <div>
       <div className="pb-4">
@@ -79,7 +89,7 @@ const FamilyWishList = () => {
           우리 가족이 원하는 음식들을 종합해서 확인하세요.
         </p>
       </div>
-      {!isAuth && (
+      {isLeader && (
         <div className="flex justify-end">
           <EditButton
             onClick={handleButtonClick}
@@ -95,7 +105,10 @@ const FamilyWishList = () => {
           const uniqueKey = getUniqueKey(recipeId, transId);
 
           return (
-            <div key={uniqueKey} className="flex items-center">
+            <div
+              key={uniqueKey}
+              className="flex items-center border-b border-gray-200"
+            >
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -106,17 +119,22 @@ const FamilyWishList = () => {
                   }}
                 />
               )}
-              <MenuList
-                type="profile"
-                menu={item.title}
-                img={item.imageUrl}
-                rate={item.avgScore}
-                category={item.category.label}
-                profiles={item.sourceProfile.profiles}
-                onClick={() => navigate(`/menu-information/${item.id}`)}
-                clickable={true}
-                isSelected={false}
-              />
+              <div className="flex-1 min-w-0">
+                <MenuList
+                  type="profile"
+                  key={item.id}
+                  menu={item.title}
+                  img={item.imageUrl}
+                  rate={item.avgScore}
+                  isSafe={item.allergyStatus}
+                  category={item.category.label}
+                  ingredients={item.ingredientsRaw}
+                  profiles={item.sourceProfile.profiles}
+                  onClick={() => handleClick(item)}
+                  clickable={true}
+                  hasBorder={false}
+                />
+              </div>
             </div>
           );
         })}

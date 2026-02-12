@@ -1,7 +1,7 @@
-import chevronLeftGray from "../../assets/icons/chevron-right-gray.svg";
-import checkBox from "../../assets/icons/Check_box.svg";
+import checkBox from "../../assets/icons/check-box.svg";
 import emptyCheckBox from "../../assets/icons/check-box-empty.svg";
 import { useNavigate, type To } from "react-router-dom";
+import Chevron from "../common/icon/Chevron";
 
 interface TermsAgreementRowProps {
   isChecked: boolean;
@@ -33,12 +33,8 @@ export default function TermsAgreementRow({
           >
             {title}
           </button>
-          <button className="w-6 h-6 cursor-pointer">
-            <img
-              src={chevronLeftGray}
-              alt="서비스 이용 약관 더보기 버튼"
-              className="size-[24px]"
-            />
+          <button onClick={handleNavigate} className="w-6 h-6 cursor-pointer">
+            <Chevron rotate={-90} color="#A1A1AA" />
           </button>
         </div>
         <button onClick={onChecked} className="cursor-pointer">

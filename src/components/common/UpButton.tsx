@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import UpImg from "../../assets/icons/chevron-up.svg";
+import Chevron from "./icon/Chevron";
 
 const UpButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,11 +35,9 @@ const UpButton = () => {
           onClick={handleClick}
           tabIndex={isVisible ? 0 : -1}
         >
-          <img
-            src={UpImg}
-            alt="위로가기 버튼"
-            className="border-1 border-gray-400 rounded-2xl bg-white cursor-pointer w-8 h-8 shadow-md"
-          />
+          <div className="flex justify-center items-center border-1 border-gray-400 rounded-2xl bg-white cursor-pointer w-8 h-8 shadow-md">
+            <Chevron rotate={180} color="black" size={32} />
+          </div>
         </button>
       </div>
     </div>

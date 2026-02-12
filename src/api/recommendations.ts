@@ -23,7 +23,7 @@ export const getRecommendScore = async (
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/high-score",
     {
-      params: category,
+      params: { category: category || undefined },
     },
   );
 
@@ -39,7 +39,7 @@ export const getRecommendSafeScore = async (
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/safe-high-score",
     {
-      params: category,
+      params: { category: category || undefined },
     },
   );
 
@@ -52,12 +52,9 @@ export const getRecommendSafeScore = async (
 export const getRecommendWish = async (
   category?: string,
 ): Promise<ResponseRecommendPopular> => {
-  const { data } = await axiosInstance.get(
-    "/api/recommendations/home/high-wish",
-    {
-      params: category,
-    },
-  );
+  const { data } = await axiosInstance.get("/api/recommendations/home/wish", {
+    params: { category: category || undefined },
+  });
 
   console.log("하단 추천 데이터: ", data);
 

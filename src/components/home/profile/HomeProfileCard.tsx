@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import DefaultMomImg from "../../../assets/profile/default-mom.svg";
 import type { FamilyDetail } from "../../../types/family-profile";
 import { useProfileModalActions } from "../../../hooks/use-profile-modal-store";
 import { getProfile } from "../../../api/family-profile";
 import { useEffect, useState } from "react";
 import { useFamilyStore } from "../../../stores/use-family-store";
+import { rolePicture } from "../../../constants/profile-record";
 interface HomeProfileCardProps {
   data: FamilyDetail;
 }
@@ -22,7 +22,7 @@ const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
     };
 
     fetchProfile();
-  });
+  }, []);
   const myProfile = data.nickname === nickname;
 
   const handleClick = () => {
@@ -30,10 +30,15 @@ const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
     else isOpen(data);
   };
 
+  // 프로필 이미지
+  const profileImageSrc = data.profilePicUrl?.includes("no_profile_image")
+    ? rolePicture[data.role]
+    : data.profilePicUrl;
+
   return (
     <div onClick={handleClick} className="shrink-0">
       <img
-        src={DefaultMomImg}
+        src={profileImageSrc}
         alt="프로필 이미지"
         className={`w-14 h-14 rounded-full cursor-pointer ${
           myProfile ? "border-[3px] border-primary-700" : ""

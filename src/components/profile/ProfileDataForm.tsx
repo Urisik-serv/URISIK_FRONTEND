@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { useAllergySearch } from "../../hooks/use-allergy-search";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useFamilyProfileForm } from "../../hooks/use-family-profile-form";
 
 import Button from "../common/Button";
@@ -7,12 +6,14 @@ import Camera from "../../assets/icons/camera.svg";
 import RequiredLabel from "../family/RequiredLabel";
 import SelectButton from "../family/SelectButton";
 import OptionalLabel from "../family/OptionalLabel";
-import { patchProfile, postProfile } from "../../api/family-profile";
 import { useProfileStore } from "../../stores/use-profile-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
+import { useProfileMutation } from "../../hooks/mutations/use-post-profile";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 interface ProfileDataFormProps {
-  isEdit?: boolean; // 편집 모드 여부
+  isEdit?: boolean;
   handlePicture?: () => void;
 }
 
@@ -20,27 +21,55 @@ export default function ProfileDataForm({
   isEdit,
   handlePicture,
 }: ProfileDataFormProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const {
     handleNickNameChange,
     handleRoleChange,
     handlePreferencesChange,
     selectedRole,
-    isCheckedPreference,
     handleLikeChange,
     handleDislikeChange,
-    isValid,
     formData,
     currentFamilyRoomId,
     request,
+    isPreferenceSelected,
   } = useFamilyProfileForm();
 
-  const {
-    selectedAllergies,
-    handleSelectAllergy: onSelectAllergy,
-    handleResetAllergy,
-  } = useAllergySearch();
+  const selectedAllergies = useProfileStore((s) => s.savedFormData.allergies);
 
-  const savedRole = useProfileStore.getState().savedFormData.role;
+  const setSavedFormData = useProfileStore((s) => s.setSavedFormData);
+
+  const handleResetAllergy = () => {
+    setSavedFormData((prev) => ({
+      ...prev,
+      allergies: [],
+    }));
+  };
+
+  const onSelectAllergy = (allergy: string) => {
+    setSavedFormData((prev) => ({
+      ...prev,
+      allergies: prev.allergies.includes(allergy)
+        ? prev.allergies.filter((a) => a !== allergy)
+        : [...prev.allergies, allergy],
+    }));
+  };
+
+  useEffect(() => {
+    if (location.state?.selectedAllergies) {
+      setSavedFormData((prev) => ({
+        ...prev,
+        allergies: location.state.selectedAllergies,
+      }));
+    }
+  }, [location.state, setSavedFormData]);
+
+  const profileMutation = useProfileMutation(currentFamilyRoomId, isEdit);
+
+  const profilePicUrl = useProfileStore((s) => s.savedFormData.profilePicUrl);
+  const savedRole = useProfileStore((s) => s.savedFormData.role);
 
   const handleGoSearch = () => {
     navigate("allergy-search");
@@ -48,36 +77,27 @@ export default function ProfileDataForm({
 
   if (currentFamilyRoomId === null) {
     alert("가족방 정보가 존재하지 않습니다");
-    return;
+    return null;
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      if (isEdit) {
-        const res = await patchProfile(currentFamilyRoomId, request);
-        console.log(res.result);
-      } else {
-        const res = await postProfile(currentFamilyRoomId, request);
-        console.log(res.result);
-      }
-    } catch (error) {
-      if (isEdit) {
-        console.error("프로필 편집 실패:", error);
-      } else {
-        console.error("프로필 생성 실패:", error);
-      }
+
+    // 폼 유효성 검사
+    if (request.nickname === "") {
+      toast.error("닉네임을 입력해주세요");
+    } else if (request.role === "") {
+      toast.error("역할을 선택해주세요");
+    } else if (request.dietPreferences.length === 0) {
+      toast.error("선호음식을 선택해주세요");
     }
 
-    if (!isValid()) {
-      alert("필수 항목을 모두 입력해주세요.");
-    }
-    console.log("제출된 폼 데이터:", formData);
+    profileMutation.mutate(request);
   };
 
-  const roles = ["엄마", "아빠", "아들", "딸"];
+  const roles = ["엄마", "아빠", "아들", "딸", "할머니", "할아버지"];
   const foods = ["한식", "중식", "일식", "양식", "디저트"];
-  const navigate = useNavigate();
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -85,14 +105,15 @@ export default function ProfileDataForm({
     >
       {isEdit && (
         <div className="h-[104px] mb-[5.5px]">
-          <div className="pt-[24px] pb-0 flex flex-col items-center">
+          <div className="pt-[24px] flex flex-col items-center">
             <img
               src={
-                useProfileStore.getState().savedFormData.profilePicUrl ??
-                rolePicture[roleMap[savedRole]]
+                profilePicUrl && profilePicUrl !== ""
+                  ? profilePicUrl
+                  : rolePicture[roleMap[savedRole]]
               }
               alt="프로필 사진"
-              className="w-[104px] m-0 rounded-full"
+              className="w-[104px] rounded-full"
             />
             <button
               onClick={handlePicture}
@@ -104,26 +125,30 @@ export default function ProfileDataForm({
           </div>
         </div>
       )}
-      <div className=" w-[343px] pt-[26px] ">
+
+      {/* 닉네임 */}
+      <div className="pt-[26px]">
         <RequiredLabel title="닉네임" />
         <div className="pt-[12px]">
           <input
             required
             type="text"
             placeholder="닉네임을 입력해주세요."
-            className="w-full h-[42px] ring-1 ring-[#C3C3C3] focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#AFAFAF]"
+            className="w-full h-[42px] ring-1 ring-[#C3C3C3] focus:outline-none px-[8px] py-[11px]"
             onChange={handleNickNameChange}
             value={formData.nickname}
           />
         </div>
       </div>
-      <div className=" w-[343px] ">
+
+      {/* 역할 */}
+      <div>
         <RequiredLabel title="역할" />
-        <div className="pt-[12px] flex gap-[12px] ">
-          {roles.map((role) => (
+        <div className="pt-[12px] flex gap-[12px] flex-wrap">
+          {roles.map((role, index) => (
             <button
               onClick={() => handleRoleChange(role)}
-              key={role}
+              key={`${role}-${index}`}
               type="button"
               className="cursor-pointer"
             >
@@ -132,6 +157,8 @@ export default function ProfileDataForm({
           ))}
         </div>
       </div>
+
+      {/* 알레르기 */}
       <div className=" w-[343px] ">
         <RequiredLabel title="알레르기 정보" />
         <div className="pt-[12px]">
@@ -142,7 +169,7 @@ export default function ProfileDataForm({
             onClick={handleGoSearch}
           />
         </div>
-        <div className="flex gap-[12px]">
+        <div className="flex gap-[12px] flex-wrap">
           {selectedAllergies.length == 0 ? (
             <button
               type="button"
@@ -166,9 +193,9 @@ export default function ProfileDataForm({
                   isSelected={selectedAllergies.length === 0}
                 />
               </button>
-              {selectedAllergies.map((allergy) => (
+              {selectedAllergies.map((allergy, index) => (
                 <button
-                  key={allergy}
+                  key={`${allergy}-${index}`}
                   onClick={() => onSelectAllergy(allergy)}
                   className="pt-[12px]"
                 >
@@ -179,54 +206,59 @@ export default function ProfileDataForm({
           )}
         </div>
       </div>
-      <div className=" w-[343px] ">
+      {/* 식단 선호도 */}
+      <div>
         <RequiredLabel title="식단 선호도" />
-        <div className="pt-[12px] flex flex-wrap gap-[12px] w-[319px]">
+        <div className="pt-[12px] flex flex-wrap gap-[12px]">
           {foods.map((food, index) => (
             <button
-              className="cursor-pointer"
+              key={`${food}-${index}`}
               type="button"
+              className="cursor-pointer"
               onClick={() => handlePreferencesChange(foods, index)}
-              key={index}
             >
               <SelectButton
                 name={food}
-                isSelected={isCheckedPreference[index]}
+                isSelected={isPreferenceSelected(food)}
               />
             </button>
           ))}
         </div>
       </div>
-      <div className=" w-[343px] ">
+
+      {/* 좋아하는 식재료 */}
+      <div>
         <OptionalLabel title="좋아하는 식재료" />
         <div className="pt-[12px]">
           <input
             type="text"
             placeholder="직접 입력하기"
-            className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
+            className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none px-[8px] py-[11px]"
             onChange={handleLikeChange}
             value={formData.likedIngredients}
           />
         </div>
       </div>
-      <div className=" w-[343px] ">
+
+      {/* 싫어하는 식재료 */}
+      <div>
         <OptionalLabel title="싫어하는 식재료" />
         <div className="pt-[12px]">
           <input
             type="text"
             placeholder="직접 입력하기"
-            className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none flex items-center gap-[10px] px-[8px] py-[11px] placeholder:text-[16px] placehorder:leading-[24px] placeholder:text-[#D1D1D1]"
+            className="w-full h-[42px] rounded-xl ring-1 ring-primary-700 focus:outline-none px-[8px] py-[11px]"
             onChange={handleDislikeChange}
             value={formData.dislikedIngredients}
           />
         </div>
       </div>
-      <div className="pt-[131px] ">
+
+      <div className="pt-[131px]">
         <Button
-          onClick={() => navigate("/")}
-          text={"완료"}
+          text={profileMutation.isPending ? "처리 중..." : "완료"}
           type="submit"
-          disabled={!isValid()}
+          disabled={profileMutation.isPending}
         />
       </div>
     </form>

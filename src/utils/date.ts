@@ -38,12 +38,29 @@ export function getThisMonday(baseDate = new Date()) {
 export function getWeekOfMonth(date = new Date()) {
   const d = new Date(date);
   const month = d.getMonth() + 1;
-  const firstDate = new Date(d.getFullYear(), d.getMonth(), 1);
+  const day = d.getDate();
 
-  // 1일에서 오늘까지 몇 밤 지났는지 + 1일의 요일 보정
-  const offset = firstDate.getDay() === 0 ? 6 : firstDate.getDay() - 1;
-  const week = Math.ceil((d.getDate() + offset) / 7);
+  const week = Math.ceil(day / 7);
 
   const weekNames = ["첫째주", "둘째주", "셋째주", "넷째주", "다섯째주"];
-  return { month, weekKor: weekNames[week - 1] || "오류" };
+
+  return {
+    month,
+    weekKor: weekNames[week - 1],
+  };
 }
+
+// 2026-02-10T00:00:00 -> 1시간단위로 분리
+export const formatRankingTime = (isoString?: string) => {
+  if (!isoString) return "실시간 순위";
+
+  const date = new Date(isoString);
+  const hour = date.getHours();
+
+  // 24시간제 -> 오전/오후 변환 로직
+  const period = hour >= 12 ? "오후" : "오전";
+  const twelveHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
+
+  // 결과 예시: 오후 3시 기준"
+  return `${period} ${twelveHour}시 기준`;
+};

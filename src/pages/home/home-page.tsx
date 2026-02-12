@@ -11,11 +11,35 @@ import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 import AlertModal from "../../components/common/AlertModal";
-import { patchAlarm } from "../../api/member";
+import { usePatchAlarm } from "../../hooks/queries/use-patch-alarm";
+import { useFamilyData } from "../../hooks/use-family-data";
+import { useGetProfile } from "../../hooks/queries/use-get-profile";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { useProfileStore } from "../../stores/use-profile-store";
+import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  //family-store 저장
+  useFamilyData();
+  const { familyRoomId } = useFamilyStore();
+  const { data } = useMyProfile(familyRoomId);
+  const isLeader = data?.isLeader;
+  const { data: profile } = useGetProfile(familyRoomId);
+  const { hasLoadedFromServer, setSavedFormData, markLoaded, saveIsLeader } =
+    useProfileStore();
+
+  useEffect(() => {
+    if (!familyRoomId || isLeader == undefined) return;
+    //profile-store 저장
+    if (!hasLoadedFromServer && profile) {
+      setSavedFormData(profile);
+      saveIsLeader(isLeader);
+      markLoaded();
+    }
+  }, [isLeader, profile, hasLoadedFromServer, familyRoomId, saveIsLeader]);
 
   const isSearchBarOpen = location.state?.showSearch === true;
 
@@ -35,14 +59,23 @@ const HomePage = () => {
     }
   }, []);
 
-  const handleAlarm = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_AGREED" });
+  const { mutate: updateAlarm } = usePatchAlarm();
+
+  const handleAlarm = () => {
+    updateAlarm({ alarmPolicy: "ALARM_AGREED" });
     setIsModalOpen(false);
   };
 
-  const handleModal = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_DISAGREED" });
+  const handleModal = () => {
+    updateAlarm({ alarmPolicy: "ALARM_DISAGREED" });
     setIsModalOpen(false);
+  };
+
+  // 카테고리
+  const [category, setCategory] = useState<string | undefined>(undefined);
+  const handleCategory = (name: string) => {
+    if (name == category) setCategory(undefined);
+    else setCategory(name);
   };
 
   return (
@@ -60,14 +93,30 @@ const HomePage = () => {
               <div onClick={openSearchBar}>
                 <SearchBar keyword="" />
               </div>
-              <div className="pt-5 gap-3 flex overflow-x-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                <FoodCard name="밥" />
-                <FoodCard name="국" />
-                <FoodCard name="반찬" />
-                <FoodCard name="후식" />
+              <div className="pt-5 gap-[27px] flex justify-center">
+                <FoodCard
+                  name="밥"
+                  onClick={() => handleCategory("밥")}
+                  isSelected={"밥" === category}
+                />
+                <FoodCard
+                  name="국"
+                  onClick={() => handleCategory("국")}
+                  isSelected={"국" === category}
+                />
+                <FoodCard
+                  name="반찬"
+                  onClick={() => handleCategory("반찬")}
+                  isSelected={"반찬" === category}
+                />
+                <FoodCard
+                  name="후식"
+                  onClick={() => handleCategory("후식")}
+                  isSelected={"후식" === category}
+                />
               </div>
               <AllergyCuration />
-              <MealCuration />
+              <MealCuration category={category} />
               {open && <ProfileModal />}
               <UpButton />
             </div>

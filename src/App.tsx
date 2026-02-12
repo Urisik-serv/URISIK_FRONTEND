@@ -2,22 +2,23 @@ import "./App.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import KakaoProvider from "./providers/kakao-provider";
+import { Toaster } from "react-hot-toast";
+import SSEProvider from "./providers/SSE-provider";
 
 function App() {
   const queryClient = new QueryClient();
 
-  useEffect(() => {
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-      window.Kakao.init(import.meta.env.VITE_KAKAO_JS_KEY);
-    }
-  }, []);
-
   return (
     <>
+      <Toaster />
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <KakaoProvider>
+          <SSEProvider>
+            <RouterProvider router={router} />
+          </SSEProvider>
+        </KakaoProvider>
         {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
       </QueryClientProvider>
     </>

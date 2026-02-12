@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 import type { SlotItem } from "../../types/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { postConfirmMealPlan } from "../../api/meal-plan";
+import toast from "react-hot-toast";
 
 type MealPlanResultProps = {
   mealPlanId: number;
   onClick: () => void;
+  weekParam: string | null;
 };
 
 type mealPlanResponse = Record<string, SlotItem[]>;
@@ -27,13 +29,14 @@ const dayKor: Record<string, string> = {
 export default function MealPlanResult({
   mealPlanId,
   onClick,
+  weekParam,
 }: MealPlanResultProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const response = sessionStorage.getItem("mealPlan");
   if (!response) {
-    alert("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
+    toast.error("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
     return;
   }
   const data = JSON.parse(response) as mealPlanResponse;
@@ -54,11 +57,14 @@ export default function MealPlanResult({
         familyRoomId: familyRoomId,
         mealPlanId: mealPlanId,
       });
-    } catch (error) {
-      alert("주간 식단 확정 실패" + error);
-    } finally {
-      console.log("주간 식단 확정 성공");
+      if (weekParam === "THIS") {
+        navigate(`/meal-plan?tab=THIS`);
+      } else {
+        navigate(`/meal-plan?tab=NEXT`);
+      }
       navigate(`/meal-plan?tab=nextWeek`);
+    } catch (error) {
+      toast.error("주간 식단 확정 실패" + error);
     }
   };
   return (
@@ -86,7 +92,7 @@ export default function MealPlanResult({
           다시 생성하기
         </button>
       </div>
-      <div className="flex gap-2 pt-12 pb-[27px] overflow-x-auto">
+      <div className="flex gap-2 pt-12 pb-[27px] overflow-x-auto pr-4">
         <div className="flex flex-col items-center gap-3 font-medium text-gray-500 text-[14px]">
           <CalendarChipM text="" />
           <p className="pl-4 pr-2 flex items-center text-center shrink-0 h-[82px] whitespace-nowrap">
@@ -120,7 +126,7 @@ export default function MealPlanResult({
       <div className="w-full max-w-[375px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
         <button
           className="w-full h-14 rounded-xl cursor-pointer text-primary-700 border border-primary-700"
-          onClick={() => navigate(`/meal-plan/edit`)}
+          onClick={() => navigate(`/meal-plan/edit?week=${weekParam}`)}
         >
           수정
         </button>

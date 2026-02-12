@@ -9,19 +9,24 @@ import {
   useProfileModalInfo,
 } from "../../../hooks/use-profile-modal-store";
 import { useEffect, useState } from "react";
-//import AllergyDataBox from "../../profile/AllergyDataBox";
-//import ElementButton from "../../common/ElementButton";
-//import EntityItem from "../../common/EntityItem";
-//import SmallButton from "../../common/SmallCommonButton";
-//import profilePicture from "../../../assets/profile/daughter-profile.svg";
-//import alertImage from "../../../assets/images/alert-circle.png";
-//import { useNavigate } from "react-router-dom";
+import AllergyDataBox from "../../profile/AllergyDataBox";
+import ElementButton from "../../common/ElementButton";
+import EntityItem from "../../common/EntityItem";
+import SmallButton from "../../common/SmallCommonButton";
+import alertImage from "../../../assets/images/alert-circle.png";
+import { useNavigate } from "react-router-dom";
+import useGetInfiniteProfileWishList from "../../../hooks/queries/use-get-infinite-profile-wishlist";
+import useGetInfiniteProfileTransWishList from "../../../hooks/queries/use-get-infinite-profile-transwishlist";
+import { useFamilyStore } from "../../../stores/use-family-store";
+import type { Profile } from "../../../types/family-profile";
+import { getProfile } from "../../../api/family-profile";
+import { rolePicture } from "../../../constants/profile-record";
 
 const ProfileModal = () => {
   const { isClose } = useProfileModalActions();
-  const { open } = useProfileModalInfo(); // selectedData 필요
+  const { open, selectedData } = useProfileModalInfo();
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const controls = useAnimation();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -57,6 +62,46 @@ const ProfileModal = () => {
     full: { y: "0%" },
   };
 
+  const roomId = useFamilyStore((data) => data.familyRoomId);
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const profileData = await getProfile(roomId, selectedData?.profileId);
+      setProfile(profileData);
+    };
+
+    fetchProfile();
+  }, [roomId]);
+
+  const allergies =
+    profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
+    [];
+
+  const preferenceMap: Record<string, string> = {
+    한식: "KOREAN",
+    중식: "CHINESE",
+    일식: "JAPANESE",
+    양식: "WESTERN",
+    디저트: "DESSERT",
+  };
+  const getKeyByValue = (value: string) => {
+    return Object.entries(preferenceMap).find(([_, v]) => v === value)?.[0];
+  };
+
+  // 위시리스트
+  const { data: profileWish } = useGetInfiniteProfileWishList(
+    roomId,
+    selectedData?.profileId,
+    5,
+  );
+
+  const { data: transWish } = useGetInfiniteProfileTransWishList(
+    roomId,
+    selectedData?.profileId,
+    5,
+  );
+
   return (
     <AnimatePresence>
       <motion.div
@@ -89,33 +134,40 @@ const ProfileModal = () => {
         </div>
 
         <div className="px-4 pb-10 overflow-y-auto overscroll-contain h-full [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
-          {/*<div className="pt-15.5 w-full mx-auto flex flex-col pb-10">
+          <div className="pt-15.5 w-full mx-auto flex flex-col pb-10">
             <div className="flex justify-between  w-full">
               <div className="flex gap-3 items-end">
-                <img src={profilePicture} alt="내 프로필 사진" />
+                <img
+                  src={
+                    selectedData?.profilePicUrl.includes("no_profile_image")
+                      ? rolePicture[selectedData.role]
+                      : selectedData?.profilePicUrl
+                  }
+                  alt="내 프로필 사진"
+                  className="size-20 rounded-full"
+                />
                 <div className="text-2xl font-semibold leading-9">
                   {selectedData?.nickname}
                 </div>
               </div>
             </div>
             <div className="pt-6">
-              {(selectedData?.allergies?.length || 0) > 0 ? (
-                selectedData?.allergies.map((allergy) => (
-                  <div className=" pb-5">
-                    <div className="text-[16px] font-semibold leading-6">
-                      알레르기
+              <div className="text-[16px] font-semibold pb-3 leading-6">
+                알레르기
+              </div>
+              {!allergies?.includes("NONE") ? (
+                <div className="flex flex-col gap-5 pb-5">
+                  {profile?.allergyAndAlterIngredients.map((item) => (
+                    <div key={item.allergen}>
+                      <AllergyDataBox
+                        name={item.allergen}
+                        alternative={item.alteredIngredients}
+                      />
                     </div>
-                    <AllergyDataBox
-                      name={allergy.name}
-                      alternative={allergy.alternativeIngredients}
-                    />
-                  </div>
-                ))
+                  ))}
+                </div>
               ) : (
                 <div className="pb-5 ">
-                  <div className="text-[16px] font-semibold leading-6">
-                    알레르기
-                  </div>
                   <div className="flex pt-2">
                     <ElementButton name="없음" />
                   </div>
@@ -123,29 +175,59 @@ const ProfileModal = () => {
               )}
             </div>
             <div>
-              <div className="text-[16px] font-semibold leading-[24px]">
+              <div className="text-[16px] font-semibold leading-6">
                 선호 음식
               </div>
-              <div className="flex gap-2 pt-2">
-                {selectedData?.preferences.likedFood.map((food) => (
-                  <ElementButton name={food} />
+              <div className="flex gap-2 pt-3">
+                {profile?.dietPreferences.map((food) => (
+                  <ElementButton name={getKeyByValue(food) ?? food} />
                 ))}
               </div>
             </div>
-            <div className="pt-[42px]">
-              <div className="text-[16px] font-semibold leading-[24px]">
+            <div className="pt-10">
+              <div className="text-[16px] font-semibold leading-6">
                 내 위시리스트
               </div>
-              {selectedData?.wishList ? (
+              {profileWish || transWish ? (
                 <div className="pt-[17px] flex flex-col gap-0">
-                  {selectedData?.wishList.map((item) => (
+                  {transWish?.pages.map((item) => (
                     <EntityItem
-                      picture={item.FoodImageUrl}
-                      name={item.name}
+                      picture={item.foodImage}
+                      name={item.transformedRecipeName}
+                      rating={item.avgScore}
+                      type="TRANSFORMED_RECIPE"
+                      isWish={true}
+                      isSafe={item.foodSafety === "SAFETY"}
+                      id={item.transformedRecipeId}
                       category={item.category}
-                      tags={item.tags.join(", ")}
-                      key={item.id}
+                      tags={item.recipeIngredients.join(", ")}
+                      key={item.transformedRecipeId}
                       border="border-b-1 border-b-gray-200"
+                      onClick={() =>
+                        navigate(
+                          `/menu-information/${item.transformedRecipeId}?type=TRANSFORMED`,
+                        )
+                      }
+                    />
+                  ))}
+                  {profileWish?.pages.map((item) => (
+                    <EntityItem
+                      picture={item.foodImage}
+                      name={item.recipeName}
+                      rating={item.avgScore}
+                      type="RECIPE"
+                      isWish={true}
+                      isSafe={item.foodSafety === "SAFETY"}
+                      id={item.recipeId}
+                      category={item.category}
+                      tags={item.recipeIngredients.join(", ")}
+                      key={item.recipeId}
+                      border="border-b-1 border-b-gray-200"
+                      onClick={() =>
+                        navigate(
+                          `/menu-information/${item.recipeId}?type=RECIPE`,
+                        )
+                      }
                     />
                   ))}
                 </div>
@@ -169,7 +251,7 @@ const ProfileModal = () => {
                 </div>
               )}
             </div>
-          </div>*/}
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>
