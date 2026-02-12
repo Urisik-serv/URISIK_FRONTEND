@@ -105,7 +105,7 @@ export default function EntityItem({
                   )}
                 </div>
                 <div className="flex gap-[5px] items-center">
-                  {isWish && <SafeMark isWish={false} isSafe={isSafe} />}
+                  {isWish && <SafeMark isWish={true} isSafe={isSafe} />}
                   <div className="text-sm tracking-[-0.42px] text-gray-400 truncate shrink-0">
                     {category}
                   </div>

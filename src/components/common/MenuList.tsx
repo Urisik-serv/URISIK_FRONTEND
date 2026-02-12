@@ -86,7 +86,7 @@ export default function MenuList({
             )}
           </div>
           <div className="flex gap-2">
-            <SafeMark isWish={!!safe} isSafe={safe} />
+            <SafeMark isWish={safe !== undefined} isSafe={safe} />
             <div className="flex gap-[5px] font-medium text-[14px] text-gray-400 truncate">
               <p>{category}</p>
               <p>|</p>
