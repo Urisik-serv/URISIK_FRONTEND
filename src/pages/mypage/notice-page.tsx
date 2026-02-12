@@ -6,7 +6,7 @@ import NotificationSkeleton from "../../components/mypage/NotificationSkeleton";
 import { useReadNotification } from "../../hooks/mutations/use-read-notification";
 
 export default function NoticePage() {
-  const { noticeList, isFetching, data, setSize } = useNoticeList();
+  const { noticeList, isFetching, data } = useNoticeList();
   const observerRef = useRef<HTMLDivElement | null>(null);
   const hasMarkedRead = useRef(false);
 
