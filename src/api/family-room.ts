@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useLocalStorage } from "../hooks/use-local-storage";
 import type {
   GetFamilyRoomResponse,
   PostFamilyRoomRequest,
@@ -12,16 +10,11 @@ import { axiosInstance } from "./axios/axios";
 export const postFamilyRoom = async (
   request: PostFamilyRoomRequest,
 ): Promise<PostFamilyRoomResponse> => {
-  const { getItem: getAccessToken } = useLocalStorage("accessToken");
-  const { data } = await axios.post<PostFamilyRoomResponse>(
-    `${import.meta.env.VITE_API_BASE_URL}/api/family-rooms`,
+  const { data } = await axiosInstance.post<PostFamilyRoomResponse>(
+    "/api/family-rooms",
     request,
-    {
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
-    },
   );
+
   return data;
 };
 

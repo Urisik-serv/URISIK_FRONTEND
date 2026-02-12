@@ -7,75 +7,58 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Agree } from "../../types/member";
 import { patchAgree } from "../../api/member";
-
-interface TermItem {
-  index: number;
-  isChecked: boolean;
-}
+import { useMutation } from "@tanstack/react-query";
 
 export default function TermsAgreementPage() {
-  // 5개의 약관 상태를 false로 초기화
-  const [terms, setTerms] = useState<TermItem[]>([
-    { index: 0, isChecked: false },
-    { index: 1, isChecked: false },
-    { index: 2, isChecked: false },
-    { index: 3, isChecked: false },
-    { index: 4, isChecked: false },
+  const [terms, setTerms] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+    false,
   ]);
+
   const navigate = useNavigate();
 
-  const allChecked = terms.length > 0 && terms.every((term) => term.isChecked);
+  const allChecked = terms.every(Boolean);
+
+  const isValid = terms[0] && terms[1] && terms[2] && terms[3];
 
   const handleCheck = (index: number) => {
-    setTerms((prev) =>
-      prev.map((term) =>
-        term.index === index ? { ...term, isChecked: !term.isChecked } : term,
-      ),
-    );
+    setTerms((prev) => prev.map((term, i) => (i === index ? !term : term)));
   };
 
   const handleAllCheck = () => {
-    const nextStatus = !allChecked;
-    setTerms((prev) =>
-      prev.map((term) => ({ ...term, isChecked: nextStatus })),
-    );
+    setTerms(Array(5).fill(!allChecked));
   };
 
-  const isValid = () => {
-    if (
-      terms[0].isChecked &&
-      terms[1].isChecked &&
-      terms[2].isChecked &&
-      terms[3].isChecked
-    ) {
-      return true;
-    }
-  };
-
-  const handleSubmit = async () => {
-    const request: Agree = {
-      serviceTermsAgreed: terms[0].isChecked,
-      privacyPolicyAgreed: terms[1].isChecked,
-      familyInfoAgreed: terms[2].isChecked,
-      aiNoticeAgreed: terms[3].isChecked,
-      marketingOptIn: terms[4].isChecked,
-    };
-
-    try {
-      await patchAgree(request);
-
+  const { mutate: agree, isPending: isAgreeing } = useMutation({
+    mutationFn: patchAgree,
+    onSuccess: () => {
       const redirect = localStorage.getItem("loginRedirect");
 
       if (redirect) {
         localStorage.removeItem("loginRedirect");
-        navigate(redirect); 
+        navigate(redirect);
       } else {
-        navigate("/family-create"); 
+        navigate("/family-create");
       }
-    } catch (error) {
-      console.error("약관 동의 처리 실패", error);
+    },
+    onError: () => {
       alert("약관 동의 처리 중 오류가 발생했습니다.");
-    }
+    },
+  });
+
+  const handleSubmit = () => {
+    const request: Agree = {
+      serviceTermsAgreed: terms[0],
+      privacyPolicyAgreed: terms[1],
+      familyInfoAgreed: terms[2],
+      aiNoticeAgreed: terms[3],
+      marketingOptIn: terms[4],
+    };
+
+    agree(request);
   };
 
   return (
@@ -107,32 +90,32 @@ export default function TermsAgreementPage() {
         </div>
         <div className="pt-[40px] flex flex-col items-center pr-[16px]">
           <TermsAgreementRow
-            isChecked={terms[0].isChecked}
-            onChecked={() => handleCheck(terms[0].index)}
+            isChecked={terms[0]}
+            onChecked={() => handleCheck(0)}
             title="서비스 이용 악관(필수)"
             to="../terms-of-service"
           />
           <TermsAgreementRow
-            isChecked={terms[1].isChecked}
-            onChecked={() => handleCheck(terms[1].index)}
+            isChecked={terms[1]}
+            onChecked={() => handleCheck(1)}
             title="개인 정보 처리 방침 (필수)"
             to="../privacy-policy"
           />
           <TermsAgreementRow
-            isChecked={terms[2].isChecked}
-            onChecked={() => handleCheck(terms[2].index)}
+            isChecked={terms[2]}
+            onChecked={() => handleCheck(2)}
             title="아동·가족 정보 조항 (필수)"
             to="../children-and-family"
           />
           <TermsAgreementRow
-            isChecked={terms[3].isChecked}
-            onChecked={() => handleCheck(terms[3].index)}
+            isChecked={terms[3]}
+            onChecked={() => handleCheck(3)}
             title="AI 추천 고지 (필수)"
             to="../ai-recommendation-notice"
           />
           <TermsAgreementRow
-            isChecked={terms[4].isChecked}
-            onChecked={() => handleCheck(terms[4].index)}
+            isChecked={terms[4]}
+            onChecked={() => handleCheck(4)}
             title="마케팅 수신 동의 (선택)"
             to="../marketing-preferences"
           />
@@ -141,7 +124,7 @@ export default function TermsAgreementPage() {
           <Button
             text={`다음`}
             type="button"
-            disabled={!isValid()}
+            disabled={!isValid || isAgreeing}
             onClick={handleSubmit}
           />
         </div>

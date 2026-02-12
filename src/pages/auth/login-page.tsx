@@ -1,9 +1,6 @@
 import logo from "../../assets/logos/main-logo.svg";
 import kakaoLogo from "../../assets/logos/kakao-logo.svg";
 import googleLogo from "../../assets/logos/Google Logo.svg";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useLocalStorage } from "../../hooks/use-local-storage";
 
 const LoginPage = () => {
   const handleGoogleLogin = () => {
@@ -13,16 +10,6 @@ const LoginPage = () => {
   const handleKakaoLogin = () => {
     window.location.href = `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
   };
-
-  // 로그인 되어 있으면 홈페이지로 이동
-  const navigate = useNavigate();
-  const { getItem: getAccessToken } = useLocalStorage("accessToken");
-  useEffect(() => {
-    const token = getAccessToken();
-    if (token) {
-      navigate("/", { replace: true });
-    }
-  }, []);
 
   return (
     <div className="h-dvh flex flex-col items-center">

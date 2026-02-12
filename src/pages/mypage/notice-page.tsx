@@ -3,27 +3,36 @@ import PublicHeader from "../../components/header/PublicHeader";
 import NoticeBlock from "../../components/mypage/NoticeBlock";
 import { useNoticeList } from "../../hooks/use-notice-list";
 import NotificationSkeleton from "../../components/mypage/NotificationSkeleton";
+import { useReadNotification } from "../../hooks/mutations/use-read-notification";
 
 export default function NoticePage() {
-  const { noticeList, isFetching, data, setSize } = useNoticeList();
+  const { noticeList, isFetching, data } = useNoticeList();
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const hasMarkedRead = useRef(false);
+
+  const { mutate: readNotification } = useReadNotification();
 
   useEffect(() => {
-    if (!observerRef.current || data?.result.last) return;
+    if (!noticeList) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isFetching) {
-          setSize((prev) => prev + 10);
-        }
-      },
-      { threshold: 1 },
-    );
+    noticeList
+      .filter((item) => !item.isRead)
+      .forEach((item) => {
+        readNotification(item.key);
+      });
+  }, [noticeList]);
 
-    observer.observe(observerRef.current);
+  useEffect(() => {
+    if (!noticeList || hasMarkedRead.current) return;
 
-    return () => observer.disconnect();
-  }, [isFetching, data?.result.last]);
+    hasMarkedRead.current = true;
+
+    noticeList
+      .filter((item) => !item.isRead)
+      .forEach((item) => {
+        readNotification(item.key);
+      });
+  }, [noticeList]);
 
   return (
     <>
@@ -36,7 +45,7 @@ export default function NoticePage() {
             content: string;
             ago: string;
             isRead: boolean;
-            key: string;
+            key: number;
           }) => (
             <NoticeBlock
               key={item.key}

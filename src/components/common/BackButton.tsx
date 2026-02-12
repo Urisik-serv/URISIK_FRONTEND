@@ -1,5 +1,5 @@
 import { useNavigate, type To } from "react-router-dom";
-import BackIcon from "../../assets/icons/chevron-left.svg";
+import Chevron from "./icon/Chevron";
 
 interface BackButtonProps {
   to?: number | To;
@@ -31,7 +31,7 @@ export default function BackButton({
       onClick={handleClick}
       className={`cursor-pointer size-[24px] shrink-0 ${className}`}
     >
-      <img src={BackIcon} alt="뒤로가기" />
+      <Chevron color="black" rotate={90} />
     </button>
   );
 }

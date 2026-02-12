@@ -11,7 +11,7 @@ import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 import AlertModal from "../../components/common/AlertModal";
-import { patchAlarm } from "../../api/member";
+import { usePatchAlarm } from "../../hooks/queries/use-patch-alarm";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -35,14 +35,23 @@ const HomePage = () => {
     }
   }, []);
 
-  const handleAlarm = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_AGREED" });
+  const { mutate: updateAlarm } = usePatchAlarm();
+
+  const handleAlarm = () => {
+    updateAlarm({ alarmPolicy: "ALARM_AGREED" });
     setIsModalOpen(false);
   };
 
-  const handleModal = async () => {
-    await patchAlarm({ alarmPolicy: "ALARM_DISAGREED" });
+  const handleModal = () => {
+    updateAlarm({ alarmPolicy: "ALARM_DISAGREED" });
     setIsModalOpen(false);
+  };
+
+  // 카테고리
+  const [category, setCategory] = useState<string | undefined>(undefined);
+  const handleCategory = (name: string) => {
+    if (name == category) setCategory(undefined);
+    else setCategory(name);
   };
 
   return (
@@ -60,14 +69,30 @@ const HomePage = () => {
               <div onClick={openSearchBar}>
                 <SearchBar keyword="" />
               </div>
-              <div className="pt-5 gap-3 flex overflow-x-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                <FoodCard name="밥" />
-                <FoodCard name="국" />
-                <FoodCard name="반찬" />
-                <FoodCard name="후식" />
+              <div className="pt-5 gap-[27px] flex justify-center">
+                <FoodCard
+                  name="밥"
+                  onClick={() => handleCategory("밥")}
+                  isSelected={"밥" === category}
+                />
+                <FoodCard
+                  name="국"
+                  onClick={() => handleCategory("국")}
+                  isSelected={"국" === category}
+                />
+                <FoodCard
+                  name="반찬"
+                  onClick={() => handleCategory("반찬")}
+                  isSelected={"반찬" === category}
+                />
+                <FoodCard
+                  name="후식"
+                  onClick={() => handleCategory("후식")}
+                  isSelected={"후식" === category}
+                />
               </div>
               <AllergyCuration />
-              <MealCuration />
+              <MealCuration category={category} />
               {open && <ProfileModal />}
               <UpButton />
             </div>

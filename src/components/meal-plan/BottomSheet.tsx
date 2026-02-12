@@ -1,5 +1,4 @@
 import Button from "../common/Button";
-import Up from "../../assets/icons/chevron-up.svg";
 import Down from "../../assets/icons/chevron-down.svg";
 import { useEffect, useState } from "react";
 import MenuList from "../common/MenuList";
@@ -8,6 +7,7 @@ import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-f
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useInView } from "react-intersection-observer";
 import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
+import Chevron from "../common/icon/Chevron";
 
 type BottomSheetProps = {
   open: boolean;
@@ -117,7 +117,7 @@ export default function BottomSheet({
             setIsOpen((prev) => !prev);
           }}
         >
-          <img src={isOpen ? Down : Up} className="size-8" alt="위로 올리기" />
+            {isOpen ? (<Chevron rotate={180} color="black" size={32} />):(<Chevron rotate={0} color="black" size={32} />)}
         </button>
       </div>
       <div className="w-full flex font-semibold text-[18px] h-13">

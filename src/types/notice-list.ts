@@ -21,6 +21,7 @@ export interface NoticeSort {
 }
 
 export interface NoticeContent {
+  id: number;
   isRead: boolean;
   type: "REVIEW_REMINDER" | "MEAL_PLAN_REMINDER" | "TEMPERATURE";
   createdAt: string;

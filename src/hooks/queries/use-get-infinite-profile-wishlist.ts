@@ -4,7 +4,7 @@ import { QUERY_KEY } from "../../constants/key";
 
 function useGetInfiniteProfileWishList(
   familyRoomId: number | null,
-  profileId: number,
+  profileId: number | undefined,
   size: number,
 ) {
   return useInfiniteQuery({

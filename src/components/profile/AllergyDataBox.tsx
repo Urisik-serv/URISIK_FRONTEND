@@ -20,8 +20,8 @@ export default function AllergyDataBox({
     <div className="flex gap-[24px]">
       <div className="pt-[8px] px-[7px] w-[62px] flex flex-col items-center gap-[6px]">
         <img src={icon} alt={`${name} 아이콘`} />
-        <div className="bg-primary-700 rounded-sm w-[48px] flex justify-center items-center">
-          <div className="text-white text-sm leading-[22.26px] font-medium">
+        <div className="bg-primary-700 rounded-sm px-2 py-1 flex justify-center items-center">
+          <div className="text-white text-sm font-medium whitespace-nowrap">
             {findKeyByValue(allergyMap, name)}
           </div>
         </div>
@@ -31,8 +31,8 @@ export default function AllergyDataBox({
           대체식재료
         </div>
         <div className="pt-[4px] flex gap-[8px] flex-wrap px-[7px]">
-          {alternative?.map((item) => (
-            <ElementButton name={item} />
+          {alternative?.map((item, index) => (
+            <ElementButton key={`${item}-${index}`} name={item} />
           ))}
         </div>
       </div>
