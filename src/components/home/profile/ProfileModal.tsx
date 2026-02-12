@@ -13,7 +13,6 @@ import AllergyDataBox from "../../profile/AllergyDataBox";
 import ElementButton from "../../common/ElementButton";
 import EntityItem from "../../common/EntityItem";
 import SmallButton from "../../common/SmallCommonButton";
-import profilePicture from "../../../assets/profile/daughter-profile.svg";
 import alertImage from "../../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
 import useGetInfiniteProfileWishList from "../../../hooks/queries/use-get-infinite-profile-wishlist";
