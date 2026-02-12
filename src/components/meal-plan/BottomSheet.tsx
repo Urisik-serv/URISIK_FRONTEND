@@ -191,8 +191,10 @@ export default function BottomSheet({
                     type="rate"
                     menu={item.title}
                     img={item.imageUrl}
+                    isSafe={item.safe ? "SAFE" : "SAFETY"}
                     rate={item.avgScore}
                     category={item.category}
+                    ingredients={item.description}
                     isSelected={isMenuListSelect}
                     onClick={() =>
                       setSelected({
