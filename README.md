@@ -87,5 +87,65 @@ pnpm run dev
 <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white" />
 
 
+## 🥕 기술 / 스택 선정 이유
+
+### React Router
+- SPA 환경에서 효율적인 클라이언트 사이드 라우팅 구현
+- Protected Route 등을 활용한 인증 기반 접근 제어 가능
+
+### Framer Motion
+- 선언형 애니메이션 라이브러리
+- 부드러운 인터랙션 및 페이지 전환 효과 구현
+- UX 향상을 위한 자연스러운 모션 처리
+
+### Swiper
+- 터치 기반 슬라이드 UI 구현에 최적화
+- 모바일 친화적인 인터랙션 지원
+- 온보딩 / 홈페이지 등에 사용
+
+### React Spinners
+- 로딩 상태를 직관적으로 표현하기 위한 경량 로딩 컴포넌트
+
+### React Hot Toast
+- 사용자 액션에 대한 즉각적인 피드백 제공
+- 전역 에러 처리 및 성공/실패 알림 구현에 적합
+
+
+### Zustand
+- 전역 상태 관리 라이브러리
+
+### TanStack Query
+- 서버 상태(Server State) 관리에 특화
+- 캐싱, 재요청, 무한 스크롤, 로딩/에러 상태 자동 관리
+- API 통신 로직과 UI 로직 분리 가능
+
+### Axios
+- HTTP 요청/응답 인터셉터를 통한 토큰 처리 및 전역 에러 핸들링 가능
+- REST API 통신에 적합
+
+### Immer
+- 불변성을 유지하면서 직관적인 상태 업데이트 가능
+- 복잡한 객체 상태 관리 시 가독성 향상
+
+### Zod
+- API 요청/응답 데이터의 런타임 유효성 검증
+- 타입 안정성과 실제 데이터 검증을 동시에 보장
+
+### Day.js
+- 가볍고 직관적인 날짜 라이브러리
+- 날짜 포맷팅 및 연산 처리에 사용
+
+### React Day Picker
+- 캘린더 UI 구현에 최적화
+- 범위 선택(range) 기능 지원
+
+### Intersection Observer
+- 무한 스크롤 구현
+- 성능을 고려한 Lazy Loading 처리 가능
+
+### Vite SVGR
+- SVG 파일을 React 컴포넌트처럼 사용 가능
+- 아이콘 재사용성 및 스타일링 편의성 향상
+
 
 

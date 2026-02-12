@@ -210,6 +210,7 @@ export default function MyProfilePage() {
                   picture={item.foodImage}
                   name={item.transformedRecipeName}
                   rating={item.avgScore}
+                  id={item.transformedRecipeId}
                   type="TRANSFORMED_RECIPE"
                   isSafe={item.foodSafety === "SAFETY"}
                   isWish={true}
