@@ -76,7 +76,7 @@ export default function ProfileDataForm({
   };
 
   if (currentFamilyRoomId === null) {
-    alert("가족방 정보가 존재하지 않습니다");
+    toast.error("가족방 정보가 존재하지 않습니다");
     return null;
   }
 
