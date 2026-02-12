@@ -6,8 +6,29 @@ export const useReadNotification = () => {
 
   return useMutation({
     mutationFn: patchIsRead,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["noticeList"] });
+    onMutate: async (notificationId) => {
+      await queryClient.cancelQueries({ queryKey: ["noticeList"] });
+
+      const previous = queryClient.getQueryData(["noticeList"]);
+
+      queryClient.setQueryData(["noticeList"], (old: any) => {
+        if (!old) return old;
+
+        return {
+          ...old,
+          result: {
+            ...old.result,
+            content: old.result.content.map((item: any) =>
+              item.id === notificationId ? { ...item, isRead: true } : item,
+            ),
+          },
+        };
+      });
+
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(["noticeList"], context?.previous);
     },
   });
 };
