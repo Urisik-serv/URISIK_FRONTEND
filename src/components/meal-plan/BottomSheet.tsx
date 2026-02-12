@@ -1,5 +1,4 @@
 import Button from "../common/Button";
-import Down from "../../assets/icons/chevron-down.svg";
 import { useEffect, useState } from "react";
 import MenuList from "../common/MenuList";
 import AlertModal from "../common/AlertModal";
@@ -117,7 +116,11 @@ export default function BottomSheet({
             setIsOpen((prev) => !prev);
           }}
         >
-            {isOpen ? (<Chevron rotate={180} color="black" size={32} />):(<Chevron rotate={0} color="black" size={32} />)}
+          {isOpen ? (
+            <Chevron rotate={180} color="black" size={32} />
+          ) : (
+            <Chevron rotate={0} color="black" size={32} />
+          )}
         </button>
       </div>
       <div className="w-full flex font-semibold text-[18px] h-13">
