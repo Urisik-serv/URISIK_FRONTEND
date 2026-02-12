@@ -58,6 +58,7 @@ export const router = createBrowserRouter([
         path: "onboarding",
         element: <OnboardingPage />,
       },
+      { path: "invite/:token", element: <InviteEntry /> },
 
       // Protected Routes (로그인 필요), 이후 페이지는 여기에 라우팅
       // 지금은 인증이 없을 때 접근 가능하게 해놓음
@@ -79,7 +80,7 @@ export const router = createBrowserRouter([
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "invite", element: <FamilyInvitePage /> },
-          { path: "invite/:token", element: <InviteEntry /> },
+
           { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",
