@@ -40,9 +40,9 @@ const AllergyCard = ({
               {shortDescription}
             </p>
           </div>
-          <div className="flex gap-0.5" onClick={handleClick}>
-            <img src={HeartFull} alt="좋아요" />
-            <p className="text-neutral-400 text-xs font-semibold leading-4">
+          <div className="flex gap-0.5 items-center" onClick={handleClick}>
+            <img src={HeartFull} alt="좋아요" className="h-3.5 w-3.5" />
+            <p className="text-primary-500 text-xs font-semibold leading-4">
               {pickedCount}가구가 선택했어요
             </p>
           </div>

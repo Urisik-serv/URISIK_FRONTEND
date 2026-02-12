@@ -10,6 +10,7 @@ function usePostWishList(familyRoomId: number | null) {
     mutationFn: (payload: ProfileWishListBody) =>
       postAddWishList(familyRoomId, payload),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.myWishlistIds] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.familyWish] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.profileWish] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.profileWish] });

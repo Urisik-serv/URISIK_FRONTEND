@@ -25,6 +25,25 @@ export default function InviteEntry() {
     retry: false,
   });
 
+  // 초대 수락
+  const { mutate: acceptInvite, isPending: isAccepting } = useMutation({
+    mutationFn: () => {
+      if (!token) throw new Error("토큰 없음");
+      return postAcceptInvite(token);
+    },
+    onSuccess: (res) => {
+      setFamilyRoomId(res.familyRoomId);
+      navigate("/family-profile-create");
+    },
+    onError: (error: any) => {
+      if (error.response?.data?.code === "FAMILY_JOIN_409") {
+        navigate("/family-profile-create");
+      } else {
+        alert("참여 처리 중 오류가 발생했습니다.");
+      }
+    },
+  });
+
   useEffect(() => {
     if (!data) return;
 
@@ -46,28 +65,11 @@ export default function InviteEntry() {
     );
   }
 
-  // 초대 수락
-  const { mutate: acceptInvite, isPending: isAccepting } = useMutation({
-    mutationFn: () => {
-      if (!token) throw new Error("토큰 없음");
-      return postAcceptInvite(token);
-    },
-    onSuccess: (res) => {
-      setFamilyRoomId(res.familyRoomId);
-      navigate("/family-profile-create");
-    },
-    onError: (error: any) => {
-      if (error.response?.data?.code === "FAMILY_JOIN_409") {
-        navigate("/family-profile-create");
-      } else {
-        alert("참여 처리 중 오류가 발생했습니다.");
-      }
-    },
-  });
-
   const handleAccept = () => {
     if (!getAccessToken()) {
       localStorage.setItem("loginRedirect", `/invite/${token}`);
+      console.log("redirect 저장:", `/invite/${token}`);
+
       navigate("/login");
       return;
     }

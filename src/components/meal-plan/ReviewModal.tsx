@@ -6,15 +6,21 @@ import SelectedStar from "../../assets/icons/star-selected.svg";
 import AlertModal from "../common/AlertModal";
 import type { createReview } from "../../types/review";
 import usePostReview from "../../hooks/use-post-review";
+import toast from "react-hot-toast";
 
 type ReviewModalProps = {
   recipeId: number;
   onClick: () => void;
+  type: "TRANSFORMED_RECIPE" | "RECIPE";
 };
 
 type Preference = boolean | null;
 
-export default function ReviewModal({ recipeId, onClick }: ReviewModalProps) {
+export default function ReviewModal({
+  recipeId,
+  onClick,
+  type,
+}: ReviewModalProps) {
   const [preference, setPreference] = useState<Preference>(null);
   const star = [1, 2, 3, 4, 5];
   const [score, setScore] = useState(0);
@@ -41,13 +47,18 @@ export default function ReviewModal({ recipeId, onClick }: ReviewModalProps) {
     isFavorite,
   }: createReview) => {
     mutate(
-      { recipeId, score, isFavorite },
+      { recipeId, score, isFavorite, type },
       {
         onSuccess: () => {
           setIsOpen(true);
         },
         onError: (e: any) => {
-          alert(e.response?.data?.message);
+          if (!score) {
+            toast.error("별을 클릭해주세요");
+            return;
+          }
+          toast.error(e.response?.data?.message);
+          onClick();
         },
       },
     );
@@ -112,7 +123,6 @@ export default function ReviewModal({ recipeId, onClick }: ReviewModalProps) {
               if (preference !== null) {
                 reviewData.isFavorite = preference;
               }
-              console.log(reviewData);
               handleSubmitReview(reviewData);
             }}
           />

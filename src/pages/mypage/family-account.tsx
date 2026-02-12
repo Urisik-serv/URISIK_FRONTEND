@@ -13,10 +13,11 @@ import { useDeleteProfile } from "../../hooks/queries/use-delete-profile";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import ErrorUI from "../../components/common/ErrorUI";
 import toast from "react-hot-toast";
+import { postLogout } from "../../api/auth";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
 
 export default function FamilyAccount() {
-  const familyRoomId = useFamilyStore.getState().familyRoomId;
-  const { resetProfile } = useProfileStore();
+  const familyRoomId = useFamilyStore((s) => s.familyRoomId);
 
   const {
     data: myFamily = [],
@@ -32,9 +33,10 @@ export default function FamilyAccount() {
     refetch: refetchProfile,
   } = useMyProfile(familyRoomId);
 
-  const { mutate: deleteMutate } = useDeleteProfile(familyRoomId as number);
-
-  const { mutate: patchAgreeMutate } = useMutation({
+  const { mutateAsync: deleteMutate } = useDeleteProfile(
+    familyRoomId as number,
+  );
+  const { mutateAsync: patchAgreeMutate } = useMutation({
     mutationFn: () =>
       patchAgree({
         serviceTermsAgreed: false,
@@ -45,16 +47,23 @@ export default function FamilyAccount() {
       }),
   });
 
-  const handleDelete = (profileId: number) => {
-    patchAgreeMutate(undefined, {
-      onSuccess: () => deleteMutate(profileId),
-      onError: () => {
-        toast.error("약관 철회에 실패했습니다.");
-      },
-    });
+  const handleDelete = async (profileId: number) => {
+    try {
+      await deleteMutate(profileId);
 
-    // 전역 상태 비워주기
-    resetProfile();
+      await patchAgreeMutate();
+
+      await postLogout();
+
+      localStorage.removeItem("accessToken");
+
+      useProfileStore.persist.clearStorage();
+      useFamilyStore.persist.clearStorage();
+
+      window.location.replace("/");
+    } catch (error) {
+      toast.error("계정 탈퇴 처리 중 오류가 발생했습니다.");
+    }
   };
 
   const findKeyByValue = (record: Record<string, string>, value: string) => {
@@ -96,14 +105,22 @@ export default function FamilyAccount() {
       <PublicHeader title={"가족계정"} />
       <div className="pt-[33px] flex flex-col items-center mx-auto">
         <div className="w-[80px]">
-          <img
-            src={
-              myProfile?.profile.profilePicUrl ??
-              rolePicture[myProfile?.profile.role as string]
-            }
-            alt="프로필 사진"
-            className="rounded-full"
-          />
+          {myProfile?.isLeader ? (
+            <LeaderProfile
+              href={
+                useProfileStore.getState().savedFormData.profilePicUrl ??
+                rolePicture[myProfile?.profile.role as string]
+              }
+            />
+          ) : (
+            <img
+              src={
+                useProfileStore.getState().savedFormData.profilePicUrl ??
+                rolePicture[myProfile?.profile.role as string]
+              }
+              className="size-[80px] rounded-full"
+            />
+          )}
           <div className="pt-[8px] text-center text-lg font-semibold tracking-[0.18px]">
             {myProfile?.profile.nickname}
           </div>
@@ -120,7 +137,11 @@ export default function FamilyAccount() {
                 return (
                   <EntityItem
                     key={member.profileId}
-                    picture={member.profilePicUrl ?? rolePicture[member.role]}
+                    picture={
+                      member.profilePicUrl?.includes("no_profile_image")
+                        ? rolePicture[member.role]
+                        : member.profilePicUrl
+                    }
                     name={member.nickname}
                     category={findKeyByValue(roleMap, member.role) as string}
                     border={

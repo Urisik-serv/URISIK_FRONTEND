@@ -6,6 +6,7 @@ import { Check } from "../common/icon/Check";
 import { usePatchProfilePic } from "../../hooks/mutations/use-patch-profile-pic";
 import PublicHeader from "../header/PublicHeader";
 import { LoadingSpinner } from "../common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 interface PictureModalProps {
   onClick: () => void;
@@ -22,12 +23,41 @@ export default function fyModal({ onClick }: PictureModalProps) {
     familyRoomid as number,
   );
 
-  const DefaultSelect = () => {
+  const DefaultSelect = async () => {
+    if (!familyRoomid) return;
+
+    const roleKey = roleMap[savedFormData.role];
+    if (!roleKey) {
+      toast.error("역할을 먼저 선택해주세요");
+      return;
+    }
+
+    const imagePath = rolePicture[roleKey];
+    console.log("imagePath:", imagePath);
+
+    if (!imagePath) {
+      toast.error("기본 이미지 경로가 없습니다");
+      return;
+    }
+
     setIsCheck("default");
-    setSavedFormData((prev) => ({
-      ...prev,
-      profilePicUrl: rolePicture[roleMap[savedFormData.role]],
-    }));
+
+    const response = await fetch(imagePath);
+
+    const blob = await response.blob();
+
+    const file = new File([blob], "default.png", {
+      type: "image/png",
+    });
+
+    uploadPic(file, {
+      onSuccess: (serverUrl) => {
+        setSavedFormData((prev) => ({
+          ...prev,
+          profilePicUrl: serverUrl,
+        }));
+      },
+    });
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
