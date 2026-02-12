@@ -1,8 +1,8 @@
 import { useNavigate, type To } from "react-router-dom";
 import ToggleButton from "./ToggleButton";
-import chevronRight from "../../assets/icons/chevron-right-gray.svg";
 import { useAlarm } from "../../hooks/queries/use-alarm-query";
 import { usePatchAlarm } from "../../hooks/queries/use-patch-alarm";
+import Chevron from "../common/icon/Chevron";
 
 interface ListItemProps {
   to?: To;
@@ -59,11 +59,7 @@ export default function ListItem({
             {title}
           </button>
           <div className="cursor-pointer" onClick={handleButton}>
-            <img
-              className="size-[24px]"
-              src={chevronRight}
-              alt={`${title} 바로 가기기`}
-            />
+            <Chevron rotate={-90} color="#71717A" />
           </div>
         </div>
       )}

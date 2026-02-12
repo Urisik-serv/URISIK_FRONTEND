@@ -1,9 +1,9 @@
 import Button from "../common/Button";
-import Up from "../../assets/icons/chevron-up.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MenuList from "../common/MenuList";
 import AlertModal from "../common/AlertModal";
+import Chevron from "../common/icon/Chevron";
 
 type BottomSheetProps = {
   open: boolean;
@@ -56,7 +56,7 @@ export default function BottomSheet({ open }: BottomSheetProps) {
             setIsOpen((prev) => !prev);
           }}
         >
-          <img src={Up} className="size-8" alt="위로 올리기" />
+          <Chevron rotate={180} color="black" size={32} />
         </button>
       </div>
       <div className="w-full flex font-semibold text-[18px] h-13">

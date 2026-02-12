@@ -47,7 +47,7 @@ export default function History() {
         <div className="pt-[16px] flex justify-end">
           <button
             onClick={handleModal}
-            className="cursor-pointer w-[70px] p-10px text-center text-white text-[16px] font-medium leading-[16px] tracking-[-0.48px] bg-gray-100 rounded-lg p-[8px]"
+            className="cursor-pointer w-[70px] p-10px text-center text-[16px] font-medium leading-[16px] tracking-[-0.48px] bg-gray-100 rounded-lg p-[8px]"
           >
             기간조회
           </button>
