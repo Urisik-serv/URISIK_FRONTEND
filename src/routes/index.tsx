@@ -28,6 +28,7 @@ import MyProfilePage from "../pages/profile/my-profile-page";
 import History from "../pages/mypage/history";
 import LoginRedirectPage from "../pages/auth/login-redirect-page";
 import InviteEntry from "../pages/home/invite-entry";
+import MealPlanDetailPage from "../pages/meal-plan/meal-plan-detail-page";
 import MenuPageDispatcher from "../components/home/detailPage/MenuPageDispatcher";
 
 export const router = createBrowserRouter([
@@ -58,6 +59,7 @@ export const router = createBrowserRouter([
         path: "onboarding",
         element: <OnboardingPage />,
       },
+      { path: "invite/:token", element: <InviteEntry /> },
 
       // Protected Routes (로그인 필요), 이후 페이지는 여기에 라우팅
       // 지금은 인증이 없을 때 접근 가능하게 해놓음
@@ -77,9 +79,10 @@ export const router = createBrowserRouter([
           { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
+          { path: "meal-plan/detail", element: <MealPlanDetailPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "invite", element: <FamilyInvitePage /> },
-          { path: "invite/:token", element: <InviteEntry /> },
+
           { path: "family-wishlist", element: <FamilyWishListPage /> },
           {
             path: "family-profile-create",

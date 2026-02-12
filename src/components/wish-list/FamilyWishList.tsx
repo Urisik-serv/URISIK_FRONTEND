@@ -105,7 +105,10 @@ const FamilyWishList = () => {
           const uniqueKey = getUniqueKey(recipeId, transId);
 
           return (
-            <div key={uniqueKey} className="flex items-center">
+            <div
+              key={uniqueKey}
+              className="flex items-center border-b border-gray-200"
+            >
               {editMode && (
                 <img
                   className="cursor-pointer w-6 h-6 shrink-0"
@@ -116,20 +119,22 @@ const FamilyWishList = () => {
                   }}
                 />
               )}
-              <MenuList
-                type="profile"
-                key={item.id}
-                menu={item.title}
-                img={item.imageUrl}
-                rate={item.avgScore}
-                isSafe={item.allergyStatus}
-                category={item.category.label}
-                ingredients={item.ingredientsRaw}
-                profiles={item.sourceProfile.profiles}
-                onClick={() => handleClick(item)}
-                clickable={true}
-                isSelected={false}
-              />
+              <div className="flex-1 min-w-0">
+                <MenuList
+                  type="profile"
+                  key={item.id}
+                  menu={item.title}
+                  img={item.imageUrl}
+                  rate={item.avgScore}
+                  isSafe={item.allergyStatus}
+                  category={item.category.label}
+                  ingredients={item.ingredientsRaw}
+                  profiles={item.sourceProfile.profiles}
+                  onClick={() => handleClick(item)}
+                  clickable={true}
+                  hasBorder={false}
+                />
+              </div>
             </div>
           );
         })}

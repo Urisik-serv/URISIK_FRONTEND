@@ -146,20 +146,20 @@ const ProfileModal = () => {
                   }
                   alt="내 프로필 사진"
                   className="size-20 rounded-full"
-                />
+
                 <div className="text-2xl font-semibold leading-9">
                   {selectedData?.nickname}
                 </div>
               </div>
             </div>
             <div className="pt-6">
-              <div className="text-[16px] font-semibold leading-[24px]">
+              <div className="text-[16px] font-semibold pb-3 leading-6">
                 알레르기
               </div>
               {!allergies?.includes("NONE") ? (
-                <div>
+                <div className="flex flex-col gap-5 pb-5">
                   {profile?.allergyAndAlterIngredients.map((item) => (
-                    <div key={item.allergen} className=" pb-[20px]">
+                    <div key={item.allergen}>
                       <AllergyDataBox
                         name={item.allergen}
                         alternative={item.alteredIngredients}
@@ -168,7 +168,7 @@ const ProfileModal = () => {
                   ))}
                 </div>
               ) : (
-                <div className="pb-[20px] ">
+                <div className="pb-5 ">
                   <div className="flex pt-2">
                     <ElementButton name="없음" />
                   </div>
@@ -176,17 +176,17 @@ const ProfileModal = () => {
               )}
             </div>
             <div>
-              <div className="text-[16px] font-semibold leading-[24px]">
+              <div className="text-[16px] font-semibold leading-6">
                 선호 음식
               </div>
-              <div className="flex gap-[8px] pt-[12px]">
+              <div className="flex gap-2 pt-3">
                 {profile?.dietPreferences.map((food) => (
                   <ElementButton name={getKeyByValue(food) ?? food} />
                 ))}
               </div>
             </div>
-            <div className="pt-[42px]">
-              <div className="text-[16px] font-semibold leading-[24px]">
+            <div className="pt-10">
+              <div className="text-[16px] font-semibold leading-6">
                 내 위시리스트
               </div>
               {profileWish || transWish ? (
@@ -197,6 +197,8 @@ const ProfileModal = () => {
                       name={item.transformedRecipeName}
                       rating={item.avgScore}
                       type="TRANSFORMED_RECIPE"
+                      isWish={true}
+                      isSafe={item.foodSafety === "SAFETY"}
                       id={item.transformedRecipeId}
                       category={item.category}
                       tags={item.recipeIngredients.join(", ")}
@@ -215,6 +217,8 @@ const ProfileModal = () => {
                       name={item.recipeName}
                       rating={item.avgScore}
                       type="RECIPE"
+                      isWish={true}
+                      isSafe={item.foodSafety === "SAFETY"}
                       id={item.recipeId}
                       category={item.category}
                       tags={item.recipeIngredients.join(", ")}

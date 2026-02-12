@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useGetWeekMealPlan from "../../hooks/queries/use-get-week-meal";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useProfileStore } from "../../stores/use-profile-store";
@@ -7,6 +8,7 @@ import EmptyState from "../common/EmptyState";
 import CalendarChipS from "./CalendarChip/CalendarChipS";
 import DateMenuList from "./DateMenuList";
 import ListHeader from "./ListHeader";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export type weekMealProps = {
   weekType: "THIS" | "NEXT";
@@ -14,11 +16,12 @@ export type weekMealProps = {
 export default function WeekMeal({ weekType }: weekMealProps) {
   const { familyRoomId } = useFamilyStore();
   const isLeader = useProfileStore().isLeader;
-  console.log(isLeader);
   const baseDate = new Date();
   const date =
     weekType === "THIS" ? getThisMonday(baseDate) : getNextMonday(baseDate); //이번주/다음주 시작 월요일 날짜
   const { data, isError, isLoading } = useGetWeekMealPlan(familyRoomId!, date);
+
+  const navigate = useNavigate();
   if (isError) {
     return (
       <div className="pt-43">
@@ -26,6 +29,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
           <EmptyState
             text="아직 식단이 생성되지 않았어요"
             buttonText="식단 생성"
+            onClick={() => navigate(`/meal-plan/create?week=${weekType}`)}
           />
         ) : (
           <EmptyState
@@ -37,7 +41,11 @@ export default function WeekMeal({ weekType }: weekMealProps) {
     );
   }
   if (isLoading) {
-    return <div>로딩스피너 추가 예정</div>;
+    return (
+      <div className="w-full pt-60">
+        <LoadingSpinner text="식단을 불러오고 있어요..." />
+      </div>
+    );
   }
   const weekData = changeAdditionalProp(data?.result.slots || {}, "WEEK");
   const listHeaderDate =
@@ -63,7 +71,10 @@ export default function WeekMeal({ weekType }: weekMealProps) {
     "SUNDAY",
   ];
   const todayIdx = new Date().getDay();
-  const adjustedIdx = todayIdx === 0 ? 6 : todayIdx - 1;
+
+  const adjustedIdx =
+    weekType === "THIS" ? (todayIdx === 0 ? 6 : todayIdx - 1) : 0;
+
   //오늘~앞으로 날
   const futureDays = dayNames.slice(adjustedIdx).map((day) => ({
     dayKor: dayKorMap[day],
@@ -84,7 +95,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
         {futureDays.map((day) => {
           if (day.meals.length > 0) {
             return (
-              <div className="flex gap-3">
+              <div key={day.dayKor} className="flex gap-3">
                 <CalendarChipS text={day.dayKor} type="primary" />
                 <DateMenuList isSelect={true} data={day.meals} />
               </div>
@@ -94,7 +105,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
         {pastDays.map((day) => {
           if (day.meals.length > 0) {
             return (
-              <div className="flex gap-3">
+              <div key={day.dayKor} className="flex gap-3">
                 <CalendarChipS text={day.dayKor} type="gray" />
                 <DateMenuList isSelect={false} data={day.meals} />
               </div>

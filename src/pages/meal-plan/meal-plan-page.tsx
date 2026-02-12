@@ -10,20 +10,27 @@ import unselectedMoon from "../../assets/icons/moon-unselected.svg";
 import useGetTodayMealPlan from "../../hooks/queries/use-get-today-meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import EmptyState from "../../components/common/EmptyState";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MealPlanPage = () => {
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get("tab");
   const [tab, setTab] = useState<"오늘의 식단" | "이번주 식단" | "다음주 식단">(
-    tabParam === "nextWeek" ? "다음주 식단" : "오늘의 식단",
+    tabParam === "NEXT"
+      ? "다음주 식단"
+      : tabParam === "THIS"
+        ? "이번주 식단"
+        : "오늘의 식단",
   );
   const [todayTab, setTodayTab] = useState<"점심" | "저녁">("점심");
   const { familyRoomId } = useFamilyStore.getState();
 
-  const { data: todayData, isError } = useGetTodayMealPlan(familyRoomId);
-  console.log(todayData);
+  const {
+    data: todayData,
+    isError,
+    isLoading,
+  } = useGetTodayMealPlan(familyRoomId);
   useEffect(() => {
-
     if (todayData?.result?.meals.length == 1) {
       if (todayData.result.meals[0].mealType === "DINNER") setTodayTab("저녁");
     }
@@ -45,19 +52,19 @@ const MealPlanPage = () => {
             className={`flex-1 cursor-pointer border-b-1 ${tab === "오늘의 식단" ? "bg-primary-700 border-primary-700 rounded-t-lg text-white" : "bg-white text-gray-300 border-gray-300"}`}
             onClick={() => setTab("오늘의 식단")}
           >
-            오늘의 식단
+            오늘
           </button>
           <button
             className={`flex-1 cursor-pointer border-b-1 ${tab === "이번주 식단" ? "bg-primary-700 border-primary-700 rounded-t-lg text-white" : "bg-white text-gray-300 border-gray-300"}`}
             onClick={() => setTab("이번주 식단")}
           >
-            이번주 식단
+            이번주
           </button>
           <button
             className={`flex-1 cursor-pointer border-b-1 ${tab === "다음주 식단" ? "bg-primary-700 border-primary-700 rounded-t-lg text-white" : "bg-white text-gray-300 border-gray-300"}`}
             onClick={() => setTab("다음주 식단")}
           >
-            다음주 식단
+            다음주
           </button>
         </div>
         {tab === "오늘의 식단" && (
@@ -84,17 +91,26 @@ const MealPlanPage = () => {
                 저녁
               </button>
             </div>
-            {isError || tabData === undefined ? (
-              <div className="pt-27">
-                <EmptyState text={`${todayTab}식단이 생성되지 않았어요.`} />
+            {isLoading ? (
+              <div className="w-full pt-60">
+                {" "}
+                <LoadingSpinner />
               </div>
             ) : (
-              <TodayMeal data={tabData} />
+              <>
+                {isError || !tabData ? (
+                  <div className="pt-27">
+                    <EmptyState text={`${todayTab}식단이 생성되지 않았어요.`} />
+                  </div>
+                ) : (
+                  <TodayMeal key={todayTab} data={tabData} />
+                )}
+              </>
             )}
           </>
         )}
-        {tab == "이번주 식단" && <WeekMeal weekType="THIS" />}
-        {tab == "다음주 식단" && <WeekMeal weekType="NEXT" />}
+        {tab == "이번주 식단" && <WeekMeal key="THIS" weekType="THIS" />}
+        {tab == "다음주 식단" && <WeekMeal key="NEXT" weekType="NEXT" />}
       </div>
     </div>
   );

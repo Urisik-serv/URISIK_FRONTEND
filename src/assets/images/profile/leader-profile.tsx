@@ -1,10 +1,18 @@
 import crown from "../profile/crown.svg";
-
-export default function LeaderProfile({ href }: { href: string }) {
+interface LeaderProfileProps {
+  href: string;
+  w?: string;
+  h?: string;
+}
+export default function LeaderProfile({
+  href,
+  w = "88",
+  h = "100",
+}: LeaderProfileProps) {
   return (
     <svg
-      width="88"
-      height="100"
+      width={w}
+      height={h}
       viewBox="0 0 88 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

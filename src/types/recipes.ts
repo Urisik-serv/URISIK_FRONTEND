@@ -31,13 +31,7 @@ export interface SearchRecipesItem {
     imageLarge: string;
     ingredientsRaw: string;
     instructionsRaw: string;
-    steps: [
-      {
-        order: number;
-        description: string;
-        imageUrl: string;
-      },
-    ];
+    steps: DetailRecipe[];
   };
 }
 
@@ -53,6 +47,7 @@ export interface ExternalRecipes {
 export interface DetailRecipeStep {
   order: number;
   description: string;
+  imageUrl: string;
 }
 
 export interface DetailRecipe {
@@ -88,12 +83,7 @@ export interface TransformedRecipe {
   title: string;
   baseRecipeId: number;
   ingredients: string[];
-  steps: [
-    {
-      order: number;
-      description: string;
-    },
-  ];
+  steps: DetailRecipeStep[];
   substitutionSummary: [
     {
       allergen: string;
@@ -183,3 +173,16 @@ export type ResponseRecommendPopular = BaseResponse<RecommendPopularRecipes>;
 export interface RecommendSearch {
   recipeName: string[];
 }
+
+export interface PopularKeyword {
+  keyword: string;
+  rank: number;
+  change: "UP" | "DOWN" | "SAME";
+}
+export interface PopularSearches {
+  windowStart: string;
+  windowEnd: string;
+  keywords: PopularKeyword[];
+}
+
+export type ResponsePopularSearch = BaseResponse<PopularSearches>;

@@ -66,6 +66,7 @@ export interface TodayMeal {
   imageUrl: string;
   ingredients: string;
   recipeSteps: RecipeStep[];
+  isReviewed: boolean;
 }
 export interface TodayMealPlan {
   date: string;
@@ -113,3 +114,30 @@ export interface ThisWeekMealPlan {
   slots: MealPlanSlots;
 }
 export type ResponseThisWeekMealPlan = BaseResponse<ThisWeekMealPlan>;
+
+/////////
+export interface Updates {
+  selectedSlot: {
+    mealType: MealType;
+    dayOfWeek: DayOfWeek;
+  };
+  selectedRecipe: {
+    type: "RECIPE" | "TRANSFORMED_RECIPE";
+    id: number;
+  };
+}
+export interface UpdatedSlots {
+  slotKey: string;
+  recipe: {
+    type: "RECIPE" | "TRANSFORMED_RECIPE";
+    id: number;
+    title: string;
+  };
+}
+export interface EditMealPlan {
+  mealPlanId: number;
+  status: "DRAFT" | "CONFIRMED";
+  updatedSlots: UpdatedSlots[];
+}
+//식단 수정 api response
+export type ResponseEditMealPlanDto = BaseResponse<EditMealPlan>;

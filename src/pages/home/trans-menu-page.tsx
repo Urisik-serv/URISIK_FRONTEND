@@ -12,6 +12,16 @@ import UpButton from "../../components/common/UpButton";
 import DownImg from "../../assets/icons/chevron-down-gray300.svg";
 import UpImg from "../../assets/icons/chevron-up-gray.svg";
 import Rate from "../../components/common/Rate";
+import {
+  getWishlistKey,
+  useMyWishlistIds,
+} from "../../hooks/queries/use-my-wishlist-ids";
+import { useMyProfileStore } from "../../stores/use-my-profile-store";
+import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
+
+const removeLeadingNumber = (text: string) => {
+  return text.replace(/^\d+[\.\)]\s*/, "");
+};
 
 const TransMenuPage = () => {
   const { menuId } = useParams();
@@ -24,9 +34,22 @@ const TransMenuPage = () => {
       try {
         const transData = await getTransRecipe(recipeId);
         console.log("변형 레시피 요청 성공: ", transData.result);
+        if (transData.result.steps) {
+          transData.result.steps = transData.result.steps.map((step) => ({
+            ...step,
+            description: removeLeadingNumber(step.description),
+          })) as any;
+        }
         setTransRecipe(transData.result);
+
         const data = await getDetailRecipe(transData.result.baseRecipeId);
         console.log("일반 레시피 요청 성공: ", data);
+        if (data.result.steps) {
+          data.result.steps = data.result.steps.map((step) => ({
+            ...step,
+            description: removeLeadingNumber(step.description),
+          })) as any;
+        }
         setRecipe(data.result);
       } catch (error) {
         console.log("레시피 로딩 실패: ", error);
@@ -35,8 +58,22 @@ const TransMenuPage = () => {
     fetchData();
   }, [recipeId]);
 
+  // 내 정보, 내 roomId
   const roomId = useFamilyStore.getState().familyRoomId;
+  const profileId = useMyProfileStore((state) => state.myProfileId);
+
   const { mutate: addWishList } = usePostWishList(roomId);
+  const { mutate: deleteWishList } = useDeleteProfileWishLists(roomId);
+
+  const [showOrigin, setShowOrigin] = useState(false);
+
+  // 위시리스트 포함여부 로직
+  const { data: wishlistIds } = useMyWishlistIds(roomId, profileId);
+  const wishKey = getWishlistKey(
+    "TRANSFORMED",
+    transRecipe?.transformedRecipeId,
+  );
+  const isWishList = wishlistIds?.has(wishKey);
 
   const handleClick = async () => {
     const currentRecipeId = transRecipe?.transformedRecipeId;
@@ -45,11 +82,12 @@ const TransMenuPage = () => {
       recipeId: [],
       transformedRecipeId: currentRecipeId ? [currentRecipeId] : [],
     };
-
-    addWishList(directPayload);
+    if (isWishList) {
+      deleteWishList(directPayload);
+    } else {
+      addWishList(directPayload);
+    }
   };
-
-  const [showOrigin, setShowOrigin] = useState(false);
 
   return (
     <div>
@@ -99,7 +137,11 @@ const TransMenuPage = () => {
             <DetailContent transRecipe={transRecipe} />
           </div>
           <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
-            <WishlistButton onClick={handleClick} isSafe={true} />
+            <WishlistButton
+              onClick={handleClick}
+              isSafe={true}
+              isWishList={isWishList}
+            />
           </div>
           <UpButton />
         </div>

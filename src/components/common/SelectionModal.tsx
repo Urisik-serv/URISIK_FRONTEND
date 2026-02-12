@@ -46,40 +46,42 @@ export default function SelectionModal({
       >
         <div className="pb-[26px] w-[353px] flex flex-col items-center gap-[8px]">
           <div
-            className={`self-stretch h-40 py-4 ${bgColor} rounded-[10px] outline-none inline-flex flex-col justify-start items-center gap-4`}
+            className={`self-stretch h-40 ${bgColor} rounded-[10px] outline-none inline-flex flex-col justify-start overflow-hidden`}
           >
             <button
               onClick={firstSelectionOnClick}
-              className={`cursor-pointer flex justify-between text-start px-5 w-full  ${textColor} text-lg font-medium  leading-5`}
+              className={`flex-1 items-center cursor-pointer flex justify-between text-start px-5 w-full  ${textColor} text-lg font-medium  leading-5`}
             >
               <div>{firstSelectionText}</div>
-              {isCheck === "firstSelection" && (
+              {isCheck === firstSelectionText && (
                 <Check fillColor={checkIconColor} />
               )}
             </button>
 
             <div
-              className={`w-[350px] h-0 border-t border-t-[0.60px] ${borderColor}`}
+              className={`w-[355px] h-0 border-t-[0.60px] ${borderColor}`}
             ></div>
             <button
               onClick={secondSelectionOnClick}
-              className={`cursor-pointer flex justify-between text-start px-5 w-full ${textColor} text-lg font-medium  leading-5`}
+              className={`flex-1 items-center cursor-pointer flex justify-between text-start px-5 w-full ${textColor} text-lg font-medium  leading-5`}
             >
               <div>{secondSelectionText}</div>
-              {isCheck === "secondSelection" && (
+              {isCheck === secondSelectionText && (
                 <Check fillColor={checkIconColor} />
               )}
             </button>
 
             <div
-              className={`w-[350px] h-0 border-t border-t-[0.60px] ${borderColor}`}
+              className={`w-[355px] h-0 border-t-[0.60px] ${borderColor}`}
             ></div>
             <button
               onClick={thirdSelectionOnClick}
-              className={`cursor-pointer flex justify-between text-start px-5 w-full ${textColor} text-lg font-medium  leading-5`}
+              className={`flex-1 items-center cursor-pointer flex justify-between text-start px-5 w-full ${textColor} text-lg font-medium  leading-5`}
             >
               <div>{thirdSelectionText}</div>
-              {isCheck === "default" && <Check fillColor={checkIconColor} />}
+              {isCheck === thirdSelectionText && (
+                <Check fillColor={checkIconColor} />
+              )}
             </button>
           </div>
         </div>

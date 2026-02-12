@@ -10,6 +10,7 @@ import { useProfileStore } from "../../stores/use-profile-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
 import { useProfileMutation } from "../../hooks/mutations/use-post-profile";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 interface ProfileDataFormProps {
   isEdit?: boolean;
@@ -81,6 +82,16 @@ export default function ProfileDataForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 폼 유효성 검사
+    if (request.nickname === "") {
+      toast.error("닉네임을 입력해주세요");
+    } else if (request.role === "") {
+      toast.error("역할을 선택해주세요");
+    } else if (request.dietPreferences.length === 0) {
+      toast.error("선호음식을 선택해주세요");
+    }
+
     profileMutation.mutate(request);
   };
 
@@ -96,7 +107,11 @@ export default function ProfileDataForm({
         <div className="h-[104px] mb-[5.5px]">
           <div className="pt-[24px] flex flex-col items-center">
             <img
-              src={profilePicUrl ?? rolePicture[roleMap[savedRole]]}
+              src={
+                profilePicUrl && profilePicUrl !== ""
+                  ? profilePicUrl
+                  : rolePicture[roleMap[savedRole]]
+              }
               alt="프로필 사진"
               className="w-[104px] rounded-full"
             />

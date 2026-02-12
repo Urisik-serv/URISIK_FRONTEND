@@ -5,6 +5,7 @@ import { useState } from "react";
 import { DayPicker, type DateRange } from "react-day-picker";
 import "../../styles/dayPicker.css";
 import Chevron from "../common/icon/Chevron";
+import toast from "react-hot-toast";
 
 interface ModalProps {
   handleModal: () => void;
@@ -31,18 +32,25 @@ export default function GetDateRangeModal({
   const [from, setFrom] = useState(fromDate);
   const [to, setTo] = useState(toDate);
 
-  const formatDate = (date?: Date) => {
+  // 화면 표시용
+  const formatDisplayDate = (date?: Date) => {
     if (!date) return "";
     return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
   };
 
-  const handleSelect = (range: DateRange | undefined) => {
-    setRange(range);
+  // 서버 전송용
+  const formatApiDate = (date?: Date) => {
+    if (!date) return "";
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  };
 
-    if (!range) return;
+  const handleSelect = (selected: DateRange | undefined) => {
+    setRange(selected);
 
-    setFrom(formatDate(range.from));
-    setTo(formatDate(range.to));
+    if (!selected?.from || !selected?.to) return;
+
+    setFrom(formatDisplayDate(selected.from));
+    setTo(formatDisplayDate(selected.to));
   };
 
   const handleFinalApply = () => {
@@ -54,14 +62,32 @@ export default function GetDateRangeModal({
   };
 
   const handleApplyDate = () => {
-    if (!range?.from) return;
+    if (!range?.from || !range?.to) {
+      toast.error("기간을 모두 선택해주세요.");
+      return;
+    }
 
-    setFrom((range?.from ?? new Date()).toISOString().slice(0, 10));
-    setTo((range?.to ?? new Date()).toISOString().slice(0, 10));
+    const fromDay = range.from.getDay();
+    const toDay = range.to.getDay();
 
+    if (fromDay !== 1) {
+      toast.error("시작 날짜는 월요일이어야 합니다.");
+      return;
+    }
+
+    if (toDay !== 0) {
+      toast.error("종료 날짜는 일요일이어야 합니다.");
+      return;
+    }
+
+    const formattedFrom = formatApiDate(range.from);
+    const formattedTo = formatApiDate(range.to);
+
+    setFrom(formattedFrom);
+    setTo(formattedTo);
+
+    setDateRange(`${formattedFrom} ~ ${formattedTo}`);
     setCalendarOpen(false);
-
-    setDateRange(`${from} ~ ${to}`);
   };
 
   return (
@@ -116,16 +142,23 @@ export default function GetDateRangeModal({
             <span className="flex items-center text-[18px]">~</span>
             <DateBlock date={to} />
           </div>
-
           <div className="pt-[25px]">
             <Button text={"적용"} type="button" onClick={handleFinalApply} />
           </div>
         </div>
       </div>
       {calendarOpen && (
-        <div className="fixed inset-0 flex justify-center items-end z-50">
-          <div className="flex flex-col w-full max-w-[375px] h-[353px] bg-white rounded-t-3xl px-4 pt-4 pb-6 flex justify-center items-center">
-            <DayPicker mode="range" selected={range} onSelect={handleSelect} />
+        <div
+          onClick={() => setCalendarOpen(false)}
+          className="fixed inset-0 flex justify-center items-end z-50"
+        >
+          <div className="flex flex-col w-full max-w-[375px]  bg-white rounded-t-3xl px-4 pt-4 pb-6 flex justify-center items-center">
+            <DayPicker
+              weekStartsOn={1}
+              mode="range"
+              selected={range}
+              onSelect={handleSelect}
+            />
             <div className="pt-4">
               <Button text="선택" type="button" onClick={handleApplyDate} />
             </div>
