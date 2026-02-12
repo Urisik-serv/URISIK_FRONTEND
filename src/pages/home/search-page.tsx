@@ -17,7 +17,7 @@ import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import { formatRankingTime } from "../../utils/date";
 import alertImage from "../../assets/images/alert-circle.png";
-import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import MealCardSkeleton from "../../components/skeltons/MealCardSkeleton";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -33,6 +33,7 @@ const SearchingPage = () => {
     0,
     6,
   );
+  const isSearching = isLoading || keyword !== debouncedKeyword;
 
   const { keywords, removeKeyword } = useRecentSearch();
 
@@ -134,8 +135,12 @@ const SearchingPage = () => {
         </div>
       ) : (
         <div className="flex flex-col px-4 py-2 pb-15 w-full">
-          {isLoading ? (
-            <LoadingSpinner />
+          {isSearching ? (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <MealCardSkeleton key={index} />
+              ))}
+            </>
           ) : recipes?.result.items && recipes.result.items.length > 0 ? (
             recipes?.result.items.map((item) => (
               <MealCard
