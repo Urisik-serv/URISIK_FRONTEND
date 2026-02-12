@@ -10,7 +10,7 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
   const handleOpen = () => setIsOpen(false);
   return (
     <>
-      <div className="flex justify-between items-center pt-3 pb-6">
+      <div className="flex justify-between items-center pt-3">
         {isOpen && (
           <ReviewModal
             recipeId={data.id}
@@ -36,19 +36,23 @@ export default function TodayMeal({ data }: { data: TodayMeal }) {
           className="w-41 h-29 object-cover rounded-lg"
         />
       </div>
-      {!isDone ? (
-        <Button
-          type="button"
-          text="식사 완료"
-          onClick={() => setIsDone(true)}
-        />
-      ) : (
-        <Button
-          type="button"
-          text="리뷰 작성"
-          bgColor="white"
-          onClick={() => setIsOpen(true)}
-        />
+      {!data.isReviewed && (
+        <div className="pt-6">
+          {!isDone ? (
+            <Button
+              type="button"
+              text="식사 완료"
+              onClick={() => setIsDone(true)}
+            />
+          ) : (
+            <Button
+              type="button"
+              text="리뷰 작성"
+              bgColor="white"
+              onClick={() => setIsOpen(true)}
+            />
+          )}
+        </div>
       )}
       <div className="pt-11 pb-29">
         <IngredientAndRecipe
