@@ -29,7 +29,7 @@ export default function FamilyInvitePage() {
         objectType: "feed",
         content: {
           title: "가족방에 초대받았어요!",
-          description: "아래 버튼을 눌러 참여해주세요",
+          description: `아래 버튼을 눌러 참여해주세요${inviteUrl}`,
           imageUrl: "",
           link: {
             webUrl: inviteUrl,
