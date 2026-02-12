@@ -3,6 +3,7 @@ import PublicHeader from "../../components/header/PublicHeader";
 import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM";
 import MenuChip from "../../components/meal-plan/MenuChip";
 import BottomSheet from "../../components/meal-plan/BottomSheet";
+import { useSearchParams } from "react-router-dom";
 import {
   type Updates,
   type DayOfWeek,
@@ -53,6 +54,9 @@ const MealPlanEditPage = () => {
 
   //바텀 시트 열고 닫기
   const [open, setOpen] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const weekParam = searchParams.get("week");
 
   //바텀 시트가 열린 적이 없으면 최초 실행시에 자동으로 열리는 애니메이션
   const hasOpenedRef = useRef(false);
@@ -194,6 +198,7 @@ const MealPlanEditPage = () => {
       </div>
       <BottomSheet
         open={open}
+        weekParam={weekParam}
         changeMenu={changeMenu}
         onSubmit={handleSubmit}
       />

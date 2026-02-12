@@ -28,6 +28,7 @@ import MyProfilePage from "../pages/profile/my-profile-page";
 import History from "../pages/mypage/history";
 import LoginRedirectPage from "../pages/auth/login-redirect-page";
 import InviteEntry from "../pages/home/invite-entry";
+import MealPlanDetailPage from "../pages/meal-plan/meal-plan-detail-page";
 import MenuPageDispatcher from "../components/home/detailPage/MenuPageDispatcher";
 
 export const router = createBrowserRouter([
@@ -77,6 +78,7 @@ export const router = createBrowserRouter([
           { path: "meal-plan", element: <MealPlanPage /> },
           { path: "meal-plan/create", element: <MealPlanCreatePage /> },
           { path: "meal-plan/edit", element: <MealPlanEditPage /> },
+          { path: "meal-plan/detail", element: <MealPlanDetailPage /> },
           { path: "family-create", element: <FamilyCreatePage /> },
           { path: "invite", element: <FamilyInvitePage /> },
           { path: "invite/:token", element: <InviteEntry /> },

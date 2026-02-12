@@ -66,6 +66,7 @@ export interface TodayMeal {
   imageUrl: string;
   ingredients: string;
   recipeSteps: RecipeStep[];
+  isReviewed: boolean;
 }
 export interface TodayMealPlan {
   date: string;

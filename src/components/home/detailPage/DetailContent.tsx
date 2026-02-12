@@ -1,5 +1,5 @@
 import type { DetailRecipe, TransformedRecipe } from "../../../types/recipes";
-import MenuInfo from "../../common/MenuInfo";
+import IngredientAndRecipe from "../../common/IngredientAndRecipe";
 import SafeMark from "../../common/SafeMark";
 
 interface DetailContentProps {
@@ -8,7 +8,9 @@ interface DetailContentProps {
 }
 const DetailContent = ({ recipe, transRecipe }: DetailContentProps) => {
   const isTrans = !!transRecipe;
-
+  if (!recipe && !transRecipe) {
+    return <div className="p-10 text-center">로딩중...</div>;
+  }
   return (
     <div>
       <div className="pb-6">
@@ -31,16 +33,16 @@ const DetailContent = ({ recipe, transRecipe }: DetailContentProps) => {
       </div>
       <div className="pb-12">
         {isTrans ? (
-          <MenuInfo title="재료" sentences={transRecipe.ingredients} />
+          <IngredientAndRecipe
+            step={transRecipe.steps}
+            ingredients={transRecipe.ingredients}
+            type="TRANS"
+          />
         ) : (
-          <MenuInfo title="재료" sentences={recipe?.ingredients} />
-        )}
-      </div>
-      <div>
-        {isTrans ? (
-          <MenuInfo title="레시피" recipes={transRecipe.steps} />
-        ) : (
-          <MenuInfo title="레시피" recipes={recipe?.steps} />
+          <IngredientAndRecipe
+            step={recipe!.steps}
+            ingredients={recipe!.ingredients}
+          />
         )}
       </div>
     </div>

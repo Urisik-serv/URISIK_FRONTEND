@@ -7,9 +7,11 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import { useInView } from "react-intersection-observer";
 import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
 import Chevron from "../common/icon/Chevron";
+import { useNavigate } from "react-router-dom";
 
 type BottomSheetProps = {
   open: boolean;
+  weekParam: string | null;
   changeMenu: (
     id: number,
     title: string,
@@ -19,6 +21,7 @@ type BottomSheetProps = {
 };
 export default function BottomSheet({
   open,
+  weekParam,
   changeMenu,
   onSubmit,
 }: BottomSheetProps) {
@@ -30,7 +33,7 @@ export default function BottomSheet({
     title: string;
     type: "RECIPE" | "TRANSFORMED_RECIPE";
   } | null>(null);
-
+  const navigate = useNavigate();
   //안전한 순 위시리스트 코드
   const { data: recommendList } = useGetRecommendList("안전한 순");
 
@@ -79,7 +82,11 @@ export default function BottomSheet({
 
   //모달창 속 확인 버튼 눌렀을 때
   const handleButton = () => {
-    //navigate(`/meal-plan?tab=nextWeek`);
+    if (weekParam === "THIS") {
+      navigate(`/meal-plan?tab=THIS`);
+    } else {
+      navigate(`/meal-plan?tab=NEXT`);
+    }
     onSubmit();
   };
 

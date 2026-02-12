@@ -23,8 +23,6 @@ export const postCreateMealPlans = async ({
     createMeal,
   );
 
-  console.log("식단 생성 api", data);
-
   return data;
 };
 
@@ -66,7 +64,6 @@ export const getTodayMealPlan = async (
   const { data } = await axiosInstance.get(
     `/api/family-rooms/${familyRoomId}/meal-plans/today`,
   );
-  console.log(data);
 
   return data;
 };

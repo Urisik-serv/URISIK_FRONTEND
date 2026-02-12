@@ -11,6 +11,7 @@ import { postConfirmMealPlan } from "../../api/meal-plan";
 type MealPlanResultProps = {
   mealPlanId: number;
   onClick: () => void;
+  weekParam: string | null;
 };
 
 type mealPlanResponse = Record<string, SlotItem[]>;
@@ -27,6 +28,7 @@ const dayKor: Record<string, string> = {
 export default function MealPlanResult({
   mealPlanId,
   onClick,
+  weekParam,
 }: MealPlanResultProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +60,11 @@ export default function MealPlanResult({
       alert("주간 식단 확정 실패" + error);
     } finally {
       console.log("주간 식단 확정 성공");
-      navigate(`/meal-plan?tab=nextWeek`);
+      if (weekParam === "THIS") {
+        navigate(`/meal-plan?tab=THIS`);
+      } else {
+        navigate(`/meal-plan?tab=NEXT`);
+      }
     }
   };
   return (
@@ -120,7 +126,7 @@ export default function MealPlanResult({
       <div className="w-full max-w-[375px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
         <button
           className="w-full h-14 rounded-xl cursor-pointer text-primary-700 border border-primary-700"
-          onClick={() => navigate(`/meal-plan/edit`)}
+          onClick={() => navigate(`/meal-plan/edit?week=${weekParam}`)}
         >
           수정
         </button>
