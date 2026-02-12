@@ -116,7 +116,7 @@ const MealCard = ({
       </div>
       <div className="flex flex-col items-start gap-1.5 flex-1 min-w-0">
         <h2
-          className="text-gray-800 text-base font-semibold leading-5 cursor-pointer truncate w-full"
+          className="text-gray-800 text-base font-semibold leading-5 cursor-pointer line-clamp-1 break-all w-full"
           onClick={handleOpenInfo}
         >
           {title}

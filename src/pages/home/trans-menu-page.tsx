@@ -19,6 +19,10 @@ import {
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 
+const removeLeadingNumber = (text: string) => {
+  return text.replace(/^\d+[\.\)]\s*/, "");
+};
+
 const TransMenuPage = () => {
   const { menuId } = useParams();
   const recipeId = Number(menuId);
@@ -30,9 +34,22 @@ const TransMenuPage = () => {
       try {
         const transData = await getTransRecipe(recipeId);
         console.log("변형 레시피 요청 성공: ", transData.result);
+        if (transData.result.steps) {
+          transData.result.steps = transData.result.steps.map((step) => ({
+            ...step,
+            description: removeLeadingNumber(step.description),
+          })) as any;
+        }
         setTransRecipe(transData.result);
+
         const data = await getDetailRecipe(transData.result.baseRecipeId);
         console.log("일반 레시피 요청 성공: ", data);
+        if (data.result.steps) {
+          data.result.steps = data.result.steps.map((step) => ({
+            ...step,
+            description: removeLeadingNumber(step.description),
+          })) as any;
+        }
         setRecipe(data.result);
       } catch (error) {
         console.log("레시피 로딩 실패: ", error);
