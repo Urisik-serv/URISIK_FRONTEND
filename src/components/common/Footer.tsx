@@ -8,11 +8,11 @@ export default function Footer() {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed bottom-0 text-[10px] font-medium z-10">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[400px] text-[10px] font-medium z-10">
       <div className="relative">
         <img src={Background} className="w-full" alt="푸터 배경" />
 
-        <div className="absolute bottom-0 w-full aspect-[375/92] flex justify-between px-6">
+        <div className="absolute bottom-0 w-full aspect-[400/92] flex justify-between px-6">
           <div className="flex justify-center w-19 pt-2">
             <button
               className="flex flex-col cursor-pointer gap-2"
@@ -36,10 +36,10 @@ export default function Footer() {
 
         <button
           className="
-            absolute left-1/2 -translate-x-1/2 bottom-[clamp(32px,calc(56/375*100vw),56px)]
+            absolute left-1/2 -translate-x-1/2 bottom-[clamp(32px,calc(56/400*100vw),56px)]
             flex flex-col justify-center items-center gap-1 
-            w-[clamp(40px,calc(68/375*100vw),56px)]
-            h-[clamp(40px,calc(68/375*100vw),56px)] 
+            w-[clamp(40px,calc(68/400*100vw),56px)]
+            h-[clamp(40px,calc(68/400*100vw),56px)] 
             rounded-full bg-primary-700 cursor-pointer"
           onClick={() => navigate("/meal-plan/create")}
         >

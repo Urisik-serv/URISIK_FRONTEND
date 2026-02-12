@@ -102,7 +102,7 @@ export default function BottomSheet({
   };
 
   return (
-    <div className="w-[375px] fixed bottom-0 p-[10px] rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] overflow-hidden bg-white flex flex-col items-center">
+    <div className="max-w-[400px] fixed bottom-0 p-[10px] rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] overflow-hidden bg-white flex flex-col items-center">
       <div>
         {isModalOpen && (
           <AlertModal

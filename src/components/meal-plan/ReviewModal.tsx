@@ -73,7 +73,7 @@ export default function ReviewModal({
           onClick={onModalClick}
         />
       )}
-      <div className="bg-white rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] w-[375px] flex flex-col gap-6 items-center text-center">
+      <div className="bg-white rounded-t-2xl shadow-[0_-2px_4px_-2px_rgba(0,0,0,0.25)] w-[400px] flex flex-col gap-6 items-center text-center">
         <button
           className="pt-[10px] cursor-pointer flex justify-center items-center"
           onClick={onClick}
