@@ -122,7 +122,7 @@ const SearchingPage = () => {
               <p className="text-neutral-400 text-xs font-normal leading-4">
                 {formatRankingTime(popular?.windowEnd)}
               </p>
-              <div className="grid grid-rows-4 grid-flow-col gap-x-10.5 gap-y-4 w-full">
+              <div className="grid grid-rows-4 grid-flow-col grid-cols-2 gap-x-10.5 gap-y-4 w-full">
                 {popular?.keywords.slice(0, 8).map((item) => (
                   <RankButton
                     key={item.keyword}
