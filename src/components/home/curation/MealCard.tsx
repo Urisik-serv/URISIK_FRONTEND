@@ -15,6 +15,7 @@ import { useFamilyStore } from "../../../stores/use-family-store";
 import { useMyProfileStore } from "../../../stores/use-my-profile-store";
 import useDeleteProfileWishLists from "../../../hooks/mutations/use-delete-profile-wishlists";
 import usePostWishList from "../../../hooks/mutations/use-post-wishlist";
+import toast from "react-hot-toast";
 
 interface MealCardProps {
   id: string;
@@ -58,11 +59,9 @@ const MealCard = ({
         const response = await postExternalRecipes(external as any);
         const recipeId = response.result.recipeId;
 
-        console.log("받아온 ID:", recipeId);
-        console.log("전달한 external: ", JSON.stringify(external));
         navigate(`/menu-information/${recipeId}?type=RECIPE`);
       } catch (error) {
-        console.error("외부 레시피 저장 실패:", error);
+        toast.error("외부 레시피 저장 실패:");
       }
     }
   };

@@ -22,8 +22,6 @@ export const getFamilyWishList = async (
     },
   );
 
-  console.log(res.data);
-
   return res;
 };
 
@@ -54,8 +52,6 @@ export const getProfileWishList = async (
     },
   );
 
-  console.log("프로필 위시리스트 조회 성공: ", data);
-
   return data;
 };
 
@@ -72,8 +68,6 @@ export const getProfileTransWishList = async (
       params: { size, cursor: cursor || undefined },
     },
   );
-
-  console.log("프로필 변형 레시피 위시리스트 조회 성공: ", data);
 
   return data;
 };
@@ -100,8 +94,6 @@ export const postAddWishList = async (
     `/api/family-rooms/${familyRoomId}/profile-wishes`,
     addRecipes,
   );
-
-  console.log("위시리스트 추가: ", data);
 
   return data;
 };

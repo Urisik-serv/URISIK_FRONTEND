@@ -32,7 +32,6 @@ const TransMenuPage = () => {
     const fetchData = async () => {
       try {
         const transData = await getTransRecipe(recipeId);
-        console.log("변형 레시피 요청 성공: ", transData.result);
         if (transData.result.steps) {
           transData.result.steps = transData.result.steps.map((step) => ({
             ...step,
@@ -42,7 +41,6 @@ const TransMenuPage = () => {
         setTransRecipe(transData.result);
 
         const data = await getDetailRecipe(transData.result.baseRecipeId);
-        console.log("일반 레시피 요청 성공: ", data);
         if (data.result.steps) {
           data.result.steps = data.result.steps.map((step) => ({
             ...step,

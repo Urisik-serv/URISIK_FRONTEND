@@ -33,7 +33,6 @@ export default function fyModal({ onClick }: PictureModalProps) {
     }
 
     const imagePath = rolePicture[roleKey];
-    console.log("imagePath:", imagePath);
 
     if (!imagePath) {
       toast.error("기본 이미지 경로가 없습니다");

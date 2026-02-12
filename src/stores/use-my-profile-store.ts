@@ -23,8 +23,6 @@ export const useMyProfileStore = create<MyProfileState>()(
             myProfileId: data.profileId,
             nickname: data.nickname,
           });
-
-          console.log("내 프로필 저장 완료:", data.nickname);
         } catch (error) {
           console.error("내 프로필 조회 실패:", error);
         }

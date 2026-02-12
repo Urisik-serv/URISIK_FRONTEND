@@ -13,8 +13,8 @@ function useDeleteFamilyWishLists(familyRoomId: number | null) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.familyWish] });
     },
-    onError: (error) => {
-      console.log("가족 위시리스트 삭제 실패: ", error);
+    onError: () => {
+
       toast.error("가족 위시리스트 삭제 실패");
     },
   });
