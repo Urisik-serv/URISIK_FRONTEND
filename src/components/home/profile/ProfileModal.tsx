@@ -145,7 +145,7 @@ const ProfileModal = () => {
                   }
                   alt="내 프로필 사진"
                   className="size-20 rounded-full"
-
+                />
                 <div className="text-2xl font-semibold leading-9">
                   {selectedData?.nickname}
                 </div>
