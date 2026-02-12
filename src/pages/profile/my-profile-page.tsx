@@ -1,7 +1,7 @@
 import PublicHeader from "../../components/header/PublicHeader";
 import { useNavigate } from "react-router-dom";
 import ElementButton from "../../components/common/ElementButton";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useFamilyStore } from "../../stores/use-family-store";
 import LeaderProfile from "../../assets/images/profile/leader-profile";
 import AllergyDataBox from "../../components/profile/AllergyDataBox";
@@ -14,6 +14,9 @@ import alertImage from "../../assets/images/alert-circle.png";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import ErrorUI from "../../components/common/ErrorUI";
 import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
+import { useInView } from "react-intersection-observer";
+import toast from "react-hot-toast";
+import MenuListSkeleton from "../../components/skeltons/MenuListSkeleton";
 
 export default function MyProfilePage() {
   const navigate = useNavigate();
@@ -46,9 +49,57 @@ export default function MyProfilePage() {
   }, [profile]);
 
   // 위시리스트 infinite query
-  const { data: profileWish } = useGetInfiniteProfileWishList(roomId, -1, 5);
+  const {
+    data: profileWish,
+    isFetching: profileFetch,
+    hasNextPage: profileNext,
+    fetchNextPage: fetchProfile,
+    isError: errorProfile,
+    isLoading: loadingProfile,
+  } = useGetInfiniteProfileWishList(roomId, -1, 5);
 
-  const { data: transWish } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+  const {
+    data: transWish,
+    isFetching: transFetch,
+    hasNextPage: transNext,
+    fetchNextPage: fetchTrans,
+    isError: errorTrans,
+    isLoading: loadingTrans,
+  } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+
+  const loading = loadingProfile || loadingTrans;
+
+  const hasData = useMemo(() => {
+    const hasTrans = (transWish?.pages?.length ?? 0) > 0;
+    const hasProfile = (profileWish?.pages?.length ?? 0) > 0;
+    return hasTrans || hasProfile;
+  }, [transWish, profileWish]);
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  // 스크롤
+  useEffect(() => {
+    if (inView) {
+      if (!transFetch && transNext) fetchTrans();
+      if (!profileFetch && profileNext) fetchProfile();
+    }
+  }, [
+    inView,
+    transFetch,
+    profileFetch,
+    transNext,
+    profileNext,
+    fetchTrans,
+    fetchProfile,
+  ]);
+
+  // 에러
+  useEffect(() => {
+    if (errorProfile) toast.error("일반 위시리스트 조회 실패");
+    if (errorTrans) toast.error("변형 위시리스트 조회 실패");
+  }, [errorProfile, errorTrans]);
 
   // 로딩 처리
   if (isPending) {
@@ -145,7 +196,13 @@ export default function MyProfilePage() {
             내 위시리스트
           </div>
 
-          {profileWish || transWish ? (
+          {loading ? (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <MenuListSkeleton key={index} />
+              ))}
+            </>
+          ) : hasData ? (
             <div className="pt-[17px] flex flex-col">
               {transWish?.pages.map((item) => (
                 <EntityItem
@@ -202,6 +259,7 @@ export default function MyProfilePage() {
             </div>
           )}
         </div>
+        <div ref={ref} className="h-2"></div>
       </div>
     </>
   );
