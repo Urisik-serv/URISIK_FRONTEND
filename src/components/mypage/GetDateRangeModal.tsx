@@ -32,9 +32,16 @@ export default function GetDateRangeModal({
   const [from, setFrom] = useState(fromDate);
   const [to, setTo] = useState(toDate);
 
-  const formatDate = (date?: Date) => {
+  // 화면 표시용
+  const formatDisplayDate = (date?: Date) => {
     if (!date) return "";
     return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
+  };
+
+  // 서버 전송용
+  const formatApiDate = (date?: Date) => {
+    if (!date) return "";
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
   };
 
   const handleSelect = (selected: DateRange | undefined) => {
@@ -42,8 +49,8 @@ export default function GetDateRangeModal({
 
     if (!selected?.from || !selected?.to) return;
 
-    setFrom(formatDate(selected.from));
-    setTo(formatDate(selected.to));
+    setFrom(formatDisplayDate(selected.from));
+    setTo(formatDisplayDate(selected.to));
   };
 
   const handleFinalApply = () => {
@@ -73,8 +80,8 @@ export default function GetDateRangeModal({
       return;
     }
 
-    const formattedFrom = formatDate(range.from);
-    const formattedTo = formatDate(range.to);
+    const formattedFrom = formatApiDate(range.from);
+    const formattedTo = formatApiDate(range.to);
 
     setFrom(formattedFrom);
     setTo(formattedTo);
