@@ -160,8 +160,10 @@ export default function BottomSheet({
                     type="profile"
                     menu={item.title}
                     img={item.imageUrl}
+                    isSafe={item.allergyStatus}
                     rate={item.avgScore}
                     category={item.category.label}
+                    ingredients={item.ingredientsRaw}
                     profiles={item.sourceProfile.profiles}
                     isSelected={isMenuListSelect}
                     onClick={() =>
