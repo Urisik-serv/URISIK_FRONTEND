@@ -13,10 +13,10 @@ import { useDeleteProfile } from "../../hooks/queries/use-delete-profile";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import ErrorUI from "../../components/common/ErrorUI";
 import toast from "react-hot-toast";
+import { postLogout } from "../../api/auth";
 
 export default function FamilyAccount() {
-  const familyRoomId = useFamilyStore.getState().familyRoomId;
-  const { resetProfile } = useProfileStore();
+  const familyRoomId = useFamilyStore((s) => s.familyRoomId);
 
   const {
     data: myFamily = [],
@@ -32,9 +32,10 @@ export default function FamilyAccount() {
     refetch: refetchProfile,
   } = useMyProfile(familyRoomId);
 
-  const { mutate: deleteMutate } = useDeleteProfile(familyRoomId as number);
-
-  const { mutate: patchAgreeMutate } = useMutation({
+  const { mutateAsync: deleteMutate } = useDeleteProfile(
+    familyRoomId as number,
+  );
+  const { mutateAsync: patchAgreeMutate } = useMutation({
     mutationFn: () =>
       patchAgree({
         serviceTermsAgreed: false,
@@ -45,16 +46,23 @@ export default function FamilyAccount() {
       }),
   });
 
-  const handleDelete = (profileId: number) => {
-    patchAgreeMutate(undefined, {
-      onSuccess: () => deleteMutate(profileId),
-      onError: () => {
-        toast.error("약관 철회에 실패했습니다.");
-      },
-    });
+  const handleDelete = async (profileId: number) => {
+    try {
+      await deleteMutate(profileId);
 
-    // 전역 상태 비워주기
-    resetProfile();
+      await patchAgreeMutate();
+
+      await postLogout();
+
+      localStorage.removeItem("accessToken");
+
+      useProfileStore.persist.clearStorage();
+      useFamilyStore.persist.clearStorage();
+
+      window.location.replace("/");
+    } catch (error) {
+      toast.error("계정 탈퇴 처리 중 오류가 발생했습니다.");
+    }
   };
 
   const findKeyByValue = (record: Record<string, string>, value: string) => {
