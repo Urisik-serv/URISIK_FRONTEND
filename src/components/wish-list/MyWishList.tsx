@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
-import CheckedBox from "../../assets/icons/Check_box.svg";
+import CheckedBox from "../../assets/icons/check-box.svg";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
 import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";

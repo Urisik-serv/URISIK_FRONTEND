@@ -18,7 +18,7 @@ export default function MenuChip({
     ${clickable ? "cursor-pointer" : ""}`}
       onClick={clickable ? onClick : undefined}
     >
-      {text}
+      <span className="line-clamp-3">{text}</span>
     </div>
   );
 }

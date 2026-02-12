@@ -1,4 +1,4 @@
-import checkBox from "../../assets/icons/Check_box.svg";
+import checkBox from "../../assets/icons/check-box.svg";
 import emptyCheckBox from "../../assets/icons/check-box-empty.svg";
 import { useNavigate, type To } from "react-router-dom";
 import Chevron from "../common/icon/Chevron";

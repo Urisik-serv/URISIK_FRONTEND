@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
-import CheckedBox from "../../assets/icons/Check_box.svg";
+import CheckedBox from "../../assets/icons/check-box.svg";
 import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
 import { useInView } from "react-intersection-observer";
 import { useFamilyStore } from "../../stores/use-family-store";
