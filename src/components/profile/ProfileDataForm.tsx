@@ -254,7 +254,7 @@ export default function ProfileDataForm({
         </div>
       </div>
 
-      <div className="pt-[131px]">
+      <div className="pt-[5px] pb-10">
         <Button
           text={profileMutation.isPending ? "처리 중..." : "완료"}
           type="submit"

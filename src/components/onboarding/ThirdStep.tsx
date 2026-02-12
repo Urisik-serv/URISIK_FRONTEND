@@ -22,7 +22,7 @@ export default function ThirdStep() {
           <div className="w-[6px] h-[6px] rounded-full bg-[#E3E3E3] cursor-pointer" />
           <div className="w-[26px] h-[6px] rounded-md bg-[#FF885A]" />
         </div>
-        <div className="pt-[73px]">
+        <div className="pt-[50px] pb-8 flex justify-center">
           <Button
             text={"시작"}
             type="button"
