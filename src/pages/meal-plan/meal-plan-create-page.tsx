@@ -12,6 +12,7 @@ import AlertModal from "../../components/common/AlertModal";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
@@ -39,8 +40,6 @@ const MealPlanCreatePage = () => {
     };
     console.log(body);
 
-    if (step === "create") setStep("result");
-
     setIsLoading(true); //로딩 시작
     try {
       if (familyRoomId == null) {
@@ -60,8 +59,13 @@ const MealPlanCreatePage = () => {
         "mealPlanId",
         JSON.stringify(response.result.mealPlanId),
       );
+      if (step === "create") setStep("result");
     } catch (error: any) {
-      alert(error.response?.data?.message);
+      if (error.response?.data?.code === "MEAL_PLAN_409") {
+        toast.error("이미 생성된 다음주 식단이 있어요");
+      } else {
+        toast.error(error.response?.data?.message);
+      }
       navigate(`/`);
     } finally {
       setIsLoading(false); // 로딩 끝

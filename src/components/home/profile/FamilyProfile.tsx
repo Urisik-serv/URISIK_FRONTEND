@@ -28,7 +28,7 @@ const FamilyProfile = () => {
     };
 
     fetchData();
-  }, [fetchMyProfile]);
+  }, [familyRoomId, fetchMyProfile]);
 
   return (
     <div className="w-full  px-4 pt-5 pb-3 bg-white rounded-xl outline-1 outline-stone-300 flex flex-col justify-start items-center gap-3  ">
