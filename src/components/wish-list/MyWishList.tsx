@@ -10,6 +10,7 @@ import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infi
 import { useInView } from "react-intersection-observer";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const MyWishList = () => {
   const [editMode, setEditMode] = useState(false);
@@ -20,6 +21,7 @@ const MyWishList = () => {
     isFetching: profileFetch,
     hasNextPage: profileNext,
     fetchNextPage: fetchProfile,
+    isError: errorProfile,
   } = useGetInfiniteProfileWishList(roomId, -1, 3);
 
   const {
@@ -27,6 +29,7 @@ const MyWishList = () => {
     isFetching: transFetch,
     hasNextPage: transNext,
     fetchNextPage: fetchTrans,
+    isError: errorTrans,
   } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
 
   const navigate = useNavigate();
@@ -40,6 +43,8 @@ const MyWishList = () => {
       if (!transFetch && transNext) fetchTrans();
       if (!profileFetch && profileNext) fetchProfile();
     }
+    if (errorProfile) toast.error("일반 위시리스트 조회 실패");
+    if (errorTrans) toast.error("변형 위시리스트 조회 실패");
   }, [
     inView,
     transFetch,
@@ -48,6 +53,8 @@ const MyWishList = () => {
     profileNext,
     fetchTrans,
     fetchProfile,
+    errorProfile,
+    errorTrans,
   ]);
 
   const {
