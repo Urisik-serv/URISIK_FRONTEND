@@ -24,14 +24,14 @@ const MealPlanEditPage = () => {
   const navigate = useNavigate();
 
   //생성한 식단 가져오기
-  const [mealPlan, setMealPlan] = useState<mealPlanResponse>(() => {
+  const [mealPlan, setMealPlan] = useState<mealPlanResponse | null>(() => {
     const response = sessionStorage.getItem("mealPlan");
-    if (response) {
-      try {
-        return JSON.parse(response) as mealPlanResponse;
-      } catch {
-        return {};
-      }
+    if (!response) return null;
+
+    try {
+      return JSON.parse(response) as mealPlanResponse;
+    } catch {
+      return null;
     }
   });
 
@@ -98,6 +98,7 @@ const MealPlanEditPage = () => {
 
     //ui
     setMealPlan((prev) => {
+      if (!prev) return prev;
       const changeDay = selected.day as string;
       const changeSlot = prev[changeDay].map((slot) =>
         slot.mealType === selected.mealType ? { ...slot, title } : slot,
