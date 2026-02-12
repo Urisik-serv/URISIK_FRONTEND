@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteProfileWishList } from "../../api/wish-list";
 import { QUERY_KEY } from "../../constants/key";
 import type { ProfileWishListBody } from "../../types/wish-list";
+import toast from "react-hot-toast";
 
 function useDeleteProfileWishLists(familyRoomId: number | null) {
   const queryClient = useQueryClient();
@@ -16,6 +17,7 @@ function useDeleteProfileWishLists(familyRoomId: number | null) {
     },
     onError: (error) => {
       console.log("프로필 위시리스트 삭제 실패: ", error);
+      toast.error("프로필 위시리스트 삭제 실패");
     },
   });
 }
