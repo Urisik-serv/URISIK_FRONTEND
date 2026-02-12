@@ -10,8 +10,6 @@ export const getRecommendSafe = async (): Promise<ResponseRecommendSafe> => {
     "/api/recommendations/home/safe-recipes",
   );
 
-  console.log("추천 데이터:", data);
-
   return data;
 };
 
@@ -27,8 +25,6 @@ export const getRecommendScore = async (
     },
   );
 
-  console.log("하단 추천 데이터: ", data);
-
   return data;
 };
 
@@ -43,8 +39,6 @@ export const getRecommendSafeScore = async (
     },
   );
 
-  console.log("하단 추천 데이터: ", data);
-
   return data;
 };
 
@@ -55,8 +49,6 @@ export const getRecommendWish = async (
   const { data } = await axiosInstance.get("/api/recommendations/home/wish", {
     params: { category: category || undefined },
   });
-
-  console.log("하단 추천 데이터: ", data);
 
   return data;
 };

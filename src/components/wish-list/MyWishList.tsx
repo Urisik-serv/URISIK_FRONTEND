@@ -64,8 +64,6 @@ const MyWishList = () => {
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
 
-    console.log("삭제 요청 데이터:", selectedProfilePayload);
-
     deleteWishlists(selectedProfilePayload);
 
     resetSelection();

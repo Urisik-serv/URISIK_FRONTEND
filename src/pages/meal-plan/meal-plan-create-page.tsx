@@ -37,7 +37,6 @@ const MealPlanCreatePage = () => {
       selectedSlots: [...lunchSlots, ...dinnerSlots],
       regenerate: regenerate,
     };
-    console.log(body);
 
     if (step === "create") setStep("result");
 

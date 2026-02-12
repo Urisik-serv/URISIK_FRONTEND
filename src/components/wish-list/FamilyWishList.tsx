@@ -54,8 +54,6 @@ const FamilyWishList = () => {
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
 
-    console.log("삭제 요청 데이터:", selectedFamilyPayload);
-
     deleteWishlists(selectedFamilyPayload);
     resetSelection();
     setEditMode(false);

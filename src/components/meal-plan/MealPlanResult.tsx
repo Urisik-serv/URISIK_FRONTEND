@@ -39,7 +39,6 @@ export default function MealPlanResult({
     return;
   }
   const data = JSON.parse(response) as mealPlanResponse;
-  console.log(data);
 
   const handleButton = () => {
     setIsOpen(true);
@@ -59,7 +58,6 @@ export default function MealPlanResult({
     } catch (error) {
       alert("주간 식단 확정 실패" + error);
     } finally {
-      console.log("주간 식단 확정 성공");
       if (weekParam === "THIS") {
         navigate(`/meal-plan?tab=THIS`);
       } else {

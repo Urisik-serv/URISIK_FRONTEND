@@ -16,8 +16,6 @@ export const getSearchRecipes = async (
     params: SearchRecipesDto,
   });
 
-  console.log(data);
-
   return data;
 };
 
@@ -29,7 +27,6 @@ export const postExternalRecipes = async (
     external,
   );
 
-  console.log("요청 성공: ", data);
   return data;
 };
 
