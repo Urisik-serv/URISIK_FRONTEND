@@ -13,6 +13,7 @@ type MealPlanResultProps = {
   mealPlanId: number;
   onClick: () => void;
   weekParam: string | null;
+  isLoading: boolean;
 };
 
 type mealPlanResponse = Record<string, SlotItem[]>;
@@ -30,11 +31,13 @@ export default function MealPlanResult({
   mealPlanId,
   onClick,
   weekParam,
+  isLoading,
 }: MealPlanResultProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const response = sessionStorage.getItem("mealPlan");
+  if (isLoading) return null;
   if (!response) {
     toast.error("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
     return;
