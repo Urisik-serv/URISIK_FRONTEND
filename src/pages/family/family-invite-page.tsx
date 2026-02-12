@@ -6,6 +6,7 @@ import Button from "../../components/common/Button";
 import { useNavigate } from "react-router-dom";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useInvite } from "../../hooks/mutations/use-invite";
+import toast from "react-hot-toast";
 
 export default function FamilyInvitePage() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function FamilyInvitePage() {
   // 카카오톡 페이지로 넘어가도록
   const InviteByKakao = async () => {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
-      alert("카카오 SDK가 준비되지 않았습니다.");
+      toast.error("카카오 SDK가 준비되지 않았습니다.");
       return;
     }
 
@@ -53,7 +54,7 @@ export default function FamilyInvitePage() {
     try {
       const { inviteUrl } = await createInvite();
       await navigator.clipboard.writeText(inviteUrl);
-      alert("링크가 복사되었습니다.");
+      toast.error("링크가 복사되었습니다.");
     } catch {}
   };
   return (

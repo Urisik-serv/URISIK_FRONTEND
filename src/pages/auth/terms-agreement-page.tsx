@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import type { Agree } from "../../types/member";
 import { patchAgree } from "../../api/member";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export default function TermsAgreementPage() {
   const [terms, setTerms] = useState<boolean[]>([
@@ -45,7 +46,7 @@ export default function TermsAgreementPage() {
       }
     },
     onError: () => {
-      alert("약관 동의 처리 중 오류가 발생했습니다.");
+      toast.error("약관 동의 처리 중 오류가 발생했습니다.");
     },
   });
 

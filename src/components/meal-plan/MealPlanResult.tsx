@@ -53,7 +53,7 @@ export default function MealPlanResult({
   const handleClick = async () => {
     try {
       if (familyRoomId == null) {
-        alert("familyRoomId 없음");
+        toast.error("familyRoomId 없음");
         return;
       }
       await postConfirmMealPlan({
