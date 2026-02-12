@@ -1,5 +1,4 @@
-import Up from "../../assets/icons/chevron-up-gray.svg";
-import Down from "../../assets/icons/chevron-down-gray.svg";
+import Chevron from "../common/icon/Chevron";
 
 type ListHeaderProps = {
   toggleable?: boolean;
@@ -16,7 +15,6 @@ export default function ListHeader({
   isOpen = true,
   setIsOpen,
 }: ListHeaderProps) {
-  const buttonSrc = isOpen ? Up : Down;
   return (
     <div
       className={`flex px-[10px] py-1 rounded-lg text-4 gap-2 ${
@@ -28,7 +26,7 @@ export default function ListHeader({
           className="size-6 flex justify-center items-center cursor-pointer"
           onClick={setIsOpen}
         >
-          <img src={buttonSrc} alt="열고 닫기" />
+          {isOpen ? <Chevron rotate={180} /> : <Chevron />}
         </button>
       )}
       <p className="font-semibold text-gray-700 text-[16px]">{title}</p>

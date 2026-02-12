@@ -2,7 +2,7 @@ import Button from "../../components/common/Button";
 import PublicHeader from "../../components/header/PublicHeader";
 import TermsAgreementRow from "../../components/terms/TermsAgreementRow";
 import CheckBoxEmpty from "../../assets/icons/check-box-empty.svg";
-import checkBox from "../../assets/icons/Check_box.svg";
+import checkBox from "../../assets/icons/check-box.svg";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Agree } from "../../types/member";

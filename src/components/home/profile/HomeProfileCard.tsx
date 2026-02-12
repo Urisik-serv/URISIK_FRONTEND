@@ -31,10 +31,9 @@ const HomeProfileCard = ({ data }: HomeProfileCardProps) => {
   };
 
   // 프로필 이미지
-  const profileImageSrc =
-    data.profilePicUrl && data.profilePicUrl !== "테스트용 url"
-      ? data.profilePicUrl
-      : rolePicture[data.role];
+  const profileImageSrc = data.profilePicUrl?.includes("no_profile_image")
+    ? rolePicture[data.role]
+    : data.profilePicUrl;
 
   return (
     <div onClick={handleClick} className="shrink-0">

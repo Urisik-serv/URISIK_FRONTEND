@@ -9,8 +9,6 @@ import ImageIndicator from "../../components/home/detailPage/ImageIndicator";
 import DetailContent from "../../components/home/detailPage/DetailContent";
 import WishlistButton from "../../components/common/WishlistButton";
 import UpButton from "../../components/common/UpButton";
-import DownImg from "../../assets/icons/chevron-down-gray300.svg";
-import UpImg from "../../assets/icons/chevron-up-gray.svg";
 import Rate from "../../components/common/Rate";
 import {
   getWishlistKey,
@@ -18,6 +16,7 @@ import {
 } from "../../hooks/queries/use-my-wishlist-ids";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
+import Chevron from "../../components/common/icon/Chevron";
 
 const removeLeadingNumber = (text: string) => {
   return text.replace(/^\d+[\.\)]\s*/, "");
@@ -120,11 +119,7 @@ const TransMenuPage = () => {
                 >
                   원형 메뉴 보기
                 </p>
-                <img
-                  className="w-6 h-6"
-                  src={showOrigin ? UpImg : DownImg}
-                  alt={showOrigin ? "위 화살표" : "아래 화살표"}
-                />
+                {showOrigin ? <Chevron rotate={180} /> : <Chevron />}
               </div>
               {showOrigin && (
                 <div className="pb-7">
