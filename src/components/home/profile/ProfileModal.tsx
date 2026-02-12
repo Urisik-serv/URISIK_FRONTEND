@@ -164,7 +164,7 @@ const ProfileModal = () => {
         dragConstraints={{ top: 0 }}
         dragElastic={0.2}
         onDragEnd={onDragEnd}
-        className="fixed z-52 left-0 right-0 mx-auto bottom-0 w-[375px] bg-white rounded-t-[20px] max-h-[93dvh] h-full overflow-hidden shadow-[0px_-3px_12px_0px_rgba(0,0,0,0.12)]"
+        className="fixed z-52 left-0 right-0 mx-auto bottom-0 w-[400px] bg-white rounded-t-[20px] max-h-[93dvh] h-full overflow-hidden shadow-[0px_-3px_12px_0px_rgba(0,0,0,0.12)]"
       >
         <div
           className="flex justify-center pt-5 pb-2 cursor-grab active:cursor-grabbing"

@@ -21,7 +21,7 @@ export default function AlertModal({
 }: AlertModalProps) {
   return (
     <div>
-      <div className="fixed inset-0 bg-black/50 w-[375px] mx-auto flex flex-col justify-center items-center z-50">
+      <div className="fixed inset-0 bg-black/50 w-[400px] mx-auto flex flex-col justify-center items-center z-50">
         <div className="w-[303px] bg-white pt-[24px] pb-[12px] rounded-xl flex flex-col items-center">
           <div className="text-primary-700 text-lg text-center font-semibold tracking-[0.18px]">
             {title}
