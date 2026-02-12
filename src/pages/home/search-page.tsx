@@ -100,7 +100,10 @@ const SearchingPage = () => {
               <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
                 {nickname || "사용자"}님 취향에 맞는 메뉴를 추천해요
               </p>
-              <div className="flex gap-1.5">
+              <div
+                className="flex gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden
+              [scrollbar-width:none]"
+              >
                 {recommend.recipeName.map((recommendName) => (
                   <ElementButton
                     key={recommendName}
