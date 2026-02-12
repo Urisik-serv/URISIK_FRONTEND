@@ -14,6 +14,7 @@ import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import ErrorUI from "../../components/common/ErrorUI";
 import toast from "react-hot-toast";
 import { postLogout } from "../../api/auth";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
 
 export default function FamilyAccount() {
   const familyRoomId = useFamilyStore((s) => s.familyRoomId);
@@ -104,14 +105,22 @@ export default function FamilyAccount() {
       <PublicHeader title={"가족계정"} />
       <div className="pt-[33px] flex flex-col items-center mx-auto">
         <div className="w-[80px]">
-          <img
-            src={
-              myProfile?.profile.profilePicUrl ??
-              rolePicture[myProfile?.profile.role as string]
-            }
-            alt="프로필 사진"
-            className="rounded-full"
-          />
+          {myProfile?.isLeader ? (
+            <LeaderProfile
+              href={
+                useProfileStore.getState().savedFormData.profilePicUrl ??
+                rolePicture[myProfile?.profile.role as string]
+              }
+            />
+          ) : (
+            <img
+              src={
+                useProfileStore.getState().savedFormData.profilePicUrl ??
+                rolePicture[myProfile?.profile.role as string]
+              }
+              className="size-[80px] rounded-full"
+            />
+          )}
           <div className="pt-[8px] text-center text-lg font-semibold tracking-[0.18px]">
             {myProfile?.profile.nickname}
           </div>
@@ -128,7 +137,11 @@ export default function FamilyAccount() {
                 return (
                   <EntityItem
                     key={member.profileId}
-                    picture={member.profilePicUrl ?? rolePicture[member.role]}
+                    picture={
+                      member.profilePicUrl?.includes("no_profile_image")
+                        ? rolePicture[member.role]
+                        : member.profilePicUrl
+                    }
                     name={member.nickname}
                     category={findKeyByValue(roleMap, member.role) as string}
                     border={
