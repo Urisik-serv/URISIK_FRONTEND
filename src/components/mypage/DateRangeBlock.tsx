@@ -32,12 +32,12 @@ export default function DateRangeBlock({
     <>
       {isOpen ? (
         <div>
-          <div className="w-[343px] h-[32px] flex justify-start items-center gap-[8px] px-[10px] py-[4px] rounded-lg bg-secondary-700">
+          <div className="w-[343px] h-[32px] flex justify-start items-center gap-[8px] px-[10px] py-[4px] rounded-lg bg-white">
             <button
               onClick={handleOpen}
               className="cursor-pointer flex items-center size-[24px] justify-center"
             >
-              <Chevron rotate={180} color="#D4D4D8" />
+              <Chevron rotate={180} color="#71717A" />
             </button>
             <div className="font-semibold text-[16px] tracking-[-0.32px] leading-[24px]">
               {handleRangeDate(weekStartDate)}
@@ -88,9 +88,9 @@ export default function DateRangeBlock({
           </div>
         </div>
       ) : (
-        <div className="w-[343px] h-[32px] flex justify-start items-center gap-[8px] px-[10px] py-[4px] rounded-lg bg-gray-200">
+        <div className="w-[343px] h-[32px] flex justify-start items-center gap-[8px] px-[10px] py-[4px] rounded-lg bg-white">
           <button onClick={handleOpen} className="cursor-pointer">
-            <Chevron color="#71717A" />
+            <Chevron color="#D4D4D8" />
           </button>
           <div className="font-semibold text-gray-500 text-[16px] tracking-[-0.32px] leading-[24px]">
             {handleRangeDate(weekStartDate)}
