@@ -13,6 +13,7 @@ import {
 import { useFamilyStore } from "../../stores/use-family-store";
 import { patchEditMealPlans, postConfirmMealPlan } from "../../api/meal-plan";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type mealPlanResponse = Record<string, SlotItem[]>;
 
@@ -28,13 +29,19 @@ const MealPlanEditPage = () => {
     if (response) {
       try {
         return JSON.parse(response) as mealPlanResponse;
-      } catch (e) {
-        alert("올바른 접근이 아닙니다. 식단 생성부터 해주세요!" + e);
+      } catch {
         return {};
       }
     }
-    return {};
   });
+
+  useEffect(() => {
+    const response = sessionStorage.getItem("mealPlan");
+    if (!response) {
+      toast.error("올바른 접근이 아닙니다. 식단 생성부터 해주세요.");
+      navigate("/");
+    }
+  }, [navigate]);
 
   const dayKor: Record<string, string> = {
     MONDAY: "월",
@@ -126,8 +133,6 @@ const MealPlanEditPage = () => {
       if (familyRoomId == null || mealPlanId == null) {
         return;
       }
-      console.log("최종 바뀐 목록", updateList);
-
       await patchEditMealPlans({
         familyRoomId: familyRoomId,
         mealPlanId: mealPlanId,
@@ -138,7 +143,7 @@ const MealPlanEditPage = () => {
         mealPlanId: mealPlanId,
       });
     } catch (e) {
-      alert("다시 시도해주세요" + e);
+      toast.error("다시 시도해주세요" + e);
     } finally {
       navigate(`/meal-plan?tab=nextWeek`);
     }

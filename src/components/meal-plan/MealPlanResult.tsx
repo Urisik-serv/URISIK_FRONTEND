@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import type { SlotItem } from "../../types/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { postConfirmMealPlan } from "../../api/meal-plan";
+import toast from "react-hot-toast";
 
 type MealPlanResultProps = {
   mealPlanId: number;
@@ -35,7 +36,7 @@ export default function MealPlanResult({
 
   const response = sessionStorage.getItem("mealPlan");
   if (!response) {
-    alert("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
+    toast.error("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
     return;
   }
   const data = JSON.parse(response) as mealPlanResponse;
