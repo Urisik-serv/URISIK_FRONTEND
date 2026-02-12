@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
 import Chevron from "../common/icon/Chevron";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 type BottomSheetProps = {
   open: boolean;
@@ -92,7 +93,7 @@ export default function BottomSheet({
 
   const handleChange = () => {
     if (!selected) {
-      alert("교체할 메뉴를 선택해주세요");
+      toast.error("교체할 메뉴를 선택해주세요");
       return;
     }
     changeMenu(selected.id, selected.title, selected.type);
