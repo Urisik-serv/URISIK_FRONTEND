@@ -62,15 +62,15 @@ export default function TermsAgreementPage() {
   };
 
   return (
-    <>
+    <div>
       <PublicHeader title={"약관 및 정책"} />
-      <div className="flex flex-col pl-[17px]">
+      <div className="flex flex-col px-[17px]">
         <div className="w-64 justify-start text-zinc-800 text-2xl font-medium font-['Wanted_Sans'] leading-9 pt-[24px]">
           서비스 이용을 위해
           <br />
           이용약관 동의가 필요해요
         </div>
-        <div className="pt-[56px]">
+        <div className="pt-[56px] flex flex-cols justify-center">
           <div className="self-stretch px-4 py-3 rounded-lg outline outline-[1.5px] outline-[#B8B8B8] inline-flex justify-start items-center gap-24 ">
             <div className="justify-start text-zinc-800 text-xl font-medium font-['Wanted_Sans'] tracking-tight">
               모든 약관에 동의합니다.
@@ -88,7 +88,7 @@ export default function TermsAgreementPage() {
             </button>
           </div>
         </div>
-        <div className="pt-[40px] flex flex-col items-center pr-[16px]">
+        <div className="pt-[40px] flex flex-col items-center">
           <TermsAgreementRow
             isChecked={terms[0]}
             onChecked={() => handleCheck(0)}
@@ -120,15 +120,15 @@ export default function TermsAgreementPage() {
             to="../marketing-preferences"
           />
         </div>
-        <div className="pt-[159px]">
-          <Button
-            text={`다음`}
-            type="button"
-            disabled={!isValid || isAgreeing}
-            onClick={handleSubmit}
-          />
-        </div>
       </div>
-    </>
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center pb-10">
+        <Button
+          text={`다음`}
+          type="button"
+          disabled={!isValid || isAgreeing}
+          onClick={handleSubmit}
+        />
+      </div>
+    </div>
   );
 }
