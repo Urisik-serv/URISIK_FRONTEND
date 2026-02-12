@@ -183,3 +183,16 @@ export type ResponseRecommendPopular = BaseResponse<RecommendPopularRecipes>;
 export interface RecommendSearch {
   recipeName: string[];
 }
+
+export interface PopularKeyword {
+  keyword: string;
+  rank: number;
+  change: "UP" | "DOWN" | "SAME";
+}
+export interface PopularSearches {
+  windowStart: string;
+  windowEnd: string;
+  keywords: PopularKeyword[];
+}
+
+export type ResponsePopularSearch = BaseResponse<PopularSearches>;
