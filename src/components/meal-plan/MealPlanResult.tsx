@@ -62,15 +62,11 @@ export default function MealPlanResult({
     } catch (error) {
       alert("주간 식단 확정 실패" + error);
     } finally {
-
       if (weekParam === "THIS") {
         navigate(`/meal-plan?tab=THIS`);
       } else {
         navigate(`/meal-plan?tab=NEXT`);
       }
-      navigate(`/meal-plan?tab=nextWeek`);
-    } catch (error) {
-      toast.error("주간 식단 확정 실패" + error);
     }
   };
   return (
