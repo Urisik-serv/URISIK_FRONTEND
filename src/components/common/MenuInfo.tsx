@@ -18,7 +18,7 @@ const MenuInfo = ({ title, sentences = [], recipes = [] }: MenuInfoProps) => {
       ) : (
         recipes.map((recipe) => (
           <p className="text-[14px] font-medium text-gray-800 leading-6">
-            {recipe.description}
+            {recipe.order}. {recipe.description}
           </p>
         ))
       )}

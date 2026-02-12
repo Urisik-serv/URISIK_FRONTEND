@@ -16,17 +16,23 @@ import {
 import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import { formatRankingTime } from "../../utils/date";
+import alertImage from "../../assets/images/alert-circle.png";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 300);
 
   {
-    /*isLoading,
+    /*
     isError,
     아직 추가하지 않음 */
   }
-  const { data: recipes } = useGetSearchRecipes(debouncedKeyword, 0, 6);
+  const { data: recipes, isLoading } = useGetSearchRecipes(
+    debouncedKeyword,
+    0,
+    6,
+  );
 
   const { keywords, removeKeyword } = useRecentSearch();
 
@@ -47,7 +53,6 @@ const SearchingPage = () => {
         setRecommend(recommendData.result);
       } catch (error) {
         console.warn("추천 검색어 로딩 실패 :", error);
-        setRecommend({ recipeName: ["4점 이상 리뷰가 1개 이상 필요합니다!"] });
       }
 
       try {
@@ -89,20 +94,22 @@ const SearchingPage = () => {
               ))}
             </div>
           </div>
-          <div className="pb-7.5">
-            <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
-              {nickname || "사용자"}님 취향에 맞는 메뉴를 추천해요
-            </p>
-            <div className="flex gap-1.5">
-              {recommend?.recipeName.map((recommendName) => (
-                <ElementButton
-                  key={recommendName}
-                  name={recommendName}
-                  onClick={() => setKeyword(recommendName)}
-                />
-              ))}
+          {recommend && recommend.recipeName.length > 0 && (
+            <div className="pb-7.5">
+              <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
+                {nickname || "사용자"}님 취향에 맞는 메뉴를 추천해요
+              </p>
+              <div className="flex gap-1.5">
+                {recommend.recipeName.map((recommendName) => (
+                  <ElementButton
+                    key={recommendName}
+                    name={recommendName}
+                    onClick={() => setKeyword(recommendName)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           <div>
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
               인기 검색어
@@ -126,21 +133,32 @@ const SearchingPage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col px-4 py-2 pb-15">
-          {recipes?.result.items.map((item) => (
-            <MealCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              shortDescription={item.description}
-              isSafe={item.safe}
-              category={item.category}
-              rating={item.avgScore}
-              img={item.imageUrl}
-              type={item.type}
-              external={item.external}
-            />
-          ))}
+        <div className="flex flex-col px-4 py-2 pb-15 w-full">
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : recipes?.result.items && recipes.result.items.length > 0 ? (
+            recipes?.result.items.map((item) => (
+              <MealCard
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                shortDescription={item.description}
+                isSafe={item.safe}
+                category={item.category}
+                rating={item.avgScore}
+                img={item.imageUrl}
+                type={item.type}
+                external={item.external}
+              />
+            ))
+          ) : (
+            <div className="w-full pt-[48px] flex flex-col items-center gap-[11px]">
+              <img src={alertImage} alt="알림 아이콘" className="size-[76px]" />
+              <div className="text-center font-medium text-[16px] text-gray-600">
+                조건에 맞는 식단이 없어요
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

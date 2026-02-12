@@ -20,7 +20,7 @@ const Rate = ({ px, rate }: RateProps) => {
   return (
     <div className="flex justify-start gap-0.5 items-center ">
       <img src={Star} alt="평점" className={starClass} />
-      <p className={textClass}>{rate}</p>
+      <p className={textClass}>{rate?.toFixed(1)}</p>
     </div>
   );
 };

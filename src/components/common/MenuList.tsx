@@ -55,8 +55,8 @@ export default function MenuList({
         <img src={img} className="size-13 rounded-lg bg-[#F5F1ED] shrink-0" />
 
         <div className="flex flex-col justify-between flex-1 min-w-0">
-          <div className="flex items-center gap-[5px] font-semibold">
-            <p>{menu}</p>
+          <div className="flex items-center gap-[5px] font-semibold ">
+            <p className="max-w-[180px] line-clamp-1">{menu}</p>
             {(type == "rate" || type == "profile") && (
               <Rate px={12} rate={rate} />
             )}
@@ -86,7 +86,7 @@ export default function MenuList({
             )}
           </div>
           <div className="flex gap-2">
-            <SafeMark isWish={!!safe} isSafe={safe} />
+            <SafeMark isWish={safe !== undefined} isSafe={safe} />
             <div className="flex gap-[5px] font-medium text-[14px] text-gray-400 truncate">
               <p>{category}</p>
               <p>|</p>

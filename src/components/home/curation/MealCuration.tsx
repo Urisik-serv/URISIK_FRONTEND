@@ -5,6 +5,7 @@ import { useGetRecommendList } from "../../../hooks/queries/use-get-recommendati
 import SelectionModal from "../../common/SelectionModal";
 import MenuDown from "../../../assets/icons/menu-down.svg";
 import MenuUp from "../../../assets/icons/menu-up.svg";
+import alertImage from "../../../assets/images/alert-circle.png";
 
 interface MealCurationProps {
   category: string | undefined;
@@ -42,21 +43,30 @@ const MealCuration = ({ category }: MealCurationProps) => {
           </button>
         </div>
       </div>
-      {data?.recipes.map((recipe) => (
-        <MealCard
-          key={recipe.id}
-          id={recipe.id}
-          shortDescription={recipe.description}
-          title={recipe.title}
-          rating={recipe.avgScore}
-          category={recipe.category}
-          img={recipe.imageUrl || SampleImg}
-          isSafe={recipe.safe}
-          external={null}
-          type=""
-          typeBool={recipe.transformed}
-        />
-      ))}
+      {data?.recipes && data.recipes.length > 0 ? (
+        data.recipes.map((recipe) => (
+          <MealCard
+            key={recipe.id}
+            id={recipe.id}
+            shortDescription={recipe.description}
+            title={recipe.title}
+            rating={recipe.avgScore}
+            category={recipe.category}
+            img={recipe.imageUrl || SampleImg}
+            isSafe={recipe.safe}
+            external={null}
+            type=""
+            typeBool={recipe.transformed}
+          />
+        ))
+      ) : (
+        <div className="pt-[48px] flex flex-col items-center gap-[11px]">
+          <img src={alertImage} alt="알림 아이콘" className="size-[76px]" />
+          <div className="text-center font-medium text-[16px] text-gray-600">
+            조건에 맞는 식단이 없어요
+          </div>
+        </div>
+      )}
       {openModal && (
         <SelectionModal
           handleModal={() => setOpenModal(false)}
