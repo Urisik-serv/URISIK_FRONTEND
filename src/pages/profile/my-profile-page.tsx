@@ -181,7 +181,7 @@ export default function MyProfilePage() {
           ) : (
             <div className="pt-[48px] flex flex-col items-center gap-[11px]">
               <img src={alertImage} alt="알림 아이콘" className="size-[76px]" />
-              <div className="text-center text-[16px] text-[#4D4D4D]">
+              <div className="text-center text-[16px] text-gray-600">
                 추가된 위시리스트가 없어요
               </div>
               <div className="pt-[24px]">
