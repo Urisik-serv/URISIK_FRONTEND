@@ -3,6 +3,7 @@ import Rate from "./Rate";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useRef } from "react";
+import SafeMark from "./SafeMark";
 
 interface EntityItemProps {
   picture: string;
@@ -11,6 +12,7 @@ interface EntityItemProps {
   id?: number;
   tags?: string;
   type?: string;
+  isWish?: boolean;
   rating?: number;
   border?: string;
   deleteProfile?: () => void;
@@ -24,6 +26,7 @@ export default function EntityItem({
   tags,
   id,
   type,
+  isWish = false,
   rating,
   border,
   deleteProfile,
@@ -86,20 +89,21 @@ export default function EntityItem({
               <img
                 src={picture}
                 alt={`${name} 사진`}
-                className="size-[52px] rounded-full object-cover"
+                className={`size-[52px] object-cover ${isWish ? "rounded-lg" : "rounded-full"}`}
               />
               <div className="flex flex-col gap-[11px] flex-1 min-w-0">
                 <div className="flex items-center gap-[5px]">
-                  <div className="text-[16px] font-semibold leading-[24px]">
+                  <div className="text-[16px] font-semibold leading-[24px] line-clamp-1">
                     {name}
                   </div>
-                  {rating && (
+                  {rating !== undefined && (
                     <div className="flex gap-[2.34px] items-center justify-center">
                       <Rate px={12} rate={rating} />
                     </div>
                   )}
                 </div>
                 <div className="flex gap-[5px] items-center">
+                  {isWish && <SafeMark isWish={false} isSafe={true} />}
                   <div className="text-sm tracking-[-0.42px] text-gray-400 truncate shrink-0">
                     {category}
                   </div>

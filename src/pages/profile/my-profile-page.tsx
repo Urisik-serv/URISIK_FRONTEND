@@ -79,7 +79,7 @@ export default function MyProfilePage() {
       <PublicHeader title="내 프로필" />
 
       <div className="pt-[33px] w-[343px] mx-auto flex flex-col pb-10">
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full pb-9">
           <div className="flex gap-[12px] items-end">
             {isLeader ? (
               <LeaderProfile
@@ -107,12 +107,14 @@ export default function MyProfilePage() {
         </div>
 
         <div className="pt-[24px] pb-[10px]">
-          <div className="text-[16px] font-semibold">알레르기</div>
+          <div className="text-[16px] font-semibold pb-3 leading-6">
+            알레르기
+          </div>
 
           {!allergies.includes("NONE") ? (
-            <div>
+            <div className="flex flex-col gap-5 pb-5">
               {profile.allergyAndAlterIngredients.map((item, index) => (
-                <div key={`${item.allergen}-${index}`} className="pb-[20px]">
+                <div key={`${item.allergen}-${index}`}>
                   <AllergyDataBox
                     name={item.allergen}
                     alternative={item.alteredIngredients}
@@ -121,7 +123,7 @@ export default function MyProfilePage() {
               ))}
             </div>
           ) : (
-            <div className="pb-[20px]">
+            <div className="pb-5">
               <div className="flex pt-2">
                 <ElementButton name="없음" />
               </div>
@@ -130,16 +132,18 @@ export default function MyProfilePage() {
         </div>
 
         <div>
-          <div className="text-[16px] font-semibold">선호 음식</div>
-          <div className="flex gap-[8px] pt-[12px]">
+          <div className="text-[16px] font-semibold leading-6">선호 음식</div>
+          <div className="flex gap-2 pt-3">
             {convertedPreferences.map((food, index) => (
               <ElementButton key={`${food}-${index}`} name={food} />
             ))}
           </div>
         </div>
 
-        <div className="pt-[42px]">
-          <div className="text-[16px] font-semibold">내 위시리스트</div>
+        <div className="pt-10">
+          <div className="text-[16px] font-semibold leading-6">
+            내 위시리스트
+          </div>
 
           {profileWish || transWish ? (
             <div className="pt-[17px] flex flex-col">
@@ -150,6 +154,7 @@ export default function MyProfilePage() {
                   name={item.transformedRecipeName}
                   rating={item.avgScore}
                   type="TRANSFORMED_RECIPE"
+                  isWish={true}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
                   border="border-b-1 border-b-gray-200"
@@ -168,6 +173,7 @@ export default function MyProfilePage() {
                   name={item.recipeName}
                   rating={item.avgScore}
                   type="RECIPE"
+                  isWish={true}
                   id={item.recipeId}
                   category={item.category}
                   tags={item.recipeIngredients.join(", ")}
