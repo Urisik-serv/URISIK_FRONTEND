@@ -134,11 +134,19 @@ export default function MyProfilePage() {
           <div className="flex gap-[12px] items-end">
             {isLeader ? (
               <LeaderProfile
-                href={rolePicture[profile.role] ?? rolePicture["MOM"]}
+                href={
+                  data?.profile.profilePicUrl.includes("no_profile_image")
+                    ? rolePicture[data.profile.role]
+                    : data?.profile.profilePicUrl
+                }
               />
             ) : (
               <img
-                src={rolePicture[profile.role] ?? rolePicture["MOM"]}
+                src={
+                  data?.profile.profilePicUrl.includes("no_profile_image")
+                    ? rolePicture[data.profile.role]
+                    : data?.profile.profilePicUrl
+                }
                 className="size-[80px] rounded-full"
               />
             )}
