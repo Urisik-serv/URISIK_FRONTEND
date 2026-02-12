@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 import type { SlotItem } from "../../types/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { postConfirmMealPlan } from "../../api/meal-plan";
+import toast from "react-hot-toast";
 
 type MealPlanResultProps = {
   mealPlanId: number;
   onClick: () => void;
   weekParam: string | null;
+  isLoading: boolean;
 };
 
 type mealPlanResponse = Record<string, SlotItem[]>;
@@ -29,13 +31,15 @@ export default function MealPlanResult({
   mealPlanId,
   onClick,
   weekParam,
+  isLoading,
 }: MealPlanResultProps) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const response = sessionStorage.getItem("mealPlan");
+  if (isLoading) return null;
   if (!response) {
-    alert("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
+    toast.error("올바른 접근이 아닙니다. 식단 생성부터 해주세요!");
     return;
   }
   const data = JSON.parse(response) as mealPlanResponse;
@@ -58,11 +62,15 @@ export default function MealPlanResult({
     } catch (error) {
       alert("주간 식단 확정 실패" + error);
     } finally {
+
       if (weekParam === "THIS") {
         navigate(`/meal-plan?tab=THIS`);
       } else {
         navigate(`/meal-plan?tab=NEXT`);
       }
+      navigate(`/meal-plan?tab=nextWeek`);
+    } catch (error) {
+      toast.error("주간 식단 확정 실패" + error);
     }
   };
   return (

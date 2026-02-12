@@ -19,6 +19,7 @@ function usePostWishList(familyRoomId: number | null) {
       toast.success("위시리스트 추가 성공. 목록을 갱신합니다.");
     },
     onError: () => {
+
       toast.error("위시리스트 추가 실패");
     },
   });

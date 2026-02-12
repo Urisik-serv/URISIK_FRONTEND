@@ -5,7 +5,7 @@ import UnselectedStar from "../../assets/icons/star-unselected.svg";
 import SelectedStar from "../../assets/icons/star-selected.svg";
 import AlertModal from "../common/AlertModal";
 import type { createReview } from "../../types/review";
-import usePostReview from "../../hooks/use-post-review";
+import usePostReview from "../../hooks/mutations/use-post-review";
 import toast from "react-hot-toast";
 
 type ReviewModalProps = {

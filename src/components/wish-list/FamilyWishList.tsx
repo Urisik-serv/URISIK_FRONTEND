@@ -11,16 +11,19 @@ import useDeleteFamilyWishLists from "../../hooks/mutations/use-delete-family-wi
 import { useNavigate } from "react-router-dom";
 import type { FamilyWishListResult } from "../../types/wish-list";
 import { useFamilyData } from "../../hooks/use-family-data";
+import toast from "react-hot-toast";
+import MenuListSkeleton from "../skeltons/MenuListSkeleton";
 
 const FamilyWishList = () => {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
   const {
     data: familyWish,
     isFetching,
+    isError,
     hasNextPage,
     fetchNextPage,
+    isLoading,
   } = useGetInfiniteFamilyWishList(familyRoomId, 6);
-  // isPending, isError 등은 나중에...
 
   const navigate = useNavigate();
 
@@ -32,7 +35,8 @@ const FamilyWishList = () => {
     if (inView && hasNextPage && !isFetching) {
       fetchNextPage();
     }
-  }, [inView, isFetching, hasNextPage, fetchNextPage]);
+    if (isError) toast.error("가족 위시리스트 조회 실패");
+  }, [inView, isFetching, hasNextPage, fetchNextPage, isError]);
 
   // 방장 권한 확인
   const { isLeader } = useFamilyData();
@@ -97,45 +101,53 @@ const FamilyWishList = () => {
         </div>
       )}
       <div className="pt-2">
-        {familyWish?.pages.map((item) => {
-          const recipeId = item.type == "RECIPE" ? item.id : null;
-          const transId = item.type == "TRANSFORMED_RECIPE" ? item.id : null;
-          const uniqueKey = getUniqueKey(recipeId, transId);
+        {isLoading ? (
+          <>
+            {Array.from({ length: 5 }).map((_, index) => (
+              <MenuListSkeleton key={index} />
+            ))}
+          </>
+        ) : (
+          familyWish?.pages.map((item) => {
+            const recipeId = item.type == "RECIPE" ? item.id : null;
+            const transId = item.type == "TRANSFORMED_RECIPE" ? item.id : null;
+            const uniqueKey = getUniqueKey(recipeId, transId);
 
-          return (
-            <div
-              key={uniqueKey}
-              className="flex items-center border-b border-gray-200"
-            >
-              {editMode && (
-                <img
-                  className="cursor-pointer w-6 h-6 shrink-0"
-                  src={`${isSelected(uniqueKey) ? CheckedBox : EmptyBox}`}
-                  alt={`${isSelected(uniqueKey) ? "선택됨" : "선택되지 않음"}`}
-                  onClick={() => {
-                    toggleSelection(uniqueKey);
-                  }}
-                />
-              )}
-              <div className="flex-1 min-w-0">
-                <MenuList
-                  type="profile"
-                  key={item.id}
-                  menu={item.title}
-                  img={item.imageUrl}
-                  rate={item.avgScore}
-                  isSafe={item.allergyStatus}
-                  category={item.category.label}
-                  ingredients={item.ingredientsRaw}
-                  profiles={item.sourceProfile.profiles}
-                  onClick={() => handleClick(item)}
-                  clickable={true}
-                  hasBorder={false}
-                />
+            return (
+              <div
+                key={uniqueKey}
+                className="flex items-center border-b border-gray-200"
+              >
+                {editMode && (
+                  <img
+                    className="cursor-pointer w-6 h-6 shrink-0"
+                    src={`${isSelected(uniqueKey) ? CheckedBox : EmptyBox}`}
+                    alt={`${isSelected(uniqueKey) ? "선택됨" : "선택되지 않음"}`}
+                    onClick={() => {
+                      toggleSelection(uniqueKey);
+                    }}
+                  />
+                )}
+                <div className="flex-1 min-w-0">
+                  <MenuList
+                    type="profile"
+                    key={item.id}
+                    menu={item.title}
+                    img={item.imageUrl}
+                    rate={item.avgScore}
+                    isSafe={item.allergyStatus}
+                    category={item.category.label}
+                    ingredients={item.ingredientsRaw}
+                    profiles={item.sourceProfile.profiles}
+                    onClick={() => handleClick(item)}
+                    clickable={true}
+                    hasBorder={false}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
       <div ref={ref} className="h-2"></div>
     </div>

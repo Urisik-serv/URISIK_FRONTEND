@@ -12,10 +12,34 @@ import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
 import AlertModal from "../../components/common/AlertModal";
 import { usePatchAlarm } from "../../hooks/queries/use-patch-alarm";
+import { useFamilyData } from "../../hooks/use-family-data";
+import { useGetProfile } from "../../hooks/queries/use-get-profile";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { useProfileStore } from "../../stores/use-profile-store";
+import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  //family-store 저장
+  useFamilyData();
+  const { familyRoomId } = useFamilyStore();
+  const { data } = useMyProfile(familyRoomId);
+  const isLeader = data?.isLeader;
+  const { data: profile } = useGetProfile(familyRoomId);
+  const { hasLoadedFromServer, setSavedFormData, markLoaded, saveIsLeader } =
+    useProfileStore();
+
+  useEffect(() => {
+    if (!familyRoomId || isLeader == undefined) return;
+    //profile-store 저장
+    if (!hasLoadedFromServer && profile) {
+      setSavedFormData(profile);
+      saveIsLeader(isLeader);
+      markLoaded();
+    }
+  }, [isLeader, profile, hasLoadedFromServer, familyRoomId, saveIsLeader]);
 
   const isSearchBarOpen = location.state?.showSearch === true;
 

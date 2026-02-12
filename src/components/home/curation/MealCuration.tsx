@@ -6,6 +6,7 @@ import SelectionModal from "../../common/SelectionModal";
 import MenuDown from "../../../assets/icons/menu-down.svg";
 import MenuUp from "../../../assets/icons/menu-up.svg";
 import alertImage from "../../../assets/images/alert-circle.png";
+import MealCardSkeleton from "../../skeltons/MealCardSkeleton";
 
 interface MealCurationProps {
   category: string | undefined;
@@ -13,7 +14,7 @@ interface MealCurationProps {
 const MealCuration = ({ category }: MealCurationProps) => {
   const [sortType, setSortType] = useState("별점 순");
 
-  const { data } = useGetRecommendList(sortType, category);
+  const { data, isLoading } = useGetRecommendList(sortType, category);
 
   // SelectionModal state
   const [openModal, setOpenModal] = useState(false);
@@ -43,7 +44,13 @@ const MealCuration = ({ category }: MealCurationProps) => {
           </button>
         </div>
       </div>
-      {data?.recipes && data.recipes.length > 0 ? (
+      {isLoading ? (
+        <>
+          <MealCardSkeleton />
+          <MealCardSkeleton />
+          <MealCardSkeleton />
+        </>
+      ) : data?.recipes && data.recipes.length > 0 ? (
         data.recipes.map((recipe) => (
           <MealCard
             key={recipe.id}

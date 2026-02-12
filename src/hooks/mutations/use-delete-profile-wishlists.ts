@@ -16,6 +16,7 @@ function useDeleteProfileWishLists(familyRoomId: number | null) {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.profileTransWish] });
     },
     onError: () => {
+
       toast.error("프로필 위시리스트 삭제 실패");
     },
   });
