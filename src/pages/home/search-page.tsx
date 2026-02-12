@@ -16,17 +16,23 @@ import {
 import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import { formatRankingTime } from "../../utils/date";
+import alertImage from "../../assets/images/alert-circle.png";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 300);
 
   {
-    /*isLoading,
+    /*
     isError,
     아직 추가하지 않음 */
   }
-  const { data: recipes } = useGetSearchRecipes(debouncedKeyword, 0, 6);
+  const { data: recipes, isLoading } = useGetSearchRecipes(
+    debouncedKeyword,
+    0,
+    6,
+  );
 
   const { keywords, removeKeyword } = useRecentSearch();
 
@@ -126,21 +132,32 @@ const SearchingPage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col px-4 py-2 pb-15">
-          {recipes?.result.items.map((item) => (
-            <MealCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              shortDescription={item.description}
-              isSafe={item.safe}
-              category={item.category}
-              rating={item.avgScore}
-              img={item.imageUrl}
-              type={item.type}
-              external={item.external}
-            />
-          ))}
+        <div className="flex flex-col px-4 py-2 pb-15 w-full">
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : recipes?.result.items && recipes.result.items.length > 0 ? (
+            recipes?.result.items.map((item) => (
+              <MealCard
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                shortDescription={item.description}
+                isSafe={item.safe}
+                category={item.category}
+                rating={item.avgScore}
+                img={item.imageUrl}
+                type={item.type}
+                external={item.external}
+              />
+            ))
+          ) : (
+            <div className="w-full pt-[48px] flex flex-col items-center gap-[11px]">
+              <img src={alertImage} alt="알림 아이콘" className="size-[76px]" />
+              <div className="text-center font-medium text-[16px] text-gray-600">
+                조건에 맞는 식단이 없어요
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
