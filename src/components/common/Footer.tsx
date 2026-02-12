@@ -1,8 +1,8 @@
 import Background from "../../assets/icons/footer-background.svg";
 import Home from "../../assets/icons/home.svg";
-import Calendar from "../../assets/icons/calendar.svg";
 import Note from "../../assets/icons/note-edit.svg";
 import { useNavigate } from "react-router-dom";
+import CalendarIcon from "./icon/Calendar";
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function Footer() {
               className="flex flex-col items-center cursor-pointer gap-2"
               onClick={() => navigate("/meal-plan")}
             >
-              <img src={Calendar} className="size-5" alt="마이 아이콘" />
+              <CalendarIcon color="#52525B" size={20} />
               <p>식단표</p>
             </button>
           </div>
