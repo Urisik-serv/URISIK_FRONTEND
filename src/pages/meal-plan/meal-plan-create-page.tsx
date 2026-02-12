@@ -41,7 +41,6 @@ const MealPlanCreatePage = () => {
       selectedSlots: [...lunchSlots, ...dinnerSlots],
       regenerate: regenerate,
     };
-    console.log(body);
 
     setIsLoading(true); //로딩 시작
     try {

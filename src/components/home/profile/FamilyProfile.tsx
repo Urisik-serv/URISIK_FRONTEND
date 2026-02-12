@@ -5,6 +5,7 @@ import type { FamilyDetails } from "../../../types/family-profile";
 import { getProfiles } from "../../../api/family-profile";
 import { useFamilyStore } from "../../../stores/use-family-store";
 import { useMyProfileStore } from "../../../stores/use-my-profile-store";
+import toast from "react-hot-toast";
 
 const FamilyProfile = () => {
   const navigate = useNavigate();
@@ -21,9 +22,8 @@ const FamilyProfile = () => {
         fetchMyProfile(familyRoomId);
 
         setData(res.result);
-        console.log("프로필 데이터: ", res);
       } catch (error) {
-        console.log("데이터 로딩 실패:", error);
+        toast.error("데이터 로딩 실패");
       }
     };
 

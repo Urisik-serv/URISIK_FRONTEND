@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useLocalStorage } from "./use-local-storage";
 import { postLogout, postReissue } from "../api/auth";
+import toast from "react-hot-toast";
 
 export const useAuth = () => {
   const { setItem: setAccessToken, removeItem: removeAccessToken } =
@@ -15,8 +16,8 @@ export const useAuth = () => {
         window.location.href = res.result.needAgreement ? "/onboarding" : "/";
       }, 1000);
     },
-    onError: (error) => {
-      console.error("로그인 실패:", error);
+    onError: () => {
+      toast.error("로그인 실패");
       window.location.href = "/login";
     },
   });
@@ -27,8 +28,8 @@ export const useAuth = () => {
       removeAccessToken();
       window.location.href = res.isSuccess ? "/login" : "/mypage";
     },
-    onError: (error) => {
-      console.error("로그아웃 실패:", error);
+    onError: () => {
+      toast.error("로그아웃 실패");
       window.location.href = "/mypage";
     },
   });

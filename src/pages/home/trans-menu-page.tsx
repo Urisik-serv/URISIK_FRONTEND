@@ -32,7 +32,6 @@ const TransMenuPage = () => {
     const fetchData = async () => {
       try {
         const transData = await getTransRecipe(recipeId);
-        console.log("변형 레시피 요청 성공: ", transData.result);
         if (transData.result.steps) {
           transData.result.steps = transData.result.steps.map((step) => ({
             ...step,
@@ -42,7 +41,6 @@ const TransMenuPage = () => {
         setTransRecipe(transData.result);
 
         const data = await getDetailRecipe(transData.result.baseRecipeId);
-        console.log("일반 레시피 요청 성공: ", data);
         if (data.result.steps) {
           data.result.steps = data.result.steps.map((step) => ({
             ...step,
@@ -131,7 +129,7 @@ const TransMenuPage = () => {
             </div>
             <DetailContent transRecipe={transRecipe} />
           </div>
-          <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
+          <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[400px] px-4 pb-3 z-50 bottom-0">
             <WishlistButton
               onClick={handleClick}
               isSafe={true}

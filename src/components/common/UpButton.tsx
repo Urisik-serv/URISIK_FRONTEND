@@ -23,7 +23,7 @@ const UpButton = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[375px] h-0 z-29 pointer-events-none">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[400px] h-0 z-29 pointer-events-none">
       <div
         className={`
           absolute bottom-32 right-5 transition-opacity duration-200 ease-in-out
