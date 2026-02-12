@@ -23,11 +23,11 @@ export default function DateMenuList({
   const navigate = useNavigate();
   return (
     <div
-      className={`w-[294px] border-[1.5px] rounded-[18px] ${isSelect ? "bg-white border-primary-700" : "bg-gray-50 border-gray-350"}`}
+      className={`w-[294px] border-[1.5px] rounded-[18px] ${isSelect ? "bg-white border-primary-700" : "bg-white border-gray-350"}`}
     >
       <div className="flex flex-col gap-[10px]">
         {data.map((data) => (
-          <div className="flex flex-col gap-4 p-4">
+          <div key={data.id} className="flex flex-col gap-4 p-4">
             <div className="flex gap-[14px]">
               <img
                 src={data.imageUrl}
@@ -38,13 +38,17 @@ export default function DateMenuList({
                 <p className="font-semibold text-[14px] tracking-[-0.02em] text-gray-800">
                   {data.title}
                 </p>
-                <p className="font-normal text-[12px] text-gray-800 leading-[18px]">
+                <p className="font-normal text-[12px] text-gray-600 leading-[18px]">
                   {data.ingredients}
                 </p>
                 <div className="flex justify-end pt-1.5">
                   <button
                     className="flex items-center font-semibold cursor-pointer text-[14px] text-gray-800"
-                    onClick={() => navigate(`/menu-information/${data.id}`)}
+                    onClick={() =>
+                      navigate(
+                        `/meal-plan/detail?menuId=${data.id}&type=${data.type}`,
+                      )
+                    }
                   >
                     레시피 자세히 보기 <Chevron rotate={-90} color="#71717A" />
                   </button>

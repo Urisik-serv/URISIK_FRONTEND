@@ -4,16 +4,21 @@ import { useEffect, useState } from "react";
 import type { FamilyDetails } from "../../../types/family-profile";
 import { getProfiles } from "../../../api/family-profile";
 import { useFamilyStore } from "../../../stores/use-family-store";
+import { useMyProfileStore } from "../../../stores/use-my-profile-store";
 
 const FamilyProfile = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<FamilyDetails>();
   const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const fetchMyProfile = useMyProfileStore((state) => state.fetchMyProfile);
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (familyRoomId === null) return;
         const res = await getProfiles(familyRoomId);
+
+        // myProfileStore 채우기
+        fetchMyProfile(familyRoomId);
 
         setData(res.result);
         console.log("프로필 데이터: ", res);
@@ -23,7 +28,7 @@ const FamilyProfile = () => {
     };
 
     fetchData();
-  }, []);
+  }, [fetchMyProfile]);
 
   return (
     <div className="w-full  px-4 pt-5 pb-3 bg-white rounded-xl outline-1 outline-stone-300 flex flex-col justify-start items-center gap-3  ">

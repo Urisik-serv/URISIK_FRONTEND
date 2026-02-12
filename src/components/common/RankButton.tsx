@@ -4,11 +4,11 @@ import Down from "../../assets/icons/down-icon.svg";
 interface RankButtonProps {
   rank: number;
   name: string;
-  up: boolean;
+  change: "UP" | "DOWN" | "SAME";
   onClick?: () => void;
 }
 
-const RankButton = ({ rank, name, up, onClick }: RankButtonProps) => {
+const RankButton = ({ rank, name, change, onClick }: RankButtonProps) => {
   return (
     <div
       className="flex justify-between items-center w-32 cursor-pointer"
@@ -18,7 +18,9 @@ const RankButton = ({ rank, name, up, onClick }: RankButtonProps) => {
         <p className="font-semibold">{rank}</p>
         <p className="">{name}</p>
       </div>
-      <img src={up ? Up : Down} alt={up ? "인기 상승" : "인기 하락"} />
+      {change === "UP" && <img src={Up} alt="인기 상승" />}
+      {change === "DOWN" && <img src={Down} alt="인기 하락" />}
+      {change === "SAME" && null}
     </div>
   );
 };

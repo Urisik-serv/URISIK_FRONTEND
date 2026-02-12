@@ -2,6 +2,8 @@ import Rate from "./Rate";
 import Profile from "../../assets/images/empty-profile.png";
 import type { WishListProfile } from "../../types/wish-list";
 import SafeMark from "./SafeMark";
+import { useFamilyData } from "../../hooks/use-family-data";
+import LeaderProfile from "../../assets/images/profile/leader-profile";
 
 type MenuListMode = "default" | "rate" | "profile";
 //default: 기본, rate: 별점까지만 보이도록, profile: 별점+프로필까지 보이도록
@@ -18,6 +20,7 @@ interface MenuListProps {
   isSafe?: string;
   rate?: number;
   profiles?: WishListProfile[];
+  hasBorder?: boolean;
 }
 
 export default function MenuList({
@@ -32,6 +35,7 @@ export default function MenuList({
   isSafe,
   rate,
   profiles,
+  hasBorder = true,
 }: MenuListProps) {
   const displayIngredients = Array.isArray(ingredients)
     ? ingredients.join(", ")
@@ -39,9 +43,12 @@ export default function MenuList({
 
   const safe = isSafe === "SAFE" || isSafe === "SAFETY";
 
+  // 방장 확인
+  const { isLeader } = useFamilyData();
+
   return (
     <div
-      className={`w-full p-[10px] border h-18 ${isSelected ? "rounded-xl bg-primary-100 border-[1.5px] border-primary-700" : "bg-white border-transparent border-b border-b-gray-200"} ${clickable ? "cursor-pointer" : ""}`}
+      className={`w-full p-[10px] border h-18 ${isSelected ? "rounded-xl bg-primary-100 border-[1.5px] border-primary-700" : `bg-white border-transparent ${hasBorder ? "border-b border-b-gray-200" : " "}`} ${clickable ? "cursor-pointer" : ""}`}
       onClick={clickable ? onClick : undefined}
     >
       <div className="flex gap-3">
@@ -56,12 +63,15 @@ export default function MenuList({
             {type == "profile" && (
               <div className="flex -space-x-2">
                 {profiles?.map((profile) => {
-                  {
-                    /* const profileImageSrc =
-  profile.profilePicUrl && profile.profilePicUrl !== "테스트용 url"
-    ? profile.profilePicUrl
-    : rolePicture[profile.];*/
-                    // 대체 이미지로 넣을 role값이 없음
+                  if (isLeader) {
+                    return (
+                      <LeaderProfile
+                        key={profile.profileId}
+                        href={profile.profilePicUrl}
+                        w="24"
+                        h="24"
+                      />
+                    );
                   }
                   return (
                     <img
