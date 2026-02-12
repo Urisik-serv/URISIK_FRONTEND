@@ -33,6 +33,8 @@ const MealPlanCreatePage = () => {
   const regenerate = true;
 
   const handleCreate = async () => {
+    if (step === "create") setStep("result");
+
     const body: CreateMealPlan = {
       weekStartDate: weekParam === "THIS" ? getThisMonday() : getNextMonday(),
       selectedSlots: [...lunchSlots, ...dinnerSlots],
@@ -59,13 +61,13 @@ const MealPlanCreatePage = () => {
         "mealPlanId",
         JSON.stringify(response.result.mealPlanId),
       );
-      if (step === "create") setStep("result");
     } catch (error: any) {
       if (error.response?.data?.code === "MEAL_PLAN_409") {
         toast.error("이미 생성된 다음주 식단이 있어요");
       } else {
         toast.error(error.response?.data?.message);
       }
+      setStep("create");
       navigate(`/`);
     } finally {
       setIsLoading(false); // 로딩 끝
@@ -137,6 +139,7 @@ const MealPlanCreatePage = () => {
                   mealPlanId={mealPlanId}
                   onClick={handleCreate}
                   weekParam={weekParam}
+                  isLoading={isLoading}
                 />
               )}
             </div>
