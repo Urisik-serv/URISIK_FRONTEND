@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Day } from "../../types/meal-plan";
 import { useNavigate } from "react-router-dom";
-import Right from "../../assets/icons/chevron-right-gray.svg";
 
 import Chevron from "../common/icon/Chevron";
 import { dayOfWeekMap } from "../../constants/date-rerord";
@@ -76,7 +75,7 @@ export default function DateRangeBlock({
                               }
                             >
                               레시피 자세히 보기
-                              <img src={Right} alt="화살표 아이콘" />
+                              <Chevron rotate={-90} color="#71717A" />
                             </button>
                           </div>
                         </div>

@@ -1,10 +1,10 @@
 import xIcon from "../../assets/icons/x-icon-gray500.svg";
-import dropDownButton from "../../assets/icons/chevron-down-gray.svg";
 import Button from "../common/Button";
 import DateBlock from "./DateBlock";
 import { useState } from "react";
 import { DayPicker, type DateRange } from "react-day-picker";
 import "../../styles/dayPicker.css";
+import Chevron from "../common/icon/Chevron";
 
 interface ModalProps {
   handleModal: () => void;
@@ -84,7 +84,7 @@ export default function GetDateRangeModal({
               className="cursor-pointer w-full p-[12px] flex justify-between items-center border border-gray-300 rounded-lg"
             >
               <span className="text-[16px]">{dateRange}</span>
-              <img src={dropDownButton} alt="열기" className="size-[24px]" />
+              <Chevron color="#71717A" />
             </button>
             {isOpenDropDown && (
               <div className="absolute top-full left-0 w-full z-50 bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md">
