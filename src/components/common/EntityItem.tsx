@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import Rate from "./Rate";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { useFamilyStore } from "../../stores/use-family-store";
+import { useRef } from "react";
 
 interface EntityItemProps {
   picture: string;
@@ -31,6 +32,9 @@ export default function EntityItem({
   const familyRoomId = useFamilyStore((data) => data.familyRoomId);
   const { mutate: deleteWishlists } = useDeleteProfileWishLists(familyRoomId);
 
+  // 드래그 상태 추적
+  const isDragging = useRef(false);
+
   const handleClick = async () => {
     if (deleteProfile) {
       deleteProfile();
@@ -46,6 +50,11 @@ export default function EntityItem({
     }
   };
 
+  const handleContentClick = () => {
+    if (isDragging.current) return;
+    if (onClick) onClick();
+  };
+
   return (
     <>
       <div className="relative overflow-hidden bg-gray-100 ">
@@ -59,9 +68,18 @@ export default function EntityItem({
           drag="x"
           dragConstraints={{ left: -93, right: 0 }}
           className="relative bg-white"
+          onDragStart={() => {
+            isDragging.current = true;
+          }}
+          // 5. 드래그 종료 시 약간의 지연 후 플래그 false (클릭 이벤트가 뒤늦게 발생하는 것 방지)
+          onDragEnd={() => {
+            setTimeout(() => {
+              isDragging.current = false;
+            }, 100);
+          }}
         >
           <div
-            onClick={onClick}
+            onClick={handleContentClick}
             className={`w-[343px] h-[72px] p-[10px] ${border} text-xl leading-[20px] tracking-[-0.6px]`}
           >
             <div className=" flex gap-[12px]">
