@@ -79,13 +79,12 @@ export default function MyProfilePage() {
     threshold: 0,
   });
 
+  // 스크롤
   useEffect(() => {
     if (inView) {
       if (!transFetch && transNext) fetchTrans();
       if (!profileFetch && profileNext) fetchProfile();
     }
-    if (errorProfile) toast.error("일반 위시리스트 조회 실패");
-    if (errorTrans) toast.error("변형 위시리스트 조회 실패");
   }, [
     inView,
     transFetch,
@@ -94,9 +93,13 @@ export default function MyProfilePage() {
     profileNext,
     fetchTrans,
     fetchProfile,
-    errorProfile,
-    errorTrans,
   ]);
+
+  // 에러
+  useEffect(() => {
+    if (errorProfile) toast.error("일반 위시리스트 조회 실패");
+    if (errorTrans) toast.error("변형 위시리스트 조회 실패");
+  }, [errorProfile, errorTrans]);
 
   // 로딩 처리
   if (isPending) {

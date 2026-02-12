@@ -8,7 +8,7 @@ import {
   useProfileModalActions,
   useProfileModalInfo,
 } from "../../../hooks/use-profile-modal-store";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AllergyDataBox from "../../profile/AllergyDataBox";
 import ElementButton from "../../common/ElementButton";
 import EntityItem from "../../common/EntityItem";
@@ -21,6 +21,9 @@ import useGetInfiniteProfileTransWishList from "../../../hooks/queries/use-get-i
 import { useFamilyStore } from "../../../stores/use-family-store";
 import type { Profile } from "../../../types/family-profile";
 import { getProfile } from "../../../api/family-profile";
+import { useInView } from "react-intersection-observer";
+import toast from "react-hot-toast";
+import MenuListSkeleton from "../../skeltons/MenuListSkeleton";
 
 const ProfileModal = () => {
   const { isClose } = useProfileModalActions();
@@ -72,7 +75,7 @@ const ProfileModal = () => {
     };
 
     fetchProfile();
-  }, [roomId]);
+  }, [roomId, selectedData?.profileId]);
 
   const allergies =
     profile?.allergyAndAlterIngredients.map((allergy) => allergy.allergen) ||
@@ -90,17 +93,57 @@ const ProfileModal = () => {
   };
 
   // 위시리스트
-  const { data: profileWish } = useGetInfiniteProfileWishList(
-    roomId,
-    selectedData?.profileId,
-    5,
-  );
+  const {
+    data: profileWish,
+    isFetching: profileFetch,
+    hasNextPage: profileNext,
+    fetchNextPage: fetchProfile,
+    isError: errorProfile,
+    isLoading: loadingProfile,
+  } = useGetInfiniteProfileWishList(roomId, selectedData?.profileId, 5);
 
-  const { data: transWish } = useGetInfiniteProfileTransWishList(
-    roomId,
-    selectedData?.profileId,
-    5,
-  );
+  const {
+    data: transWish,
+    isFetching: transFetch,
+    hasNextPage: transNext,
+    fetchNextPage: fetchTrans,
+    isError: errorTrans,
+    isLoading: loadingTrans,
+  } = useGetInfiniteProfileTransWishList(roomId, selectedData?.profileId, 5);
+
+  const loading = loadingProfile || loadingTrans;
+
+  const hasData = useMemo(() => {
+    const hasTrans = (transWish?.pages?.length ?? 0) > 0;
+    const hasProfile = (profileWish?.pages?.length ?? 0) > 0;
+    return hasTrans || hasProfile;
+  }, [transWish, profileWish]);
+
+  const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  // 스크롤
+  useEffect(() => {
+    if (inView) {
+      if (!transFetch && transNext) fetchTrans();
+      if (!profileFetch && profileNext) fetchProfile();
+    }
+  }, [
+    inView,
+    transFetch,
+    profileFetch,
+    transNext,
+    profileNext,
+    fetchTrans,
+    fetchProfile,
+  ]);
+
+  // 에러
+  useEffect(() => {
+    if (errorProfile) toast.error("일반 위시리스트 조회 실패");
+    if (errorTrans) toast.error("변형 위시리스트 조회 실패");
+  }, [errorProfile, errorTrans]);
 
   return (
     <AnimatePresence>
@@ -175,7 +218,10 @@ const ProfileModal = () => {
               </div>
               <div className="flex gap-2 pt-3">
                 {profile?.dietPreferences.map((food) => (
-                  <ElementButton name={getKeyByValue(food) ?? food} />
+                  <ElementButton
+                    key={food}
+                    name={getKeyByValue(food) ?? food}
+                  />
                 ))}
               </div>
             </div>
@@ -183,7 +229,13 @@ const ProfileModal = () => {
               <div className="text-[16px] font-semibold leading-6">
                 내 위시리스트
               </div>
-              {profileWish || transWish ? (
+              {loading ? (
+                <>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <MenuListSkeleton key={index} />
+                  ))}
+                </>
+              ) : hasData ? (
                 <div className="pt-[17px] flex flex-col gap-0">
                   {transWish?.pages.map((item) => (
                     <EntityItem
@@ -245,6 +297,7 @@ const ProfileModal = () => {
                   </div>
                 </div>
               )}
+              <div ref={ref} className="h-2"></div>
             </div>
           </div>
         </div>
