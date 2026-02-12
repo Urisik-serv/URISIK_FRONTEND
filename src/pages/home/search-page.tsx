@@ -53,7 +53,6 @@ const SearchingPage = () => {
         setRecommend(recommendData.result);
       } catch (error) {
         console.warn("추천 검색어 로딩 실패 :", error);
-        setRecommend({ recipeName: ["4점 이상 리뷰가 1개 이상 필요합니다!"] });
       }
 
       try {
@@ -95,20 +94,22 @@ const SearchingPage = () => {
               ))}
             </div>
           </div>
-          <div className="pb-7.5">
-            <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
-              {nickname || "사용자"}님 취향에 맞는 메뉴를 추천해요
-            </p>
-            <div className="flex gap-1.5">
-              {recommend?.recipeName.map((recommendName) => (
-                <ElementButton
-                  key={recommendName}
-                  name={recommendName}
-                  onClick={() => setKeyword(recommendName)}
-                />
-              ))}
+          {recommend && recommend.recipeName.length > 0 && (
+            <div className="pb-7.5">
+              <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
+                {nickname || "사용자"}님 취향에 맞는 메뉴를 추천해요
+              </p>
+              <div className="flex gap-1.5">
+                {recommend.recipeName.map((recommendName) => (
+                  <ElementButton
+                    key={recommendName}
+                    name={recommendName}
+                    onClick={() => setKeyword(recommendName)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
           <div>
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
               인기 검색어
