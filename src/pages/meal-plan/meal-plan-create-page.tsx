@@ -13,11 +13,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
+import { useProfileStore } from "../../stores/use-profile-store";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
   const [isOpen, setIsOpen] = useState(false);
-  const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
+  const isLeader = useProfileStore().isLeader;
   const { familyRoomId } = useFamilyStore.getState();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +34,8 @@ const MealPlanCreatePage = () => {
   const regenerate = true;
 
   const handleCreate = async () => {
+    if (step === "create") setStep("result");
+
     const body: CreateMealPlan = {
       weekStartDate: weekParam === "THIS" ? getThisMonday() : getNextMonday(),
       selectedSlots: [...lunchSlots, ...dinnerSlots],
@@ -59,13 +62,13 @@ const MealPlanCreatePage = () => {
         "mealPlanId",
         JSON.stringify(response.result.mealPlanId),
       );
-      if (step === "create") setStep("result");
     } catch (error: any) {
       if (error.response?.data?.code === "MEAL_PLAN_409") {
         toast.error("이미 생성된 다음주 식단이 있어요");
       } else {
         toast.error(error.response?.data?.message);
       }
+      setStep("create");
       navigate(`/`);
     } finally {
       setIsLoading(false); // 로딩 끝
@@ -74,7 +77,7 @@ const MealPlanCreatePage = () => {
 
   return (
     <div>
-      {isMember ? (
+      {!isLeader ? (
         <>
           <PublicHeader title={"식단 생성"} />
           <MemberMealPlanView />
@@ -137,6 +140,7 @@ const MealPlanCreatePage = () => {
                   mealPlanId={mealPlanId}
                   onClick={handleCreate}
                   weekParam={weekParam}
+                  isLoading={isLoading}
                 />
               )}
             </div>
