@@ -142,10 +142,10 @@ const MealPlanEditPage = () => {
         familyRoomId: familyRoomId,
         mealPlanId: mealPlanId,
       });
+      sessionStorage.removeItem("mealPlan");
+      navigate(`/meal-plan?tab=nextWeek`);
     } catch (e) {
       toast.error("다시 시도해주세요" + e);
-    } finally {
-      navigate(`/meal-plan?tab=nextWeek`);
     }
   };
 
