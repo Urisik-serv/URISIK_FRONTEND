@@ -18,6 +18,10 @@ import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
+const removeLeadingNumber = (text: string) => {
+  return text.replace(/^\d+[\.\)]\s*/, "");
+};
+
 const MenuInformationPage = () => {
   const { menuId } = useParams();
   const [recipe, setRecipe] = useState<DetailRecipe>();
@@ -31,6 +35,12 @@ const MenuInformationPage = () => {
       try {
         const data = await getDetailRecipe(recipeId);
         console.log("get 요청 성공: ", data);
+        if (data.result.steps) {
+          data.result.steps = data.result.steps.map((step) => ({
+            ...step,
+            description: removeLeadingNumber(step.description),
+          })) as any;
+        }
         setRecipe(data.result);
       } catch (error) {
         console.log("일반 레시피 로딩 실패: ", error);
