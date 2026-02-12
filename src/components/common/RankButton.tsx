@@ -1,5 +1,6 @@
 import Up from "../../assets/icons/up-icon.svg";
 import Down from "../../assets/icons/down-icon.svg";
+import Same from "../../assets/icons/same-icon.svg";
 
 interface RankButtonProps {
   rank: number;
@@ -20,7 +21,7 @@ const RankButton = ({ rank, name, change, onClick }: RankButtonProps) => {
       </div>
       {change === "UP" && <img src={Up} alt="인기 상승" />}
       {change === "DOWN" && <img src={Down} alt="인기 하락" />}
-      {change === "SAME" && null}
+      {change === "SAME" && <img src={Same} alt="인기 유지" />}
     </div>
   );
 };
