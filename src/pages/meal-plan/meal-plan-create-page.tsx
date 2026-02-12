@@ -13,11 +13,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
+import { useProfileStore } from "../../stores/use-profile-store";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
   const [isOpen, setIsOpen] = useState(false);
-  const isMember = false; // true로 바꾸면 가족원 화면을 볼 수 있습니다.
+  const isLeader = useProfileStore().isLeader;
   const { familyRoomId } = useFamilyStore.getState();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +77,7 @@ const MealPlanCreatePage = () => {
 
   return (
     <div>
-      {isMember ? (
+      {!isLeader ? (
         <>
           <PublicHeader title={"식단 생성"} />
           <MemberMealPlanView />
