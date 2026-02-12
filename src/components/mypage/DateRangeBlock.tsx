@@ -1,8 +1,9 @@
 import { useState } from "react";
 import type { Day } from "../../types/meal-plan";
 import { useNavigate } from "react-router-dom";
-import Right from "../../assets/icons/chevron-right-gray.svg";
+
 import Chevron from "../common/icon/Chevron";
+import { dayOfWeekMap } from "../../constants/date-rerord";
 
 interface DateRangeBlockProps {
   weekStartDate: string;
@@ -44,18 +45,15 @@ export default function DateRangeBlock({
           </div>
           <div className="flex flex-col gap-[12px] pt-[11px]">
             {days?.map((item) => (
-              <div
-                key={item.dayOfWeek}
-                className="flex justify-between h-[190px]"
-              >
+              <div key={item.dayOfWeek} className="flex justify-between">
                 <div className="flex flex-col justify-start">
                   <div className="size-[37px] p-[10px] bg-primary-700 text-white rounded-lg flex items-center justify-center">
-                    {item.dayOfWeek}
+                    {dayOfWeekMap[item.dayOfWeek]}
                   </div>
                 </div>
-                <div className="w-[294px] border border-primary-700 border-[1.5px] px-[16px] rounded-[18px] flex flex-col gap-[16px] justify-center">
+                <div className="w-[294px] border border-primary-700 border-[1.5px] px-[16px]  rounded-[18px] flex flex-col gap-[16px] justify-center">
                   {item.meals.map((meal) => (
-                    <div className="flex flex-col gap-4 p-4">
+                    <div className="flex flex-col gap-4 py-4">
                       <div className="flex gap-[14px]">
                         <img
                           src={meal.imageUrl}
@@ -76,8 +74,8 @@ export default function DateRangeBlock({
                                 navigate(`/menu-information/${meal.id}`)
                               }
                             >
-                              레시피 자세히 보기{" "}
-                              <img src={Right} alt="화살표 아이콘" />
+                              레시피 자세히 보기
+                              <Chevron rotate={-90} color="#71717A" />
                             </button>
                           </div>
                         </div>

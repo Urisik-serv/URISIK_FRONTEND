@@ -14,6 +14,7 @@ export default function FamilyCreatePage() {
     handleLeader,
     isLeader,
     handleSubmit,
+    isCreating,
   } = useFamilyData();
 
   return (
@@ -118,7 +119,12 @@ export default function FamilyCreatePage() {
             </div>
           </div>
           <div className="pt-[264px]">
-            <Button text="다음" type="submit" onClick={handleSubmit} />
+            <Button
+              text="다음"
+              type="submit"
+              onClick={handleSubmit}
+              disabled={isCreating}
+            />
           </div>
         </div>
       </div>

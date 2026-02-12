@@ -106,7 +106,11 @@ export const useFamilyProfileForm = () => {
 
   // request 생성
   const savedAllergies = useProfileStore((s) => s.savedFormData.allergies);
-  let allergyList = savedAllergies.map((item) => allergyMap[item]);
+
+  const allergyList =
+    savedAllergies.length === 0
+      ? ["NONE"]
+      : savedAllergies.map((item) => allergyMap[item]);
 
   const preferencesList = formData.preferences
     .map((item) => preferenceMap[item])

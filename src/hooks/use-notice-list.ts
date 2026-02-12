@@ -78,8 +78,7 @@ export const useNoticeList = () => {
       content: content,
       ago: ago(item.createdAt),
       isRead: item.isRead,
-      key: crypto.randomUUID(),
-      id: crypto.randomUUID(),
+      key: item.id,
     };
   });
 

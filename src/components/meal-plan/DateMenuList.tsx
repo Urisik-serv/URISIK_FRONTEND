@@ -1,6 +1,6 @@
-import Right from "../../assets/icons/chevron-right-gray.svg";
 import { useNavigate } from "react-router-dom";
 import type { MealType } from "../../types/meal-plan";
+import Chevron from "../common/icon/Chevron";
 
 type DateMenu = {
   dayOfWeek: string;
@@ -50,7 +50,7 @@ export default function DateMenuList({
                       )
                     }
                   >
-                    레시피 자세히 보기 <img src={Right} alt="화살표 아이콘" />
+                    레시피 자세히 보기 <Chevron rotate={-90} color="#71717A" />
                   </button>
                 </div>
               </div>

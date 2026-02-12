@@ -92,7 +92,7 @@ export default function MealPlanResult({
           다시 생성하기
         </button>
       </div>
-      <div className="flex gap-2 pt-12 pb-[27px] overflow-x-auto">
+      <div className="flex gap-2 pt-12 pb-[27px] overflow-x-auto pr-4">
         <div className="flex flex-col items-center gap-3 font-medium text-gray-500 text-[14px]">
           <CalendarChipM text="" />
           <p className="pl-4 pr-2 flex items-center text-center shrink-0 h-[82px] whitespace-nowrap">

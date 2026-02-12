@@ -2,9 +2,11 @@ import type {
   CreateMealPlan,
   MonthResult,
   ResponseCreateMealPlanDto,
+  ResponseEditMealPlanDto,
   ResponseMonthMealPlan,
   ResponseThisWeekMealPlan,
   ResponseTodayMealPlan,
+  Updates,
 } from "../types/meal-plan";
 import { axiosInstance } from "./axios/axios";
 
@@ -21,6 +23,23 @@ export const postCreateMealPlans = async ({
     createMeal,
   );
 
+  return data;
+};
+
+//주간 식단 수정 api
+export const patchEditMealPlans = async ({
+  familyRoomId,
+  mealPlanId,
+  updates,
+}: {
+  familyRoomId: number;
+  mealPlanId: number;
+  updates: Updates[];
+}): Promise<ResponseEditMealPlanDto> => {
+  const { data } = await axiosInstance.patch(
+    `/api/family-rooms/${familyRoomId}/meal-plans/${mealPlanId}`,
+    { updates },
+  );
   return data;
 };
 
