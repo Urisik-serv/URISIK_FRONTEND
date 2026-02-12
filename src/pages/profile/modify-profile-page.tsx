@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import PictureModifyModal from "../../components/profile/PictureModifyModal";
 import ProfileDataForm from "../../components/profile/ProfileDataForm";
