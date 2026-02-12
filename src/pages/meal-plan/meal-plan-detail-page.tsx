@@ -5,6 +5,8 @@ import { getDetailRecipe, getTransRecipe } from "../../api/recipes";
 import IngredientAndRecipe from "../../components/common/IngredientAndRecipe";
 import type { RecipeStep } from "../../types/meal-plan";
 import type { DetailRecipeStep } from "../../types/recipes";
+import toast from "react-hot-toast";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
 const MealPlanDetailPage = () => {
   const [searchParams] = useSearchParams();
@@ -12,9 +14,11 @@ const MealPlanDetailPage = () => {
   const type = searchParams.get("type");
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [step, setStep] = useState<RecipeStep[] | DetailRecipeStep[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         if (type === "RECIPE") {
           const data = await getDetailRecipe(Number(recipeId));
@@ -25,8 +29,10 @@ const MealPlanDetailPage = () => {
           setIngredients(data.result.ingredients);
           setStep(data.result.steps);
         }
-      } catch (error) {
-        console.log("레시피 로딩 실패: ", error);
+      } catch {
+        toast.error("레시피 로딩 실패");
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -37,6 +43,11 @@ const MealPlanDetailPage = () => {
   return (
     <div>
       <PublicHeader title={"레시피"} />
+      {isLoading && (
+        <div className="pt-60">
+          <LoadingSpinner text="레시피를 불러오고 있어요" />
+        </div>
+      )}
       <div className="p-4 pt-2">
         <IngredientAndRecipe
           ingredients={ingredients}

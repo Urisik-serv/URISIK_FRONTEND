@@ -43,7 +43,7 @@ export default function WeekMeal({ weekType }: weekMealProps) {
   if (isLoading) {
     return (
       <div className="w-full pt-60">
-        <LoadingSpinner />
+        <LoadingSpinner text="식단을 불러오고 있어요..." />
       </div>
     );
   }

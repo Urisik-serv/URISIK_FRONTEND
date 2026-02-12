@@ -6,6 +6,7 @@ import SelectedStar from "../../assets/icons/star-selected.svg";
 import AlertModal from "../common/AlertModal";
 import type { createReview } from "../../types/review";
 import usePostReview from "../../hooks/use-post-review";
+import toast from "react-hot-toast";
 
 type ReviewModalProps = {
   recipeId: number;
@@ -52,7 +53,11 @@ export default function ReviewModal({
           setIsOpen(true);
         },
         onError: (e: any) => {
-          alert(e.response?.data?.message);
+          if (!score) {
+            toast.error("별을 클릭해주세요");
+            return;
+          }
+          toast.error(e.response?.data?.message);
           onClick();
         },
       },
@@ -118,7 +123,6 @@ export default function ReviewModal({
               if (preference !== null) {
                 reviewData.isFavorite = preference;
               }
-              console.log(reviewData);
               handleSubmitReview(reviewData);
             }}
           />

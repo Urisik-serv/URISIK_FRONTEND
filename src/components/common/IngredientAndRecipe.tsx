@@ -47,7 +47,7 @@ const IngredientAndRecipe = ({
                 <p className="text-gray-350 font-medium">{step.stepOrder}</p>
                 {/* <p className=" text-[20px] ">재료손질</p> */}
               </div>
-              <p className="font-normal text-gray-600">
+              <p className="font-medium text-gray-600">
                 {type === "TRANS"
                   ? step.description
                   : step.description.slice(3)}
