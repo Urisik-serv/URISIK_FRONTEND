@@ -54,7 +54,7 @@ export default function FamilyInvitePage() {
     try {
       const { inviteUrl } = await createInvite();
       await navigator.clipboard.writeText(inviteUrl);
-      toast.error("링크가 복사되었습니다.");
+      toast.success("링크가 복사되었습니다.");
     } catch {}
   };
   return (
