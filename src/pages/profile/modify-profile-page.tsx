@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
 import PictureModifyModal from "../../components/profile/PictureModifyModal";
 import ProfileDataForm from "../../components/profile/ProfileDataForm";
@@ -11,22 +11,21 @@ import ErrorUI from "../../components/common/ErrorUI";
 export default function ModifyProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
   const familyRoomId = useFamilyStore((s) => s.familyRoomId);
-  const { setSavedFormData } = useProfileStore();
 
   const { data, isPending, isError, refetch } = useGetProfile(familyRoomId);
+  const { setSavedFormData, hasLoadedFromServer, markLoaded } =
+    useProfileStore();
 
   const handleModal = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const hasInitialized = useRef(false);
-
   useEffect(() => {
-    if (data && !hasInitialized.current) {
+    if (data && !hasLoadedFromServer) {
       setSavedFormData(data);
-      hasInitialized.current = true;
+      markLoaded();
     }
-  }, [data, setSavedFormData]);
+  }, [data, hasLoadedFromServer, setSavedFormData, markLoaded]);
 
   if (isPending) {
     return (
