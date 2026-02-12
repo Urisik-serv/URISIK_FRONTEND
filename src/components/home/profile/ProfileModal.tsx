@@ -21,6 +21,7 @@ import useGetInfiniteProfileTransWishList from "../../../hooks/queries/use-get-i
 import { useFamilyStore } from "../../../stores/use-family-store";
 import type { Profile } from "../../../types/family-profile";
 import { getProfile } from "../../../api/family-profile";
+import { rolePicture } from "../../../constants/profile-record";
 
 const ProfileModal = () => {
   const { isClose } = useProfileModalActions();
@@ -138,8 +139,13 @@ const ProfileModal = () => {
             <div className="flex justify-between  w-full">
               <div className="flex gap-3 items-end">
                 <img
-                  src={selectedData?.profilePicUrl || profilePicture}
+                  src={
+                    selectedData?.profilePicUrl.includes("no_profile_image")
+                      ? rolePicture[selectedData.role]
+                      : selectedData?.profilePicUrl
+                  }
                   alt="내 프로필 사진"
+                  className="size-20 rounded-full"
                 />
                 <div className="text-2xl font-semibold leading-9">
                   {selectedData?.nickname}
