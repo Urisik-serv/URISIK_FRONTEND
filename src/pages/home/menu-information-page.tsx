@@ -17,6 +17,7 @@ import {
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const removeLeadingNumber = (text: string) => {
   return text.replace(/^\d+[\.\)]\s*/, "");
@@ -84,6 +85,7 @@ const MenuInformationPage = () => {
         );
       } catch (error) {
         console.log("우리가족 버전 생성 실패", error);
+        toast.error("우리가족 버전 생성에 실패했습니다.");
         setIsLoading(false);
       }
     }
