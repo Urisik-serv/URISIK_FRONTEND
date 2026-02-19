@@ -12,9 +12,9 @@ import { Autoplay, Pagination } from "swiper/modules";
 
 export default function OnboardingPage() {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-[100dvh]">
       <HomeHeader />
-      <div className="flex-1 px-[16px] overflow-hidden">
+      <div className="flex flex-1 items-center px-[16px] overflow-hidden">
         <Swiper
           modules={[Autoplay, Pagination]}
           autoplay={{
@@ -26,13 +26,13 @@ export default function OnboardingPage() {
           slidesPerView={1}
           className="h-full w-full"
         >
-          <SwiperSlide className="pt-[92px] h-full flex items-center">
+          <SwiperSlide className="pt-[40px] h-full flex items-center">
             <FirstStep />
           </SwiperSlide>
-          <SwiperSlide className="pt-[92px] h-full flex items-center">
+          <SwiperSlide className="pt-[40px] h-full flex items-center">
             <SecondStep />
           </SwiperSlide>
-          <SwiperSlide className="pt-[92px] h-full flex items-center">
+          <SwiperSlide className="pt-[40px] h-full flex items-center">
             <ThirdStep />
           </SwiperSlide>
         </Swiper>

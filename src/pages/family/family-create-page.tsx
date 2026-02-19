@@ -118,7 +118,7 @@ export default function FamilyCreatePage() {
               </div>
             </div>
           </div>
-          <div className="pt-[264px]">
+          <div className="fixed bottom-0 left-1/2 -translate-x-1/2 pb-10">
             <Button
               text="다음"
               type="submit"

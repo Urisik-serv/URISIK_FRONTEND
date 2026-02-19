@@ -5,6 +5,7 @@ import { useFamilyStore } from "../stores/use-family-store";
 import { useNavigate } from "react-router-dom";
 import type { Role } from "../types/family-profile";
 import { POLICY_BY_ROLE } from "../constants/profile-record";
+import toast from "react-hot-toast";
 
 export const useFamilyData = () => {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ export const useFamilyData = () => {
       }
     },
     onError: () => {
-      alert("가족방 생성에 실패했습니다. 다시 시도해주세요.");
+      toast.error("가족방 생성에 실패했습니다. 다시 시도해주세요.");
     },
   });
 

@@ -120,7 +120,7 @@ const MenuInformationPage = () => {
                 </div>
                 <DetailContent recipe={recipe} />
               </div>
-              <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[375px] px-4 pb-3 z-50 bottom-0">
+              <div className="fixed left-1/2 -translate-x-1/2 w-full max-w-[400px] px-4 pb-3 z-50 bottom-0">
                 <WishlistButton
                   onClick={handleClick}
                   isSafe={isSafe}

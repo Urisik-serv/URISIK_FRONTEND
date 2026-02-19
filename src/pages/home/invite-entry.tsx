@@ -7,6 +7,7 @@ import { useLocalStorage } from "../../hooks/use-local-storage";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 export default function InviteEntry() {
   const { token } = useParams();
@@ -39,7 +40,7 @@ export default function InviteEntry() {
       if (error.response?.data?.code === "FAMILY_JOIN_409") {
         navigate("/family-profile-create");
       } else {
-        alert("참여 처리 중 오류가 발생했습니다.");
+        toast.error("참여 처리 중 오류가 발생했습니다.");
       }
     },
   });
@@ -48,7 +49,7 @@ export default function InviteEntry() {
     if (!data) return;
 
     if (data.expired) {
-      alert("유효하지 않은 토큰입니다.");
+      toast.error("유효하지 않은 토큰입니다.");
       navigate("/");
     }
   }, [data, navigate]);

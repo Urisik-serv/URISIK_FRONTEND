@@ -52,7 +52,7 @@ export default function MealPlanResult({
   const handleClick = async () => {
     try {
       if (familyRoomId == null) {
-        alert("familyRoomId 없음");
+        toast.error("familyRoomId 없음");
         return;
       }
       await postConfirmMealPlan({
@@ -125,7 +125,7 @@ export default function MealPlanResult({
           );
         })}
       </div>
-      <div className="w-full max-w-[375px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
+      <div className="w-full max-w-[400px] fixed left-1/2 -translate-x-1/2 bottom-11 flex gap-3 px-4 font-semibold text-[20px]">
         <button
           className="w-full h-14 rounded-xl cursor-pointer text-primary-700 border border-primary-700"
           onClick={() => navigate(`/meal-plan/edit?week=${weekParam}`)}

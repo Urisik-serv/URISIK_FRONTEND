@@ -12,8 +12,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-dvh flex flex-col items-center">
-      <div className=" pt-[269px]">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-center">
+      <div className="">
         <img src={logo} alt="로그인 화면 로고" className="w-[240px] h-[80px]" />
         <div className="text-center justify-start pt-[36px]">
           <span className="text-neutral-500 text-xs font-normal  leading-4">
@@ -24,7 +24,7 @@ const LoginPage = () => {
           </span>
         </div>
       </div>
-      <div className="pt-[124px] flex flex-col items-center gap-[8px] w-[343px]">
+      <div className="fixed bottom-0 pb-[40px] flex flex-col items-center gap-[8px] w-[343px]">
         <button
           onClick={handleKakaoLogin}
           className="cursor-pointer self-stretch px-4 pt-[15px] pb-4 bg-[#FEE500] rounded-[10px] inline-flex justify-center items-center gap-3.5 h-[55px]"
