@@ -6,7 +6,7 @@ import AlertModal from "../../components/common/AlertModal";
 import { useAuth } from "../../hooks/use-auth";
 import { useProfileStore } from "../../stores/use-profile-store";
 import LeaderProfile from "../../assets/images/profile/leader-profile";
-import { roleMap, rolePicture } from "../../constants/profile-record";
+import { rolePicture } from "../../constants/profile-record";
 import BellIcon from "../../assets/mypage/bell.svg";
 import ListBox from "../../assets/mypage/list-box.svg";
 import Finance from "../../assets/mypage/finance.svg";
@@ -18,7 +18,7 @@ const MyPage = () => {
   const { LogoutMutate, LogoutIsPending } = useAuth();
   const { generation } = useNoticeList();
 
-  const myData = useProfileStore.getState().savedFormData;
+  const myData = useProfileStore((state) => state.savedFormData);
   const isLeader = useProfileStore().isLeader;
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +39,10 @@ const MyPage = () => {
     );
   }
 
+  const profileImageSrc = myData.profilePicUrl?.includes("no_profile_image")
+    ? rolePicture[myData.role]
+    : myData.profilePicUrl;
+
   return (
     <>
       <PublicHeader title="마이페이지" />
@@ -46,20 +50,9 @@ const MyPage = () => {
         <div className="flex justify-between  w-full">
           <div className="flex gap-[12px] items-end">
             {isLeader ? (
-              <LeaderProfile
-                href={
-                  useProfileStore.getState().savedFormData.profilePicUrl ??
-                  rolePicture[roleMap[myData.role]]
-                }
-              />
+              <LeaderProfile href={profileImageSrc as string} />
             ) : (
-              <img
-                src={
-                  useProfileStore.getState().savedFormData.profilePicUrl ??
-                  rolePicture[roleMap[myData.role]]
-                }
-                className="size-[80px] rounded-full"
-              />
+              <img src={profileImageSrc} className="size-[80px] rounded-full" />
             )}
             <div className="text-2xl font-semibold leading-[36px]">
               {myData.nickname}

@@ -69,7 +69,6 @@ export default function InviteEntry() {
   const handleAccept = () => {
     if (!getAccessToken()) {
       localStorage.setItem("loginRedirect", `/invite/${token}`);
-      console.log("redirect 저장:", `/invite/${token}`);
 
       navigate("/login");
       return;

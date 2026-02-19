@@ -62,25 +62,36 @@ export const useNoticeList = () => {
   };
 
   let generation;
-  const noticeList = data?.result.content.map((item) => {
-    let content;
-    if (item.type === "TEMPERATURE" && item.mealPlanGenerationCount !== null) {
-      const temp = getTemp(item.mealPlanGenerationCount);
-      generation = item.mealPlanGenerationCount;
-      content = noticeMap[item.type].content(temp);
-    } else {
-      content = noticeMap[item.type].content();
-    }
+  const noticeList = data?.result.content
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
+    .map((item) => {
+      let content;
 
-    return {
-      icon: noticeMap[item.type].icon,
-      title: noticeMap[item.type].title,
-      content: content,
-      ago: ago(item.createdAt),
-      isRead: item.isRead,
-      key: item.id,
-    };
-  });
+      if (
+        item.type === "TEMPERATURE" &&
+        item.mealPlanGenerationCount !== null
+      ) {
+        const temp = getTemp(item.mealPlanGenerationCount);
+        generation = item.mealPlanGenerationCount;
+        content = noticeMap[item.type].content(temp);
+      } else {
+        content = noticeMap[item.type].content();
+      }
+
+      return {
+        icon: noticeMap[item.type].icon,
+        title: noticeMap[item.type].title,
+        content,
+        ago: ago(item.createdAt),
+        createdAt: item.createdAt,
+        isRead: item.isRead,
+        key: item.id,
+      };
+    });
 
   return { noticeList, generation, isFetching, data, setSize };
 };
