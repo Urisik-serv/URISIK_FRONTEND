@@ -91,7 +91,7 @@ export default function MealPlanResult({
           onClick={onClick}
         >
           <img src={TryAgain} alt="다시 생성하기 아이콘" />
-          <p className="shrink-0">다시 생성하기</p>
+          <span className="shrink-0">다시 생성하기</span>
         </button>
       </div>
       <div className="flex gap-2 pt-12 pb-[27px] overflow-x-auto pr-4">
