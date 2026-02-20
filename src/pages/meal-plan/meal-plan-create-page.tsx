@@ -103,7 +103,7 @@ const MealPlanCreatePage = () => {
                     onChangeSelected={setDinnerSlots}
                   />
                 </div>
-                <div className="fixed bottom-11">
+                <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center pb-10">
                   <Button
                     text="식단 생성"
                     type="button"

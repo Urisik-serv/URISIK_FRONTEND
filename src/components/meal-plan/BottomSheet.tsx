@@ -213,7 +213,7 @@ export default function BottomSheet({
         <div ref={ref} className="h-2"></div>
       </div>
 
-      <div className="p-[10px]">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center pb-10">
         <Button
           text={isOpen ? "바꾸기" : "수정완료"}
           type="button"

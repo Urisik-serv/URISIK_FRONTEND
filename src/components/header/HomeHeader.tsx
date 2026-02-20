@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import headerLogo from "../../assets/logos/main-logo.svg";
-import shoppingCart from "../../assets/icons/shopping-outline.svg";
 import accountImg from "../../assets/icons/account-outline.svg";
 
 const HomeHeader = () => {
@@ -15,10 +14,6 @@ const HomeHeader = () => {
         onClick={() => navigate("/")}
       />
       <div className="flex justify-start items-center gap-3.5">
-        <div className="flex justify-center items-center w-8 h-8 cursor-pointer">
-          <img src={shoppingCart} alt="장바구니 아이콘" className="w-6 h-6" />
-        </div>
-        {/*장바구니 페이지로 이동은 아직 미구현*/}
         <div className="flex justify-center items-center w-8 h-8 cursor-pointer bg-zinc-100 rounded-2xl">
           <img
             src={accountImg}
