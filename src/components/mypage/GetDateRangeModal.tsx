@@ -152,7 +152,10 @@ export default function GetDateRangeModal({
           onClick={() => setCalendarOpen(false)}
           className="fixed inset-0 flex justify-center items-end z-50"
         >
-          <div className="flex flex-col w-full max-w-[400px]  bg-white rounded-t-3xl px-4 pt-4 pb-6 flex justify-center items-center">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex flex-col w-full max-w-[400px]  bg-white rounded-t-3xl px-4 pt-4 pb-6 flex justify-center items-center"
+          >
             <DayPicker
               weekStartsOn={1}
               mode="range"
