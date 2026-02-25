@@ -1,0 +1,25 @@
+language: ko
+
+reviews:
+  profile: assertive
+  auto_review:
+    enabled: true
+  path_instructions:
+    - path: "**/*.{ts,tsx,js,jsx}"
+      instructions: |
+        Follow the naming conventions defined in README.md.
+        - Query hooks must start with use and include domain context (e.g., useGetMealPlan)
+        - Constants must be UPPER_SNAKE_CASE
+        - Variables and functions must use camelCase
+        - Components must use PascalCase
+        Focus on:
+        - React Query best practices
+        - Zustand state management correctness
+        - Avoid unnecessary re-renders
+        - Strict TypeScript typing
+        - Proper error handling
+        - Naming convention consistency
+  path_filters:
+    - "!dist/**"
+    - "!node_modules/**"
+    - "!coverage/**"
