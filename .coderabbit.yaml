@@ -1,11 +1,9 @@
+language: ko
+
 reviews:
   profile: assertive
   auto_review:
     enabled: true
-language: ko
-  
-
-reviews:
   path_instructions:
     - path: "**/*.{ts,tsx,js,jsx}"
       instructions: |
