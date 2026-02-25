@@ -5,28 +5,23 @@ reviews:
 language: ko
   
 
-review_instructions: |
-  Follow the naming conventions defined in README.md.
-  - Query hooks must start with use and include domain context (e.g., useGetMealPlan)
-  - Constants must be UPPER_SNAKE_CASE
-  - Variables and functions must use camelCase
-  - Components must use PascalCase
-
-  Focus on:
-  - React Query best practices
-  - Zustand state management correctness
-  - Avoid unnecessary re-renders
-  - Strict TypeScript typing
-  - Proper error handling
-  - Naming convention consistency
-
-rules:
-  detect_security_issues: true
-  check_react_hooks: true
-  check_typescript_types: true
-  suggest_refactoring: true
-
-ignore:
-  - dist/**
-  - node_modules/**
-  - coverage/**
+reviews:
+  path_instructions:
+    - path: "**/*.{ts,tsx,js,jsx}"
+      instructions: |
+        Follow the naming conventions defined in README.md.
+        - Query hooks must start with use and include domain context (e.g., useGetMealPlan)
+        - Constants must be UPPER_SNAKE_CASE
+        - Variables and functions must use camelCase
+        - Components must use PascalCase
+        Focus on:
+        - React Query best practices
+        - Zustand state management correctness
+        - Avoid unnecessary re-renders
+        - Strict TypeScript typing
+        - Proper error handling
+        - Naming convention consistency
+  path_filters:
+    - "!dist/**"
+    - "!node_modules/**"
+    - "!coverage/**"
