@@ -56,6 +56,42 @@ pnpm run dev
 - `UPPER_CASE` : 상수
 - `kebab-case` : 파일,폴더 (컴포넌트 파일만 예외로  PascalCase로 설정)
 
+### 🥕 api 관련 네이밍 규칙
+- api 폴더 내 interface:
+    
+    응답-타입명+Response / 매개변수: 타입명+Params
+    
+- 함수: HTTP 메서드 종류+함수명
+  
+### 🥕 Import/order 규칙
+
+- react가 포함된 import가 가장 최상단에 위치하게 합니다.
+- 알파벳을 기준으로 오름차순으로 정렬됩니다.
+- 그룹사이에 최소 한 줄 이상의 줄 바꿈을 강제합니다.
+
+### 🥕 Export 규칙
+
+**컴포넌트**: 하단에 `default export`
+
+```tsx
+const ProductList = () => {
+  return <div>상품 리스트</div>;
+};
+
+export default ProductList;
+```
+
+**유틸 함수**: 각 함수를 `named export`
+
+```ts
+export const fetchItems = () => {
+  /* ... */
+};
+
+export const updateUser = () => {
+  /* ... */
+};
+```
 
 ## 🥕 기술 스택
 ###  Frontend
