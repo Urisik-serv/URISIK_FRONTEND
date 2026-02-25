@@ -1,7 +1,9 @@
 reviews:
-  auto_review: true
-  review_level: thorough
-  language: ko
+  profile: assertive
+  auto_review:
+    enabled: true
+language: ko
+  
 
 review_instructions: |
   Follow the naming conventions defined in README.md.
