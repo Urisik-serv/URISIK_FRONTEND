@@ -1,14 +1,10 @@
-import type { ReactElement } from "react";
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface ButtonType {
-  children: ReactElement | string;
+interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
   size: "Btn_L" | "Btn_M" | "Btn_S";
   variant: "primary" | "gray" | "transparent";
-  disabled?: boolean;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
-  className: string;
 }
 
 const SIZES = {
@@ -22,31 +18,30 @@ const VARIANTS = {
   transparent: "bg-transparent border-1 border-primary-700",
 };
 
-const Button = ({
-  children = "",
-  size = "Btn_M",
-  variant = "primary",
-  disabled = false,
-  onClick,
-  type,
-  className,
-}: ButtonType) => {
-  const sizeClass = SIZES[size];
-  const variantClass = VARIANTS[variant];
-  const disabledClass = disabled && "opacity-50 cursor-not-allowed";
-
-  return (
-    <button
-      onClick={onClick}
-      type={type}
-      disabled={disabled}
-      className={twMerge(
-        `rounded-xl flex justify-center items-center ${sizeClass} ${variantClass} ${disabledClass} ${className}`,
-      )}
-    >
-      {children}
-    </button>
-  );
-};
-
+const Button = forwardRef<HTMLButtonElement, ButtonType>(
+  (
+    { children, size = "Btn_M", variant = "primary", className, ...props },
+    ref,
+  ) => {
+    const sizeClass = SIZES[size];
+    const variantClass = VARIANTS[variant];
+    const disabledClass = props.disabled ? "opacity-50 cursor-not-allowed" : "";
+    return (
+      <button
+        ref={ref}
+        className={twMerge(
+          "rounded-xl flex justify-center items-center transition-colors",
+          sizeClass,
+          variantClass,
+          disabledClass,
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+Button.displayName = "Button";
 export default Button;
