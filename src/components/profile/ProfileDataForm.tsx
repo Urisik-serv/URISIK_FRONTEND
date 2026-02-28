@@ -258,7 +258,7 @@ export default function ProfileDataForm({
         <Button
           size="Btn_L"
           variant="primary"
-          type="button"
+          type="submit"
           className="w-[343px]"
           disabled={profileMutation.isPending}
         >
