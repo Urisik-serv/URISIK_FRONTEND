@@ -26,12 +26,12 @@ export default function Index() {
     };
 
     if (Platform.OS === "android") {
-      BackHandler.addEventListener("hardwareBackPress", onAndroidBackPress);
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onAndroidBackPress,
+      );
       return () => {
-        BackHandler.removeEventListener(
-          "hardwareBackPress",
-          onAndroidBackPress,
-        );
+        subscription.remove();
       };
     }
   }, [canGoBack]);
@@ -55,13 +55,13 @@ export default function Index() {
   };
 
   // 구글 로그인을 위한 User-Agent 속이기
-  const customUserAgent =
+  const CUSTOM_USER_AGENT =
     Platform.OS === "android"
       ? "Mozilla/5.0 (Linux; Android 13; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
       : "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1";
 
   // 팝업 창을 현재 창으로 강제 변환
-  const injectedJS = `
+  const INJECT_JS = `
     window.open = function(url, target, features) {
       window.location.href = url;
       return null;
@@ -86,9 +86,9 @@ export default function Index() {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         originWhitelist={["*"]} // 특수한 형태의 주소(ex. 카카오 로그인..)로 링크를 막지 않기 위해 -> 추후에 보한 강화시 수정 필요
-        userAgent={customUserAgent}
+        userAgent={CUSTOM_USER_AGENT}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
-        injectedJavaScript={injectedJS}
+        injectedJavaScript={INJECT_JS}
         setSupportMultipleWindows={false}
         onNavigationStateChange={(navState) => setCanGoBack(navState.canGoBack)}
       />
