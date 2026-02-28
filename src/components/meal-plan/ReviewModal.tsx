@@ -117,6 +117,16 @@ export default function ReviewModal({
             variant="primary"
             type="button"
             className="w-[343px]"
+            onClick={() => {
+              const reviewData: createReview = {
+                recipeId,
+                score,
+              };
+              if (preference !== null) {
+                reviewData.isFavorite = preference;
+              }
+              handleSubmitReview(reviewData);
+            }}
           >
             <span className="text-xl font-semibold leading-[22px]">등록</span>
           </Button>
