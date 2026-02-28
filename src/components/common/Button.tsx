@@ -11,13 +11,12 @@ interface ButtonType {
   className: string;
 }
 
-const sizes = {
+const SIZES = {
   Btn_L: "px-[10px] py-[16px]",
   Btn_S: "px-[24px] py-[6px]",
   Btn_M: "px-[10px] py-[16px]", // padding을 className에 직접 지정 가능
 };
-
-const variants = {
+const VARIANTS = {
   primary: "bg-primary-700 text-white",
   gray: "bg-gray-100",
   transparent: "bg-transparent border-1 border-primary-700",
@@ -32,8 +31,8 @@ const Button = ({
   type,
   className,
 }: ButtonType) => {
-  const sizeClass = sizes[size];
-  const variantClass = variants[variant];
+  const sizeClass = SIZES[size];
+  const variantClass = VARIANTS[variant];
   const disabledClass = disabled && "opacity-50 cursor-not-allowed";
 
   return (
