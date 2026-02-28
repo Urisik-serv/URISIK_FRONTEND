@@ -1,30 +1,53 @@
-import Pencil from "../../assets/icons/pencil-primary-500.svg";
+import type { ReactElement } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface ButtonProps {
-  onClick?: () => void;
-  text: string;
-  type: "button" | "submit" | "reset";
+interface ButtonType {
+  children: ReactElement | string;
+  size: "Btn_L" | "Btn_M" | "Btn_S";
+  variant: "primary" | "gray" | "transparent";
   disabled?: boolean;
-  bgColor?: "primary" | "white";
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  className: string;
 }
 
-export default function Button({
+const sizes = {
+  Btn_L: "px-[10px] py-[16px]",
+  Btn_S: "px-[24px] py-[6px]",
+  Btn_M: "px-[10px] py-[16px]", // padding을 className에 직접 지정 가능
+};
+
+const variants = {
+  primary: "bg-primary-700 text-white",
+  gray: "bg-gray-100",
+  transparent: "bg-transparent border-1 border-primary-700",
+};
+
+const Button = ({
+  children = "",
+  size = "Btn_M",
+  variant = "primary",
+  disabled = false,
   onClick,
-  text,
   type,
-  disabled,
-  bgColor = "primary",
-}: ButtonProps) {
+  className,
+}: ButtonType) => {
+  const sizeClass = sizes[size];
+  const variantClass = variants[variant];
+  const disabledClass = disabled && "opacity-50 cursor-not-allowed";
+
   return (
     <button
-      className={`w-[343px] px-[10px] py-[16px] flex items-center justify-center gap-[10px] rounded-xl font-semibold text-[20px] leading-[22px] text-center cursor-pointer
-        ${bgColor == "primary" ? "bg-primary-700 text-white" : "bg-white text-primary-500 border border-primary-500"}`}
       onClick={onClick}
       type={type}
       disabled={disabled}
+      className={twMerge(
+        `rounded-xl flex justify-center items-center ${sizeClass} ${variantClass} ${disabledClass} ${className}`,
+      )}
     >
-      {bgColor === "white" && <img src={Pencil} />}
-      {text}
+      {children}
     </button>
   );
-}
+};
+
+export default Button;
