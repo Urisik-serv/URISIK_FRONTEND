@@ -256,10 +256,16 @@ export default function ProfileDataForm({
 
       <div className="pt-[5px] pb-10">
         <Button
-          text={profileMutation.isPending ? "처리 중..." : "완료"}
-          type="submit"
+          size="Btn_L"
+          variant="primary"
+          type="button"
+          className="w-[343px]"
           disabled={profileMutation.isPending}
-        />
+        >
+          <span className="text-xl font-semibold leading-[22px]">
+            {profileMutation.isPending ? "처리 중..." : "완료"}
+          </span>
+        </Button>
       </div>
     </form>
   );

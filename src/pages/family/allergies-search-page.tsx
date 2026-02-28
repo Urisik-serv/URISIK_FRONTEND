@@ -60,7 +60,15 @@ export default function AllergiesSearchPage() {
             </div>
           </div>
           <div className="pt-[420px]">
-            <Button text={"완료"} type="submit" onClick={handleComplete} />
+            <Button
+              size="Btn_L"
+              variant="primary"
+              onClick={handleComplete}
+              type="button"
+              className="w-[343px]"
+            >
+              <span className="text-xl font-semibold leading-[22px]">완료</span>
+            </Button>
           </div>
         </div>
       </div>

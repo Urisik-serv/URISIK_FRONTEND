@@ -215,16 +215,15 @@ export default function BottomSheet({
 
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center pb-10">
         <Button
-          text={isOpen ? "바꾸기" : "수정완료"}
+          size="Btn_L"
+          variant="primary"
           type="button"
-          onClick={() => {
-            if (isOpen) {
-              handleChange();
-            } else {
-              setIsModalOpen(true);
-            }
-          }}
-        />
+          className="w-[343px]"
+        >
+          <span className="text-xl font-semibold leading-[22px]">
+            {isOpen ? "바꾸기" : "수정완료"}
+          </span>
+        </Button>
       </div>
     </div>
   );

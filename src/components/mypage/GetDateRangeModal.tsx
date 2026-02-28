@@ -143,7 +143,15 @@ export default function GetDateRangeModal({
             <DateBlock date={to} />
           </div>
           <div className="pt-[25px]">
-            <Button text={"적용"} type="button" onClick={handleFinalApply} />
+            <Button
+              size="Btn_L"
+              variant="primary"
+              type="button"
+              className="w-[343px]"
+              onClick={handleFinalApply}
+            >
+              <span className="text-xl font-semibold leading-[22px]">적용</span>
+            </Button>
           </div>
         </div>
       </div>
@@ -163,7 +171,17 @@ export default function GetDateRangeModal({
               onSelect={handleSelect}
             />
             <div className="pt-4">
-              <Button text="선택" type="button" onClick={handleApplyDate} />
+              <Button
+                size="Btn_L"
+                variant="primary"
+                type="button"
+                className="w-[343px]"
+                onClick={handleApplyDate}
+              >
+                <span className="text-xl font-semibold leading-[22px]">
+                  선택
+                </span>
+              </Button>
             </div>
           </div>
         </div>

@@ -122,13 +122,17 @@ export default function TermsAgreementPage() {
           />
         </div>
       </div>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center pb-10">
+      <div className="flex justify-center pt-[159px]">
         <Button
-          text={`다음`}
-          type="button"
-          disabled={!isValid || isAgreeing}
+          size="Btn_L"
+          variant="primary"
           onClick={handleSubmit}
-        />
+          type="button"
+          className="w-[343px]"
+          disabled={!isValid || isAgreeing}
+        >
+          <span className="text-xl font-semibold leading-[22px]">다음</span>
+        </Button>
       </div>
     </div>
   );

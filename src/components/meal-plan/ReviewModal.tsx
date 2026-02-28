@@ -113,19 +113,13 @@ export default function ReviewModal({
         </div>
         <div className="w-full p-[10px] flex justify-center">
           <Button
+            size="Btn_L"
+            variant="primary"
             type="button"
-            text="등록"
-            onClick={() => {
-              const reviewData: createReview = {
-                recipeId,
-                score,
-              };
-              if (preference !== null) {
-                reviewData.isFavorite = preference;
-              }
-              handleSubmitReview(reviewData);
-            }}
-          />
+            className="w-[343px]"
+          >
+            <span className="text-xl font-semibold leading-[22px]">등록</span>
+          </Button>
         </div>
       </div>
     </div>
