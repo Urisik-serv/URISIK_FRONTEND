@@ -3,8 +3,8 @@ import { twMerge } from "tailwind-merge";
 
 interface ButtonType extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  size: "Btn_L" | "Btn_M" | "Btn_S";
-  variant: "primary" | "gray" | "transparent";
+  size?: "Btn_L" | "Btn_M" | "Btn_S";
+  variant?: "primary" | "gray" | "transparent";
 }
 
 const SIZES = {
@@ -20,7 +20,7 @@ const VARIANTS = {
 
 const Button = forwardRef<HTMLButtonElement, ButtonType>(
   (
-    { children, size = "Btn_M", variant = "primary", className, ...props },
+    { children, size = "Btn_L", variant = "primary", className, ...props },
     ref,
   ) => {
     const sizeClass = SIZES[size];

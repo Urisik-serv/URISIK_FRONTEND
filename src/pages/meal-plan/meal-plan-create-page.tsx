@@ -109,7 +109,7 @@ const MealPlanCreatePage = () => {
                     variant="primary"
                     type="button"
                     className="w-[343px]"
-                    onClick={() => handleCreate()}
+                    onClick={handleCreate}
                   >
                     <span className="text-xl font-semibold leading-[22px]">
                       식단 생성
