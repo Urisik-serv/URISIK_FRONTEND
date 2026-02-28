@@ -85,7 +85,7 @@ export default function Index() {
         style={styles.webview}
         javaScriptEnabled={true}
         domStorageEnabled={true}
-        originWhitelist={["*"]}
+        originWhitelist={["*"]} // 특수한 형태의 주소(ex. 카카오 로그인..)로 링크를 막지 않기 위해 -> 추후에 보한 강화시 수정 필요
         userAgent={customUserAgent}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         injectedJavaScript={injectedJS}
