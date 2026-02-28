@@ -219,6 +219,7 @@ export default function BottomSheet({
           variant="primary"
           type="button"
           className="w-[343px]"
+          onClick={handleChange}
         >
           <span className="text-xl font-semibold leading-[22px]">
             {isOpen ? "바꾸기" : "수정완료"}
