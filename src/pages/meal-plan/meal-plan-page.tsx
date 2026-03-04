@@ -135,14 +135,14 @@ export default MealPlanPage;
 function TodayMealTab({ data }: { data: TodayMeal }) {
   const [isDone, setIsDone] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const handleOpen = () => setIsOpen(false);
+  const handleClose = () => setIsOpen(false);
   return (
     <>
       <div className="flex justify-between items-center pt-3">
         {isOpen && (
           <ReviewModal
             recipeId={data.id}
-            onClick={handleOpen}
+            onClick={handleClose}
             type={data.type}
           />
         )}
