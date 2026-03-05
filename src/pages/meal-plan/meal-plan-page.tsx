@@ -16,7 +16,6 @@ import { useProfileStore } from "../../stores/use-profile-store";
 import { getNextMonday, getThisMonday, getWeekOfMonth } from "../../utils/date";
 import useGetWeekMealPlan from "../../hooks/queries/use-get-week-meal";
 import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
-import ListHeader from "../../components/meal-plan/ListHeader";
 import CalendarChipS from "../../components/meal-plan/CalendarChip/CalendarChipS";
 import DateMenuList from "../../components/meal-plan/DateMenuList";
 import usePostReview from "../../hooks/mutations/use-post-review";
@@ -275,7 +274,12 @@ function WeekMealTab({ weekType }: { weekType: "THISWEEK" | "NEXTWEEK" }) {
   return (
     <>
       <div className="pt-[33px] pb-[11px]">
-        <ListHeader title={`${month}월 ${weekKor}`} date={listHeaderDate} />
+        <div className="flex px-[10px] py-1 rounded-lg text-4 gap-2 bg-white">
+          <p className="font-semibold text-gray-700 text-[16px]">{`${month}월 ${weekKor}`}</p>
+          <p className="font-medium text-gray-500 text-[16px]">
+            {listHeaderDate}
+          </p>
+        </div>
       </div>
       <div className="flex flex-col gap-3 pb-30">
         {futureDays.map((day) => {
