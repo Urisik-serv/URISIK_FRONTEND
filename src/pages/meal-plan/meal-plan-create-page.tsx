@@ -1,9 +1,12 @@
 import Button from "../../components/common/Button";
-import ChooseWeek from "../../components/meal-plan/ChooseWeek";
 import MemberMealPlanView from "../../components/meal-plan/MemberMealPlanView";
 import PublicHeader from "../../components/header/PublicHeader";
-import { useState } from "react";
-import type { CreateMealPlan, SlotRequest } from "../../types/meal-plan";
+import { useEffect, useState } from "react";
+import type {
+  CreateMealPlan,
+  DayOfWeek,
+  SlotRequest,
+} from "../../types/meal-plan";
 import { postCreateMealPlans } from "../../api/meal-plan";
 import { useFamilyStore } from "../../stores/use-family-store";
 import MealPlanResult from "../../components/meal-plan/MealPlanResult";
@@ -14,6 +17,7 @@ import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
 import { useProfileStore } from "../../stores/use-profile-store";
+import CalendarChipS from "../../components/meal-plan/CalendarChip/CalendarChipS";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
@@ -151,3 +155,55 @@ const MealPlanCreatePage = () => {
 };
 
 export default MealPlanCreatePage;
+
+type ChooseWeekProps = {
+  mealTime: "점심" | "저녁";
+  onChangeSelected: (slots: SlotRequest[]) => void;
+};
+
+const week: { label: string; value: DayOfWeek }[] = [
+  { label: "월", value: "MONDAY" },
+  { label: "화", value: "TUESDAY" },
+  { label: "수", value: "WEDNESDAY" },
+  { label: "목", value: "THURSDAY" },
+  { label: "금", value: "FRIDAY" },
+  { label: "토", value: "SATURDAY" },
+  { label: "일", value: "SUNDAY" },
+];
+
+function ChooseWeek({ mealTime, onChangeSelected }: ChooseWeekProps) {
+  const mealType = mealTime === "점심" ? "LUNCH" : "DINNER";
+
+  const [selectedDays, setSelectedDays] = useState<DayOfWeek[]>([]);
+
+  const toggleDay = (day: DayOfWeek) => {
+    setSelectedDays((prev) =>
+      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day],
+    );
+  };
+
+  useEffect(() => {
+    const slots: SlotRequest[] = selectedDays.map((d) => ({
+      dayOfWeek: d,
+      mealType,
+    }));
+    onChangeSelected(slots);
+  }, [selectedDays, mealType, onChangeSelected]);
+
+  return (
+    <div>
+      <p className="text-[18px] font-medium">{mealTime} 식사</p>
+      <div className="flex gap-3 pt-3">
+        {week.map((day, idx) => (
+          <CalendarChipS
+            key={idx}
+            text={day.label}
+            type="select"
+            isSelect={selectedDays.includes(day.value)}
+            onClick={() => toggleDay(day.value)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
