@@ -1,5 +1,4 @@
 import Button from "../../components/common/Button";
-import MemberMealPlanView from "../../components/meal-plan/MemberMealPlanView";
 import PublicHeader from "../../components/header/PublicHeader";
 import { useEffect, useState } from "react";
 import type {
@@ -18,6 +17,7 @@ import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
 import { useProfileStore } from "../../stores/use-profile-store";
 import CalendarChipS from "../../components/meal-plan/CalendarChip/CalendarChipS";
+import Background from "../../assets/icons/member-meal-background.svg";
 
 const MealPlanCreatePage = () => {
   const [step, setStep] = useState<"create" | "result">("create");
@@ -204,6 +204,21 @@ function ChooseWeek({ mealTime, onChangeSelected }: ChooseWeekProps) {
           />
         ))}
       </div>
+    </div>
+  );
+}
+
+//방장이 아닌 가족원이 이 페이지에 진입했을 때
+function MemberMealPlanView() {
+  return (
+    <div className="flex flex-col items-center justify-center pt-35">
+      <p className="font-semibold text-primary-700 text-[14px] pb-4">
+        방장이 식단을 생성하고 있어요.
+      </p>
+      <p className="font-medium text-[#4d4d4d] text-[18px] text-center whitespace-pre-line pb-10">
+        가족원의 위시리스트를 기반으로 {"\n"}다음주 식단이 생성돼요.
+      </p>
+      <img src={Background} alt="가족원 식단화면 배경 아이콘" />
     </div>
   );
 }
