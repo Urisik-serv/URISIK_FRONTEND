@@ -16,7 +16,7 @@ import { useProfileStore } from "../../stores/use-profile-store";
 import { getNextMonday, getThisMonday, getWeekOfMonth } from "../../utils/date";
 import useGetWeekMealPlan from "../../hooks/queries/use-get-week-meal";
 import { changeAdditionalProp } from "../../utils/changeAdditionalProp";
-import CalendarChipS from "../../components/meal-plan/CalendarChip/CalendarChipS";
+import CalendarChipS from "../../components/chip/CalendarChip/CalendarChipS";
 import DateMenuList from "../../components/meal-plan/DateMenuList";
 import usePostReview from "../../hooks/mutations/use-post-review";
 import type { createReview } from "../../types/review";

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PublicHeader from "../../components/header/PublicHeader";
-import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM";
-import MenuChip from "../../components/meal-plan/MenuChip";
+import CalendarChipM from "../../components/chip/CalendarChip/CalendarChipM";
+import MenuChip from "../../components/chip/MenuChip";
 import { useSearchParams } from "react-router-dom";
 import {
   type Updates,

@@ -16,10 +16,10 @@ import { getNextMonday, getThisMonday } from "../../utils/date";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
 import { useProfileStore } from "../../stores/use-profile-store";
-import CalendarChipS from "../../components/meal-plan/CalendarChip/CalendarChipS";
+import CalendarChipS from "../../components/chip/CalendarChip/CalendarChipS";
 import Background from "../../assets/icons/member-meal-background.svg";
-import CalendarChipM from "../../components/meal-plan/CalendarChip/CalendarChipM";
-import MenuChip from "../../components/meal-plan/MenuChip";
+import CalendarChipM from "../../components/chip/CalendarChip/CalendarChipM";
+import MenuChip from "../../components/chip/MenuChip";
 import TryAgain from "../../assets/icons/try-again.svg";
 
 const MealPlanCreatePage = () => {
