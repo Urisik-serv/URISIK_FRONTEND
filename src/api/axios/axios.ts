@@ -53,6 +53,7 @@ axiosInstance.interceptors.response.use(
         if (reissueRes.result.needAgreement) {
           // 약관동의 안 돼있을 경우 약관동의로 리다이렉트
           window.location.href = "/agreement";
+          return Promise.reject(new Error("Agreement required"));
         }
         return axiosInstance(originalRequest);
       } catch (refreshError) {
