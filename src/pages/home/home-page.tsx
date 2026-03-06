@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import SearchBar from "../../components/common/SearchBar";
 import UpButton from "../../components/common/UpButton";
 import HomeHeader from "../../components/header/HomeHeader";
-import AllergyCuration from "../../components/home/curation/AllergyCuration";
 import MealCuration from "../../components/home/curation/MealCuration";
 import ProfileModal from "../../components/home/profile/ProfileModal";
 import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
@@ -27,6 +26,15 @@ import { useGetFamilyProfiles } from "../../hooks/queries/use-get-family-profile
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import HomeProfileCard from "../../components/home/profile/HomeProfileCard";
 import FamilyProfilesSkeleton from "../../components/skeltons/FamilyProfilesSkeleton";
+
+// AllergyCuration import
+import { Swiper as SwiperType } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import useGetRecommendSafe from "../../hooks/queries/use-get-safe-recipes";
+import AllergyCardSkeleton from "../../components/skeltons/AllergyCardSkeleton";
+import AllergyCard from "../../components/home/curation/AllergyCard";
+import PageIndicator from "../../components/common/PageIndicator";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -219,6 +227,61 @@ const FoodCard = ({ name, onClick, isSelected }: FoodCardProps) => {
       <p className="text-center text-neutral-700 text-base font-semibold leading-6">
         {name}
       </p>
+    </div>
+  );
+};
+
+// AllergyCuration
+const AllergyCuration = () => {
+  // 슬라이드 효과
+  const [activePage, setActivePage] = useState(1);
+  const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
+  const handlePage = (pageNum: number) => {
+    if (swiperRef) {
+      swiperRef.slideToLoop(pageNum - 1);
+    }
+    setActivePage(pageNum);
+  };
+
+  const { data, isLoading } = useGetRecommendSafe();
+
+  return (
+    <div>
+      <div className="pb-4">
+        <h2 className="pt-[31px] text-zinc-800 text-xl font-semibold tracking-tight">
+          같은 알레르기 가족에게 인기 메뉴
+        </h2>
+        <p className="text-neutral-400 text-sm font-medium leading-6">
+          같은 알레르기를 소유한 가족원들 사이에서 인기가 많아요.
+        </p>
+      </div>
+      {isLoading ? (
+        <AllergyCardSkeleton />
+      ) : (
+        data && (
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={16}
+            slidesPerView={1}
+            loop={true}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            onSwiper={(swiper) => setSwiperRef(swiper)}
+            onSlideChange={(swiper) => setActivePage(swiper.realIndex + 1)}
+            className="pb-2"
+          >
+            {data?.recipes.map((recipe) => (
+              <SwiperSlide>
+                <AllergyCard key={recipe.id} recipe={recipe} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )
+      )}
+      {!isLoading && (
+        <div className="flex justify-center pt-2">
+          <PageIndicator page={activePage} total={3} onClick={handlePage} />
+        </div>
+      )}
     </div>
   );
 };

@@ -129,22 +129,23 @@ export interface ResponseSearchRecipes extends BaseResponse<SearchRecipesItems> 
 
 export interface ResponseExternalRecipes extends BaseResponse<ExternalRecipes> {}
 
+// 추천 레시피 response
+export interface SafeRecipe {
+  id: string;
+  title: string;
+  imageUrl: string;
+  description: string;
+  category: string;
+  avgScore: number;
+  reviewCount: number;
+  wishCount: number;
+  transformed: boolean;
+  safe: boolean;
+}
+
 //홈 화면 추천 레시피(상단)
 export interface RecommendSafeRecipes {
-  recipes: [
-    {
-      id: string;
-      title: string;
-      imageUrl: string;
-      description: string;
-      category: string;
-      avgScore: number;
-      reviewCount: number;
-      wishCount: number;
-      transformed: boolean;
-      safe: boolean;
-    },
-  ];
+  recipes: SafeRecipe[];
 }
 
 export type ResponseRecommendSafe = BaseResponse<RecommendSafeRecipes>;
