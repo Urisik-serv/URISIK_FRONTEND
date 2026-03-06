@@ -1,4 +1,4 @@
-const AllergyCardSkeleton = () => {
+const AllergyRecipeCardSkeleton = () => {
   return (
     <div className="w-full py-3 px-2.5 rounded-xl border-2 border-gray-100 animate-pulse bg-white animate-pulse">
       <div className="flex justify-between items-center h-32">
@@ -22,4 +22,4 @@ const AllergyCardSkeleton = () => {
   );
 };
 
-export default AllergyCardSkeleton;
+export default AllergyRecipeCardSkeleton;

@@ -3,10 +3,10 @@ import HeartFull from "../../../assets/icons/heart-full.svg";
 import { useNavigate } from "react-router-dom";
 import type { SafeRecipe } from "../../../types/recipes";
 
-interface AllergyCardProps {
+interface AllergyRecipeCardProps {
   recipe: SafeRecipe;
 }
-const AllergyCard = ({ recipe }: AllergyCardProps) => {
+const AllergyRecipeCard = ({ recipe }: AllergyRecipeCardProps) => {
   const navigate = useNavigate();
   const handleClick = async () => {
     const numId = Number(recipe.id);
@@ -46,4 +46,4 @@ const AllergyCard = ({ recipe }: AllergyCardProps) => {
   );
 };
 
-export default AllergyCard;
+export default AllergyRecipeCard;

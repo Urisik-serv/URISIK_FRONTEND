@@ -28,13 +28,13 @@ import HomeProfileCard from "../../components/home/profile/HomeProfileCard";
 import FamilyProfilesSkeleton from "../../components/skeltons/FamilyProfilesSkeleton";
 
 // AllergyCuration import
+import AllergyRecipeCard from "../../components/home/curation/AllergyRecipeCard";
+import AllergyRecipeCardSkeleton from "../../components/skeltons/AllergyCardSkeleton";
+import { Autoplay } from "swiper/modules";
+import PageIndicator from "../../components/common/PageIndicator";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import useGetRecommendSafe from "../../hooks/queries/use-get-safe-recipes";
-import AllergyCardSkeleton from "../../components/skeltons/AllergyCardSkeleton";
-import AllergyCard from "../../components/home/curation/AllergyCard";
-import PageIndicator from "../../components/common/PageIndicator";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -256,7 +256,7 @@ const AllergyCuration = () => {
         </p>
       </div>
       {isLoading ? (
-        <AllergyCardSkeleton />
+        <AllergyRecipeCardSkeleton />
       ) : (
         data && (
           <Swiper
@@ -271,7 +271,7 @@ const AllergyCuration = () => {
           >
             {data?.recipes.map((recipe) => (
               <SwiperSlide>
-                <AllergyCard key={recipe.id} recipe={recipe} />
+                <AllergyRecipeCard key={recipe.id} recipe={recipe} />
               </SwiperSlide>
             ))}
           </Swiper>
