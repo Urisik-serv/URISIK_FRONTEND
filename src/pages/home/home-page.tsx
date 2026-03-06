@@ -1,15 +1,14 @@
+import AlertModal from "../../components/common/AlertModal";
 import { useEffect, useState } from "react";
 import SearchBar from "../../components/common/SearchBar";
 import UpButton from "../../components/common/UpButton";
 import HomeHeader from "../../components/header/HomeHeader";
 import AllergyCuration from "../../components/home/curation/AllergyCuration";
 import MealCuration from "../../components/home/curation/MealCuration";
-import FamilyProfile from "../../components/home/profile/FamilyProfile";
 import ProfileModal from "../../components/home/profile/ProfileModal";
 import { useProfileModalInfo } from "../../hooks/use-profile-modal-store";
 import SearchingPage from "./search-page";
 import { useLocation, useNavigate } from "react-router-dom";
-import AlertModal from "../../components/common/AlertModal";
 import { usePatchAlarm } from "../../hooks/queries/use-patch-alarm";
 import { useFamilyData } from "../../hooks/use-family-data";
 import { useGetProfile } from "../../hooks/queries/use-get-profile";
@@ -17,10 +16,17 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import { useProfileStore } from "../../stores/use-profile-store";
 import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
 
+//FoodCard import
 import Rice from "../../assets/category/rice.svg";
 import Soup from "../../assets/category/soup.svg";
 import Banchan from "../../assets/category/banchan.svg";
 import Dessert from "../../assets/category/dessert.svg";
+
+// FamilyProfiles import
+import { useGetFamilyProfiles } from "../../hooks/queries/use-get-family-profiles";
+import { useMyProfileStore } from "../../stores/use-my-profile-store";
+import HomeProfileCard from "../../components/home/profile/HomeProfileCard";
+import FamilyProfilesSkeleton from "../../components/skeltons/FamilyProfilesSkeleton";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -144,13 +150,58 @@ const HomePage = () => {
 
 export default HomePage;
 
+// FamilyProfile
+const FamilyProfile = () => {
+  const navigate = useNavigate();
+  const familyRoomId = useFamilyStore.getState().familyRoomId;
+
+  const { data: myFamily = [], isPending } = useGetFamilyProfiles(familyRoomId);
+  const fetchMyProfile = useMyProfileStore((state) => state.fetchMyProfile);
+  const myNickName = useMyProfileStore((state) => state.nickname);
+  useEffect(() => {
+    if (familyRoomId === null) return;
+
+    // myProfileStore 채우기
+    fetchMyProfile(familyRoomId);
+  }, [familyRoomId, fetchMyProfile]);
+
+  const sortedFamily = [...myFamily].sort((a, b) => {
+    if (a.nickname === myNickName) return -1;
+    if (b.nickname === myNickName) return 1;
+    return 0;
+  });
+
+  return (
+    <div className="w-full  px-4 pt-5 pb-3 bg-white rounded-xl outline-1 outline-stone-300 flex flex-col justify-start items-center gap-3  ">
+      <p className="self-stretch justify-start text-black text-lg font-medium leading-7">
+        우리가족 프로필
+      </p>
+      <div className="flex self-stretch items-center gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
+        {isPending ? (
+          <FamilyProfilesSkeleton />
+        ) : (
+          sortedFamily?.map((profile) => (
+            <HomeProfileCard key={profile.profileId} data={profile} />
+          ))
+        )}
+      </div>
+      <button
+        onClick={() => navigate("family-wishlist")}
+        className="self-stretch px-2.5 py-3 text-white text-[17px] font-semibold bg-primary-700 rounded-xl justify-center items-center cursor-pointer"
+      >
+        가족 위시리스트
+      </button>
+    </div>
+  );
+};
+
+// FoodCard
 const categoryImages: Record<string, string> = {
   밥: Rice,
   국: Soup,
   반찬: Banchan,
   후식: Dessert,
 };
-
 interface FoodCardProps {
   name: string;
   onClick: () => void;
