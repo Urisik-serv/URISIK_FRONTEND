@@ -4,8 +4,11 @@ import { LOCAL_STORAGE_KEY } from "../../constants/key";
 import { postLogout, postReissue } from "../auth";
 import toast from "react-hot-toast";
 
+const isDev = import.meta.env.DEV;
+const BASE_URL = isDev ? "" : import.meta.env.VITE_API_BASE_URL;
+
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "",
+  baseURL: BASE_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
