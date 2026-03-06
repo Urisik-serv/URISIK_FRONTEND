@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProfiles } from "../../api/family-profile";
 
-export const useFamilyProfiles = (familyRoomId: number | null) => {
+export const useGetFamilyProfiles = (familyRoomId: number | null) => {
   return useQuery({
     queryKey: ["familyProfiles", familyRoomId],
     queryFn: async () => {
