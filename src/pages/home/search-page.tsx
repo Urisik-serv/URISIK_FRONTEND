@@ -4,7 +4,7 @@ import ElementButton from "../../components/common/ElementButton";
 import RankButton from "../../components/common/RankButton";
 import SearchBar from "../../components/common/SearchBar";
 import useDebounce from "../../hooks/use-debounce";
-import MealCard from "../../components/home/curation/MealCard";
+import MealRecipeCard from "../../components/cards/MealRecipeCard";
 import useGetSearchRecipes from "../../hooks/queries/use-get-search-recipes";
 import { useRecentSearch } from "../../hooks/use-recent-search";
 import { useFamilyStore } from "../../stores/use-family-store";
@@ -17,7 +17,7 @@ import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import { formatRankingTime } from "../../utils/date";
 import alertImage from "../../assets/images/alert-circle.png";
-import MealCardSkeleton from "../../components/skeltons/MealCardSkeleton";
+import MealRecipeCardSkeleton from "../../components/skeltons/MealRecipeCardSkeleton";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -141,12 +141,12 @@ const SearchingPage = () => {
           {isSearching ? (
             <>
               {Array.from({ length: 5 }).map((_, index) => (
-                <MealCardSkeleton key={index} />
+                <MealRecipeCardSkeleton key={index} />
               ))}
             </>
           ) : recipes?.result.items && recipes.result.items.length > 0 ? (
             recipes?.result.items.map((item) => (
-              <MealCard
+              <MealRecipeCard
                 key={item.id}
                 id={item.id}
                 title={item.title}

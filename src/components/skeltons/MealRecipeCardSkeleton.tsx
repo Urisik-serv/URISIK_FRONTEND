@@ -1,4 +1,4 @@
-const MealCardSkeleton = () => {
+const MealRecipeCardSkeleton = () => {
   return (
     <div className="flex py-4 w-full gap-5 animate-pulse">
       <div className="w-32 h-32 bg-gray-200 rounded-xl shrink-0" />
@@ -22,4 +22,4 @@ const MealCardSkeleton = () => {
   );
 };
 
-export default MealCardSkeleton;
+export default MealRecipeCardSkeleton;

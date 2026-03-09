@@ -27,7 +27,7 @@ import HomeProfileCard from "../../components/home/profile/HomeProfileCard";
 import FamilyProfilesSkeleton from "../../components/skeltons/FamilyProfilesSkeleton";
 
 // AllergyCuration import
-import AllergyRecipeCard from "../../components/home/curation/AllergyRecipeCard";
+import AllergyRecipeCard from "../../components/cards/AllergyRecipeCard";
 import AllergyRecipeCardSkeleton from "../../components/skeltons/AllergyCardSkeleton";
 import { Autoplay } from "swiper/modules";
 import PageIndicator from "../../components/common/PageIndicator";
@@ -41,9 +41,9 @@ import MenuDown from "../../assets/icons/menu-down.svg";
 import MenuUp from "../../assets/icons/menu-up.svg";
 import SampleImg from "../../assets/sample/shrimp-mushroom.png";
 import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
-import MealCardSkeleton from "../../components/skeltons/MealCardSkeleton";
-import MealCard from "../../components/home/curation/MealCard";
+import MealRecipeCardSkeleton from "../../components/skeltons/MealRecipeCardSkeleton";
 import SelectionModal from "../../components/common/SelectionModal";
+import MealRecipeCard from "../../components/cards/MealRecipeCard";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -335,13 +335,13 @@ const MealCuration = ({ category }: MealCurationProps) => {
       </div>
       {isLoading ? (
         <>
-          <MealCardSkeleton />
-          <MealCardSkeleton />
-          <MealCardSkeleton />
+          <MealRecipeCardSkeleton />
+          <MealRecipeCardSkeleton />
+          <MealRecipeCardSkeleton />
         </>
       ) : data?.recipes && data.recipes.length > 0 ? (
         data.recipes.map((recipe) => (
-          <MealCard
+          <MealRecipeCard
             key={recipe.id}
             id={recipe.id}
             shortDescription={recipe.description}

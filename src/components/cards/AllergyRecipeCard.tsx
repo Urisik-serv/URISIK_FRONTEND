@@ -1,7 +1,7 @@
 import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
 import HeartFull from "../../../assets/icons/heart-full.svg";
 import { useNavigate } from "react-router-dom";
-import type { SafeRecipe } from "../../../types/recipes";
+import type { SafeRecipe } from "../../types/recipes";
 
 interface AllergyRecipeCardProps {
   recipe: SafeRecipe;
