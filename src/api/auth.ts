@@ -1,13 +1,20 @@
+import axios from "axios";
 import type { LogoutResponse, ReissueResponse } from "../types/auth";
-import { axiosInstance } from "./axios/axios";
 
 export const postReissue = async (): Promise<ReissueResponse> => {
-  const { data } =
-    await axiosInstance.post<ReissueResponse>("/api/auth/reissue");
+  const { data } = await axios.post<ReissueResponse>(
+    `${import.meta.env.VITE_API_BASE_URL}/api/auth/reissue`,
+    {
+      withCredentials: true,
+    },
+  );
   return data;
 };
 
 export const postLogout = async (): Promise<LogoutResponse> => {
-  const { data } = await axiosInstance.post<LogoutResponse>("/api/auth/logout");
+  const { data } = await axios.post<LogoutResponse>(
+    `${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`,
+    { withCredentials: true },
+  );
   return data;
 };

@@ -19,7 +19,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const { getItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
-    let accessToken = getItem();
+    const accessToken = getItem();
 
     // accessToken이 존재하면 Authorization 헤더에 Bearer 토큰 형식으로 추가한다
     if (accessToken) {
