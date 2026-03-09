@@ -22,6 +22,7 @@ import MealRecipeCardSkeleton from "../../components/skeltons/MealRecipeCardSkel
 import Up from "../..//assets/icons/up-icon.svg";
 import Down from "../../assets/icons/down-icon.svg";
 import Same from "../../assets/icons/same-icon.svg";
+import useGetPopularSearch from "../../hooks/queries/use-get-popular-search";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -49,7 +50,8 @@ const SearchingPage = () => {
   const [recommend, setRecommend] = useState<RecommendSearch>();
 
   // 인기검색어 TOP8
-  const [popular, setPopular] = useState<PopularSearches>();
+  const { data: popularSearches, isPending: popularSearchPending } =
+    useGetPopularSearch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,15 +60,6 @@ const SearchingPage = () => {
         setRecommend(recommendData.result);
       } catch (error) {
         console.warn("추천 검색어 로딩 실패 :", error);
-      }
-
-      try {
-        await postPopularSearch();
-        const popularData = await getPopularSearch();
-        setPopular(popularData.result);
-        console.log("인기 검색어 로딩 성공:", popularData.result);
-      } catch (error) {
-        console.error("인기 검색어 로딩 실패:", error);
       }
     };
 
@@ -122,22 +115,26 @@ const SearchingPage = () => {
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
               인기 검색어
             </p>
-            <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4">
-              <p className="text-neutral-400 text-xs font-normal leading-4">
-                {formatRankingTime(popular?.windowEnd)}
-              </p>
-              <div className="grid grid-rows-4 grid-flow-col grid-cols-2 gap-x-10.5 gap-y-4 w-full">
-                {popular?.keywords.slice(0, 8).map((item) => (
-                  <RankButton
-                    key={item.keyword}
-                    rank={item.rank}
-                    change={item.change}
-                    name={item.keyword}
-                    onClick={() => setKeyword(item.keyword)}
-                  />
-                ))}
+            {popularSearchPending ? (
+              <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4 animate-pulse"></div>
+            ) : (
+              <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4">
+                <p className="text-neutral-400 text-xs font-normal leading-4">
+                  {formatRankingTime(popularSearches?.windowEnd)}
+                </p>
+                <div className="grid grid-rows-4 grid-flow-col grid-cols-2 gap-x-10.5 gap-y-4 w-full">
+                  {popularSearches?.keywords.slice(0, 8).map((item) => (
+                    <RankButton
+                      key={item.keyword}
+                      rank={item.rank}
+                      change={item.change}
+                      name={item.keyword}
+                      onClick={() => setKeyword(item.keyword)}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       ) : (

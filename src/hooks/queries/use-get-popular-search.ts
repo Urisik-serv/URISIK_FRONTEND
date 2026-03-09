@@ -7,5 +7,9 @@ const useGetPopularSearch = () => {
     queryKey: ["popularSearch"],
     staleTime: 1000 * 60 * 60,
     gcTime: 1000 * 60 * 60,
+
+    select: (data) => data.result,
   });
 };
+
+export default useGetPopularSearch;
