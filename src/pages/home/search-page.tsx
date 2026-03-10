@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BackButton from "../../components/common/BackButton";
 import ElementButton from "../../components/common/ElementButton";
 import SearchBar from "../../components/common/SearchBar";
@@ -7,12 +7,6 @@ import MealRecipeCard from "../../components/cards/MealRecipeCard";
 import useGetSearchRecipes from "../../hooks/queries/use-get-search-recipes";
 import { useRecentSearch } from "../../hooks/use-recent-search";
 import { useFamilyStore } from "../../stores/use-family-store";
-import {
-  getPopularSearch,
-  getRecommendSearch,
-  postPopularSearch,
-} from "../../api/search";
-import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import { formatRankingTime } from "../../utils/date";
 import alertImage from "../../assets/images/alert-circle.png";
