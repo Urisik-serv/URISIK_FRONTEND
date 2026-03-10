@@ -59,7 +59,7 @@ export const postConfirmMealPlan = async ({
 
 //오늘의 식단 조회 api
 export const getTodayMealPlan = async (
-  familyRoomId: number,
+  familyRoomId: number | null,
 ): Promise<ResponseTodayMealPlan> => {
   const { data } = await axiosInstance.get(
     `/api/family-rooms/${familyRoomId}/meal-plans/today`,

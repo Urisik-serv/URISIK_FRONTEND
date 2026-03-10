@@ -5,7 +5,7 @@ import { formatYMD } from "../../utils/date";
 function useGetTodayMealPlan(familyRoomId: number | null) {
   const today = formatYMD(new Date());
   return useQuery({
-    queryFn: () => getTodayMealPlan(familyRoomId!),
+    queryFn: () => getTodayMealPlan(familyRoomId),
     queryKey: ["mealplan", "today", today, familyRoomId],
 
     enabled: !!familyRoomId,
