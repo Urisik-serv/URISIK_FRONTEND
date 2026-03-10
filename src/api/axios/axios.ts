@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
       try {
         const reissueRes = await postReissue();
 
-        const { setItem } = useLocalStorage(reissueRes.result.accessToken);
+        const { setItem } = useLocalStorage(LOCAL_STORAGE_KEY.accessToken);
         setItem(reissueRes.result.accessToken);
         originalRequest.headers.Authorization = `Bearer ${reissueRes.result.accessToken}`;
         if (reissueRes.result.needAgreement) {
