@@ -23,6 +23,7 @@ import Up from "../..//assets/icons/up-icon.svg";
 import Down from "../../assets/icons/down-icon.svg";
 import Same from "../../assets/icons/same-icon.svg";
 import useGetPopularSearch from "../../hooks/queries/use-get-popular-search";
+import useGetRecommendSearch from "../../hooks/queries/use-get-recommend-search";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -47,24 +48,11 @@ const SearchingPage = () => {
   const nickname = useMyProfileStore((state) => state.nickname);
 
   // 추천 검색어
-  const [recommend, setRecommend] = useState<RecommendSearch>();
+  const { data: recommend } = useGetRecommendSearch(familyRoomId);
 
   // 인기검색어 TOP8
   const { data: popularSearches, isPending: popularSearchPending } =
     useGetPopularSearch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const recommendData = await getRecommendSearch(familyRoomId);
-        setRecommend(recommendData.result);
-      } catch (error) {
-        console.warn("추천 검색어 로딩 실패 :", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div className="flex pt-[30px] justify-center items-start flex-col w-full">
