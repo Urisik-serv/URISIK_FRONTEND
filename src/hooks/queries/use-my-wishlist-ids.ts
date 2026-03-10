@@ -43,5 +43,6 @@ export const useMyWishlistIds = (
     gcTime: 1000 * 60 * 60,
     refetchOnWindowFocus: false,
     refetchOnMount: false,
+    enabled: !!familyRoomId && !!profileId,
   });
 };
