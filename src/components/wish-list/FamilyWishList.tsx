@@ -3,7 +3,6 @@ import EditButton from "../common/EditButton";
 import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
 import CheckedBox from "../../assets/icons/check-box.svg";
-import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
 import { useInView } from "react-intersection-observer";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
@@ -13,6 +12,8 @@ import type { FamilyWishListResult } from "../../types/wish-list";
 import { useFamilyData } from "../../hooks/use-family-data";
 import toast from "react-hot-toast";
 import MenuListSkeleton from "../skeltons/MenuListSkeleton";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { wishQueries } from "../../hooks/queries/wish-queries";
 
 const FamilyWishList = () => {
   const familyRoomId = useFamilyStore.getState().familyRoomId;
@@ -23,7 +24,7 @@ const FamilyWishList = () => {
     hasNextPage,
     fetchNextPage,
     isLoading,
-  } = useGetInfiniteFamilyWishList(familyRoomId, 6);
+  } = useInfiniteQuery(wishQueries.family(familyRoomId, 6));
 
   const navigate = useNavigate();
 

@@ -2,13 +2,14 @@ import Button from "../common/Button";
 import { useEffect, useState } from "react";
 import MenuList from "../common/MenuList";
 import AlertModal from "../common/AlertModal";
-import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useInView } from "react-intersection-observer";
 import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
 import Chevron from "../common/icon/Chevron";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { wishQueries } from "../../hooks/queries/wish-queries";
 
 type BottomSheetProps = {
   open: boolean;
@@ -45,7 +46,7 @@ export default function BottomSheet({
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useGetInfiniteFamilyWishList(familyRoomId, 6);
+  } = useInfiniteQuery(wishQueries.family(familyRoomId, 6));
   // isPending, isError 등은 나중에...
 
   const { ref, inView } = useInView({
