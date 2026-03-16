@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MobileLayout from "../layouts/mobile-layout";
 import ProtectedRoute from "./protected-route";
-import SignupPage from "../pages/auth/signup-page";
 import LoginPage from "../pages/auth/login-page";
 import HomePage from "../pages/home/home-page";
 import MyPage from "../pages/mypage/my-page";
@@ -46,10 +45,6 @@ export const router = createBrowserRouter([
       {
         path: "login/callback",
         element: <LoginRedirectPage />,
-      },
-      {
-        path: "signup",
-        element: <SignupPage />,
       },
       {
         path: "agreement",
