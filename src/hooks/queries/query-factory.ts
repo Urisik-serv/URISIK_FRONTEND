@@ -33,11 +33,11 @@ export const queryFactory = {
       ...queryFactory.wishList.all(familyRoomId),
       "profile",
     ],
-    transWishes: (familyRoomId: number | null) => [
+    transWishLists: (familyRoomId: number | null) => [
       ...queryFactory.wishList.profileWishLists(familyRoomId),
       "trans",
     ],
-    originWishes: (familyRoomId: number | null) => [
+    originWishLists: (familyRoomId: number | null) => [
       ...queryFactory.wishList.profileWishLists(familyRoomId),
       "origin",
     ],
