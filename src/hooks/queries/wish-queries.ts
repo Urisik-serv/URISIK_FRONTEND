@@ -14,7 +14,7 @@ export const wishQueries = {
       queryKey: queryFactory.wishList.familyWishLists(familyRoomId),
       initialPageParam: null as string | null,
       getNextPageParam: (lastPage) => {
-        if (lastPage.headers["x-has-next"] === false) return undefined;
+        if (lastPage.headers["x-has-next"] === "false") return undefined;
         return lastPage.headers["x-next-cursor"];
       },
       staleTime: 1000 * 60 * 5, // 5분
