@@ -47,4 +47,9 @@ export const queryFactory = {
       profileId,
     ],
   },
+
+  search: {
+    all: () => ["search"],
+    recommendSearch: () => [...queryFactory.search.all(), "recommend"],
+  },
 };
