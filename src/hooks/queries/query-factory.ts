@@ -8,16 +8,16 @@ export const queryFactory = {
   },
 
   recommend: {
-    all: (category?: string) => ["recommend", category],
-    recommendWishHigh: (category?: string) => [
+    all: (category: string) => ["recommend", category],
+    recommendWishHigh: (category: string) => [
       ...queryFactory.recommend.all(category),
       "wishHigh",
     ],
-    recommendSafeHigh: (category?: string) => [
+    recommendSafeHigh: (category: string) => [
       ...queryFactory.recommend.all(category),
       "safeHigh",
     ],
-    recommendSafeTop: (category?: string) => [
+    recommendSafeTop: (category: string) => [
       ...queryFactory.recommend.all(category),
       "safeTop",
     ],
