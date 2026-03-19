@@ -31,7 +31,7 @@ const AllergyRecipeCard = ({ recipe }: AllergyRecipeCardProps) => {
           <div className="flex gap-0.5 items-center" onClick={handleClick}>
             <img src={HeartFull} alt="좋아요" className="h-3.5 w-3.5" />
             <p className="text-primary-500 text-xs font-semibold leading-4">
-              {recipe.reviewCount}가구가 선택했어요
+              {recipe.wishCount}가구가 선택했어요
             </p>
           </div>
         </div>
