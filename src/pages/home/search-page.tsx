@@ -13,7 +13,7 @@ import alertImage from "../../assets/images/alert-circle.png";
 import MealRecipeCardSkeleton from "../../components/skeltons/MealRecipeCardSkeleton";
 
 // RankButton Props
-import Up from "../..//assets/icons/up-icon.svg";
+import Up from "../../assets/icons/up-icon.svg";
 import Down from "../../assets/icons/down-icon.svg";
 import Same from "../../assets/icons/same-icon.svg";
 import useGetPopularSearch from "../../hooks/queries/use-get-popular-search";
