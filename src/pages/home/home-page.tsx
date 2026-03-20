@@ -170,7 +170,7 @@ export default HomePage;
 // FamilyProfile
 const FamilyProfile = () => {
   const navigate = useNavigate();
-  const familyRoomId = useFamilyStore.getState().familyRoomId;
+  const familyRoomId = useFamilyStore((state) => state.familyRoomId);
 
   const { data: myFamily = [], isPending } = useGetFamilyProfiles(familyRoomId);
   const fetchMyProfile = useMyProfileStore((state) => state.fetchMyProfile);
@@ -283,8 +283,8 @@ const AllergyCuration = () => {
             className="pb-2"
           >
             {data?.recipes.map((recipe) => (
-              <SwiperSlide>
-                <AllergyRecipeCard key={recipe.id} recipe={recipe} />
+              <SwiperSlide key={recipe.id}>
+                <AllergyRecipeCard recipe={recipe} />
               </SwiperSlide>
             ))}
           </Swiper>
