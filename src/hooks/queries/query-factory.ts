@@ -2,7 +2,7 @@ export const queryFactory = {
   recipe: {
     all: ["recipe"],
     searches: () => [...queryFactory.recipe.all, "search"],
-    searchRecipe: (keyword: string) => [...queryFactory.recipe.all, keyword],
+    searchRecipe: (keyword: string, page?:number, size?:number) => [...queryFactory.recipe.all, {keyword, page, size}],
     popularSearch: () => [...queryFactory.recipe.searches(), "popular"],
     recommendSearch: () => [...queryFactory.recipe.searches(), "recommend"],
   },
