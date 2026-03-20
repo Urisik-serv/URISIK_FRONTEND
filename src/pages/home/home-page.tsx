@@ -228,15 +228,17 @@ interface FoodCardProps {
 const FoodCard = ({ name, onClick, isSelected }: FoodCardProps) => {
   const imgSrc = categoryImages[name];
   return (
-    <div
-      className={`px-2.5 py-2.5 flex flex-col justify-center items-center gap-1 cursor-pointer shrink-0 ${isSelected && "border-b-2 border-primary-700"}`}
+    <button
+      type="button"
+      aria-pressed={isSelected}
+      className={`px-2.5 py-2.5 flex flex-col justify-center items-center gap-1 cursor-pointer shrink-0 ${isSelected ? "border-b-2 border-primary-700" : ""}`}
       onClick={onClick}
     >
       <img className="w-11 h-11 " src={imgSrc} alt={`${name}`} />
       <p className="text-center text-neutral-700 text-base font-semibold leading-6">
         {name}
       </p>
-    </div>
+    </button>
   );
 };
 

@@ -167,8 +167,9 @@ interface RankButtonProps {
 
 const RankButton = ({ rank, name, change, onClick }: RankButtonProps) => {
   return (
-    <div
-      className="flex justify-between items-center w-full cursor-pointer"
+    <button
+      type="button"
+      className="flex justify-between items-center w-full text-left bg-transparent border-0 p-0"
       onClick={onClick}
     >
       <div className="flex gap-2 text-zinc-800 text-base font-normal leading-5 shrink-0">
@@ -178,6 +179,6 @@ const RankButton = ({ rank, name, change, onClick }: RankButtonProps) => {
       {change === "UP" && <img src={Up} alt="인기 상승" />}
       {change === "DOWN" && <img src={Down} alt="인기 하락" />}
       {change === "SAME" && <img src={Same} alt="인기 유지" />}
-    </div>
+    </button>
   );
 };
