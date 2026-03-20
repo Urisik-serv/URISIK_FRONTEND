@@ -256,6 +256,8 @@ const AllergyCuration = () => {
 
   const { data, isLoading } = useGetRecommendSafe();
 
+  const totalPages = data?.recipes.length ?? 0;
+
   return (
     <div>
       <div className="pb-4">
@@ -288,9 +290,13 @@ const AllergyCuration = () => {
           </Swiper>
         )
       )}
-      {!isLoading && (
+      {totalPages > 1 && (
         <div className="flex justify-center pt-2">
-          <PageIndicator page={activePage} total={3} onClick={handlePage} />
+          <PageIndicator
+            page={activePage}
+            total={totalPages}
+            onClick={handlePage}
+          />
         </div>
       )}
     </div>
