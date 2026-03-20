@@ -8,19 +8,20 @@ export const queryFactory = {
   },
 
   recommend: {
-    all: (category: string) => ["recommend", category],
-    recommendWishHigh: (category: string) => [
+    all: (category: string|undefined) => ["recommend", category],
+    recommendWishHigh: (category: string|undefined) => [
       ...queryFactory.recommend.all(category),
       "wishHigh",
     ],
-    recommendSafeHigh: (category: string) => [
+    recommendSafeHigh: (category: string|undefined) => [
       ...queryFactory.recommend.all(category),
       "safeHigh",
     ],
-    recommendSafeTop: (category: string) => [
+    recommendSafeTop: (category: string|undefined) => [
       ...queryFactory.recommend.all(category),
       "safeTop",
     ],
+    alergySafe:()=>[...queryFactory.recommend.all(undefined), "alergySafe"],
   },
 
   wishList: {
@@ -46,10 +47,5 @@ export const queryFactory = {
       "ids",
       profileId,
     ],
-  },
-
-  search: {
-    all: () => ["search"],
-    recommendSearch: () => [...queryFactory.search.all(), "recommend"],
   },
 };

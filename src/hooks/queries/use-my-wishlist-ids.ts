@@ -3,7 +3,7 @@ import {
   getProfileTransWishList,
   getProfileWishList,
 } from "../../api/wish-list";
-import { QUERY_KEY } from "../../constants/key";
+import { queryFactory } from "./query-factory";
 
 export type WishReqType = "RECIPE" | "TRANSFORMED";
 
@@ -16,7 +16,7 @@ export const useMyWishlistIds = (
   profileId: number | undefined,
 ) => {
   return useQuery({
-    queryKey: [QUERY_KEY.myWishlistIds, familyRoomId, profileId],
+    queryKey: queryFactory.wishList.wishIds(familyRoomId, profileId),
 
     queryFn: async () => {
       const [recipeRes, transRes] = await Promise.all([
