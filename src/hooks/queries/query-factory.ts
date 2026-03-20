@@ -30,20 +30,21 @@ export const queryFactory = {
       ...queryFactory.wishList.all(familyRoomId),
       "family",
     ],
-    profileWishLists: (familyRoomId: number | null) => [
+    profileWishLists: (familyRoomId: number | null, profileId: number | undefined) => [
       ...queryFactory.wishList.all(familyRoomId),
       "profile",
+      profileId,
     ],
-    transWishLists: (familyRoomId: number | null) => [
-      ...queryFactory.wishList.profileWishLists(familyRoomId),
+    transWishLists: (familyRoomId: number | null,profileId: number | undefined) => [
+      ...queryFactory.wishList.profileWishLists(familyRoomId, profileId),
       "trans",
     ],
-    originWishLists: (familyRoomId: number | null) => [
-      ...queryFactory.wishList.profileWishLists(familyRoomId),
+    originWishLists: (familyRoomId: number | null, profileId: number | undefined) => [
+      ...queryFactory.wishList.profileWishLists(familyRoomId, profileId),
       "origin",
     ],
     wishIds: (familyRoomId: number | null, profileId: number | undefined) => [
-      ...queryFactory.wishList.profileWishLists(familyRoomId),
+      ...queryFactory.wishList.profileWishLists(familyRoomId, profileId),
       "ids",
       profileId,
     ],

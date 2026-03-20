@@ -34,7 +34,7 @@ export const wishQueries = {
     infiniteQueryOptions({
       queryFn: ({ pageParam }) =>
         getProfileWishList(familyRoomId, profileId, size, pageParam),
-      queryKey: queryFactory.wishList.originWishLists(familyRoomId),
+      queryKey: queryFactory.wishList.originWishLists(familyRoomId, profileId),
       initialPageParam: 0,
       getNextPageParam: (lastPage) => {
         return lastPage.result.hasNext ? lastPage.result.nextCursor : undefined;
@@ -56,7 +56,7 @@ export const wishQueries = {
     infiniteQueryOptions({
       queryFn: ({ pageParam }) =>
         getProfileTransWishList(familyRoomId, profileId, size, pageParam),
-      queryKey: queryFactory.wishList.transWishLists(familyRoomId),
+      queryKey: queryFactory.wishList.transWishLists(familyRoomId, profileId),
       initialPageParam: 0,
       getNextPageParam: (lastPage) => {
         return lastPage.result.hasNext ? lastPage.result.nextCursor : undefined;
