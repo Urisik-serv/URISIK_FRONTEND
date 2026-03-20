@@ -8,7 +8,7 @@ export const queryFactory = {
   },
 
   recommend: {
-    all: (category: string|undefined) => ["recommend", category],
+    all: (category: string|undefined) => category?[...["recommend"], category]:["recommend"],
     recommendWishHigh: (category: string|undefined) => [
       ...queryFactory.recommend.all(category),
       "wishHigh",
