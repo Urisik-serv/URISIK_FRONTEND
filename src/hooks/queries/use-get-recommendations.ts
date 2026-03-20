@@ -6,7 +6,7 @@ import {
 } from "../../api/recommendations";
 import { QUERY_KEY } from "../../constants/key";
 
-const getQueryConfig = (sortType: string, category: string) => {
+const getQueryConfig = (sortType: string, category: string|undefined) => {
   switch (sortType) {
     case "안전한 순":
       return {
@@ -27,7 +27,7 @@ const getQueryConfig = (sortType: string, category: string) => {
   }
 };
 
-export const useGetRecommendList = (sortType: string, category: string) => {
+export const useGetRecommendList = (sortType: string, category: string|undefined) => {
   const { queryKey, queryFn } = getQueryConfig(sortType, category);
 
   return useQuery({

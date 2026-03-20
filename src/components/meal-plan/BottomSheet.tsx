@@ -4,12 +4,12 @@ import MenuList from "../common/MenuList";
 import AlertModal from "../common/AlertModal";
 import { useFamilyStore } from "../../stores/use-family-store";
 import { useInView } from "react-intersection-observer";
-import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
 import Chevron from "../common/icon/Chevron";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { wishQueries } from "../../hooks/queries/wish-queries";
+import useGetRecommendSafe from "../../hooks/queries/use-get-safe-recipes";
 
 type BottomSheetProps = {
   open: boolean;
@@ -37,7 +37,7 @@ export default function BottomSheet({
   } | null>(null);
   const navigate = useNavigate();
   //안전한 순 위시리스트 코드
-  const { data: recommendList } = useGetRecommendList("안전한 순");
+  const { data: recommendList } = useGetRecommendSafe();
 
   //가족 위시리스트 코드
   const familyRoomId = useFamilyStore.getState().familyRoomId;
