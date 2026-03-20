@@ -5,7 +5,7 @@ import { queryFactory } from "./query-factory";
 const useGetRecommendSafe = () => {
   return useQuery({
     queryFn: () => getRecommendSafe(),
-    queryKey: queryFactory.recommend.alergySafe(),
+    queryKey: queryFactory.recommend.allergySafe(),
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 30,
 

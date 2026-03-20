@@ -21,7 +21,7 @@ export const queryFactory = {
       ...queryFactory.recommend.all(category),
       "safeTop",
     ],
-    alergySafe:()=>[...queryFactory.recommend.all(undefined), "alergySafe"],
+    allergySafe:()=>[...queryFactory.recommend.all(undefined), "allergySafe"],
   },
 
   wishList: {
