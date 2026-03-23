@@ -73,7 +73,7 @@ export const getWeekMealPlan = async ({
   familyRoomId,
   date,
 }: {
-  familyRoomId: number;
+  familyRoomId: number | null;
   date: string;
 }): Promise<ResponseThisWeekMealPlan> => {
   const { data } = await axiosInstance.get(

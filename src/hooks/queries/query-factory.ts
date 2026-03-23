@@ -60,4 +60,19 @@ export const queryFactory = {
       "ids",
     ],
   },
+  mealPlan: {
+    all: (familyRoomId: number | null, date: string) => [
+      "mealPlan",
+      familyRoomId,
+      date,
+    ],
+    today: (familyRoomId: number | null, date: string) => [
+      ...queryFactory.mealPlan.all(familyRoomId, date),
+      "today",
+    ],
+    week: (familyRoomId: number | null, date: string) => [
+      ...queryFactory.mealPlan.all(familyRoomId, date),
+      "week",
+    ],
+  },
 };

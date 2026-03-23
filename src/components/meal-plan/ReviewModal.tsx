@@ -7,6 +7,7 @@ import AlertModal from "../common/AlertModal";
 import type { createReview } from "../../types/review";
 import usePostReview from "../../hooks/mutations/use-post-review";
 import toast from "react-hot-toast";
+import { useFamilyStore } from "../../stores/use-family-store";
 
 type ReviewModalProps = {
   recipeId: number;
@@ -38,8 +39,9 @@ export default function ReviewModal({
     setIsOpen(false);
     onClick();
   };
+  const { familyRoomId } = useFamilyStore.getState();
 
-  const { mutate } = usePostReview();
+  const { mutate } = usePostReview(familyRoomId);
 
   const handleSubmitReview = ({
     recipeId,

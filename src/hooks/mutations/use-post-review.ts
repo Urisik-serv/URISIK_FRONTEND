@@ -2,11 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postReview, postTransformReview } from "../../api/review";
 import { formatYMD } from "../../utils/date";
 import type { createReview } from "../../types/review";
+import { queryFactory } from "../queries/query-factory";
 
-export type review = createReview & { type: "RECIPE" | "TRANSFORMED_RECIPE" };
-function usePostReview() {
+export type review = createReview & {
+  type: "RECIPE" | "TRANSFORMED_RECIPE";
+};
+function usePostReview(familyRoomId: number | null) {
   const queryClient = useQueryClient();
-  const today = formatYMD(new Date());
+  const todayDate = formatYMD(new Date());
 
   return useMutation({
     mutationFn: ({ recipeId, score, isFavorite, type }: review) => {
@@ -20,11 +23,10 @@ function usePostReview() {
         });
       }
     },
-
-    mutationKey: ["review", today],
-
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mealplan", "today"] });
+      queryClient.invalidateQueries({
+        queryKey: queryFactory.mealPlan.today(familyRoomId, todayDate),
+      });
     },
   });
 }
