@@ -8,7 +8,7 @@ function useGetWeekMealPlan(familyRoomId: number | null, date: string) {
 
   return useQuery({
     queryFn: () => getWeekMealPlan({ familyRoomId: familyRoomId, date }),
-    queryKey: queryFactory.mealPlan.week(familyRoomId, todayDate),
+    queryKey: queryFactory.mealPlan.week(familyRoomId, date, todayDate),
     enabled: !!familyRoomId,
     retry: 1,
     staleTime: Infinity, //같은 날에 바뀔 일은 거의 없어서 무한으로 두었습니다.
