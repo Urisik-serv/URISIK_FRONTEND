@@ -70,9 +70,10 @@ export const queryFactory = {
       ...queryFactory.mealPlan.all(familyRoomId, date),
       "today",
     ],
-    week: (familyRoomId: number | null, date: string) => [
+    week: (familyRoomId: number | null, date: string, todayDate: string) => [
       ...queryFactory.mealPlan.all(familyRoomId, date),
       "week",
+      todayDate,
     ],
   },
 };

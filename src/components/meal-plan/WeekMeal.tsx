@@ -14,7 +14,7 @@ export type weekMealProps = {
   weekType: "THIS" | "NEXT";
 };
 export default function WeekMeal({ weekType }: weekMealProps) {
-  const { familyRoomId } = useFamilyStore();
+  const familyRoomId = useFamilyStore((state) => state.familyRoomId);
   const isLeader = useProfileStore().isLeader;
   const baseDate = new Date();
   const date =
