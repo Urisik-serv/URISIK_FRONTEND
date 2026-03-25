@@ -17,9 +17,10 @@ import Button from "../../components/common/Button";
 import MenuList from "../../components/common/MenuList";
 import Chevron from "../../components/common/icon/Chevron";
 import AlertModal from "../../components/common/AlertModal";
-import useGetInfiniteFamilyWishList from "../../hooks/queries/use-get-infinite-family-wishlist";
 import { useInView } from "react-intersection-observer";
 import { useGetRecommendList } from "../../hooks/queries/use-get-recommendations";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { wishQueries } from "../../hooks/queries/wish-queries";
 
 type mealPlanResponse = Record<string, SlotItem[]>;
 
@@ -247,7 +248,7 @@ function BottomSheet({
   } | null>(null);
   const navigate = useNavigate();
   //안전한 순 위시리스트 코드
-  const { data: recommendList } = useGetRecommendList("안전한 순");
+  const { data: recommendList } = useGetRecommendList("안전한 순", undefined);
 
   //가족 위시리스트 코드
   const familyRoomId = useFamilyStore.getState().familyRoomId;
@@ -256,7 +257,7 @@ function BottomSheet({
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useGetInfiniteFamilyWishList(familyRoomId, 6);
+  } = useInfiniteQuery(wishQueries.family(familyRoomId, 6));
 
   const { ref, inView } = useInView({
     threshold: 0,
