@@ -1,23 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import SampleImg from "../../../assets/sample/shrimp-mushroom.png";
-import Rate from "../../common/Rate";
-import { postExternalRecipes } from "../../../api/recipes";
-import type { SearchRecipesItem } from "../../../types/recipes";
-import SafeMark from "../../common/SafeMark";
-import HeartFull from "../../../assets/icons/heart-full.svg";
-import HeartOutline from "../../../assets/icons/heart-outline.svg";
+import SampleImg from "../../assets/sample/shrimp-mushroom.png";
+import Rate from "../common/Rate";
+import { postExternalRecipes } from "../../api/recipes";
+import type { SearchRecipesItem } from "../../types/recipes";
+import SafeMark from "../common/SafeMark";
+import HeartFull from "../../assets/icons/heart-full.svg";
+import HeartOutline from "../../assets/icons/heart-outline.svg";
 import {
   getWishlistKey,
   useMyWishlistIds,
   type WishReqType,
-} from "../../../hooks/queries/use-my-wishlist-ids";
-import { useFamilyStore } from "../../../stores/use-family-store";
-import { useMyProfileStore } from "../../../stores/use-my-profile-store";
-import useDeleteProfileWishLists from "../../../hooks/mutations/use-delete-profile-wishlists";
-import usePostWishList from "../../../hooks/mutations/use-post-wishlist";
+} from "../../hooks/queries/use-my-wishlist-ids";
+import { useFamilyStore } from "../../stores/use-family-store";
+import { useMyProfileStore } from "../../stores/use-my-profile-store";
+import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
+import usePostWishList from "../../hooks/mutations/use-post-wishlist";
 import toast from "react-hot-toast";
 
-interface MealCardProps {
+interface MealRecipeCardProps {
   id: string;
   title: string;
   shortDescription: string;
@@ -29,7 +29,7 @@ interface MealCardProps {
   isSafe?: boolean;
   external: SearchRecipesItem["external"] | null;
 }
-const MealCard = ({
+const MealRecipeCard = ({
   id,
   title,
   shortDescription,
@@ -40,7 +40,7 @@ const MealCard = ({
   typeBool,
   isSafe,
   external,
-}: MealCardProps) => {
+}: MealRecipeCardProps) => {
   const navigate = useNavigate();
 
   if (typeBool !== undefined) {
@@ -141,4 +141,4 @@ const MealCard = ({
   );
 };
 
-export default MealCard;
+export default MealRecipeCard;

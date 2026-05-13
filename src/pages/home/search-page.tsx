@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BackButton from "../../components/common/BackButton";
 import ElementButton from "../../components/common/ElementButton";
-import RankButton from "../../components/common/RankButton";
 import SearchBar from "../../components/common/SearchBar";
 import useDebounce from "../../hooks/use-debounce";
-import MealCard from "../../components/home/curation/MealCard";
+import MealRecipeCard from "../../components/cards/MealRecipeCard";
 import useGetSearchRecipes from "../../hooks/queries/use-get-search-recipes";
 import { useRecentSearch } from "../../hooks/use-recent-search";
 import { useFamilyStore } from "../../stores/use-family-store";
-import {
-  getPopularSearch,
-  getRecommendSearch,
-  postPopularSearch,
-} from "../../api/search";
-import type { PopularSearches, RecommendSearch } from "../../types/recipes";
 import { useMyProfileStore } from "../../stores/use-my-profile-store";
 import { formatRankingTime } from "../../utils/date";
 import alertImage from "../../assets/images/alert-circle.png";
-import MealCardSkeleton from "../../components/skeltons/MealCardSkeleton";
+import MealRecipeCardSkeleton from "../../components/skeltons/MealRecipeCardSkeleton";
+
+// RankButton Props
+import Up from "../../assets/icons/up-icon.svg";
+import Down from "../../assets/icons/down-icon.svg";
+import Same from "../../assets/icons/same-icon.svg";
+import useGetPopularSearch from "../../hooks/queries/use-get-popular-search";
+import useGetRecommendSearch from "../../hooks/queries/use-get-recommend-search";
 
 const SearchingPage = () => {
   const [keyword, setKeyword] = useState("");
@@ -42,32 +42,11 @@ const SearchingPage = () => {
   const nickname = useMyProfileStore((state) => state.nickname);
 
   // 추천 검색어
-  const [recommend, setRecommend] = useState<RecommendSearch>();
+  const { data: recommend } = useGetRecommendSearch(familyRoomId);
 
   // 인기검색어 TOP8
-  const [popular, setPopular] = useState<PopularSearches>();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const recommendData = await getRecommendSearch(familyRoomId);
-        setRecommend(recommendData.result);
-      } catch (error) {
-        console.warn("추천 검색어 로딩 실패 :", error);
-      }
-
-      try {
-        await postPopularSearch();
-        const popularData = await getPopularSearch();
-        setPopular(popularData.result);
-        console.log("인기 검색어 로딩 성공:", popularData.result);
-      } catch (error) {
-        console.error("인기 검색어 로딩 실패:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { data: popularSearches, isPending: popularSearchPending } =
+    useGetPopularSearch();
 
   return (
     <div className="flex pt-[30px] justify-center items-start flex-col w-full">
@@ -118,22 +97,26 @@ const SearchingPage = () => {
             <p className="pb-3 text-zinc-800 text-base font-semibold leading-6">
               인기 검색어
             </p>
-            <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4">
-              <p className="text-neutral-400 text-xs font-normal leading-4">
-                {formatRankingTime(popular?.windowEnd)}
-              </p>
-              <div className="grid grid-rows-4 grid-flow-col grid-cols-2 gap-x-10.5 gap-y-4 w-full">
-                {popular?.keywords.slice(0, 8).map((item) => (
-                  <RankButton
-                    key={item.keyword}
-                    rank={item.rank}
-                    change={item.change}
-                    name={item.keyword}
-                    onClick={() => setKeyword(item.keyword)}
-                  />
-                ))}
+            {popularSearchPending ? (
+              <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4 animate-pulse"></div>
+            ) : (
+              <div className="h-48 px-5 py-3.5 bg-primary-100 rounded-lg flex flex-col justify-start items-start gap-4">
+                <p className="text-neutral-400 text-xs font-normal leading-4">
+                  {formatRankingTime(popularSearches?.windowEnd)}
+                </p>
+                <div className="grid grid-rows-4 grid-flow-col grid-cols-2 gap-x-10.5 gap-y-4 w-full">
+                  {popularSearches?.keywords.slice(0, 8).map((item) => (
+                    <RankButton
+                      key={item.keyword}
+                      rank={item.rank}
+                      change={item.change}
+                      name={item.keyword}
+                      onClick={() => setKeyword(item.keyword)}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       ) : (
@@ -141,12 +124,12 @@ const SearchingPage = () => {
           {isSearching ? (
             <>
               {Array.from({ length: 5 }).map((_, index) => (
-                <MealCardSkeleton key={index} />
+                <MealRecipeCardSkeleton key={index} />
               ))}
             </>
           ) : recipes?.result.items && recipes.result.items.length > 0 ? (
             recipes?.result.items.map((item) => (
-              <MealCard
+              <MealRecipeCard
                 key={item.id}
                 id={item.id}
                 title={item.title}
@@ -174,3 +157,28 @@ const SearchingPage = () => {
 };
 
 export default SearchingPage;
+
+interface RankButtonProps {
+  rank: number;
+  name: string;
+  change: "UP" | "DOWN" | "SAME";
+  onClick?: () => void;
+}
+
+const RankButton = ({ rank, name, change, onClick }: RankButtonProps) => {
+  return (
+    <button
+      type="button"
+      className="flex justify-between items-center w-full text-left bg-transparent border-0 p-0"
+      onClick={onClick}
+    >
+      <div className="flex gap-2 text-zinc-800 text-base font-normal leading-5 shrink-0">
+        <p className="font-semibold">{rank}</p>
+        <p className="">{name}</p>
+      </div>
+      {change === "UP" && <img src={Up} alt="인기 상승" />}
+      {change === "DOWN" && <img src={Down} alt="인기 하락" />}
+      {change === "SAME" && <img src={Same} alt="인기 유지" />}
+    </button>
+  );
+};

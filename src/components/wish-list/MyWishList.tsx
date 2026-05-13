@@ -4,14 +4,14 @@ import MenuList from "../common/MenuList";
 import EmptyBox from "../../assets/icons/check-box-empty.svg";
 import CheckedBox from "../../assets/icons/check-box.svg";
 import { useRecipeSelection } from "../../hooks/use-recipe-selection";
-import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
 import { useFamilyStore } from "../../stores/use-family-store";
-import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
 import { useInView } from "react-intersection-observer";
 import useDeleteProfileWishLists from "../../hooks/mutations/use-delete-profile-wishlists";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import MenuListSkeleton from "../skeltons/MenuListSkeleton";
+import { wishQueries } from "../../hooks/queries/wish-queries";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const MyWishList = () => {
   const [editMode, setEditMode] = useState(false);
@@ -24,7 +24,7 @@ const MyWishList = () => {
     fetchNextPage: fetchProfile,
     isError: errorProfile,
     isLoading: loadingProfile,
-  } = useGetInfiniteProfileWishList(roomId, -1, 3);
+  } = useInfiniteQuery(wishQueries.profileOrigin(roomId, -1, 3));
 
   const {
     data: transWish,
@@ -33,7 +33,7 @@ const MyWishList = () => {
     fetchNextPage: fetchTrans,
     isError: errorTrans,
     isLoading: loadingTrans,
-  } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+  } = useInfiniteQuery(wishQueries.profileTrans(roomId, -1, 5));
 
   const navigate = useNavigate();
 

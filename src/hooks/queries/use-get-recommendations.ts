@@ -4,30 +4,30 @@ import {
   getRecommendScore,
   getRecommendWish,
 } from "../../api/recommendations";
-import { QUERY_KEY } from "../../constants/key";
+import { queryFactory } from "./query-factory";
 
-const getQueryConfig = (sortType: string, category?: string) => {
+const getQueryConfig = (sortType: string, category: string|undefined) => {
   switch (sortType) {
     case "안전한 순":
       return {
-        queryKey: [QUERY_KEY.safeHighScore, category],
+        queryKey: queryFactory.recommend.recommendSafeHigh(category),
         queryFn: () => getRecommendSafeScore(category),
       };
     case "찜 많은 순":
       return {
-        queryKey: [QUERY_KEY.wishHighScore, category],
+        queryKey: queryFactory.recommend.recommendWishHigh(category),
         queryFn: () => getRecommendWish(category),
       };
     case "별점 순":
     default:
       return {
-        queryKey: [QUERY_KEY.highScore, category],
+        queryKey: queryFactory.recommend.recommendSafeTop(category),
         queryFn: () => getRecommendScore(category),
       };
   }
 };
 
-export const useGetRecommendList = (sortType: string, category?: string) => {
+export const useGetRecommendList = (sortType: string, category: string|undefined) => {
   const { queryKey, queryFn } = getQueryConfig(sortType, category);
 
   return useQuery({

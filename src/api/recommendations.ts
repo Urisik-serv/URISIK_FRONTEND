@@ -16,12 +16,12 @@ export const getRecommendSafe = async (): Promise<ResponseRecommendSafe> => {
 // 홈 레시피 추천 (하단)
 // 별점순
 export const getRecommendScore = async (
-  category?: string,
+  category: string|undefined,
 ): Promise<ResponseRecommendPopular> => {
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/high-score",
     {
-      params: { category: category || undefined },
+      params: { category: category },
     },
   );
 
@@ -30,12 +30,12 @@ export const getRecommendScore = async (
 
 // 안전한 레시피
 export const getRecommendSafeScore = async (
-  category?: string,
+  category: string|undefined,
 ): Promise<ResponseRecommendPopular> => {
   const { data } = await axiosInstance.get(
     "/api/recommendations/home/safe-high-score",
     {
-      params: { category: category || undefined },
+      params: { category: category },
     },
   );
 
@@ -44,10 +44,10 @@ export const getRecommendSafeScore = async (
 
 // 위시순
 export const getRecommendWish = async (
-  category?: string,
+  category: string|undefined,
 ): Promise<ResponseRecommendPopular> => {
   const { data } = await axiosInstance.get("/api/recommendations/home/wish", {
-    params: { category: category || undefined },
+    params: { category: category },
   });
 
   return data;

@@ -6,8 +6,6 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import LeaderProfile from "../../assets/images/profile/leader-profile";
 import AllergyDataBox from "../../components/profile/AllergyDataBox";
 import { rolePicture } from "../../constants/profile-record";
-import useGetInfiniteProfileWishList from "../../hooks/queries/use-get-infinite-profile-wishlist";
-import useGetInfiniteProfileTransWishList from "../../hooks/queries/use-get-infinite-profile-transwishlist";
 import EntityItem from "../../components/common/EntityItem";
 import SmallButton from "../../components/common/SmallCommonButton";
 import alertImage from "../../assets/images/alert-circle.png";
@@ -17,6 +15,8 @@ import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
 import { useInView } from "react-intersection-observer";
 import toast from "react-hot-toast";
 import MenuListSkeleton from "../../components/skeltons/MenuListSkeleton";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { wishQueries } from "../../hooks/queries/wish-queries";
 
 export default function MyProfilePage() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function MyProfilePage() {
     fetchNextPage: fetchProfile,
     isError: errorProfile,
     isLoading: loadingProfile,
-  } = useGetInfiniteProfileWishList(roomId, -1, 5);
+  } = useInfiniteQuery(wishQueries.profileOrigin(roomId, -1, 5));
 
   const {
     data: transWish,
@@ -65,7 +65,7 @@ export default function MyProfilePage() {
     fetchNextPage: fetchTrans,
     isError: errorTrans,
     isLoading: loadingTrans,
-  } = useGetInfiniteProfileTransWishList(roomId, -1, 5);
+  } = useInfiniteQuery(wishQueries.profileTrans(roomId, -1, 5));
 
   const loading = loadingProfile || loadingTrans;
 

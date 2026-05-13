@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTodayMealPlan } from "../../api/meal-plan";
 import { formatYMD } from "../../utils/date";
+import { queryFactory } from "./query-factory";
 
 function useGetTodayMealPlan(familyRoomId: number | null) {
-  const today = formatYMD(new Date());
+  const todayDate = formatYMD(new Date());
   return useQuery({
-    queryFn: () => getTodayMealPlan(familyRoomId!),
-    queryKey: ["mealplan", "today", today, familyRoomId],
-
+    queryFn: () => getTodayMealPlan(familyRoomId),
+    queryKey: queryFactory.mealPlan.today(familyRoomId, todayDate),
     enabled: !!familyRoomId,
     retry: 1,
     staleTime: Infinity, //같은 날에 바뀔 일은 거의 없어서 무한으로 두었습니다.

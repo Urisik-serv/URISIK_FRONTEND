@@ -7,7 +7,7 @@ import { useFamilyStore } from "../../stores/use-family-store";
 import { roleMap, rolePicture } from "../../constants/profile-record";
 import { patchAgree } from "../../api/member";
 import { useProfileStore } from "../../stores/use-profile-store";
-import { useFamilyProfiles } from "../../hooks/queries/use-get-family-profiles";
+import { useGetFamilyProfiles } from "../../hooks/queries/use-get-family-profiles";
 import { useMyProfile } from "../../hooks/queries/use-get-my-profile";
 import { useDeleteProfile } from "../../hooks/queries/use-delete-profile";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
@@ -24,7 +24,7 @@ export default function FamilyAccount() {
     isPending: familyLoading,
     isError: familyError,
     refetch: refetchFamily,
-  } = useFamilyProfiles(familyRoomId);
+  } = useGetFamilyProfiles(familyRoomId);
 
   const {
     data: myProfile,

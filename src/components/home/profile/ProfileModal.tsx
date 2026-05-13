@@ -15,8 +15,6 @@ import EntityItem from "../../common/EntityItem";
 import SmallButton from "../../common/SmallCommonButton";
 import alertImage from "../../../assets/images/alert-circle.png";
 import { useNavigate } from "react-router-dom";
-import useGetInfiniteProfileWishList from "../../../hooks/queries/use-get-infinite-profile-wishlist";
-import useGetInfiniteProfileTransWishList from "../../../hooks/queries/use-get-infinite-profile-transwishlist";
 import { useFamilyStore } from "../../../stores/use-family-store";
 import type { Profile } from "../../../types/family-profile";
 import { getProfile } from "../../../api/family-profile";
@@ -24,6 +22,8 @@ import { useInView } from "react-intersection-observer";
 import toast from "react-hot-toast";
 import MenuListSkeleton from "../../skeltons/MenuListSkeleton";
 import { rolePicture } from "../../../constants/profile-record";
+import { wishQueries } from "../../../hooks/queries/wish-queries";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const ProfileModal = () => {
   const { isClose } = useProfileModalActions();
@@ -100,7 +100,9 @@ const ProfileModal = () => {
     fetchNextPage: fetchProfile,
     isError: errorProfile,
     isLoading: loadingProfile,
-  } = useGetInfiniteProfileWishList(roomId, selectedData?.profileId, 5);
+  } = useInfiniteQuery(
+    wishQueries.profileOrigin(roomId, selectedData?.profileId, 5),
+  );
 
   const {
     data: transWish,
@@ -109,7 +111,9 @@ const ProfileModal = () => {
     fetchNextPage: fetchTrans,
     isError: errorTrans,
     isLoading: loadingTrans,
-  } = useGetInfiniteProfileTransWishList(roomId, selectedData?.profileId, 5);
+  } = useInfiniteQuery(
+    wishQueries.profileTrans(roomId, selectedData?.profileId, 5),
+  );
 
   const loading = loadingProfile || loadingTrans;
 

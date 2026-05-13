@@ -321,6 +321,7 @@ function ReviewModal({ recipeId, onClick, type }: ReviewModalProps) {
   const star = [1, 2, 3, 4, 5];
   const [score, setScore] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const { familyRoomId } = useFamilyStore.getState();
 
   const handlebutton = (select: Preference) => {
     if (select == preference) {
@@ -335,7 +336,7 @@ function ReviewModal({ recipeId, onClick, type }: ReviewModalProps) {
     onClick();
   };
 
-  const { mutate } = usePostReview();
+  const { mutate } = usePostReview(familyRoomId);
 
   const handleSubmitReview = ({
     recipeId,

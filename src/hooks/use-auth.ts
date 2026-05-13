@@ -1,9 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocalStorage } from "./use-local-storage";
 import { postLogout, postReissue } from "../api/auth";
 import toast from "react-hot-toast";
 
 export const useAuth = () => {
+  const queryClient = useQueryClient();
+
   const { setItem: setAccessToken, removeItem: removeAccessToken } =
     useLocalStorage("accessToken");
 
@@ -26,6 +28,7 @@ export const useAuth = () => {
     mutationFn: postLogout,
     onSuccess: (res) => {
       removeAccessToken();
+      queryClient.clear();
       window.location.href = res.isSuccess ? "/login" : "/mypage";
     },
     onError: () => {
