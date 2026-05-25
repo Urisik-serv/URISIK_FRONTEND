@@ -103,13 +103,17 @@ export default function FamilyInvitePage() {
           </div>
           <div className="pt-[156px]">
             <Button
-              text="다음"
-              type="submit"
+              size="Btn_L"
+              variant="primary"
               onClick={() => {
                 navigate("/");
               }}
+              type="button"
+              className="w-[343px]"
               disabled={isInviting}
-            />
+            >
+              <span className="text-xl font-semibold leading-[22px]">다음</span>
+            </Button>
           </div>
         </div>
       </div>

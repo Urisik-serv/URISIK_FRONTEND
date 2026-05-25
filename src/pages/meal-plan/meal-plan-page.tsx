@@ -171,20 +171,15 @@ function TodayMealTab({ data }: { data: TodayMeal }) {
       </div>
       {!data.isReviewed && (
         <div className="pt-6">
-          {!isDone ? (
-            <Button
-              type="button"
-              text="식사 완료"
-              onClick={() => setIsDone(true)}
-            />
-          ) : (
-            <Button
-              type="button"
-              text="리뷰 작성"
-              bgColor="white"
-              onClick={() => setIsOpen(true)}
-            />
-          )}
+          <Button
+            onClick={isDone ? () => setIsOpen(true) : () => setIsDone(true)}
+            size="Btn_L"
+            variant="primary"
+            type="button"
+            className="w-[343px]"
+          >
+            {isDone ? "리뷰 작성" : "식사 완료"}
+          </Button>
         </div>
       )}
       <div className="pt-11 pb-29">
@@ -410,8 +405,10 @@ function ReviewModal({ recipeId, onClick, type }: ReviewModalProps) {
         </div>
         <div className="w-full p-[10px] flex justify-center">
           <Button
+            size="Btn_L"
+            variant="primary"
             type="button"
-            text="등록"
+            className="w-[343px]"
             onClick={() => {
               const reviewData: createReview = {
                 recipeId,
@@ -422,7 +419,9 @@ function ReviewModal({ recipeId, onClick, type }: ReviewModalProps) {
               }
               handleSubmitReview(reviewData);
             }}
-          />
+          >
+            <span className="text-xl font-semibold leading-[22px]">등록</span>
+          </Button>
         </div>
       </div>
     </div>

@@ -112,10 +112,16 @@ const MealPlanCreatePage = () => {
                 </div>
                 <div className="fixed bottom-0 left-1/2 -translate-x-1/2 flex justify-center pb-10">
                   <Button
-                    text="식단 생성"
+                    size="Btn_L"
+                    variant="primary"
                     type="button"
-                    onClick={() => handleCreate()}
-                  />
+                    className="w-[343px]"
+                    onClick={handleCreate}
+                  >
+                    <span className="text-xl font-semibold leading-[22px]">
+                      식단 생성
+                    </span>
+                  </Button>
                 </div>
               </div>
             </>

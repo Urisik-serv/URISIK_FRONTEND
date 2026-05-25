@@ -120,11 +120,15 @@ export default function FamilyCreatePage() {
           </div>
           <div className="fixed bottom-0 left-1/2 -translate-x-1/2 pb-10">
             <Button
-              text="다음"
-              type="submit"
+              size="Btn_L"
+              variant="primary"
               onClick={handleSubmit}
+              type="submit"
+              className="w-[343px]"
               disabled={isCreating}
-            />
+            >
+              <span className="text-xl font-semibold leading-[22px]">다음</span>
+            </Button>
           </div>
         </div>
       </div>

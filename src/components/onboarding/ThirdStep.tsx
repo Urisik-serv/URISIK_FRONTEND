@@ -24,12 +24,14 @@ export default function ThirdStep() {
         </div>
         <div className="pt-[50px] pb-8 flex justify-center">
           <Button
-            text={"시작"}
+            size="Btn_L"
+            variant="primary"
+            onClick={() => navigate("/agreement")}
             type="button"
-            onClick={() => {
-              navigate("../agreement");
-            }}
-          />
+            className="w-full"
+          >
+            <span className="text-xl font-semibold leading-[22px]">시작</span>
+          </Button>
         </div>
       </div>
     </>
